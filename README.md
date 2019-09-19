@@ -1,2 +1,0 @@
-# UWPLedMatrix
-UWP Led Matrix
