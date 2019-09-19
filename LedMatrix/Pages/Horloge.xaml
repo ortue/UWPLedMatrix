@@ -1,0 +1,14 @@
+﻿<Page
+    x:Class="LedMatrix.Pages.Horloge"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LedMatrix.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+  <Grid>
+    <Button x:Name="BtnHorloge" Content="Horloge" Height="40" Width="100" Click="BtnHorloge_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="12"/>
+  </Grid>
+</Page>
