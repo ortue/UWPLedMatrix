@@ -29,6 +29,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -41,6 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -52,6 +54,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <OutputPath>bin\ARM\Release\</OutputPath>
@@ -64,6 +67,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
     <DebugSymbols>true</DebugSymbols>
@@ -76,6 +80,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
     <OutputPath>bin\ARM64\Release\</OutputPath>
@@ -88,6 +93,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -99,6 +105,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -111,6 +118,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -128,8 +136,8 @@
     <Compile Include="Pages\Horloge.xaml.cs">
       <DependentUpon>Horloge.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Spectrum.xaml.cs">
-      <DependentUpon>Spectrum.xaml</DependentUpon>
+    <Compile Include="Pages\SpectrumPage.xaml.cs">
+      <DependentUpon>SpectrumPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TableauPage.xaml.cs">
       <DependentUpon>TableauPage.xaml</DependentUpon>
@@ -147,11 +155,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\1up.png" />
+    <Content Include="Images\bioniccommando.png" />
+    <Content Include="Images\BlackMageLeft.gif" />
+    <Content Include="Images\CecilWalkFront.gif" />
     <Content Include="Images\CheepCheepRed.gif" />
+    <Content Include="Images\ChocoboWalk.gif" />
     <Content Include="Images\Enemy01.gif" />
     <Content Include="Images\EnergyTank.gif" />
+    <Content Include="Images\Enterprise.gif" />
     <Content Include="Images\GeegaOrangeR.gif" />
     <Content Include="Images\GodOfPoverty.png" />
+    <Content Include="Images\kidicarus.gif" />
     <Content Include="Images\KoopaTroopaShellGreen.png" />
     <Content Include="Images\LittleGoomba.gif" />
     <Content Include="Images\LuigiStanding.png" />
@@ -161,8 +175,13 @@
     <Content Include="Images\MarioStanding.png" />
     <Content Include="Images\MarioWalkingR.gif" />
     <Content Include="Images\megaman.png" />
+    <Content Include="Images\QuestionBlock.gif" />
+    <Content Include="Images\ScrewAttack.gif" />
+    <Content Include="Images\ShipLeft.gif" />
     <Content Include="Images\ShyguyRedRight.gif" />
+    <Content Include="Images\spinywalk.gif" />
     <Content Include="Images\ToadSmallR.gif" />
+    <Content Include="Images\WhiteMage-Walk-Front.gif" />
     <Content Include="Images\ZeelaOrange.gif" />
     <Content Include="Images\ZeldaSpriteArmos.gif" />
     <Content Include="Images\ZeldaSpriteFairy.gif" />
@@ -196,7 +215,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Spectrum.xaml">
+    <Page Include="Pages\SpectrumPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -11,10 +11,11 @@
   Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
   <Grid>
-    <NavigationView x:Name="MainNavigation" IsBackButtonVisible="Collapsed" IsPaneOpen="True" IsPaneToggleButtonVisible="False" IsSettingsVisible="False" OpenPaneLength="110" PaneDisplayMode="Left" SelectionChanged="MainNavigation_SelectionChanged">
+    <NavigationView x:Name="MainNavigation" IsBackButtonVisible="Visible" IsPaneOpen="True" IsPaneToggleButtonVisible="False" IsSettingsVisible="False" OpenPaneLength="110" PaneDisplayMode="Left" SelectionChanged="MainNavigation_SelectionChanged">
       <NavigationView.MenuItems>
         <NavigationViewItem Content="Anime" Icon="Emoji" Tag="GifAnime" Height="80"/>
         <NavigationViewItem Content="Horloge" Icon="Clock" Tag="Horloge" Height="80"/>
+        <NavigationViewItem Content="Spectrum" Icon="ViewAll" Tag="SpectrumPage" Height="80"/>
         <NavigationViewItem Content="Tableau" Icon="ViewAll" Tag="TableauPage" Height="80"/>
       </NavigationView.MenuItems>
 
