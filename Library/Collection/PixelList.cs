@@ -65,7 +65,7 @@ namespace Library.Collection
 
       //Fond Centre 
       for (int j = 1; j < 10; j++)
-        for (int i = 1; i < 359; i = i + 4)
+        for (int i = 1; i < 359; i += 4)
           GetCoordonnee(GetCerlcleCoord(Coordonnee.Get(10, 10, Largeur, Hauteur), i, j)).SetColor(new Color { R = (byte)(7 * j), G = (byte)(7 * j), B = (byte)(7 * j) });
 
       //Cadran
@@ -81,7 +81,7 @@ namespace Library.Collection
       Print(Coordonnee.Get(2, 13, Largeur, Hauteur), leading + DateTime.Now.ToString("hh") + deuxPoint + DateTime.Now.ToString("mm"), new Color());
 
       //5 minutes
-      for (int i = 1; i < 60; i = i + 5)
+      for (int i = 1; i < 60; i += 5)
         GetCoordonnee(GetTempsCoord(i, 8)).SetColor(heureCouleur);
 
       GetCoordonnee(Coordonnee.Get(9, 2, Largeur, Hauteur)).SetColor(heureCouleur);
@@ -469,5 +469,3 @@ namespace Library.Collection
 // /
 // /
 ///
-
-

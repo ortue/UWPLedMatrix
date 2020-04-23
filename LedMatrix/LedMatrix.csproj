@@ -157,7 +157,7 @@
     <Content Include="Images\1up.png" />
     <Content Include="Images\bioniccommando.png" />
     <Content Include="Images\BlackMageLeft.gif" />
-    <Content Include="Images\CecilWalkFront.gif" />
+    <Content Include="Images\Cecil.gif" />
     <Content Include="Images\CheepCheepRed.gif" />
     <Content Include="Images\ChocoboWalk.gif" />
     <Content Include="Images\Enemy01.gif" />
@@ -165,7 +165,6 @@
     <Content Include="Images\Enterprise.gif" />
     <Content Include="Images\GeegaOrangeR.gif" />
     <Content Include="Images\GodOfPoverty.png" />
-    <Content Include="Images\kidicarus.gif" />
     <Content Include="Images\KoopaTroopaShellGreen.png" />
     <Content Include="Images\LittleGoomba.gif" />
     <Content Include="Images\LuigiStanding.png" />

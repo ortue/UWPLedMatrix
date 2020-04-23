@@ -71,10 +71,8 @@ namespace LedMatrix
       }
       else
       {
-
         NavigationViewItem selectedItem = (NavigationViewItem)args.SelectedItem;
-        string selectedItemTag = ((string)selectedItem.Tag);
-        string pageName = "LedMatrix.Pages." + selectedItemTag;
+        string pageName = "LedMatrix.Pages." + selectedItem.Tag.ToString();
         Type pageType = Type.GetType(pageName);
         MainFrame.Navigate(pageType);
       }

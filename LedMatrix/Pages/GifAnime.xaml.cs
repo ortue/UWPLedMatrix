@@ -19,6 +19,8 @@ namespace LedMatrix.Pages
 			get { return Util.Context.Animations; }
 		}
 
+		public bool Autorun { get; set; }
+
 		/// <summary>
 		/// Constructeur
 		/// </summary>
@@ -29,6 +31,8 @@ namespace LedMatrix.Pages
 
 		private void GridLed_ItemClick(object sender, ItemClickEventArgs e)
 		{
+			Autorun = false;
+
 			ShowAnimation(((Animation)e.ClickedItem).FileName);
 		}
 
@@ -69,9 +73,29 @@ namespace LedMatrix.Pages
 					Util.Context.Pixels.Reset();
 
 					using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-					  waitHandle.Wait(TimeSpan.FromMilliseconds(1));
+						waitHandle.Wait(TimeSpan.FromMilliseconds(1));
 				}
 			}
+		}
+
+		private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+		{
+			Task.Run(() =>
+			{
+				Autorun = true;
+
+				int i = 0;
+				while (Autorun)
+				{
+					ShowAnimation(Animations[i++].FileName);
+
+					using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
+						waitHandle.Wait(TimeSpan.FromSeconds(10));
+
+					if (Animations.Count <= i)
+						i = 0;
+				}
+			});
 		}
 	}
 }
