@@ -44,38 +44,38 @@ namespace LedMatrix.Pages
 		{
 			ImageClass imageClass = new ImageClass(file);
 
+			Task.Run(() =>
+			{
+				int task = Util.StartTask();
+				int frame = 0;
+
+				for (int slide = imageClass.Width; slide >= 0; slide--)
+					SetAnimation(imageClass, frame++, slide);
+
+				while (imageClass.Animation && Util.TaskWork(task))
+					SetAnimation(imageClass, frame++);
+			});
+		}
+
+		/// <summary>
+		/// SetAnimation
+		/// </summary>
+		/// <param name="imageClass"></param>
+		/// <param name="frame"></param>
+		/// <param name="slide"></param>
+		private void SetAnimation(ImageClass imageClass, int frame, int slide = 0)
+		{
 			if (imageClass.Animation)
-			{
-				Task.Run(() =>
-				{
-					int task = Util.StartTask();
-					int frame = 0;
-
-					while (Util.TaskWork(task))
-					{
-						imageClass.SetÞixelFrame(frame++, Util.Context.Pixels);
-						Util.SetLeds();
-						Util.Context.Pixels.Reset();
-
-						using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-							waitHandle.Wait(TimeSpan.FromMilliseconds(80));
-					}
-				});
-			}
+				imageClass.SetÞixelFrame(frame++, Util.Context.Pixels, slide);
 			else
-			{
-				Util.StopTask();
+				imageClass.SetÞixel(Util.Context.Pixels, slide);
 
-				for (int slide = 19; slide > 0; slide--)
-				{
-					imageClass.SetÞixel(Util.Context.Pixels, slide);
-					Util.SetLeds();
-					Util.Context.Pixels.Reset();
+			Util.SetLeds();
+			Util.Context.Pixels.Reset();
 
-					using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-						waitHandle.Wait(TimeSpan.FromMilliseconds(1));
-				}
-			}
+			if (slide == 0)
+				using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
+					waitHandle.Wait(TimeSpan.FromMilliseconds(80));
 		}
 
 		private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)

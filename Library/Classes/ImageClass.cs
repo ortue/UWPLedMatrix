@@ -105,21 +105,14 @@ namespace Library.Classes
 		{
 			int heightOffset = (pixels.Hauteur - Height) / 2;
 			int widthOffset = (pixels.Largeur - Width) / 2;
-
-
-			//int test = 0;
-			//if (slide > 0)
-			//	test = 1;
-
 			int newLine = pixels.Largeur - Width;
-
-
 			int pixelOffset = heightOffset * pixels.Largeur + widthOffset + 1;
 
 			foreach (Couleur couleur in Couleurs)
 			{
-				if (pixels.SingleOrDefault(p => p.Position == couleur.Position + pixelOffset + slide) is Pixel pixel)
-					pixel.Couleur = couleur.Color;
+				if (couleur.Position % Width < Width - slide) // Pour faire l'effet du slide de la droite
+					if (pixels.SingleOrDefault(p => p.Position == couleur.Position + pixelOffset + slide) is Pixel pixel)
+						pixel.Couleur = couleur.Color;
 
 				//Changement de ligne
 				if (couleur.Position % Width == Width - 1)
@@ -132,7 +125,7 @@ namespace Library.Classes
 		/// </summary>
 		/// <param name="frame"></param>
 		/// <param name="pixels"></param>
-		public void SetÞixelFrame(int frame, PixelList pixels)
+		public void SetÞixelFrame(int frame, PixelList pixels, int slide = 0)
 		{
 			int heightOffset = (pixels.Hauteur - Height) / 2;
 			int widthOffset = (pixels.Largeur - Width) / 2;
@@ -142,7 +135,8 @@ namespace Library.Classes
 
 			foreach (Couleur couleur in Couleurs.Where(c => c.FrameCompteur == frameCourant))
 			{
-				if (pixels.SingleOrDefault(p => p.Position == couleur.Position + pixelOffset) is Pixel pixel)
+				if (couleur.Position % Width < Width - slide) // Pour faire l'effet du slide de la droite
+					if (pixels.SingleOrDefault(p => p.Position == couleur.Position + pixelOffset + slide) is Pixel pixel)
 					pixel.Couleur = couleur.Color;
 
 				//Changement de ligne
