@@ -13,11 +13,6 @@ namespace Library.Classes
 {
 	public class ImageClass
 	{
-		public int Pixels
-		{
-			get { return Height * Width; }
-		}
-
 		public int Height { get; set; }
 		public int Width { get; set; }
 		public int FrameCount { get; set; }
@@ -80,7 +75,7 @@ namespace Library.Classes
 		/// <summary>
 		/// GetPixelFrame
 		/// </summary>
-		/// <param name="bitmapDecoder"></param>
+		/// <param name="bitmap"></param>
 		/// <returns></returns>
 		public async Task<List<byte[]>> GetPixelFrame(BitmapDecoder bitmap)
 		{
@@ -97,35 +92,11 @@ namespace Library.Classes
 		}
 
 		/// <summary>
-		/// Mapping de pixel
-		/// </summary>
-		/// <param name="pixels"></param>
-		/// <param name="slide">Slider l'image de la droite a la gauche</param>
-		public void SetÞixel(PixelList pixels, int slide = 0)
-		{
-			int heightOffset = (pixels.Hauteur - Height) / 2;
-			int widthOffset = (pixels.Largeur - Width) / 2;
-			int newLine = pixels.Largeur - Width;
-			int pixelOffset = heightOffset * pixels.Largeur + widthOffset + 1;
-
-			foreach (Couleur couleur in Couleurs)
-			{
-				if (couleur.Position % Width < Width - slide) // Pour faire l'effet du slide de la droite
-					if (pixels.SingleOrDefault(p => p.Position == couleur.Position + pixelOffset + slide) is Pixel pixel)
-						pixel.Couleur = couleur.Color;
-
-				//Changement de ligne
-				if (couleur.Position % Width == Width - 1)
-					pixelOffset += newLine;
-			}
-		}
-
-		/// <summary>
 		/// SetÞixelFrame
 		/// </summary>
 		/// <param name="frame"></param>
 		/// <param name="pixels"></param>
-		public void SetÞixelFrame(int frame, PixelList pixels, int slide = 0)
+		public void SetÞixelFrame(int frame, PixelList pixels, int slide, bool fadeOut = false)
 		{
 			int heightOffset = (pixels.Hauteur - Height) / 2;
 			int widthOffset = (pixels.Largeur - Width) / 2;
@@ -135,9 +106,18 @@ namespace Library.Classes
 
 			foreach (Couleur couleur in Couleurs.Where(c => c.FrameCompteur == frameCourant))
 			{
-				if (couleur.Position % Width < Width - slide) // Pour faire l'effet du slide de la droite
-					if (pixels.SingleOrDefault(p => p.Position == couleur.Position + pixelOffset + slide) is Pixel pixel)
-					pixel.Couleur = couleur.Color;
+				if (fadeOut)
+				{
+					if (couleur.Position % Width >= slide) // Pour faire l'effet du slide vers la gauche
+						if (pixels.SingleOrDefault(p => p.Position == couleur.Position + pixelOffset - slide) is Pixel pixel)
+							pixel.Couleur = couleur.Color;
+				}
+				else
+				{
+					if (couleur.Position % Width < Width - slide) // Pour faire l'effet du slide de la droite
+						if (pixels.SingleOrDefault(p => p.Position == couleur.Position + pixelOffset + slide) is Pixel pixel)
+							pixel.Couleur = couleur.Color;
+				}
 
 				//Changement de ligne
 				if (couleur.Position % Width == Width - 1)

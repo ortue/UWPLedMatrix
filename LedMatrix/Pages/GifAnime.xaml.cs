@@ -14,12 +14,13 @@ namespace LedMatrix.Pages
 	/// </summary>
 	public sealed partial class GifAnime : Page
 	{
+		public bool Autorun { get; set; }
+		public string LastAutorun { get; set; }
+
 		public AnimationList Animations
 		{
 			get { return Util.Context.Animations; }
 		}
-
-		public bool Autorun { get; set; }
 
 		/// <summary>
 		/// Constructeur
@@ -42,18 +43,31 @@ namespace LedMatrix.Pages
 		/// <param name="file"></param>
 		private void ShowAnimation(string file)
 		{
-			ImageClass imageClass = new ImageClass(file);
-
 			Task.Run(() =>
 			{
 				int task = Util.StartTask();
 				int frame = 0;
 
+				//Fade Out
+				if (!string.IsNullOrWhiteSpace(LastAutorun))
+				{
+					ImageClass imageClassLastAutorun = new ImageClass(LastAutorun);
+
+					for (int slide = 0; slide < imageClassLastAutorun.Width; slide++)
+						SetAnimation(imageClassLastAutorun, frame++, slide, true);
+				}
+
+				ImageClass imageClass = new ImageClass(file);
+
+				//Fade In
 				for (int slide = imageClass.Width; slide >= 0; slide--)
 					SetAnimation(imageClass, frame++, slide);
 
+				LastAutorun = file;
+
+				//Animation
 				while (imageClass.Animation && Util.TaskWork(task))
-					SetAnimation(imageClass, frame++);
+					SetAnimation(imageClass, frame++, 0);
 			});
 		}
 
@@ -63,13 +77,10 @@ namespace LedMatrix.Pages
 		/// <param name="imageClass"></param>
 		/// <param name="frame"></param>
 		/// <param name="slide"></param>
-		private void SetAnimation(ImageClass imageClass, int frame, int slide = 0)
+		/// <param name="fadeOut"></param>
+		private void SetAnimation(ImageClass imageClass, int frame, int slide, bool fadeOut = false)
 		{
-			if (imageClass.Animation)
-				imageClass.SetÞixelFrame(frame++, Util.Context.Pixels, slide);
-			else
-				imageClass.SetÞixel(Util.Context.Pixels, slide);
-
+			imageClass.SetÞixelFrame(frame++, Util.Context.Pixels, slide, fadeOut);
 			Util.SetLeds();
 			Util.Context.Pixels.Reset();
 

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using Windows.UI;
 
 namespace Library.Collection
@@ -52,22 +51,18 @@ namespace Library.Collection
 		/// <returns></returns>
 		public void SetHorloge()
 		{
-			//Color fondCouleur = new Color { B = 20 };
-			//Color secondeCouleur = new Color { B = 128, R = 128 };
 			Color minuteCouleur = new Color { R = 39 / 2, G = 144 / 2, B = 176 / 2 };//39,144,176
-
 			Color heureCouleur = new Color { R = 148 / 2, G = 200 / 2, B = 80 / 2 };//148,186,101
-
-			//Color centreCouleur = new Color { R = 20, G = 20, B = 20 };
+			Color pointCouleur = new Color { R = 148 / 5, G = 200 / 5, B = 80 / 5 };//148,186,101
 
 			//Fond
 			foreach (Pixel pixel in this)
 				pixel.SetColor(new Color { B = (byte)(5 + pixel.Coord.Y * 2) });
 
 			//Fond Centre 
-			for (int j = 1; j < 10; j++)
-				for (int i = 1; i < 359; i += 4)
-					GetCoordonnee(GetCercleCoord(Coordonnee.Get(10, 10, Largeur, Hauteur), i, j)).SetColor(new Color { R = (byte)(7 * j), G = (byte)(7 * j), B = (byte)(7 * j) });
+			//for (int j = 1; j < 10; j++)
+			//	for (int i = 1; i < 359; i += 4)
+			//		GetCoordonnee(GetCercleCoord(Coordonnee.Get(10, 10, Largeur, Hauteur), i, j)).SetColor(new Color { R = (byte)(7 * j), G = (byte)(7 * j), B = (byte)(7 * j) });
 
 			//Cadran
 			string deuxPoint = " ";
@@ -79,21 +74,21 @@ namespace Library.Collection
 			if (DateTime.Now.ToString("hh").Length == 1)
 				leading = "  ";
 
+			//5 minutes
+			for (int i = 0; i < 60; i += 5)
+				GetCoordonnee(GetTempsCoord(i, 10)).SetColor(pointCouleur);
+
 			Print(Coordonnee.Get(2, 13, Largeur, Hauteur), leading + DateTime.Now.ToString("hh") + deuxPoint + DateTime.Now.ToString("mm"), new Color());
 
-			//5 minutes
-			for (int i = 1; i < 60; i += 5)
-				GetCoordonnee(GetTempsCoord(i, 8)).SetColor(heureCouleur);
-
-			GetCoordonnee(Coordonnee.Get(9, 2, Largeur, Hauteur)).SetColor(heureCouleur);
-			GetCoordonnee(Coordonnee.Get(10, 17, Largeur, Hauteur)).SetColor(heureCouleur);
+			GetCoordonnee(Coordonnee.Get(9, 0, Largeur, Hauteur)).SetColor(pointCouleur);
+			GetCoordonnee(Coordonnee.Get(9, 19, Largeur, Hauteur)).SetColor(pointCouleur);
 
 			//Aiguille
 			int minute = DateTime.Now.Minute;
 			int heure = DateTime.Now.Hour;
 
 			for (int i = 0; i < 9; i++)
-				GetCoordonnee(GetTempsCoord(DateTime.Now.Second, i)).SetColor(new Color { R = 43 / 2, G = 78 / 2, B = 114 / 2 });//43,78,114
+				GetCoordonnee(GetTempsCoord(DateTime.Now.Second, i)).SetColor(new Color { R = 80 / 2, G = 78 / 2, B = 114 / 2 });//43,78,114
 
 			for (int i = 0; i < 8; i++)
 				GetCoordonnee(GetTempsCoord(minute, i)).SetColor(minuteCouleur);
@@ -101,34 +96,11 @@ namespace Library.Collection
 			for (int i = 0; i < 6; i++)
 				GetCoordonnee(GetHeureCoord(heure, minute, i)).SetColor(heureCouleur);
 
-
+			//for (int i = 0; i < 4; i++)
+			//	GetCoordonnee(GetTempsCoord(DateTime.Now.Millisecond / 100 * 6, i)).SetColor(new Color { R = 255 / 2, G = 0 / 2, B = 0 / 2 });//43,78,114
 
 			//Print(Coordonnee.Get(1, 1, Largeur, Hauteur), DateTime.Now.Second.ToString(), new Color());
-
 		}
-
-		/// <summary>
-		/// Décaller l'image pour la faire glisser de la droite
-		/// </summary>
-		/// <param name="slide"></param>
-		//public PixelList SlideShow(int slide)
-		//{
-			//PixelList resultat = new PixelList(Largeur, Hauteur);
-
-			//int position = Largeur - slide;
-
-			//for(int i =0;i <=slide;i++)
-			//	resultat.Add(new Pixel());
-
-			//foreach (Pixel pixel in this)
-			//	resultat.Add(pixel);
-
-			////for (int y = 1; y < Hauteur; y++)
-			////	for (int x = slide; x < Largeur; x++)
-			////		resultat.GetCoordonnee(new Coordonnee(x, y)).SetColor(new Color { R = 0, G = 0, B = 0 });
-
-			//return resultat;
-		//}
 
 		/// <summary>
 		/// Reset
@@ -142,12 +114,12 @@ namespace Library.Collection
 		/// <summary>
 		/// Carre
 		/// </summary>
-		public void Carre(int position, int size, Color couleur)
-		{
-			for (int j = 0; j < size; j++)
-				for (int i = position + (Largeur * j); i < size + position + (Largeur * j); i++)
-					GetPosition(i).SetColor(couleur);
-		}
+		//public void Carre(int position, int size, Color couleur)
+		//{
+		//	for (int j = 0; j < size; j++)
+		//		for (int i = position + (Largeur * j); i < size + position + (Largeur * j); i++)
+		//			GetPosition(i).SetColor(couleur);
+		//}
 
 		/// <summary>
 		/// SetCouleur
@@ -196,7 +168,7 @@ namespace Library.Collection
 		/// <param name="temp"></param>
 		/// <param name="rayon"></param>
 		/// <returns></returns>
-		private Coordonnee GetTempsCoord(int temp, int rayon)
+		private Coordonnee GetTempsCoord(double temp, int rayon)
 		{
 			Coordonnee coord = new Coordonnee(Largeur, Hauteur);
 
@@ -264,8 +236,14 @@ namespace Library.Collection
 		/// <returns></returns>
 		private Coordonnee CheckCoord(Coordonnee coord)
 		{
+			if (coord.X < 0)
+				coord.X = 0;
+
 			if (coord.X > Largeur - 1)
 				coord.X = Largeur - 1;
+
+			if (coord.Y < 0)
+				coord.Y = 0;
 
 			if (coord.Y > Hauteur - 1)
 				coord.Y = Hauteur - 1;
