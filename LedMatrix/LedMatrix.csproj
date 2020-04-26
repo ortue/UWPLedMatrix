@@ -127,6 +127,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Demo.cs" />
     <Compile Include="Classes\DotStarStrip.cs" />
     <Compile Include="Context\Context.cs" />
     <Compile Include="Context\Util.cs" />
@@ -229,7 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.8</Version>
+      <Version>6.2.10</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

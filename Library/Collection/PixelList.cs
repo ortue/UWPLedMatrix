@@ -155,9 +155,20 @@ namespace Library.Collection
 		/// <summary>
 		/// GetCoordonnee
 		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public Pixel GetCoordonnee(int x, int y)
+		{
+			return this.SingleOrDefault(p => p.Coord.X == x && p.Coord.Y == y);
+		}
+
+		/// <summary>
+		/// GetCoordonnee
+		/// </summary>
 		/// <param name="coordonnee"></param>
 		/// <returns></returns>
-		private Pixel GetCoordonnee(Coordonnee coordonnee)
+		public Pixel GetCoordonnee(Coordonnee coordonnee)
 		{
 			return this.SingleOrDefault(p => p.Coord.X == coordonnee.X && p.Coord.Y == coordonnee.Y);
 		}
@@ -181,7 +192,7 @@ namespace Library.Collection
 
 			coord.Y = (Hauteur / 2) - (int)(rayon * Math.Cos(Math.PI * temp / 180) + 0.5);
 
-			return CheckCoord(coord);
+			return coord.CheckCoord();
 		}
 
 		/// <summary>
@@ -206,7 +217,7 @@ namespace Library.Collection
 
 			coord.Y = (Hauteur / 2) - (int)(rayon * Math.Cos(Math.PI * val / 180) + 0.5);
 
-			return CheckCoord(coord);
+			return coord.CheckCoord();
 		}
 
 		/// <summary>
@@ -215,41 +226,19 @@ namespace Library.Collection
 		/// <param name="degree"></param>
 		/// <param name="rayon"></param>
 		/// <returns></returns>
-		private Coordonnee GetCercleCoord(Coordonnee centre, int degree, int rayon)
-		{
-			Coordonnee coord = new Coordonnee(Largeur, Hauteur);
+		//private Coordonnee GetCercleCoord(Coordonnee centre, int degree, int rayon)
+		//{
+		//	Coordonnee coord = new Coordonnee(Largeur, Hauteur);
 
-			if (degree >= 0 && degree <= 180)
-				coord.X = centre.X + (int)(rayon * Math.Sin(Math.PI * degree / 180));
-			else
-				coord.X = centre.X - (int)(rayon * -Math.Sin(Math.PI * degree / 180)) - 1;
+		//	if (degree >= 0 && degree <= 180)
+		//		coord.X = centre.X + (int)(rayon * Math.Sin(Math.PI * degree / 180));
+		//	else
+		//		coord.X = centre.X - (int)(rayon * -Math.Sin(Math.PI * degree / 180)) - 1;
 
-			coord.Y = centre.Y - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
+		//	coord.Y = centre.Y - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
 
-			return CheckCoord(coord);
-		}
-
-		/// <summary>
-		/// CheckCoord
-		/// </summary>
-		/// <param name="coord"></param>
-		/// <returns></returns>
-		private Coordonnee CheckCoord(Coordonnee coord)
-		{
-			if (coord.X < 0)
-				coord.X = 0;
-
-			if (coord.X > Largeur - 1)
-				coord.X = Largeur - 1;
-
-			if (coord.Y < 0)
-				coord.Y = 0;
-
-			if (coord.Y > Hauteur - 1)
-				coord.Y = Hauteur - 1;
-
-			return coord;
-		}
+		//	return CheckCoord(coord);
+		//}
 
 		/// <summary>
 		/// Print
