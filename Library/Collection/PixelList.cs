@@ -256,11 +256,16 @@ namespace Library.Collection
 
 				PrintLettre(coord, chaine[i], couleur);
 
-				if (chaine[i] == ':' || chaine[i] == ' ')
+				if (chaine[i] == ':' || chaine[i] == ' ' || chaine[i] == '.')
 					coord.Droite(2);
 				else
 					coord.Droite(4);
 			}
+		}
+
+		public void SetMeteo(string temp)
+		{
+			Print(Coordonnee.Get(2, 2, Largeur, Hauteur), temp, new Color { B = 127 });
 		}
 
 		/// <summary>
@@ -448,6 +453,10 @@ namespace Library.Collection
 				case ':':
 					GetCoordonnee(coo.Bas(1)).SetColor(couleur);
 					GetCoordonnee(coo.Bas(2)).SetColor(couleur);
+					break;
+
+				case '.':
+					GetCoordonnee(coo.Bas(4)).SetColor(couleur);
 					break;
 
 				case ' ':

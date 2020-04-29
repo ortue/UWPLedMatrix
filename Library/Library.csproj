@@ -129,6 +129,7 @@
     <Compile Include="Collection\TaskGoList.cs" />
     <Compile Include="Entities\Animation.cs" />
     <Compile Include="Entities\Couleur.cs" />
+    <Compile Include="Entities\Current.cs" />
     <Compile Include="Entities\Pixel.cs" />
     <Compile Include="Entities\TaskGo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

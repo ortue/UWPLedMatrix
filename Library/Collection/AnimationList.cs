@@ -18,7 +18,7 @@ namespace Library.Collection
       Task<List<string>> files = Task.Run(async () => await FetchAsync(path));
 
       foreach (string file in files.Result)
-        Add(new Animation(file));
+        Add(new Animation(file, path));
     }
 
     /// <summary>
