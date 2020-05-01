@@ -3,6 +3,7 @@ using Library.Classes;
 using Library.Collection;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -20,9 +21,11 @@ namespace LedMatrix.Pages
 	/// </summary>
 	public sealed partial class Horloge : Page
 	{
-		static HttpClient Client = new HttpClient();
+		static readonly HttpClient Client = new HttpClient() { BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather?q=Sainte-Marthe-sur-le-Lac&mode=xml&units=metric&appid=52534a6f666e45fb30ace3343cea4a47") };
 
-
+		/// <summary>
+		/// Constructeur
+		/// </summary>
 		public Horloge()
 		{
 			InitializeComponent();
@@ -30,6 +33,8 @@ namespace LedMatrix.Pages
 
 		private void BtnHorloge_Click(object sender, RoutedEventArgs e)
 		{
+			Util.StopTask();
+
 			Task.Run(() =>
 			{
 				int task = Util.StartTask();
@@ -44,16 +49,10 @@ namespace LedMatrix.Pages
 
 		private void BtnMeteo_Click(object sender, RoutedEventArgs e)
 		{
-			Client.BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather?q=Sainte-Marthe-sur-le-Lac&mode=xml&units=metric&appid=52534a6f666e45fb30ace3343cea4a47");
-			Client.DefaultRequestHeaders.Accept.Clear();
-			Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
+			Util.StopTask();
 
 			Task.Run(() =>
 		 {
-
-
-
-
 
 
 
@@ -72,21 +71,13 @@ namespace LedMatrix.Pages
 					 meteo = (current)serializer.Deserialize(reader);
 
 
-
+					 Util.Context.Pixels.Reset();
 
 					 AnimationList Animations = new AnimationList("MeteoImg");
+					 ImageClass imageClass = new ImageClass(Animations.GetName(meteo.weather.icon).FileName);
+					 imageClass.SetÞixelFrame(0, Util.Context.Pixels, 0, false);
 
-
-						 ImageClass imageClass = new ImageClass(Animations[0].FileName);
-						 imageClass.SetÞixelFrame(0, Util.Context.Pixels, 0, false);
-
-
-
-
-
-
-
-					 Util.Context.Pixels.SetMeteo(meteo.temperature.value.ToString());
+					 Util.Context.Pixels.SetMeteo(meteo);
 					 Util.SetLeds();
 					 Util.Context.Pixels.Reset();
 				 }

@@ -263,9 +263,15 @@ namespace Library.Collection
 			}
 		}
 
-		public void SetMeteo(string temp)
+		/// <summary>
+		/// SetMeteo
+		/// </summary>
+		/// <param name="temp"></param>
+		public void SetMeteo(current meteo)
 		{
-			Print(Coordonnee.Get(2, 2, Largeur, Hauteur), temp, new Color { B = 127 });
+			Print(Coordonnee.Get(4, 2, Largeur, Hauteur), meteo.temperature.value.ToString("0") + "°C", new Color { B = 127 });
+			Print(Coordonnee.Get(2, 8, Largeur, Hauteur), "H " + meteo.humidity.value.ToString() + "%", new Color { B = 127 });
+			Print(Coordonnee.Get(2, 14, Largeur, Hauteur), DateTime.Now.ToString("hh") + ":" + DateTime.Now.ToString("mm"), new Color { B = 127 });
 		}
 
 		/// <summary>
@@ -450,6 +456,25 @@ namespace Library.Collection
 					GetCoordonnee(coo.Bas(1)).SetColor(couleur);
 					break;
 
+				case 'C':
+					GetCoordonnee(coo).SetColor(couleur);
+					GetCoordonnee(coo.Droite(1)).SetColor(couleur);
+					GetCoordonnee(coo.Droite(1)).SetColor(couleur);
+					GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Droite(1)).SetColor(couleur);
+					GetCoordonnee(coo.Droite(1)).SetColor(couleur);
+					break;
+
+				case '°':
+					GetCoordonnee(coo.Droite(1)).SetColor(couleur);
+					GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Droite(2)).SetColor(couleur);
+					GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
+					break;
+
 				case ':':
 					GetCoordonnee(coo.Bas(1)).SetColor(couleur);
 					GetCoordonnee(coo.Bas(2)).SetColor(couleur);
@@ -459,7 +484,31 @@ namespace Library.Collection
 					GetCoordonnee(coo.Bas(4)).SetColor(couleur);
 					break;
 
+				case '%':
+					GetCoordonnee(coo).SetColor(couleur);
+					GetCoordonnee(coo.Droite(2)).SetColor(couleur);
+					GetCoordonnee(coo.Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Droite(2)).SetColor(couleur);
+					break;
+
 				case ' ':
+					break;
+
+				case 'H':
+					GetCoordonnee(coo).SetColor(couleur);
+					GetCoordonnee(coo.Droite(2)).SetColor(couleur);
+					GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Droite(2)).SetColor(couleur);
+					GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Droite(1)).SetColor(couleur);
+					GetCoordonnee(coo.Droite(1)).SetColor(couleur);
+					GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Droite(2)).SetColor(couleur);
+					GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
+					GetCoordonnee(coo.Droite(2)).SetColor(couleur);
 					break;
 			}
 		}

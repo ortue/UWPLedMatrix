@@ -33,6 +33,7 @@ namespace LedMatrix.Pages
 		private void GridLed_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			Autorun = false;
+			Util.StopTask();
 
 			ShowAnimation(((Animation)e.ClickedItem).FileName);
 		}
@@ -96,6 +97,7 @@ namespace LedMatrix.Pages
 				Autorun = true;
 
 				int i = 0;
+
 				while (Autorun)
 				{
 					ShowAnimation(Animations[i++].FileName);

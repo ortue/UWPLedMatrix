@@ -35,5 +35,15 @@ namespace Library.Collection
 
       return files.Select(f => f.Name).ToList();
     }
+
+    /// <summary>
+    /// GetName
+    /// </summary>
+    /// <param name="icon"></param>
+    /// <returns></returns>
+    public Animation GetName(string icon)
+    {
+      return this.SingleOrDefault(a=>a.FileNameXaml.Contains(icon));
+    }
   }
 }
