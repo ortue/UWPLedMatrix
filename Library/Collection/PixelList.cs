@@ -67,6 +67,13 @@ namespace Library.Collection
 			Color heureCouleur = new Color { R = 148 / 2, G = 200 / 2, B = 80 / 2 };//148,186,101
 			Color pointCouleur = new Color { R = 148 / 5, G = 200 / 5, B = 80 / 5 };//148,186,101
 
+			//5 minutes
+			for (int i = 0; i < 60; i += 5)
+				GetCoordonnee(GetTempsCoord(i, 10)).SetColor(pointCouleur);
+
+			GetCoordonnee(Coordonnee.Get(9, 0, Largeur, Hauteur)).SetColor(pointCouleur);
+			GetCoordonnee(Coordonnee.Get(9, 19, Largeur, Hauteur)).SetColor(pointCouleur);
+
 			BackGround();
 
 			//Fond Centre 
@@ -79,6 +86,9 @@ namespace Library.Collection
 			string deuxPoint = " ";
 			int hh = DateTime.Now.Hour;
 
+			if (hh == 0)
+				hh = 12;
+
 			if (hh > 12)
 				hh -= 12;
 
@@ -88,14 +98,7 @@ namespace Library.Collection
 			if (hh < 10)
 				leading = " ";
 
-			//5 minutes
-			for (int i = 0; i < 60; i += 5)
-				GetCoordonnee(GetTempsCoord(i, 10)).SetColor(pointCouleur);
-
 			Print(Coordonnee.Get(2, 13, Largeur, Hauteur), leading + hh + deuxPoint + DateTime.Now.ToString("mm"), new Color());
-
-			GetCoordonnee(Coordonnee.Get(9, 0, Largeur, Hauteur)).SetColor(pointCouleur);
-			GetCoordonnee(Coordonnee.Get(9, 19, Largeur, Hauteur)).SetColor(pointCouleur);
 
 			//Aiguille
 			int minute = DateTime.Now.Minute;
@@ -289,6 +292,9 @@ namespace Library.Collection
 			string leading = "";
 			string deuxPoint = " ";
 			int heure = DateTime.Now.Hour;
+
+			if (heure == 0)
+				heure = 12;
 
 			if (heure > 12)
 				heure -= 12;
