@@ -14,7 +14,6 @@ namespace LedMatrix.Pages
 	/// </summary>
 	public sealed partial class GifAnime : Page
 	{
-		public bool Autorun { get; set; }
 		public string LastAutorun { get; set; }
 
 		public AnimationList Animations
@@ -32,7 +31,7 @@ namespace LedMatrix.Pages
 
 		private void GridLed_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			Autorun = false;
+			Util.Context.Autorun = false;
 			Util.StopTask();
 
 			ShowAnimation(((Animation)e.ClickedItem).FileName);
@@ -94,11 +93,11 @@ namespace LedMatrix.Pages
 		{
 			Task.Run(() =>
 			{
-				Autorun = true;
+				Util.Context.Autorun = true;
 
 				int i = 0;
 
-				while (Autorun)
+				while (Util.Context.Autorun)
 				{
 					ShowAnimation(Animations[i++].FileName);
 

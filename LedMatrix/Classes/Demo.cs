@@ -8,8 +8,25 @@ namespace LedMatrix.Classes
 {
 	public class Demo
 	{
+		public static void Go()
+		{
+			Random random = new Random();
+			int demo = random.Next(0, 2);
+
+			switch (demo)
+			{
+				case 0:
+					Demo1();
+					break;
+
+				case 1:
+					Demo2();
+					break;
+			}
+		}
+
 		/// <summary>
-		/// Constructeur
+		/// Demo1
 		/// </summary>
 		public static void Demo1()
 		{
@@ -78,6 +95,48 @@ namespace LedMatrix.Classes
 		{
 			if (y > 0)
 				Util.Context.Pixels.GetCoordonnee(x, y - 1).SetColor(new Color());
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private static void Demo2()
+		{
+			int task = Util.StartTask();
+
+			Random random = new Random();
+			int x = random.Next(0, Util.Context.Pixels.Largeur);
+			int y = random.Next(0, Util.Context.Pixels.Hauteur);
+			decimal xx = random.Next(5, 50) / 10;
+			decimal yy = random.Next(5, 50) / 10;
+
+			while (Util.TaskWork(task))
+			{
+				Util.Context.Pixels.GetCoordonnee(x, y).Set(0, 0, 0);
+
+				if (GetBall(x + xx) >= Util.Context.Pixels.Largeur || GetBall(x + xx) < 0)
+				{
+					xx -= (xx * 2);
+				}
+
+				x = GetBall(x + xx);
+
+				if (GetBall(y + yy) >= Util.Context.Pixels.Largeur || GetBall(y + yy) < 0)
+					yy -= (yy * 2);
+
+				y = GetBall(y + yy);
+
+				Util.Context.Pixels.GetCoordonnee(x, y).Set(0, 0, 127);
+				Util.SetLeds();
+
+				using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
+					waitHandle.Wait(TimeSpan.FromMilliseconds(1));
+			}
+		}
+
+		private static int GetBall(decimal point)
+		{
+			return (int)(Math.Round(point, 0));
 		}
 	}
 }

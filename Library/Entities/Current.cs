@@ -1,828 +1,166 @@
-﻿/// <remarks/>
-[System.Xml.Serialization.XmlType(AnonymousType = true)]
-[System.Xml.Serialization.XmlRoot(Namespace = "", IsNullable = false)]
-public partial class current
+﻿using System;
+
+namespace Library.Entities
 {
-  private currentPressure pressureField;
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	[System.Xml.Serialization.XmlRoot(Namespace = "", IsNullable = false)]
+	public partial class current
+	{
+		public currentCity city { get; set; }
+		public currentTemperature temperature { get; set; }
+		public currentFeels_like feels_like { get; set; }
+		public currentHumidity humidity { get; set; }
+		public currentPressure pressure { get; set; }
+		public currentWind wind { get; set; }
+		public currentClouds clouds { get; set; }
+		public currentVisibility visibility { get; set; }
+		public currentPrecipitation precipitation { get; set; }
+		public currentWeather weather { get; set; }
+		public currentLastupdate lastupdate { get; set; }
+	}
 
-  private currentWind windField;
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentCity
+	{
+		public currentCityCoord coord { get; set; }
+		public string country { get; set; }
+		public short timezone { get; set; }
+		public currentCitySun sun { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public uint id { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string name { get; set; }
+	}
 
-  private currentClouds cloudsField;
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentCityCoord
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public decimal lon { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public decimal lat { get; set; }
+	}
 
-  private currentVisibility visibilityField;
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentCitySun
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public DateTime rise { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public DateTime set { get; set; }
+	}
 
-  private currentPrecipitation precipitationField;
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentTemperature
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public decimal value { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public decimal min { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public decimal max { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string unit { get; set; }
+	}
 
-  private currentWeather weatherField;
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentFeels_like
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public decimal value { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string unit { get; set; }
+	}
 
-  private currentLastupdate lastupdateField;
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentHumidity
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public int value { get; set; }
 
-  /// <remarks/>
-  public currentCity city { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string unit { get; set; }
+	}
 
-  /// <remarks/>
-  public currentTemperature temperature { get; set; }
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentPressure
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public ushort value { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string unit { get; set; }
+	}
 
-  /// <remarks/>
-  public currentFeels_like feels_like { get; set; }
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentWind
+	{
+		public currentWindSpeed speed { get; set; }
+		public object gusts { get; set; }
+		public currentWindDirection direction { get; set; }
+	}
 
-  /// <remarks/>
-  public currentHumidity humidity { get; set; }
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentWindSpeed
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public decimal value { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string unit { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string name { get; set; }
+	}
 
-  /// <remarks/>
-  public currentPressure pressure
-  {
-    get
-    {
-      return this.pressureField;
-    }
-    set
-    {
-      this.pressureField = value;
-    }
-  }
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentWindDirection
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public int value { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string code { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string name { get; set; }
+	}
 
-  /// <remarks/>
-  public currentWind wind
-  {
-    get
-    {
-      return this.windField;
-    }
-    set
-    {
-      this.windField = value;
-    }
-  }
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentClouds
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public int value { get; set; }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string name { get; set; }
+	}
 
-  /// <remarks/>
-  public currentClouds clouds
-  {
-    get
-    {
-      return this.cloudsField;
-    }
-    set
-    {
-      this.cloudsField = value;
-    }
-  }
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentVisibility
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public ushort value { get; set; }
+	}
 
-  /// <remarks/>
-  public currentVisibility visibility
-  {
-    get
-    {
-      return this.visibilityField;
-    }
-    set
-    {
-      this.visibilityField = value;
-    }
-  }
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentPrecipitation
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public string mode { get; set; }
+	}
 
-  /// <remarks/>
-  public currentPrecipitation precipitation
-  {
-    get
-    {
-      return this.precipitationField;
-    }
-    set
-    {
-      this.precipitationField = value;
-    }
-  }
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentWeather
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public ushort number { get; set; }
 
-  /// <remarks/>
-  public currentWeather weather
-  {
-    get
-    {
-      return this.weatherField;
-    }
-    set
-    {
-      this.weatherField = value;
-    }
-  }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string value { get; set; }
 
-  /// <remarks/>
-  public currentLastupdate lastupdate
-  {
-    get
-    {
-      return this.lastupdateField;
-    }
-    set
-    {
-      this.lastupdateField = value;
-    }
-  }
+		[System.Xml.Serialization.XmlAttribute()]
+		public string icon { get; set; }
+	}
+
+	[System.Xml.Serialization.XmlType(AnonymousType = true)]
+	public partial class currentLastupdate
+	{
+		[System.Xml.Serialization.XmlAttribute()]
+		public DateTime value { get; set; }
+	}
 }
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentCity
-{
-
-  private currentCityCoord coordField;
-
-  private string countryField;
-
-  private short timezoneField;
-
-  private currentCitySun sunField;
-
-  private uint idField;
-
-  private string nameField;
-
-  /// <remarks/>
-  public currentCityCoord coord
-  {
-    get
-    {
-      return this.coordField;
-    }
-    set
-    {
-      this.coordField = value;
-    }
-  }
-
-  /// <remarks/>
-  public string country
-  {
-    get
-    {
-      return this.countryField;
-    }
-    set
-    {
-      this.countryField = value;
-    }
-  }
-
-  /// <remarks/>
-  public short timezone
-  {
-    get
-    {
-      return this.timezoneField;
-    }
-    set
-    {
-      this.timezoneField = value;
-    }
-  }
-
-  /// <remarks/>
-  public currentCitySun sun
-  {
-    get
-    {
-      return this.sunField;
-    }
-    set
-    {
-      this.sunField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public uint id
-  {
-    get
-    {
-      return this.idField;
-    }
-    set
-    {
-      this.idField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string name
-  {
-    get
-    {
-      return this.nameField;
-    }
-    set
-    {
-      this.nameField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentCityCoord
-{
-
-  private decimal lonField;
-
-  private decimal latField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public decimal lon
-  {
-    get
-    {
-      return this.lonField;
-    }
-    set
-    {
-      this.lonField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public decimal lat
-  {
-    get
-    {
-      return this.latField;
-    }
-    set
-    {
-      this.latField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentCitySun
-{
-
-  private System.DateTime riseField;
-
-  private System.DateTime setField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public System.DateTime rise
-  {
-    get
-    {
-      return this.riseField;
-    }
-    set
-    {
-      this.riseField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public System.DateTime set
-  {
-    get
-    {
-      return this.setField;
-    }
-    set
-    {
-      this.setField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentTemperature
-{
-
-  private decimal valueField;
-
-  private decimal minField;
-
-  private decimal maxField;
-
-  private string unitField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public decimal value
-  {
-    get
-    {
-      return this.valueField;
-    }
-    set
-    {
-      this.valueField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public decimal min
-  {
-    get
-    {
-      return this.minField;
-    }
-    set
-    {
-      this.minField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public decimal max
-  {
-    get
-    {
-      return this.maxField;
-    }
-    set
-    {
-      this.maxField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string unit
-  {
-    get
-    {
-      return this.unitField;
-    }
-    set
-    {
-      this.unitField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentFeels_like
-{
-
-  private decimal valueField;
-
-  private string unitField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public decimal value
-  {
-    get
-    {
-      return this.valueField;
-    }
-    set
-    {
-      this.valueField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string unit
-  {
-    get
-    {
-      return this.unitField;
-    }
-    set
-    {
-      this.unitField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentHumidity
-{
-
-  private byte valueField;
-
-  private string unitField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public byte value
-  {
-    get
-    {
-      return this.valueField;
-    }
-    set
-    {
-      this.valueField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string unit
-  {
-    get
-    {
-      return this.unitField;
-    }
-    set
-    {
-      this.unitField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentPressure
-{
-
-  private ushort valueField;
-
-  private string unitField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public ushort value
-  {
-    get
-    {
-      return this.valueField;
-    }
-    set
-    {
-      this.valueField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string unit
-  {
-    get
-    {
-      return this.unitField;
-    }
-    set
-    {
-      this.unitField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentWind
-{
-
-  private currentWindSpeed speedField;
-
-  private object gustsField;
-
-  private currentWindDirection directionField;
-
-  /// <remarks/>
-  public currentWindSpeed speed
-  {
-    get
-    {
-      return this.speedField;
-    }
-    set
-    {
-      this.speedField = value;
-    }
-  }
-
-  /// <remarks/>
-  public object gusts
-  {
-    get
-    {
-      return this.gustsField;
-    }
-    set
-    {
-      this.gustsField = value;
-    }
-  }
-
-  /// <remarks/>
-  public currentWindDirection direction
-  {
-    get
-    {
-      return this.directionField;
-    }
-    set
-    {
-      this.directionField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentWindSpeed
-{
-
-  private decimal valueField;
-
-  private string unitField;
-
-  private string nameField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public decimal value
-  {
-    get
-    {
-      return this.valueField;
-    }
-    set
-    {
-      this.valueField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string unit
-  {
-    get
-    {
-      return this.unitField;
-    }
-    set
-    {
-      this.unitField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string name
-  {
-    get
-    {
-      return this.nameField;
-    }
-    set
-    {
-      this.nameField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentWindDirection
-{
-
-  private byte valueField;
-
-  private string codeField;
-
-  private string nameField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public byte value
-  {
-    get
-    {
-      return this.valueField;
-    }
-    set
-    {
-      this.valueField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string code
-  {
-    get
-    {
-      return this.codeField;
-    }
-    set
-    {
-      this.codeField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string name
-  {
-    get
-    {
-      return this.nameField;
-    }
-    set
-    {
-      this.nameField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentClouds
-{
-
-  private byte valueField;
-
-  private string nameField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public byte value
-  {
-    get
-    {
-      return this.valueField;
-    }
-    set
-    {
-      this.valueField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string name
-  {
-    get
-    {
-      return this.nameField;
-    }
-    set
-    {
-      this.nameField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentVisibility
-{
-
-  private ushort valueField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public ushort value
-  {
-    get
-    {
-      return this.valueField;
-    }
-    set
-    {
-      this.valueField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentPrecipitation
-{
-
-  private string modeField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string mode
-  {
-    get
-    {
-      return this.modeField;
-    }
-    set
-    {
-      this.modeField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentWeather
-{
-
-  private ushort numberField;
-
-  private string valueField;
-
-  private string iconField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public ushort number
-  {
-    get
-    {
-      return this.numberField;
-    }
-    set
-    {
-      this.numberField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string value
-  {
-    get
-    {
-      return this.valueField;
-    }
-    set
-    {
-      this.valueField = value;
-    }
-  }
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public string icon
-  {
-    get
-    {
-      return this.iconField;
-    }
-    set
-    {
-      this.iconField = value;
-    }
-  }
-}
-
-/// <remarks/>
-//[System.SerializableAttribute()]
-//[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class currentLastupdate
-{
-
-  private System.DateTime valueField;
-
-  /// <remarks/>
-  [System.Xml.Serialization.XmlAttributeAttribute()]
-  public System.DateTime value
-  {
-    get
-    {
-      return this.valueField;
-    }
-    set
-    {
-      this.valueField = value;
-    }
-  }
-}
-

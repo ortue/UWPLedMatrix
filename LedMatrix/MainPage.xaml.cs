@@ -1,14 +1,9 @@
 ﻿using LedMatrix.Classes;
 using LedMatrix.Context;
 using LedMatrix.Pages;
-using Library.Classes;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -21,6 +16,9 @@ namespace LedMatrix
 	/// </summary>
 	public sealed partial class MainPage : Page
 	{
+		/// <summary>
+		/// Constructeur
+		/// </summary>
 		public MainPage()
 		{
 			InitializeComponent();
@@ -34,30 +32,7 @@ namespace LedMatrix
 			{
 				// Initialize the led strip
 				await Util.Context.PixelStrip.Begin();
-
-				await Task.Run(() =>
-				{
-					Demo.Demo1();
-
-					//while (Util.TaskWork(task))
-					//{
-					//  i++;
-
-					//  for (int position = 1; position <= Util.Context.NbrLed; position++)
-					//  {
-					//    if (i % 400 == position)
-					//    {
-					//      Util.Context.Pixels.GetPosition(position).SetColor(new Color { B = (byte)(i % 128) });
-					//      Util.Context.Pixels.GetNumero(position).SetColor(new Color { R = (byte)(i % 128) });
-					//    }
-					//  }
-
-					//Util.SetLeds();
-
-					//using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-					//  waitHandle.Wait(TimeSpan.FromMilliseconds(1));
-					//}
-				});
+				await Task.Run(() => Demo.Go());
 			}
 			catch (Exception ex)
 			{
@@ -75,6 +50,8 @@ namespace LedMatrix
 			}
 			else
 			{
+				Util.Context.Autorun = false;
+
 				NavigationViewItem selectedItem = (NavigationViewItem)args.SelectedItem;
 				string pageName = "LedMatrix.Pages." + selectedItem.Tag.ToString();
 				Type pageType = Type.GetType(pageName);

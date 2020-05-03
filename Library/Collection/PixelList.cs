@@ -3,6 +3,7 @@ using Library.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using Windows.UI;
 
@@ -46,6 +47,17 @@ namespace Library.Collection
 		}
 
 		/// <summary>
+		/// BackGround
+		/// </summary>
+		public void BackGround()
+		{
+			//Fond
+			foreach (Pixel pixel in this)
+				if (pixel.Couleur == new Color())
+					pixel.SetColor(new Color { B = (byte)(5 + pixel.Coord.Y * 2) });
+		}
+
+		/// <summary>
 		/// SetHorloge
 		/// </summary>
 		/// <returns></returns>
@@ -55,9 +67,7 @@ namespace Library.Collection
 			Color heureCouleur = new Color { R = 148 / 2, G = 200 / 2, B = 80 / 2 };//148,186,101
 			Color pointCouleur = new Color { R = 148 / 5, G = 200 / 5, B = 80 / 5 };//148,186,101
 
-			//Fond
-			foreach (Pixel pixel in this)
-				pixel.SetColor(new Color { B = (byte)(5 + pixel.Coord.Y * 2) });
+			BackGround();
 
 			//Fond Centre 
 			//for (int j = 1; j < 10; j++)
@@ -65,20 +75,24 @@ namespace Library.Collection
 			//		GetCoordonnee(GetCercleCoord(Coordonnee.Get(10, 10, Largeur, Hauteur), i, j)).SetColor(new Color { R = (byte)(7 * j), G = (byte)(7 * j), B = (byte)(7 * j) });
 
 			//Cadran
-			string deuxPoint = " ";
 			string leading = "";
+			string deuxPoint = " ";
+			int hh = DateTime.Now.Hour;
+
+			if (hh > 12)
+				hh -= 12;
 
 			if (DateTime.Now.Millisecond < 500)
 				deuxPoint = ":";
 
-			if (DateTime.Now.ToString("hh").Length == 1)
-				leading = "  ";
+			if (hh < 10)
+				leading = " ";
 
 			//5 minutes
 			for (int i = 0; i < 60; i += 5)
 				GetCoordonnee(GetTempsCoord(i, 10)).SetColor(pointCouleur);
 
-			Print(Coordonnee.Get(2, 13, Largeur, Hauteur), leading + DateTime.Now.ToString("hh") + deuxPoint + DateTime.Now.ToString("mm"), new Color());
+			Print(Coordonnee.Get(2, 13, Largeur, Hauteur), leading + hh + deuxPoint + DateTime.Now.ToString("mm"), new Color());
 
 			GetCoordonnee(Coordonnee.Get(9, 0, Largeur, Hauteur)).SetColor(pointCouleur);
 			GetCoordonnee(Coordonnee.Get(9, 19, Largeur, Hauteur)).SetColor(pointCouleur);
@@ -269,9 +283,31 @@ namespace Library.Collection
 		/// <param name="temp"></param>
 		public void SetMeteo(current meteo)
 		{
-			Print(Coordonnee.Get(4, 2, Largeur, Hauteur), meteo.temperature.value.ToString("0") + "°C", new Color { B = 127 });
-			Print(Coordonnee.Get(2, 8, Largeur, Hauteur), "H " + meteo.humidity.value.ToString() + "%", new Color { B = 127 });
-			Print(Coordonnee.Get(2, 14, Largeur, Hauteur), DateTime.Now.ToString("hh") + ":" + DateTime.Now.ToString("mm"), new Color { B = 127 });
+			Color couleur = new Color { R = 64, G = 0, B = 0 };
+
+			//Cadran
+			string leading = "";
+			string deuxPoint = " ";
+			int heure = DateTime.Now.Hour;
+
+			if (heure > 12)
+				heure -= 12;
+
+			if (DateTime.Now.Millisecond < 500)
+				deuxPoint = ":";
+
+			if (heure < 10)
+				leading = " ";
+
+			if (meteo != null)
+				Print(Coordonnee.Get(4, 2, Largeur, Hauteur), meteo.temperature.value.ToString("0") + "°C", couleur);
+
+			if (meteo != null)
+				Print(Coordonnee.Get(2, 8, Largeur, Hauteur), "H " + meteo.humidity.value.ToString() + "%", couleur);
+
+			Print(Coordonnee.Get(2, 14, Largeur, Hauteur), leading + heure + deuxPoint + DateTime.Now.ToString("mm"), couleur);
+
+			BackGround();
 		}
 
 		/// <summary>

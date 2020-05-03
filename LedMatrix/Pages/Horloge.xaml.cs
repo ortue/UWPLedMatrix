@@ -2,13 +2,7 @@
 using Library.Classes;
 using Library.Collection;
 using System;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using Windows.ApplicationModel.Background;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -21,7 +15,10 @@ namespace LedMatrix.Pages
 	/// </summary>
 	public sealed partial class Horloge : Page
 	{
-		static readonly HttpClient Client = new HttpClient() { BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather?q=Sainte-Marthe-sur-le-Lac&mode=xml&units=metric&appid=52534a6f666e45fb30ace3343cea4a47") };
+		public AnimationList MeteoImgs
+		{
+			get { return Util.Context.MeteoImgs; }
+		}
 
 		/// <summary>
 		/// Constructeur
@@ -38,6 +35,7 @@ namespace LedMatrix.Pages
 			Task.Run(() =>
 			{
 				int task = Util.StartTask();
+
 				while (Util.TaskWork(task))
 				{
 					Util.Context.Pixels.SetHorloge();
@@ -52,38 +50,29 @@ namespace LedMatrix.Pages
 			Util.StopTask();
 
 			Task.Run(() =>
-		 {
+			{
+				DateTime update = DateTime.Now.AddMinutes(-10);
+				int task = Util.StartTask();
 
+				while (Util.TaskWork(task))
+				{
+					if (Util.Context.Meteo != null)
+					{
+						ImageClass imageClass = new ImageClass(MeteoImgs.GetName(Util.Context.Meteo.weather.icon).FileName);
+						imageClass.SetÞixelFrame(0, Util.Context.Pixels, 0, false);
+					}
 
+					Util.Context.Pixels.SetMeteo(Util.Context.Meteo);
+					Util.SetLeds();
+					Util.Context.Pixels.Reset();
 
-			 Task<HttpResponseMessage> response = Client.GetAsync(Client.BaseAddress);
-
-			 if (response.Result.IsSuccessStatusCode)
-			 {
-
-				 XmlSerializer serializer = new XmlSerializer(typeof(current));
-				 string xml = response.Result.Content.ReadAsStringAsync().Result;
-
-				 current meteo = new current();
-
-				 using (TextReader reader = new StringReader(xml))
-				 {
-					 meteo = (current)serializer.Deserialize(reader);
-
-
-					 Util.Context.Pixels.Reset();
-
-					 AnimationList Animations = new AnimationList("MeteoImg");
-					 ImageClass imageClass = new ImageClass(Animations.GetName(meteo.weather.icon).FileName);
-					 imageClass.SetÞixelFrame(0, Util.Context.Pixels, 0, false);
-
-					 Util.Context.Pixels.SetMeteo(meteo);
-					 Util.SetLeds();
-					 Util.Context.Pixels.Reset();
-				 }
-			 }
-		 });
+					if (update.AddMinutes(5) < DateTime.Now)
+					{
+						update = DateTime.Now;
+						Util.UpdateMeteo();
+					}
+				}
+			});
 		}
-
 	}
 }
