@@ -9,10 +9,11 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
   <Grid>
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Vertical">
       <Button x:Name="BtnHorloge" Content="Horloge" Height="60" Width="160" Click="BtnHorloge_Click" VerticalAlignment="Top" Margin="12,12,0,0" FontSize="20"/>
-
       <Button x:Name="BtnMeteo" Content="Météo" Height="60" Width="160" Click="BtnMeteo_Click" VerticalAlignment="Top" Margin="12,12,0,0" FontSize="20"/>
+      <Button x:Name="BtnDate" Content="Date" Height="60" Width="160" Click="BtnDate_Click" VerticalAlignment="Top" Margin="12,12,0,0" FontSize="20"/>
+      <Button x:Name="BtnBinaire" Content="Binaire" Height="60" Width="160" Click="BtnBinaire_Click" VerticalAlignment="Top" Margin="12,12,0,0" FontSize="20"/>
     </StackPanel>
 
 

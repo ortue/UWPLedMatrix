@@ -100,6 +100,14 @@ namespace Library.Entities
 		}
 
 		/// <summary>
+		/// SetColor rien
+		/// </summary>
+		public void SetColor()
+		{
+			Couleur = new Color();
+		}
+
+		/// <summary>
 		/// SetColor
 		/// </summary>
 		/// <param name="couleur"></param>

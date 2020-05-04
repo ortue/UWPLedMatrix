@@ -74,5 +74,15 @@ namespace LedMatrix.Pages
 				}
 			});
 		}
+
+		private void BtnDate_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void BtnBinaire_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }

@@ -15,8 +15,11 @@
       <NavigationView.MenuItems>
         <NavigationViewItem Content="Anime" Icon="Emoji" Tag="GifAnime" Height="80"/>
         <NavigationViewItem Content="Horloge" Icon="Clock" Tag="Horloge" Height="80"/>
+        <NavigationViewItem Content="Demo" Icon="OutlineStar" Tag="DemoPage" Height="80"/>
+
         <NavigationViewItem Content="Spectrum" Icon="ViewAll" Tag="SpectrumPage" Height="80"/>
-        <NavigationViewItem Content="Tableau" Icon="ViewAll" Tag="TableauPage" Height="80"/>
+
+        <NavigationViewItem Content="Tableau" Icon="ViewAll" Tag="TableauPage" Height="80" Visibility="Collapsed"/>
       </NavigationView.MenuItems>
 
       <Frame x:Name="MainFrame" />
