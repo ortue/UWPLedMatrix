@@ -3,7 +3,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using Windows.UI;
-using Windows.UI.StartScreen;
 
 namespace LedMatrix.Classes
 {
@@ -58,7 +57,6 @@ namespace LedMatrix.Classes
           EffacerDernier(x, y);
           Util.Context.Pixels.GetCoordonnee(x, y).Set(r, g, b);
           Util.SetLeds();
-          Util.Context.Pixels.Reset();
 
           int temp = 100;
 
@@ -107,23 +105,15 @@ namespace LedMatrix.Classes
     /// </summary>
     public static void Demo2()
     {
+      Pong pong = new Pong();
       int task = Util.StartTask();
 
-      decimal x = 10;
-      decimal y = 10;
-
-      Random random = new Random();
-      decimal xx = random.Next(1, 11) / (decimal)10;
-      decimal yy = random.Next(1, 11) / (decimal)10;
-      int vitesse = 40;
-
-      decimal p1 = 9;
-      decimal p2 = 9;
+      Color scoreColor = new Color { R = 127, G = 127, B = 127 };
 
       while (Util.TaskWork(task))
       {
         //Effacer la balle apres
-        Util.Context.Pixels.GetCoordonnee(x, y).SetColor();
+        Util.Context.Pixels.GetCoordonnee(pong.X, pong.Y).SetColor();
 
         //Pointiller du milieux
         for (int i = 1; i < Util.Context.Pixels.Hauteur - 1; i += 2)
@@ -132,102 +122,44 @@ namespace LedMatrix.Classes
           Util.Context.Pixels.GetCoordonnee(10, i).Set(16, 16, 32);
         }
 
-        //Mure des palettes
-        if (x + xx >= Util.Context.Pixels.Largeur - 3 || x + xx < 2)
-        {
-          xx -= (xx * 2);
-
-          if (vitesse > 0)
-            vitesse--;
-
-          //Quand on pogne le boute de la palette augmenter le yy
-          if (x > 10)
-          {
-            for (int i = -2; i < 3; i++)
-              if (y + i == p2)
-                yy += yy + (decimal)0.2 * i;
-              else if (y == p2)
-                yy += yy + (decimal)0.1;
-          }
-          else
-          {
-            for (int i = -2; i < 3; i++)
-              if (y + i == p1)
-                yy += yy + (decimal)0.2 * i;
-              else if (y == p1)
-                yy += yy + (decimal)0.1;
-          }
-
-          if (xx > 2)
-            xx = 2;
-
-          if (xx < -2)
-            xx = -2;
-
-          if (yy > 2)
-            yy = 2;
-
-          if (yy < -2)
-            yy = -2;
-        }
-
-        //Position de la balle
-        x += xx;
+        //Mure des palettes, si y a un but pause 1.5 secondes
+        if (pong.Palette(Util.Context.Pixels.Largeur))
+          using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
+            waitHandle.Wait(TimeSpan.FromMilliseconds(1500));
 
         //Mure du haut et du bas
-        if (y + yy >= Util.Context.Pixels.Hauteur - 2 || y + yy < 1)
-          yy -= (yy * 2);
+        pong.Horizontal(Util.Context.Pixels.Hauteur);
 
         //Position de la balle
-        y += yy;
+        pong.X += pong.XX;
+        pong.Y += pong.YY;
 
         //Pointage
-        Util.Context.Pixels.Print(5, 2, "0", new Color { R = 127, G = 127, B = 127 });
-        Util.Context.Pixels.Print(12, 2, "0", new Color { R = 127, G = 127, B = 127 });
+        Util.Context.Pixels.Print(pong.ScorePad, 2, pong.ScoreP1.ToString(), scoreColor);
+        Util.Context.Pixels.Print(12, 2, pong.ScoreP2.ToString(), scoreColor);
 
         //La balle
-        Util.Context.Pixels.GetCoordonnee(x, y).Set(0, 0, 127);
-
-        decimal vitessePalette = (decimal)0.5 - (40 - vitesse) / 100;
+        Util.Context.Pixels.GetCoordonnee(pong.X, pong.Y).Set(16, 16, 127);
 
         //Position des palettes
-        if (x > 9 && xx > 0)
-        {
-          if (p2 < y)
-            p2 += vitessePalette;
-          else if (p2 > y)
-            p2 -= vitessePalette;
+        pong.PositionPalette();
 
-          if (p2 < 3)
-            p2 = 3;
-
-          if (p2 > 16)
-            p2 = 16;
-        }
-        else if (x < 9 && xx < 0)
-        {
-          if (p1 < y)
-            p1 += vitessePalette;
-          else if (p1 > y)
-            p1 -= vitessePalette;
-
-          if (p1 < 3)
-            p1 = 3;
-
-          if (p1 > 16)
-            p1 = 16;
-        }
-
-        //Dessiner les palette
-        for (int i = -4; i < 4; i++)
+        //Dessiner les palettes
+        for (int i = -3; i < 3; i++)
         {
           Color paddle = new Color();
 
           if (i >= -2 && i < 3)
             paddle = new Color { R = 64, G = 127, B = 64 };
 
-          Util.Context.Pixels.GetCoordonnee(1, p1 + i).SetColor(paddle);
-          Util.Context.Pixels.GetCoordonnee(18, p2 + i).SetColor(paddle);
+          int p1Int = (int)Math.Round(pong.Pad1, 0);
+          int p2Int = (int)Math.Round(pong.Pad2, 0);
+
+          if (!(Util.Context.Pixels.GetCoordonnee(1, p1Int + i).Couleur == scoreColor && paddle == new Color()))
+            Util.Context.Pixels.GetCoordonnee(1, p1Int + i).SetColor(paddle);
+
+          if (!(Util.Context.Pixels.GetCoordonnee(18, p2Int + i).Couleur == scoreColor && paddle == new Color()))
+            Util.Context.Pixels.GetCoordonnee(18, p2Int + i).SetColor(paddle);
         }
 
         //Bordure
@@ -242,10 +174,25 @@ namespace LedMatrix.Classes
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        if (vitesse > 0)
+        if (pong.Vitesse > 0)
           using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-            waitHandle.Wait(TimeSpan.FromMilliseconds(vitesse));
+            waitHandle.Wait(TimeSpan.FromMilliseconds(pong.Vitesse));
       }
+    }
+
+    public static void RefreshScreen()
+    {
+      //Bordure
+      for (int i = 0; i < Util.Context.Pixels.Largeur; i++)
+      {
+        Util.Context.Pixels.GetCoordonnee(i, 0).Set(64, 64, 127);
+        Util.Context.Pixels.GetCoordonnee(i, 19).Set(64, 64, 127);
+      }
+
+      //Background
+      Util.Context.Pixels.BackGround();
+      Util.SetLeds();
+      Util.Context.Pixels.Reset();
     }
   }
 }

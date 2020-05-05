@@ -86,7 +86,7 @@ namespace LedMatrix.Pages
 
 			if (slide == 0)
 				using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-					waitHandle.Wait(TimeSpan.FromMilliseconds(80));
+					waitHandle.Wait(TimeSpan.FromMilliseconds(60));
 		}
 
 		private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)

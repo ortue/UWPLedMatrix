@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="Classes\Demo.cs" />
     <Compile Include="Classes\DotStarStrip.cs" />
+    <Compile Include="Classes\Pong.cs" />
     <Compile Include="Context\Context.cs" />
     <Compile Include="Context\Util.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -183,6 +184,7 @@
     <Content Include="Images\ShipLeft.gif" />
     <Content Include="Images\ShyguyRedRight.gif" />
     <Content Include="Images\spinywalk.gif" />
+    <Content Include="Images\Spiral.gif" />
     <Content Include="Images\ToadSmallR.gif" />
     <Content Include="Images\WhiteMage-Walk-Front.gif" />
     <Content Include="Images\ZeelaOrange.gif" />
