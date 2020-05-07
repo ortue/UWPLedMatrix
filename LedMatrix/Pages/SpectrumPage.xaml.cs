@@ -63,29 +63,29 @@ namespace LedMatrix.Pages
 			{
 				try
 				{
-					ProgressBarVolume.Value = (double)(currentPeak * 100);
+					ProgressBarVolume.Value = currentPeak * 100;
 
 
 
 
 
-					foreach (Pixel pixel in Util.Context.Pixels)
-					{
-						if ((19 - pixel.Coord.Y) < currentPeak * 20)
-						{
-							pixel.SetColor(new Color { B = (byte)(5 + pixel.Coord.Y * 5) });
+					//foreach (Pixel pixel in Util.Context.Pixels)
+					//{
+					//	if ((19 - pixel.Coord.Y) < currentPeak * 20)
+					//	{
+					//		pixel.SetColor(new Color { B = (byte)(5 + pixel.Coord.Y * 5) });
 
-							//Debug.WriteLine(Math.Round(max * 20, 0).ToString() + " - " + pixel.Coord.Y);
+					//		//Debug.WriteLine(Math.Round(max * 20, 0).ToString() + " - " + pixel.Coord.Y);
 
-						}
-						else
-							pixel.SetColor(new Color());
-					}
-
-
+					//	}
+					//	else
+					//		pixel.SetColor(new Color());
+					//}
 
 
-					Util.SetLeds();
+
+
+					//Util.SetLeds();
 
 
 				}
@@ -154,7 +154,7 @@ namespace LedMatrix.Pages
 
 		unsafe private void ProcessFrameOutput(AudioFrame frame)
 		{
-			using (AudioBuffer buffer = frame.LockBuffer(AudioBufferAccessMode.Write))
+			using (AudioBuffer buffer = frame.LockBuffer(AudioBufferAccessMode.ReadWrite))
 			using (IMemoryBufferReference reference = buffer.CreateReference())
 			{
 				try
@@ -233,6 +233,13 @@ namespace LedMatrix.Pages
 		}
 
 
+		//[ComImport]
+		//[Guid("5B0D3235-4DBA-4D44-865E-8F1D0E4FD04D")]
+		//[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 
+		//unsafe interface IMemoryBufferByteAccess
+		//{
+		//	void GetBuffer(out byte* buffer, out uint capacity);
+		//}
 	}
 }

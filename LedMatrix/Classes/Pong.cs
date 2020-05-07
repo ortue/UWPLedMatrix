@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.ApplicationModel.Background;
 
 namespace LedMatrix.Classes
 {
@@ -6,13 +7,73 @@ namespace LedMatrix.Classes
   {
     public decimal X { get; set; }
     public decimal Y { get; set; }
-    public decimal XX { get; set; }
-    public decimal YY { get; set; }
-    public int Vitesse { get; set; }
-    public decimal Pad1 { get; set; }
-    public decimal Pad2 { get; set; }
     public int ScoreP1 { get; set; }
     public int ScoreP2 { get; set; }
+    public int Vitesse { get; set; }
+
+    private decimal _xX;
+    public decimal XX
+    {
+      get
+      {
+        if (_xX > (decimal)1.9)
+          _xX = (decimal)1.9;
+
+        if (_xX < (decimal)-1.9)
+          _xX = (decimal)-1.9;
+
+        return _xX;
+      }
+      set { _xX = value; }
+    }
+
+    private decimal _yY;
+    public decimal YY
+    {
+      get
+      {
+        if (_yY > (decimal)1.9)
+          _yY = (decimal)1.9;
+
+        if (_yY < (decimal)-1.9)
+          _yY = (decimal)-1.9;
+
+        return _yY;
+      }
+      set { _yY = value; }
+    }
+
+    private decimal _pad1;
+    public decimal Pad1
+    {
+      get
+      {
+        if (_pad1 < 3)
+          _pad1 = 3;
+
+        if (_pad1 > 16)
+          _pad1 = 16;
+
+        return _pad1;
+      }
+      set { _pad1 = value; }
+    }
+
+    private decimal _pad2;
+    public decimal Pad2
+    {
+      get
+      {
+        if (_pad2 < 3)
+          _pad2 = 3;
+
+        if (_pad2 > 16)
+          _pad2 = 16;
+
+        return _pad2;
+      }
+      set { _pad2 = value; }
+    }
 
     public decimal VitessePalette
     {
@@ -52,6 +113,20 @@ namespace LedMatrix.Classes
       }
     }
 
+    public bool IsBut
+    {
+      get
+      {
+        if (Droite)
+          return Y > Pad2 + 3 || Y < Pad2 - 3;
+
+        if (Gauche)
+          return Y > Pad1 + 3 || Y < Pad1 - 3;
+
+        return false;
+      }
+    }
+
     /// <summary>
     /// Constructeur
     /// </summary>
@@ -74,26 +149,17 @@ namespace LedMatrix.Classes
     }
 
     /// <summary>
-    /// Quand on pogne le boute de la palette augmenter le yy
+    /// Frontiere vertical
     /// </summary>
     public bool Palette(int largeur)
     {
       bool but = false;
 
       //Les deux murs horisontal
-      if (X + XX > largeur - 2 || X + XX < 1)
+      if (Vertical(largeur))
       {
-        if (Droite)
-        {
-          YY *= Deviation(Pad2);
-          but = Score(2, Pad2);
-        }
-        else if (Gauche)
-        {
-          YY *= Deviation(Pad1);
-          but = Score(1, Pad1);
-        }
-
+        YY *= Deviation();
+        but = Score();
         XX -= (XX * 2);
 
         if (Vitesse > 0)
@@ -105,33 +171,28 @@ namespace LedMatrix.Classes
           Random random = new Random();
           YY = (random.Next(0, 5) - 3) * (decimal)0.1;
         }
-
-        if (XX > (decimal)1.9)
-          XX = (decimal)1.9;
-
-        if (XX < (decimal)-1.9)
-          XX = (decimal)-1.9;
-
-        if (YY > (decimal)1.9)
-          YY = (decimal)1.9;
-
-        if (YY < (decimal)-1.9)
-          YY = (decimal)-1.9;
       }
 
       return but;
     }
 
     /// <summary>
-    /// Deviation
+    /// Quand on pogne le boute de la palette augmenter le yy
     /// </summary>
     /// <param name="pad"></param>
     /// <returns></returns>
-    public decimal Deviation(decimal pad)
+    public decimal Deviation()
     {
+      int facteur = 1;
+
       for (int i = -2; i < 3; i++)
-        if ((int)Math.Round(Y + i, 0) == (int)Math.Round(pad, 0))
-          return 1 + (decimal)0.1 * i;
+      {
+        if (Droite && (int)Math.Round(Y + i, 0) == (int)Math.Round(Pad2, 0))
+          return facteur + (decimal)0.1 * -i;
+
+        if (Gauche && (int)Math.Round(Y + i, 0) == (int)Math.Round(Pad1, 0))
+          return facteur + (decimal)0.1 * -i;
+      }
 
       return 0;
     }
@@ -147,12 +208,6 @@ namespace LedMatrix.Classes
           Pad2 += VitessePalette;
         else if (Math.Round(Pad2, 0) > Math.Round(Y, 0))
           Pad2 -= VitessePalette;
-
-        if (Pad2 < 3)
-          Pad2 = 3;
-
-        if (Pad2 > 16)
-          Pad2 = 16;
       }
       else if (X < 10 && XX < 0)
       {
@@ -160,13 +215,20 @@ namespace LedMatrix.Classes
           Pad1 += VitessePalette;
         else if (Math.Round(Pad1, 0) > Math.Round(Y, 0))
           Pad1 -= VitessePalette;
-
-        if (Pad1 < 3)
-          Pad1 = 3;
-
-        if (Pad1 > 16)
-          Pad1 = 16;
       }
+    }
+
+    /// <summary>
+    /// Vertical
+    /// </summary>
+    /// <param name="largeur"></param>
+    /// <returns></returns>
+    public bool Vertical(int largeur)
+    {
+      if (!IsBut)
+        return X + XX > largeur - 3 || X + XX < 2;
+
+      return X + XX > largeur - 2 || X + XX < 1;
     }
 
     /// <summary>
@@ -182,23 +244,22 @@ namespace LedMatrix.Classes
     /// <summary>
     /// ResetScore
     /// </summary>
-    public bool Score(int cote, decimal pad)
+    public bool Score()
     {
       bool but = false;
 
-      if (Y > pad + 3 || Y < pad - 3)
+      if (IsBut)
       {
         Random random = new Random();
 
-        if (cote == 2)
+        if (Droite)
         {
           but = true;
           X = 4;
           XX = -random.Next(3, 12) / (decimal)10;
           ScoreP1++;
         }
-
-        if (cote == 1)
+        else if (Gauche)
         {
           but = true;
           X = 14;

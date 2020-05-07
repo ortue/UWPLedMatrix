@@ -179,20 +179,5 @@ namespace LedMatrix.Classes
             waitHandle.Wait(TimeSpan.FromMilliseconds(pong.Vitesse));
       }
     }
-
-    public static void RefreshScreen()
-    {
-      //Bordure
-      for (int i = 0; i < Util.Context.Pixels.Largeur; i++)
-      {
-        Util.Context.Pixels.GetCoordonnee(i, 0).Set(64, 64, 127);
-        Util.Context.Pixels.GetCoordonnee(i, 19).Set(64, 64, 127);
-      }
-
-      //Background
-      Util.Context.Pixels.BackGround();
-      Util.SetLeds();
-      Util.Context.Pixels.Reset();
-    }
   }
 }
