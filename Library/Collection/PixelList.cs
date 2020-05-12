@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using Windows.UI;
 
 namespace Library.Collection
 {
@@ -53,7 +52,7 @@ namespace Library.Collection
     {
       //Fond
       foreach (Pixel pixel in this)
-        if (pixel.Couleur == new Color())
+        if (pixel.Couleur == new Color { R = 0, G = 0, B = 0 })
           pixel.SetColor(new Color { B = (byte)(5 + pixel.Coord.Y * 2) });
     }
 
@@ -125,7 +124,7 @@ namespace Library.Collection
     public void Reset()
     {
       foreach (Pixel pixel in this)
-        pixel.Couleur = Color.FromArgb(0, 0, 0, 0);
+        pixel.Couleur = Color.FromArgb(0, 0, 0);
     }
 
     /// <summary>
@@ -190,16 +189,16 @@ namespace Library.Collection
     {
       int xx = (int)Math.Round(x, 0);
 
-      if (xx >= Largeur-1)
-        xx = Largeur-1;
+      if (xx >= Largeur - 1)
+        xx = Largeur - 1;
 
       if (xx < 0)
         xx = 0;
 
       int yy = (int)Math.Round(y, 0);
 
-      if (yy >= Hauteur-1)
-        yy = Hauteur-1;
+      if (yy >= Hauteur - 1)
+        yy = Hauteur - 1;
 
       if (yy < 0)
         yy = 0;

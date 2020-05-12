@@ -128,6 +128,7 @@
     <Compile Include="Collection\PixelList.cs" />
     <Compile Include="Collection\TaskGoList.cs" />
     <Compile Include="Entities\Animation.cs" />
+    <Compile Include="Entities\Color.cs" />
     <Compile Include="Entities\Couleur.cs" />
     <Compile Include="Entities\Current.cs" />
     <Compile Include="Entities\Pixel.cs" />
@@ -143,6 +144,9 @@
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

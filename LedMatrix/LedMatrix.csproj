@@ -127,8 +127,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\AnimationList.cs" />
     <Compile Include="Classes\Demo.cs" />
     <Compile Include="Classes\DotStarStrip.cs" />
+    <Compile Include="Classes\ImageClass.cs" />
     <Compile Include="Classes\Pong.cs" />
     <Compile Include="Context\Context.cs" />
     <Compile Include="Context\Util.cs" />

@@ -8,8 +8,8 @@ namespace LedMatrix.Context
 	{
 		public PixelList Pixels { get; set; }
 		public DotStarStrip PixelStrip { get; set; }
-		public AnimationList Animations { get; set; }
-		public AnimationList MeteoImgs { get; set; }
+		public Classes.AnimationList Animations { get; set; }
+		public Classes.AnimationList MeteoImgs { get; set; }
 		public current Meteo { get; set; }
 		public bool Autorun { get; set; }
 

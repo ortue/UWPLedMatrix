@@ -114,19 +114,19 @@ namespace LedMatrix.Context
 
 		public static async void SetAnimation()
 		{
-			AnimationList animations = await SetAnimationAsync("Images");
+			Classes.AnimationList animations = await SetAnimationAsync("Images");
 			Context.Animations = animations;
 		}
 
 		public static async void SetMeteoImg()
 		{
-			AnimationList animations = await SetAnimationAsync("MeteoImg");
+			Classes.AnimationList animations = await SetAnimationAsync("MeteoImg");
 			Context.MeteoImgs = animations;
 		}
 
-		private static async Task<AnimationList> SetAnimationAsync(string path)
+		private static async Task<Classes.AnimationList> SetAnimationAsync(string path)
 		{
-			return await Task.Run(() => new AnimationList(path));
+			return await Task.Run(() => new Classes.AnimationList(path));
 		}
 	}
 }

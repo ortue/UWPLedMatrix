@@ -1,8 +1,6 @@
 ﻿using Library.Entities;
 using System;
 using System.Collections.Generic;
-using Windows.UI;
-using Windows.UI.Xaml.Media.Animation;
 
 namespace Library.Collection
 {
@@ -18,9 +16,9 @@ namespace Library.Collection
 
 			for (int i = 0; i < pixels.Length; i += 4)
 				if (IsTransparent(pixels, i))
-					Add(new Couleur(position++, Color.FromArgb(0, 0, 0, 0)));
+					Add(new Couleur(position++, Color.FromArgb(0, 0, 0)));
 				else
-					Add(new Couleur(position++, Color.FromArgb(0, (byte)(pixels[i] / 2), (byte)(pixels[i + 1] / 2), (byte)(pixels[i + 2] / 2))));
+					Add(new Couleur(position++, Color.FromArgb((byte)(pixels[i] / 2), (byte)(pixels[i + 1] / 2), (byte)(pixels[i + 2] / 2))));
 		}
 
 		/// <summary>
@@ -37,9 +35,9 @@ namespace Library.Collection
 
 				for (int i = 0; i < frame.Length; i += 4)
 					if (IsTransparent(frame, i))
-						Add(new Couleur(frameCompteur, position++, Color.FromArgb(0, 0, 0, 0)));
+						Add(new Couleur(frameCompteur, position++, Color.FromArgb(0, 0, 0)));
 					else
-						Add(new Couleur(frameCompteur, position++, Color.FromArgb(0, (byte)(frame[i] / 2), (byte)(frame[i + 1] / 2), (byte)(frame[i + 2] / 2))));
+						Add(new Couleur(frameCompteur, position++, Color.FromArgb((byte)(frame[i] / 2), (byte)(frame[i + 1] / 2), (byte)(frame[i + 2] / 2))));
 
 				frameCompteur++;
 			}

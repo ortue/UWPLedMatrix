@@ -1,8 +1,9 @@
 ﻿using LedMatrix.Context;
+using Library.Entities;
 using System;
 using System.Linq;
 using System.Threading;
-using Windows.UI;
+//using Windows.UI;
 
 namespace LedMatrix.Classes
 {

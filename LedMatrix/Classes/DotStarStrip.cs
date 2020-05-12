@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Devices.Spi;
-using Windows.UI;
 using System;
+using Library.Entities;
 
 namespace LedMatrix.Classes
 {

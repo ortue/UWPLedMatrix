@@ -1,5 +1,5 @@
-﻿using LedMatrix.Context;
-using Library.Classes;
+﻿using LedMatrix.Classes;
+using LedMatrix.Context;
 using Library.Collection;
 using System;
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ namespace LedMatrix.Pages
 	/// </summary>
 	public sealed partial class Horloge : Page
 	{
-		public AnimationList MeteoImgs
+		public Classes.AnimationList MeteoImgs
 		{
 			get { return Util.Context.MeteoImgs; }
 		}

@@ -1,6 +1,5 @@
 ﻿using Library.Classes;
 using System.ComponentModel;
-using Windows.UI;
 
 namespace Library.Entities
 {
@@ -10,17 +9,17 @@ namespace Library.Entities
 		public int Position { get; set; }
 		public Coordonnee Coord { get; set; }
 
-		private byte _alpha;
-		public byte Alpha
-		{
-			get { return _alpha; }
-			set
-			{
-				_alpha = value;
-				OnPropertyChanged("Alpha");
-				OnPropertyChanged("Couleur");
-			}
-		}
+		//private byte _alpha;
+		//public byte Alpha
+		//{
+		//	get { return _alpha; }
+		//	set
+		//	{
+		//		_alpha = value;
+		//		OnPropertyChanged("Alpha");
+		//		OnPropertyChanged("Couleur");
+		//	}
+		//}
 
 		private byte _red;
 		public byte Red
@@ -60,17 +59,17 @@ namespace Library.Entities
 
 		public Color Couleur
 		{
-			get { return Color.FromArgb(Alpha, Red, Green, Blue); }
+			get { return Color.FromArgb(Red, Green, Blue); }
 			set
 			{
-				Alpha = value.A;
+				//Alpha = value.A;
 				Red = value.R;
 				Green = value.G;
 				Blue = value.B;
 
 				OnPropertyChanged("Couleur");
 
-				OnPropertyChanged("Alpha");
+				//OnPropertyChanged("Alpha");
 				OnPropertyChanged("Red");
 				OnPropertyChanged("Green");
 				OnPropertyChanged("Blue");

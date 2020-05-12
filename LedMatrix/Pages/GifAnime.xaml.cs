@@ -1,5 +1,5 @@
-﻿using LedMatrix.Context;
-using Library.Classes;
+﻿using LedMatrix.Classes;
+using LedMatrix.Context;
 using Library.Collection;
 using Library.Entities;
 using System;
@@ -16,7 +16,7 @@ namespace LedMatrix.Pages
 	{
 		public string LastAutorun { get; set; }
 
-		public AnimationList Animations
+		public Classes.AnimationList Animations
 		{
 			get { return Util.Context.Animations; }
 		}
