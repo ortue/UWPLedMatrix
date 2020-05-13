@@ -174,7 +174,7 @@ namespace WebMatrix.Classes
     /// or
     /// y.</exception>
     /// <exception cref="ArgumentNullException">bitmap.</exception>
-    public void SetPixels(List<Color> pixels, int sourceOffsetX = 0, int sourceOffsetY = 0, float brightness = 0f, int targetOffset = 0, int targetLength = 0)
+    public void SetPixelsBak(List<Color> pixels, int sourceOffsetX = 0, int sourceOffsetY = 0, float brightness = 0f, int targetOffset = 0, int targetLength = 0)
     {
       // Parameter validation
       if (pixels == null)
@@ -247,66 +247,66 @@ namespace WebMatrix.Classes
       }
     }
 
-    //public void SetPixels(BitmapBuffer pixels, int sourceOffsetX, int sourceOffsetY, float brightness = 1f, int targetOffset = 0, int targetLength = 0)
-    //{
-    //  // Parameter validation
-    //  if (pixels == null)
-    //    throw new ArgumentNullException(nameof(pixels));
+    public void SetPixels(BitmapBuffer pixels, int sourceOffsetX, int sourceOffsetY, float brightness = 1f, int targetOffset = 0, int targetLength = 0)
+    {
+      // Parameter validation
+      if (pixels == null)
+        throw new ArgumentNullException(nameof(pixels));
 
-    //  if (sourceOffsetX < 0 || sourceOffsetX > (pixels.ImageWidth - targetLength) - 1)
-    //    throw new ArgumentOutOfRangeException(nameof(sourceOffsetX));
+      //if (sourceOffsetX < 0 || sourceOffsetX > (pixels.ImageWidth - targetLength) - 1)
+      //  throw new ArgumentOutOfRangeException(nameof(sourceOffsetX));
 
-    //  if (sourceOffsetY < 0 || sourceOffsetY >= pixels.ImageHeight)
-    //  {
-    //    throw new ArgumentOutOfRangeException(nameof(sourceOffsetY),
-    //        $"{nameof(sourceOffsetY)} was '{sourceOffsetY}' but it must be between '0' and '{pixels.ImageHeight - 1}'");
-    //  }
+      //if (sourceOffsetY < 0 || sourceOffsetY >= pixels.ImageHeight)
+      //{
+      //  throw new ArgumentOutOfRangeException(nameof(sourceOffsetY),
+      //      $"{nameof(sourceOffsetY)} was '{sourceOffsetY}' but it must be between '0' and '{pixels.ImageHeight - 1}'");
+      //}
 
-    //  if (targetOffset < 0) targetOffset = 0;
-    //  if (targetOffset > LedCount - 1)
-    //    throw new ArgumentOutOfRangeException(nameof(targetOffset));
+      //if (targetOffset < 0) targetOffset = 0;
+      //if (targetOffset > LedCount - 1)
+      //  throw new ArgumentOutOfRangeException(nameof(targetOffset));
 
-    //  if (targetLength <= 0)
-    //    targetLength = LedCount;
+      if (targetLength <= 0)
+        targetLength = LedCount;
 
-    //  if (targetOffset + targetLength > LedCount)
-    //    throw new ArgumentOutOfRangeException(nameof(targetLength));
+      //if (targetOffset + targetLength > LedCount)
+      //  throw new ArgumentOutOfRangeException(nameof(targetLength));
 
-    //  // Brightness Setting
-    //  if (brightness < 0f) brightness = 0f;
-    //  if (brightness > 1f) brightness = 1f;
-    //  var brightnessByte = (byte)(brightness * 31);
-    //  brightnessByte = (byte)(brightnessByte | BrightnessSetMask);
+      // Brightness Setting
+      if (brightness < 0f) brightness = 0f;
+      if (brightness > 1f) brightness = 1f;
+      var brightnessByte = (byte)(brightness * 31);
+      brightnessByte = (byte)(brightnessByte | BrightnessSetMask);
 
-    //  // Offset settings
-    //  const int brightnessOffset = 0;
-    //  var blueOffset = ReverseRgb ? 1 : 3;
-    //  const int greenOffset = 2;
-    //  var redOffset = ReverseRgb ? 3 : 1;
+      // Offset settings
+      const int brightnessOffset = 0;
+      var blueOffset = ReverseRgb ? 1 : 3;
+      const int greenOffset = 2;
+      var redOffset = ReverseRgb ? 3 : 1;
 
-    //  // Pixel copying
-    //  lock (_syncLock)
-    //  {
-    //    var bmpOffsetBase = pixels.GetPixelOffset(sourceOffsetX, sourceOffsetY);
-    //    var bmpOffsetLimit = bmpOffsetBase + (targetLength * BitmapBuffer.BytesPerPixel);
-    //    var setCount = 0;
+      // Pixel copying
+      lock (_syncLock)
+      {
+        var bmpOffsetBase = pixels.GetPixelOffset(sourceOffsetX, sourceOffsetY);
+        var bmpOffsetLimit = bmpOffsetBase + (targetLength * BitmapBuffer.BytesPerPixel);
+        var setCount = 0;
 
-    //    var frameBufferOffset = StartFrame.Length + (targetOffset * StartFrame.Length);
+        var frameBufferOffset = StartFrame.Length + (targetOffset * StartFrame.Length);
 
-    //    for (var bmpOffset = bmpOffsetBase; bmpOffset < bmpOffsetLimit; bmpOffset += BitmapBuffer.BytesPerPixel)
-    //    {
-    //      _frameBuffer[frameBufferOffset + brightnessOffset] = brightnessByte;
-    //      _frameBuffer[frameBufferOffset + redOffset] = pixels.Data[bmpOffset + BitmapBuffer.ROffset]; // R
-    //      _frameBuffer[frameBufferOffset + greenOffset] = pixels.Data[bmpOffset + BitmapBuffer.GOffset]; // G
-    //      _frameBuffer[frameBufferOffset + blueOffset] = pixels.Data[bmpOffset + BitmapBuffer.BOffset]; // B
-    //      frameBufferOffset += StartFrame.Length;
-    //      setCount += 1;
+        for (var bmpOffset = bmpOffsetBase; bmpOffset < bmpOffsetLimit; bmpOffset += BitmapBuffer.BytesPerPixel)
+        {
+          _frameBuffer[frameBufferOffset + brightnessOffset] = brightnessByte;
+          _frameBuffer[frameBufferOffset + redOffset] = pixels.Data[bmpOffset + BitmapBuffer.ROffset]; // R
+          _frameBuffer[frameBufferOffset + greenOffset] = pixels.Data[bmpOffset + BitmapBuffer.GOffset]; // G
+          _frameBuffer[frameBufferOffset + blueOffset] = pixels.Data[bmpOffset + BitmapBuffer.BOffset]; // B
+          frameBufferOffset += StartFrame.Length;
+          setCount += 1;
 
-    //      if (setCount >= targetLength)
-    //        break;
-    //    }
-    //  }
-    //}
+          if (setCount >= targetLength)
+            break;
+        }
+      }
+    }
 
     /// <summary>
     /// Renders all the pixels in the FrameBuffer.

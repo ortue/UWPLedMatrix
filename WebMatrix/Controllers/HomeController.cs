@@ -38,7 +38,7 @@ namespace WebMatrix.Controllers
         Util.Setup();
 
         foreach (LedLibrary.Entities.Pixel pixel in Util.Context.Pixels)
-          pixel.Couleur = new LedLibrary.Entities.Color { R = 76, G = 12, B = 127 };
+          pixel.Couleur = new LedLibrary.Entities.Color { A = 0, R = 32, G = 0, B = 0 };
 
         Util.SetLeds();
       }
