@@ -7,7 +7,7 @@ namespace WebMatrix.Context
 	public class LedMatrixContext
 	{
 		public PixelList Pixels { get; set; }
-		public LedStripAPA102C PixelStrip { get; set; }
+		public DotStarStrip PixelStrip { get; set; }
 		public AnimationList Animations { get; set; }
 		public AnimationList MeteoImgs { get; set; }
 		public current Meteo { get; set; }
@@ -42,7 +42,7 @@ namespace WebMatrix.Context
 		/// </summary>
 		public LedMatrixContext()
 		{
-			PixelStrip = new LedStripAPA102C(NbrLed);
+			PixelStrip = new DotStarStrip(NbrLed);
 			Pixels = new PixelList(Largeur, Hauteur);
 
 			//Util.SetAnimation();

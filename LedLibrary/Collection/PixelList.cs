@@ -52,7 +52,7 @@ namespace LedLibrary.Collection
     {
       //Fond
       foreach (Pixel pixel in this)
-        if (pixel.Couleur == new Color { R = 0, G = 0, B = 0 })
+        if (pixel.Couleur.Egal(new Color { R = 0, G = 0, B = 0 }))
           pixel.SetColor(new Color { B = (byte)(5 + pixel.Coord.Y * 2) });
     }
 
@@ -104,16 +104,16 @@ namespace LedLibrary.Collection
       int heure = DateTime.Now.Hour;
 
       for (int i = 0; i < 9; i++)
-        GetCoordonnee(GetTempsCoord(DateTime.Now.Second, i)).SetColor(new Color { R = 80 / 2, G = 78 / 2, B = 114 / 2 });//43,78,114
+        GetCoordonnee(GetTempsCoord(DateTime.Now.Second + DateTime.Now.Millisecond / (double)1000, i)).SetColor(new Color { R = 80 / 2, G = 78 / 2, B = 114 / 2 });//43,78,114
 
       for (int i = 0; i < 8; i++)
-        GetCoordonnee(GetTempsCoord(minute, i)).SetColor(minuteCouleur);
+        GetCoordonnee(GetTempsCoord(minute + DateTime.Now.Second * 1.6 / 100, i)).SetColor(minuteCouleur);
 
       for (int i = 0; i < 6; i++)
         GetCoordonnee(GetHeureCoord(heure, minute, i)).SetColor(heureCouleur);
 
-      //for (int i = 0; i < 4; i++)
-      //	GetCoordonnee(GetTempsCoord(DateTime.Now.Millisecond / 100 * 6, i)).SetColor(new Color { R = 255 / 2, G = 0 / 2, B = 0 / 2 });//43,78,114
+      for (int i = 0; i < 4; i++)
+        GetCoordonnee(GetTempsCoord(DateTime.Now.Millisecond / (double)100 * 6, i)).SetColor(new Color { R = 255 / 2, G = 0 / 2, B = 0 / 2 });//43,78,114
 
       //Print(Coordonnee.Get(1, 1, Largeur, Hauteur), DateTime.Now.Second.ToString(), new Color());
     }

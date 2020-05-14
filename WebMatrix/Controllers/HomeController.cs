@@ -22,30 +22,49 @@ namespace WebMatrix.Controllers
 
     public IActionResult Index()
     {
+      Util.Setup();
+      Util.StopTask();
+
+      Task.Run(() =>
+      {
+        int task = Util.StartTask();
+
+        while (Util.TaskWork(task))
+        {
+          Util.Context.Pixels.SetHorloge();
+          Util.SetLeds();
+          Util.Context.Pixels.Reset();
+        }
+      });
+
       return View();
     }
 
     public IActionResult Privacy()
     {
 
-      try
-      {
-        // Initialize the led strip
-        //Util.Context.PixelStrip.Begin();
-        //Task.Run(() => Demo.Go());
+      //try
+      //{
+      //Task.Run(() => Demo.Go());
 
 
-        Util.Setup();
+      // Initialize the led strip
+      Util.Setup();
 
-        foreach (LedLibrary.Entities.Pixel pixel in Util.Context.Pixels)
-          pixel.Couleur = new LedLibrary.Entities.Color { A = 0, R = 32, G = 0, B = 0 };
 
-        Util.SetLeds();
-      }
-      catch (Exception ex)
-      {
-        Debug.WriteLine(ex.ToString());
-      }
+      Task.Run(() => Demo.Go());
+
+
+
+      //foreach (LedLibrary.Entities.Pixel pixel in Util.Context.Pixels)
+      //  pixel.Couleur = new LedLibrary.Entities.Color { A = 0, R = 32, G = 0, B = 0 };
+
+      //Util.SetLeds();
+      //}
+      //catch (Exception ex)
+      //{
+      //  Debug.WriteLine(ex.ToString());
+      //}
 
 
       return View();

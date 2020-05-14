@@ -52,6 +52,7 @@ namespace WebMatrix.Context
     /// </summary>
     public static void Setup()
     {
+
       Context = new LedMatrixContext();
       TaskGo = new TaskGoList();
     }
@@ -61,24 +62,7 @@ namespace WebMatrix.Context
     /// </summary>
     public static void SetLeds()
     {
-      //Context.PixelStrip.SendPixels(Context.Pixels.PixelColors);
-
-
-      BitmapBuffer bitmapBuffer = new BitmapBuffer();
-      int i = 0;
-
-      bitmapBuffer.Data = new byte[Context.Pixels.PixelColors.Count * 4];
-
-      foreach (Color color in Context.Pixels.PixelColors)
-      {
-        bitmapBuffer.Data[i++] = color.A;
-        bitmapBuffer.Data[i++] = color.R;
-        bitmapBuffer.Data[i++] = color.G;
-        bitmapBuffer.Data[i++] = color.B;
-      }
-
-      Context.PixelStrip.SetPixels(bitmapBuffer, 0, 0, 1, 0, 0);
-      Context.PixelStrip.Render();
+      Context.PixelStrip.SendPixels(Context.Pixels.PixelColors);
     }
 
     /// <summary>

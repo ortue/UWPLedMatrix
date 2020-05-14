@@ -18,5 +18,15 @@
     {
       return new Color { R = Red, G = Green, B = Blue };
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="color"></param>
+    /// <returns></returns>
+    public bool Egal(Color color)
+    {
+      return R == color.R && G == color.G && B == color.B;
+    }
   }
 }
