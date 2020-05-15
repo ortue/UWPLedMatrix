@@ -36,7 +36,7 @@ namespace WebMatrix.Context
     /// <returns></returns>
     public static bool TaskWork(int id)
     {
-      return TaskGo.SingleOrDefault(t => t.ID == id).Work;
+      return TaskGo.SingleOrDefault(t => t.ID == id)?.Work ?? false;
     }
 
     /// <summary>
@@ -52,7 +52,6 @@ namespace WebMatrix.Context
     /// </summary>
     public static void Setup()
     {
-
       Context = new LedMatrixContext();
       TaskGo = new TaskGoList();
     }
@@ -62,41 +61,17 @@ namespace WebMatrix.Context
     /// </summary>
     public static void SetLeds()
     {
-      Context.PixelStrip.SendPixels(Context.Pixels.PixelColors);
-    }
-
-    /// <summary>
-    /// Get Byte From Pixel
-    /// </summary>
-    /// <param name="fileNameOfImage"></param>
-    /// <returns></returns>
-    public static async Task<byte[]> GetByteFromPixel(string fileNameOfImage)
-    {
-      //Windows.Storage.StorageFile imageFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(fileNameOfImage); // Bild laden
-      //Stream imagestream = await imageFile.OpenStreamForReadAsync(); // Bild in Stream umwandeln
-      //BitmapDecoder imageDecoder = await BitmapDecoder.CreateAsync(imagestream.AsRandomAccessStream()); // Stream dekodieren
-      //PixelDataProvider imagePixelData = await imageDecoder.GetPixelDataAsync(); // Informationen über Pixel erhalten
-      //return imagePixelData.DetachPixelData(); // Pixel Daten bekommen
-
-      return null;
-    }
-
-    /// <summary>
-    /// UpdateMeteo
-    /// </summary>
-    public static async void UpdateMeteo()
-    {
-      current meteo = await GetMeteo();
-      Context.Meteo = meteo;
+      if (Environment.MachineName != "PC-BENOIT")
+        Context.PixelStrip.SendPixels(Context.Pixels.PixelColors);
     }
 
     /// <summary>
     /// GetMeteo
     /// </summary>
     /// <returns></returns>
-    private static async Task<current> GetMeteo()
+    public static current GetMeteo()
     {
-      return await Task.Run(() =>
+      return Task.Run(() =>
       {
         Task<HttpResponseMessage> response = Client.GetAsync(Client.BaseAddress);
 
@@ -112,24 +87,7 @@ namespace WebMatrix.Context
         }
         else
           return null;
-      });
+      }).Result;
     }
-
-    //public static async void SetAnimation()
-    //{
-    //	AnimationList animations = await SetAnimationAsync("Images");
-    //	Context.Animations = animations;
-    //}
-
-    //public static async void SetMeteoImg()
-    //{
-    //	AnimationList animations = await SetAnimationAsync("MeteoImg");
-    //	Context.MeteoImgs = animations;
-    //}
-
-    //private static async Task<AnimationList> SetAnimationAsync(string path)
-    //{
-    //	return await Task.Run(() => new AnimationList(path));
-    //}
   }
 }

@@ -15,11 +15,11 @@ namespace LedLibrary.Collection
     public int Largeur { get; set; }
     public int Hauteur { get; set; }
 
-    public List<Color> PixelColors
+    public List<Couleur> PixelColors
     {
       get
       {
-        List<Color> pixelColors = new List<Color>();
+        List<Couleur> pixelColors = new List<Couleur>();
 
         foreach (Pixel pixel in this.OrderBy(p => p.Numero))
           pixelColors.Add(pixel.Couleur);
@@ -52,8 +52,8 @@ namespace LedLibrary.Collection
     {
       //Fond
       foreach (Pixel pixel in this)
-        if (pixel.Couleur.Egal(new Color { R = 0, G = 0, B = 0 }))
-          pixel.SetColor(new Color { B = (byte)(5 + pixel.Coord.Y * 2) });
+        if (pixel.Couleur.Egal(new Couleur { R = 0, G = 0, B = 0 }))
+          pixel.SetColor(new Couleur { B = (byte)(5 + pixel.Coord.Y * 2) });
     }
 
     /// <summary>
@@ -62,9 +62,9 @@ namespace LedLibrary.Collection
     /// <returns></returns>
     public void SetHorloge()
     {
-      Color minuteCouleur = new Color { R = 39 / 2, G = 144 / 2, B = 176 / 2 };//39,144,176
-      Color heureCouleur = new Color { R = 148 / 2, G = 200 / 2, B = 80 / 2 };//148,186,101
-      Color pointCouleur = new Color { R = 148 / 5, G = 200 / 5, B = 80 / 5 };//148,186,101
+      Couleur minuteCouleur = new Couleur { R = 39 / 2, G = 144 / 2, B = 176 / 2 };//39,144,176
+      Couleur heureCouleur = new Couleur { R = 148 / 2, G = 200 / 2, B = 80 / 2 };//148,186,101
+      Couleur pointCouleur = new Couleur { R = 148 / 5, G = 200 / 5, B = 80 / 5 };//148,186,101
 
       //5 minutes
       for (int i = 0; i < 60; i += 5)
@@ -97,14 +97,14 @@ namespace LedLibrary.Collection
       if (hh < 10)
         leading = " ";
 
-      Print(Coordonnee.Get(2, 13, Largeur, Hauteur), leading + hh + deuxPoint + DateTime.Now.ToString("mm"), new Color());
+      Print(Coordonnee.Get(2, 13, Largeur, Hauteur), leading + hh + deuxPoint + DateTime.Now.ToString("mm"), new Couleur());
 
       //Aiguille
       int minute = DateTime.Now.Minute;
       int heure = DateTime.Now.Hour;
 
       for (int i = 0; i < 9; i++)
-        GetCoordonnee(GetTempsCoord(DateTime.Now.Second + DateTime.Now.Millisecond / (double)1000, i)).SetColor(new Color { R = 80 / 2, G = 78 / 2, B = 114 / 2 });//43,78,114
+        GetCoordonnee(GetTempsCoord(DateTime.Now.Second + DateTime.Now.Millisecond / (double)1000, i)).SetColor(new Couleur { R = 80 / 2, G = 78 / 2, B = 114 / 2 });//43,78,114
 
       for (int i = 0; i < 8; i++)
         GetCoordonnee(GetTempsCoord(minute + DateTime.Now.Second * 1.6 / 100, i)).SetColor(minuteCouleur);
@@ -112,8 +112,8 @@ namespace LedLibrary.Collection
       for (int i = 0; i < 6; i++)
         GetCoordonnee(GetHeureCoord(heure, minute, i)).SetColor(heureCouleur);
 
-      for (int i = 0; i < 4; i++)
-        GetCoordonnee(GetTempsCoord(DateTime.Now.Millisecond / (double)100 * 6, i)).SetColor(new Color { R = 255 / 2, G = 0 / 2, B = 0 / 2 });//43,78,114
+      for (int i = 0; i < 5; i++)
+        GetCoordonnee(GetTempsCoord(DateTime.Now.Millisecond / (double)100 * 6, i)).SetColor(new Couleur { R = 255 / 2, G = 0 / 2, B = 0 / 2 });//43,78,114
 
       //Print(Coordonnee.Get(1, 1, Largeur, Hauteur), DateTime.Now.Second.ToString(), new Color());
     }
@@ -124,7 +124,7 @@ namespace LedLibrary.Collection
     public void Reset()
     {
       foreach (Pixel pixel in this)
-        pixel.Couleur = Color.FromArgb(0, 0, 0);
+        pixel.Couleur = Couleur.FromArgb(0, 0, 0);
     }
 
     /// <summary>
@@ -251,7 +251,7 @@ namespace LedLibrary.Collection
 
       //each hour makes 30 degree
       //each min makes 0.5 degree
-      int val = (int)((heure * 30) + (minute * 0.5));
+      double val = (heure * 30) + (minute * 0.5);
 
       if (val >= 0 && val <= 180)
         coord.X = (Largeur / 2) + (int)(rayon * Math.Sin(Math.PI * val / 180));
@@ -289,7 +289,7 @@ namespace LedLibrary.Collection
     /// <param name="coord"></param>
     /// <param name="chaine"></param>
     /// <param name="couleur"></param>
-    public void Print(Coordonnee coord, string chaine, Color couleur)
+    public void Print(Coordonnee coord, string chaine, Couleur couleur)
     {
       int y = coord.Y;
 
@@ -313,7 +313,7 @@ namespace LedLibrary.Collection
     /// <param name="y"></param>
     /// <param name="chaine"></param>
     /// <param name="couleur"></param>
-    public void Print(int x, int y, string chaine, Color couleur)
+    public void Print(int x, int y, string chaine, Couleur couleur)
     {
       Print(Coordonnee.Get(x, y, Largeur, Hauteur), chaine, couleur);
     }
@@ -324,7 +324,7 @@ namespace LedLibrary.Collection
     /// <param name="temp"></param>
     public void SetMeteo(current meteo)
     {
-      Color couleur = new Color { R = 64, G = 0, B = 0 };
+      Couleur couleur = new Couleur { R = 64, G = 0, B = 0 };
 
       //Cadran
       string leading = "";
@@ -359,7 +359,7 @@ namespace LedLibrary.Collection
     /// </summary>
     /// <param name="coord"></param>
     /// <param name="lettre"></param>
-    private void PrintLettre(Coordonnee coord, char lettre, Color couleur)
+    private void PrintLettre(Coordonnee coord, char lettre, Couleur couleur)
     {
       Coordonnee coo = new Coordonnee(coord);
 

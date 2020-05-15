@@ -14,11 +14,11 @@ namespace LedLibrary.Collection
 		{
 			int position = 0;
 
-			for (int i = 0; i < pixels.Length; i += 4)
+			for (int i = 0; i < pixels.Length; i += 3)
 				if (IsTransparent(pixels, i))
-					Add(new Couleur(position++, Color.FromArgb(0, 0, 0)));
+					Add(new Couleur(position++, Couleur.FromArgb(0, 0, 0)));
 				else
-					Add(new Couleur(position++, Color.FromArgb((byte)(pixels[i] / 2), (byte)(pixels[i + 1] / 2), (byte)(pixels[i + 2] / 2))));
+					Add(new Couleur(position++, Couleur.FromArgb((byte)(pixels[i] / 2), (byte)(pixels[i + 1] / 2), (byte)(pixels[i + 2] / 2))));
 		}
 
 		/// <summary>
@@ -33,11 +33,11 @@ namespace LedLibrary.Collection
 			{
 				int position = 0;
 
-				for (int i = 0; i < frame.Length; i += 4)
+				for (int i = 0; i < frame.Length; i += 3)
 					if (IsTransparent(frame, i))
-						Add(new Couleur(frameCompteur, position++, Color.FromArgb(0, 0, 0)));
+						Add(new Couleur(frameCompteur, position++, Couleur.FromArgb(0, 0, 0)));
 					else
-						Add(new Couleur(frameCompteur, position++, Color.FromArgb((byte)(frame[i] / 2), (byte)(frame[i + 1] / 2), (byte)(frame[i + 2] / 2))));
+						Add(new Couleur(frameCompteur, position++, Couleur.FromArgb((byte)(frame[i] / 2), (byte)(frame[i + 1] / 2), (byte)(frame[i + 2] / 2))));
 
 				frameCompteur++;
 			}

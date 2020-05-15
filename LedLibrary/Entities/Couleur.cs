@@ -5,17 +5,34 @@ namespace LedLibrary.Entities
   {
     public int FrameCompteur { get; set; }
     public int Position { get; set; }
-    public Color Color { get; set; }
+    //public Color Color { get; set; }
+
+    public byte A { get; set; }
+    public byte B { get; set; }
+    public byte G { get; set; }
+    public byte R { get; set; }
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public Couleur()
+    { 
+    
+    }
 
     /// <summary>
     /// Constructeur
     /// </summary>
     /// <param name="position"></param>
     /// <param name="color"></param>
-    public Couleur(int position, Color color)
+    public Couleur(int position, Couleur couleur)
     {
       Position = position;
-      Color = color;
+
+      A = couleur.A;
+      R = couleur.R;
+      G = couleur.G;
+      B = couleur.B;
     }
 
     /// <summary>
@@ -23,23 +40,49 @@ namespace LedLibrary.Entities
     /// </summary>
     /// <param name="frameCompteur"></param>
     /// <param name="color"></param>
-    public Couleur(int frameCompteur, int position, Color color)
+    public Couleur(int frameCompteur, int position, Couleur couleur)
     {
       FrameCompteur = frameCompteur;
       Position = position;
-      Color = color;
+
+      A = couleur.A;
+      R = couleur.R;
+      G = couleur.G;
+      B = couleur.B;
     }
 
     /// <summary>
-    /// 
+    /// Get
     /// </summary>
     /// <param name="r"></param>
     /// <param name="g"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static Color Get(int r, int g, int b)
+    public static Couleur Get(int r, int g, int b)
     {
-      return new Color { R = (byte)r, G = (byte)g, B = (byte)b };
+      return new Couleur { R = (byte)r, G = (byte)g, B = (byte)b };
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Red"></param>
+    /// <param name="Green"></param>
+    /// <param name="Blue"></param>
+    /// <returns></returns>
+    public static Couleur FromArgb(byte Red, byte Green, byte Blue)
+    {
+      return new Couleur { R = Red, G = Green, B = Blue };
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="color"></param>
+    /// <returns></returns>
+    public bool Egal(Couleur couleur)
+    {
+      return R == couleur.R && G == couleur.G && B == couleur.B;
     }
   }
 }

@@ -32,7 +32,7 @@ namespace WebMatrix.Classes
       // By initializing an int array of that specific length, it gets initialized with ints of default value (0).  :)
       EndFrame = new byte[endFrameSize];
 
-      Begin(10000000);
+        Begin(10000000);
     }
 
     /// <summary>
@@ -41,8 +41,8 @@ namespace WebMatrix.Classes
     /// <returns>Task representing the async action</returns>
     public void Begin(int spiFrequency )
     {
-      //ClockFrequency = 10000000,
-
+      //ClockFrequency = 10 000 000,
+      //Pi.Spi.DefaultFrequency 8 000 000 int
       Pi.Init<BootstrapWiringPi>();
 
       if (spiFrequency == 0)
@@ -59,7 +59,7 @@ namespace WebMatrix.Classes
     /// Sends a bunch of colors out to the LED strip
     /// </summary>
     /// <param name="pixels">List of <see cref="Color"/>s to send to the strip.</param>
-    public void SendPixels(List<Color> pixels)
+    public void SendPixels(List<Couleur> pixels)
     {
       List<byte> spiDataBytes = new List<byte>();
       spiDataBytes.AddRange(StartFrame);

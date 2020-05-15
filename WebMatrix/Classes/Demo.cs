@@ -82,8 +82,8 @@ namespace LedMatrix.Classes
             if (x < Util.Context.Pixels.Largeur - 1 && y < Util.Context.Pixels.Hauteur - bot[x + 1])
               EffacerDernier(x++, y);
 
-            using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-              waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+            using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+            waitHandle.Wait(TimeSpan.FromMilliseconds(100));
           }
         }
 
@@ -97,7 +97,7 @@ namespace LedMatrix.Classes
     private static void EffacerDernier(int x, int y)
     {
       if (y > 0)
-        Util.Context.Pixels.GetCoordonnee(x, y - 1).SetColor(new Color());
+        Util.Context.Pixels.GetCoordonnee(x, y - 1).SetColor(new Couleur());
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ namespace LedMatrix.Classes
       Pong pong = new Pong();
       int task = Util.StartTask();
 
-      Color scoreColor = new Color { R = 127, G = 127, B = 127 };
+      Couleur scoreColor = new Couleur { R = 127, G = 127, B = 127 };
 
       while (Util.TaskWork(task))
       {
@@ -147,18 +147,18 @@ namespace LedMatrix.Classes
         //Dessiner les palettes
         for (int i = -3; i < 3; i++)
         {
-          Color paddle = new Color();
+          Couleur paddle = new Couleur();
 
           if (i >= -2 && i < 3)
-            paddle = new Color { R = 64, G = 127, B = 64 };
+            paddle = new Couleur { R = 64, G = 127, B = 64 };
 
           int p1Int = (int)Math.Round(pong.Pad1, 0);
           int p2Int = (int)Math.Round(pong.Pad2, 0);
 
-          if (!(Util.Context.Pixels.GetCoordonnee(1, p1Int + i).Couleur == scoreColor && paddle == new Color()))
+          if (!(Util.Context.Pixels.GetCoordonnee(1, p1Int + i).Couleur == scoreColor && paddle == new Couleur()))
             Util.Context.Pixels.GetCoordonnee(1, p1Int + i).SetColor(paddle);
 
-          if (!(Util.Context.Pixels.GetCoordonnee(18, p2Int + i).Couleur == scoreColor && paddle == new Color()))
+          if (!(Util.Context.Pixels.GetCoordonnee(18, p2Int + i).Couleur == scoreColor && paddle == new Couleur()))
             Util.Context.Pixels.GetCoordonnee(18, p2Int + i).SetColor(paddle);
         }
 

@@ -10,6 +10,240 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\1up.png" />
+    <None Remove="Images\bioniccommando.png" />
+    <None Remove="Images\BlackMageLeft.gif" />
+    <None Remove="Images\Cecil.gif" />
+    <None Remove="Images\CheepCheepRed.gif" />
+    <None Remove="Images\Enemy01.gif" />
+    <None Remove="Images\EnergyTank.gif" />
+    <None Remove="Images\Enterprise.gif" />
+    <None Remove="Images\GeegaOrangeR.gif" />
+    <None Remove="Images\GodOfPoverty.png" />
+    <None Remove="Images\KobilR.gif" />
+    <None Remove="Images\KoopaTroopaShellGreen.png" />
+    <None Remove="Images\LittleGoomba.gif" />
+    <None Remove="Images\LuigiStanding.png" />
+    <None Remove="Images\MagicMushroom.png" />
+    <None Remove="Images\Mario.gif" />
+    <None Remove="Images\MarioSmallR.gif" />
+    <None Remove="Images\MarioStanding.png" />
+    <None Remove="Images\MarioWalkingR.gif" />
+    <None Remove="Images\megaman.png" />
+    <None Remove="Images\QuestionBlock.gif" />
+    <None Remove="Images\ScrewAttack.gif" />
+    <None Remove="Images\ShipLeft.gif" />
+    <None Remove="Images\ShyguyRedRight.gif" />
+    <None Remove="Images\spinywalk.gif" />
+    <None Remove="Images\Spiral.gif" />
+    <None Remove="Images\ToadSmallR.gif" />
+    <None Remove="Images\WhiteMage-Walk-Front.gif" />
+    <None Remove="Images\ZeelaOrange.gif" />
+    <None Remove="Images\ZeldaSpriteArmos.gif" />
+    <None Remove="Images\ZeldaSpriteFairy.gif" />
+    <None Remove="Images\ZeldaSpriteFire.gif" />
+    <None Remove="Images\ZeldaSpriteFood.png" />
+    <None Remove="Images\ZeldaSpriteHeart.gif" />
+    <None Remove="Images\ZeldaSpriteHeartContainer.png" />
+    <None Remove="Images\ZeldaSpriteLinkFront.gif" />
+    <None Remove="Images\ZeldaSpriteOctorokRedDown.gif" />
+    <None Remove="Images\ZeldaSpriteStalfos.gif" />
+    <None Remove="Images\ZeldaSpriteTriforce.gif" />
+    <None Remove="MeteoImg\01d.gif" />
+    <None Remove="MeteoImg\01n.gif" />
+    <None Remove="MeteoImg\02d.gif" />
+    <None Remove="MeteoImg\02n.gif" />
+    <None Remove="MeteoImg\03d.gif" />
+    <None Remove="MeteoImg\03n.gif" />
+    <None Remove="MeteoImg\04d.gif" />
+    <None Remove="MeteoImg\04n.gif" />
+    <None Remove="MeteoImg\09d.gif" />
+    <None Remove="MeteoImg\09n.gif" />
+    <None Remove="MeteoImg\10d.gif" />
+    <None Remove="MeteoImg\10n.gif" />
+    <None Remove="MeteoImg\11d.gif" />
+    <None Remove="MeteoImg\11n.gif" />
+    <None Remove="MeteoImg\13d.gif" />
+    <None Remove="MeteoImg\13n.gif" />
+    <None Remove="MeteoImg\50d.gif" />
+    <None Remove="MeteoImg\50n.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\1up.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\bioniccommando.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\BlackMageLeft.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Cecil.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\CheepCheepRed.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Enemy01.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\EnergyTank.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Enterprise.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\GeegaOrangeR.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\GodOfPoverty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\KobilR.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\KoopaTroopaShellGreen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\LittleGoomba.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\LuigiStanding.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\MagicMushroom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Mario.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\MarioSmallR.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\MarioStanding.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\MarioWalkingR.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\megaman.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\QuestionBlock.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ScrewAttack.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ShipLeft.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ShyguyRedRight.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\spinywalk.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Spiral.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ToadSmallR.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\WhiteMage-Walk-Front.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ZeelaOrange.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ZeldaSpriteArmos.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ZeldaSpriteFairy.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ZeldaSpriteFire.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ZeldaSpriteFood.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ZeldaSpriteHeart.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ZeldaSpriteHeartContainer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ZeldaSpriteLinkFront.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ZeldaSpriteOctorokRedDown.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ZeldaSpriteStalfos.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ZeldaSpriteTriforce.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\01d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\01n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\02d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\02n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\03d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\03n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\04d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\04n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\09d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\09n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\10d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\10n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\11d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\11n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\13d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\13n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\50d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MeteoImg\50n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Unosquare.Raspberry.IO" Version="0.27.0" />
     <PackageReference Include="Unosquare.WiringPi" Version="0.5.0" />
   </ItemGroup>

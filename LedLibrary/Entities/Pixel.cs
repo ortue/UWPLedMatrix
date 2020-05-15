@@ -57,9 +57,9 @@ namespace LedLibrary.Entities
 			}
 		}
 
-		public Color Couleur
+		public Couleur Couleur
 		{
-			get { return Color.FromArgb(Red, Green, Blue); }
+			get { return Couleur.FromArgb(Red, Green, Blue); }
 			set
 			{
 				//Alpha = value.A;
@@ -103,14 +103,14 @@ namespace LedLibrary.Entities
 		/// </summary>
 		public void SetColor()
 		{
-			Couleur = new Color();
+			Couleur = new Couleur();
 		}
 
 		/// <summary>
 		/// SetColor
 		/// </summary>
 		/// <param name="couleur"></param>
-		public void SetColor(Color couleur)
+		public void SetColor(Couleur couleur)
 		{
 			Couleur = couleur;
 		}
@@ -123,7 +123,7 @@ namespace LedLibrary.Entities
 		/// <param name="b"></param>
 		public void Set(int r, int g, int b)
 		{
-			Couleur = new Color { R = (byte)r, G = (byte)g, B = (byte)b };
+			Couleur = new Couleur { R = (byte)r, G = (byte)g, B = (byte)b };
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

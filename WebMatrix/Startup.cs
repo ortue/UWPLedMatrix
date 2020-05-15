@@ -30,23 +30,23 @@ namespace WebMatrix
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-      //if (env.IsDevelopment())
-      //{
-      //  app.UseDeveloperExceptionPage();
-      //}
-      //else
-      //{
-      //  app.UseExceptionHandler("/Home/Error");
-      //}
-
-      app.UseExceptionHandler(a => a.Run(async context =>
+      if (env.IsDevelopment())
       {
-        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
-        var exception = exceptionHandlerPathFeature.Error;
-        var result = exception.Message ;
-        context.Response.ContentType = "application/html";
-        await context.Response.WriteAsync(result);
-      }));
+        app.UseDeveloperExceptionPage();
+      }
+      else
+      {
+        app.UseExceptionHandler("/Home/Error");
+      }
+
+      //app.UseExceptionHandler(a => a.Run(async context =>
+      //{
+      //  var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+      //  var exception = exceptionHandlerPathFeature.Error;
+      //  var result = exception.Message ;
+      //  context.Response.ContentType = "application/html";
+      //  await context.Response.WriteAsync(result);
+      //}));
 
 
       app.UseStaticFiles();

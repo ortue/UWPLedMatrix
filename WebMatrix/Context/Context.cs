@@ -1,5 +1,6 @@
 ﻿using LedLibrary.Collection;
 using LedLibrary.Entities;
+using System;
 using WebMatrix.Classes;
 
 namespace WebMatrix.Context
@@ -42,15 +43,15 @@ namespace WebMatrix.Context
 		/// </summary>
 		public LedMatrixContext()
 		{
-			PixelStrip = new DotStarStrip(NbrLed);
+			if (Environment.MachineName != "PC-BENOIT")
+				PixelStrip = new DotStarStrip(NbrLed);
+
 			Pixels = new PixelList(Largeur, Hauteur);
 
-			//Util.SetAnimation();
-			//Util.SetMeteoImg();
-			//Util.UpdateMeteo();
-
-			//Animations = new AnimationList("Images");
-			//MeteoImgs = new AnimationList("MeteoImg");
+			Animations = new AnimationList("Images");
+			MeteoImgs = new AnimationList("MeteoImg");
+			Meteo = Util.GetMeteo();
+			
 		}
 	}
 }
