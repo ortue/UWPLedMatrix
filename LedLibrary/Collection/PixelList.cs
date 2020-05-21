@@ -112,8 +112,11 @@ namespace LedLibrary.Collection
       for (int i = 0; i < 6; i++)
         GetCoordonnee(GetHeureCoord(heure, minute, i)).SetColor(heureCouleur);
 
-      for (int i = 0; i < 5; i++)
-        GetCoordonnee(GetTempsCoord(DateTime.Now.Millisecond / (double)100 * 6, i)).SetColor(new Couleur { R = 255 / 2, G = 0 / 2, B = 0 / 2 });//43,78,114
+      //for (int i = 0; i < 5; i++)
+      //  GetCoordonnee(GetTempsCoord(DateTime.Now.Millisecond / (double)100 * 6, i)).SetColor(new Couleur { R = 255 / 2, G = 0 / 2, B = 0 / 2 });//43,78,114
+
+      for (int i = 0; i < 6; i++)
+        GetCoordonnee(GetTempsCoord((DateTime.Now.Millisecond / (double)100 * 6) - i, 9)).SetColor(new Couleur { R = new List<byte> { 128, 64, 32, 16, 8, 4 }[i] });
 
       //Print(Coordonnee.Get(1, 1, Largeur, Hauteur), DateTime.Now.Second.ToString(), new Color());
     }
@@ -343,11 +346,11 @@ namespace LedLibrary.Collection
       if (heure < 10)
         leading = " ";
 
-      if (meteo != null)
-        Print(Coordonnee.Get(4, 2, Largeur, Hauteur), meteo.temperature.value.ToString("0") + "°C", couleur);
+      if (meteo.temperature is currentTemperature temperature)
+        Print(Coordonnee.Get(4, 2, Largeur, Hauteur), temperature.value.ToString("0") + "°C", couleur);
 
-      if (meteo != null)
-        Print(Coordonnee.Get(2, 8, Largeur, Hauteur), "H " + meteo.humidity.value.ToString() + "%", couleur);
+      if (meteo.humidity is currentHumidity humidity)
+        Print(Coordonnee.Get(2, 8, Largeur, Hauteur), "H " + humidity.value.ToString() + "%", couleur);
 
       Print(Coordonnee.Get(2, 14, Largeur, Hauteur), leading + heure + deuxPoint + DateTime.Now.ToString("mm"), couleur);
 

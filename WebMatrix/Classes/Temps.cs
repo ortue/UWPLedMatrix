@@ -1,0 +1,64 @@
+﻿using LedLibrary.Collection;
+using LedLibrary.Entities;
+using System;
+using System.Threading.Tasks;
+using WebMatrix.Context;
+
+namespace WebMatrix.Classes
+{
+  public class Temps
+  {
+    /// <summary>
+    /// Horloge
+    /// </summary>
+    public static void Horloge()
+    {
+      Util.Setup();
+
+      Task.Run(() =>
+      {
+        int task = Util.StartTask();
+
+        while (Util.TaskWork(task))
+        {
+          Util.Context.Pixels.SetHorloge();
+          Util.SetLeds();
+          Util.Context.Pixels.Reset();
+        }
+      });
+    }
+
+    /// <summary>
+    /// Meteo
+    /// </summary>
+    public static void Meteo()
+    {
+      ImageClassList meteoImgs = new ImageClassList("MeteoImg");
+      current meteo = new current();
+
+      Util.Setup();
+
+      Task.Run(() =>
+      {
+        DateTime update = DateTime.Now.AddMinutes(-10);
+        int task = Util.StartTask();
+
+        while (Util.TaskWork(task))
+        {
+          if (meteo.weather is currentWeather weather)
+            meteoImgs.SetPixel(weather.icon, Util.Context.Pixels);
+
+          Util.Context.Pixels.SetMeteo(meteo);
+          Util.SetLeds();
+          Util.Context.Pixels.Reset();
+
+          if (update.AddMinutes(5) < DateTime.Now)
+          {
+            update = DateTime.Now;
+            meteo = Util.GetMeteo();
+          }
+        }
+      });
+    }
+  }
+}

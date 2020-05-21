@@ -10,8 +10,8 @@ namespace WebMatrix.Context
 		public PixelList Pixels { get; set; }
 		public DotStarStrip PixelStrip { get; set; }
 		public AnimationList Animations { get; set; }
-		public AnimationList MeteoImgs { get; set; }
-		public current Meteo { get; set; }
+		//public AnimationList MeteoImgs { get; set; }
+		//public current Meteo { get; set; }
 		public bool Autorun { get; set; }
 
 		/// <summary>
@@ -48,9 +48,9 @@ namespace WebMatrix.Context
 
 			Pixels = new PixelList(Largeur, Hauteur);
 
-			Animations = new AnimationList("Images");
-			MeteoImgs = new AnimationList("MeteoImg");
-			Meteo = Util.GetMeteo();
+			//Animations = new AnimationList("Images");
+			//MeteoImgs = new AnimationList("MeteoImg");
+			//Meteo = Util.GetMeteo();
 			
 		}
 	}

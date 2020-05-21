@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using WebMatrix.Classes;
 
 namespace WebMatrix.Context
 {
@@ -79,14 +78,13 @@ namespace WebMatrix.Context
         {
           string xml = response.Result.Content.ReadAsStringAsync().Result;
 
-          using (TextReader reader = new StringReader(xml))
-          {
-            XmlSerializer serializer = new XmlSerializer(typeof(current));
-            return (current)serializer.Deserialize(reader);
-          }
+          using TextReader reader = new StringReader(xml);
+          XmlSerializer serializer = new XmlSerializer(typeof(current));
+          return (current)serializer.Deserialize(reader);
         }
         else
           return null;
+
       }).Result;
     }
   }

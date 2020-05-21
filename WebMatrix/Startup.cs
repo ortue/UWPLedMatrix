@@ -39,14 +39,14 @@ namespace WebMatrix
         app.UseExceptionHandler("/Home/Error");
       }
 
-      //app.UseExceptionHandler(a => a.Run(async context =>
-      //{
-      //  var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
-      //  var exception = exceptionHandlerPathFeature.Error;
-      //  var result = exception.Message ;
-      //  context.Response.ContentType = "application/html";
-      //  await context.Response.WriteAsync(result);
-      //}));
+      app.UseExceptionHandler(a => a.Run(async context =>
+      {
+        IExceptionHandlerPathFeature exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+        Exception exception = exceptionHandlerPathFeature.Error;
+        string result = exception.Message;
+        context.Response.ContentType = "application/html";
+        await context.Response.WriteAsync(result);
+      }));
 
 
       app.UseStaticFiles();

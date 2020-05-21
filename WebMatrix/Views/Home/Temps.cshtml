@@ -1,0 +1,34 @@
+﻿
+@{
+  ViewData["Title"] = "Temps";
+}
+
+<div class="container-fluid" style="background-color:black;">
+  <a href="@Url.Action("Temps", new { id = 0 })" class="btn btn-info btn-icon-split btn-lg" style="margin:10px;">
+    <span class="icon text-white-50" style="width:60px;">
+      <i class="fab fa-mix"></i>
+    </span>
+    <span class="text" style="width:170px;">Horloge</span>
+  </a>
+
+  <a href="@Url.Action("Temps", new { id = 1 })" class="btn btn-info btn-icon-split btn-lg" style="margin:10px;">
+    <span class="icon text-white-50" style="width:60px;">
+      <i class="fas fa-meteor"></i>
+    </span>
+    <span class="text" style="width:170px;">Météo</span>
+  </a>
+
+  <a href="@Url.Action("Temps", new { id = 2 })" class="btn btn-info btn-icon-split btn-lg" style="margin:10px;">
+    <span class="icon text-white-50" style="width:60px;">
+      <i class="fas fa-th-large"></i>
+    </span>
+    <span class="text" style="width:170px;">Date</span>
+  </a>
+
+  <a href="@Url.Action("Temps", new { id = 3 })" class="btn btn-info btn-icon-split btn-lg" style="margin:10px;">
+    <span class="icon text-white-50" style="width:60px;">
+      <i class="fas fa-dragon"></i>
+    </span>
+    <span class="text" style="width:170px;">Binaire</span>
+  </a>
+</div>

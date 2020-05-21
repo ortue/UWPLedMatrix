@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LedMatrix.Classes
+namespace WebMatrix.Classes
 {
   public class Pong
   {

@@ -4,18 +4,15 @@ using System.Linq;
 using System.Threading;
 using WebMatrix.Context;
 
-namespace LedMatrix.Classes
+namespace WebMatrix.Classes
 {
   public class Demo
   {
     /// <summary>
     /// Go
     /// </summary>
-    public static void Go()
+    public static void Go(int? demo)
     {
-      Random random = new Random();
-      int demo = random.Next(0, 2);
-
       switch (demo)
       {
         case 0:
@@ -33,6 +30,9 @@ namespace LedMatrix.Classes
     /// </summary>
     public static void Demo1()
     {
+      // Initialize the led strip
+      Util.Setup();
+
       int task = Util.StartTask();
       int[] bot = new int[20] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -105,6 +105,9 @@ namespace LedMatrix.Classes
     /// </summary>
     public static void Demo2()
     {
+      // Initialize the led strip
+      Util.Setup();
+
       Pong pong = new Pong();
       int task = Util.StartTask();
 

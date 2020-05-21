@@ -1,27 +1,16 @@
 ﻿using LedLibrary.Collection;
-using LedLibrary.Entities;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 
-namespace LedLibrary.Classes
+namespace LedLibrary.Entities
 {
   public class ImageClass
   {
+    public string FileName { get; set; }
     public int Height { get; set; }
     public int Width { get; set; }
-    public int FrameCount
-    {
-      get
-      {
-        if (FrameCount == 0)
-          return 1;
-
-        return FrameCount;
-      }
-      set { FrameCount = value; }
-    }
     public int NbrByte
     {
       get { return Width * Height * 3; }
@@ -33,12 +22,28 @@ namespace LedLibrary.Classes
       get { return FrameCount > 1; }
     }
 
+    private int _frameCount;
+
+    public int FrameCount
+    {
+      get
+      {
+        if (_frameCount == 0)
+          return 1;
+
+        return _frameCount;
+      }
+      set { _frameCount = value; }
+    }
+
     /// <summary>
     /// Constructeur
     /// </summary>
     /// <param name="path"></param>
     public ImageClass(string fileNameOfImage)
     {
+      FileName = fileNameOfImage;
+
       using (Image image = Image.FromFile(fileNameOfImage))
       {
         Size size = new Size(image.Width, image.Height);
@@ -48,9 +53,7 @@ namespace LedLibrary.Classes
         if (ImageAnimator.CanAnimate(image))
         {
           FrameDimension dimension = new FrameDimension(image.FrameDimensionsList[0]);
-          var a = image.GetFrameCount(dimension);
-
-          FrameCount = a;
+          FrameCount = image.GetFrameCount(dimension);
 
           List<byte[]> frames = new List<byte[]>();
 
@@ -79,7 +82,6 @@ namespace LedLibrary.Classes
         for (int x = 0; x < Width; x++)
         {
           Color color = bitmap.GetPixel(x, y);
-
 
           if (frame.Count() > i)
           {

@@ -20,21 +20,6 @@ namespace LedLibrary.Collection
     }
 
     /// <summary>
-    /// FetchAsync
-    /// </summary>
-    /// <param name="path"></param>
-    /// <returns></returns>
-    //private async Task<List<string>> FetchAsync(string path)
-    //{
-    //  string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
-
-    //  StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(root + "\\" + path);
-    //  IReadOnlyList<StorageFile> files = await folder.GetFilesAsync();
-
-    //  return files.Select(f => f.Name).ToList();
-    //}
-
-    /// <summary>
     /// GetName
     /// </summary>
     /// <param name="icon"></param>
