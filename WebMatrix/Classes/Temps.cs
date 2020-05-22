@@ -33,10 +33,8 @@ namespace WebMatrix.Classes
     /// </summary>
     public static void Meteo()
     {
-      ImageClassList meteoImgs = new ImageClassList("MeteoImg");
-      current meteo = new current();
-
       Util.Setup();
+      ImageClassList meteoImgs = new ImageClassList("MeteoImg");
 
       Task.Run(() =>
       {
@@ -45,17 +43,17 @@ namespace WebMatrix.Classes
 
         while (Util.TaskWork(task))
         {
-          if (meteo.weather is currentWeather weather)
+          if (Util.Meteo.weather is currentWeather weather)
             meteoImgs.SetPixel(weather.icon, Util.Context.Pixels);
 
-          Util.Context.Pixels.SetMeteo(meteo);
+          Util.Context.Pixels.SetMeteo(Util.Meteo);
           Util.SetLeds();
           Util.Context.Pixels.Reset();
 
           if (update.AddMinutes(5) < DateTime.Now)
           {
             update = DateTime.Now;
-            meteo = Util.GetMeteo();
+            Util.GetMeteo();
           }
         }
       });

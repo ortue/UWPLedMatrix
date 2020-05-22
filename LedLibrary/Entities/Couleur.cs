@@ -5,19 +5,22 @@ namespace LedLibrary.Entities
   {
     public int FrameCompteur { get; set; }
     public int Position { get; set; }
-    //public Color Color { get; set; }
-
     public byte A { get; set; }
     public byte B { get; set; }
     public byte G { get; set; }
     public byte R { get; set; }
 
+    public bool IsNoir
+    {
+      get { return R == 0 && G == 0 && B == 0; }
+    }
+
     /// <summary>
     /// Constructeur
     /// </summary>
     public Couleur()
-    { 
-    
+    {
+
     }
 
     /// <summary>

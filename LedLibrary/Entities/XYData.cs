@@ -12,10 +12,10 @@ namespace LedLibrary.Entities
     public Color MarkerColor;
     public string Label;
 
-    public XYData(double[] Xs, double[] Ys, float lineWidth = 1, Color? lineColor = null, float markerSize = 3, Color? markerColor = null, string label = null)
+    public XYData(double[] xs, double[] ys, float lineWidth = 1, Color? lineColor = null, float markerSize = 3, Color? markerColor = null, string label = null)
     {
-      Xs = Xs;
-      Ys = Ys;
+      Xs = xs;
+      Ys = ys;
 
       LineWidth = lineWidth;
       MarkerSize = markerSize;

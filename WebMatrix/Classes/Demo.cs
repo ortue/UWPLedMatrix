@@ -1,5 +1,6 @@
 ﻿using LedLibrary.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using WebMatrix.Context;
@@ -107,16 +108,25 @@ namespace WebMatrix.Classes
     {
       // Initialize the led strip
       Util.Setup();
-
       Pong pong = new Pong();
       int task = Util.StartTask();
-
       Couleur scoreColor = new Couleur { R = 127, G = 127, B = 127 };
+      List<KeyValuePair<decimal, decimal>> traine = new List<KeyValuePair<decimal, decimal>>();
+
+      List<Couleur> traineCouleur = new List<Couleur> { new Couleur(), new Couleur { R = 6, G = 6, B = 46 } };
+
+      for (int tr = 0; tr < 2; tr++)
+        traine.Add(new KeyValuePair<decimal, decimal>(pong.X, pong.Y));
 
       while (Util.TaskWork(task))
       {
         //Effacer la balle apres
-        Util.Context.Pixels.GetCoordonnee(pong.X, pong.Y).SetColor();
+        traine.Add(new KeyValuePair<decimal, decimal>(pong.X, pong.Y));
+
+        for (int tr = 0; tr < 2; tr++)
+          Util.Context.Pixels.GetCoordonnee(traine[tr].Key, traine[tr].Value).Couleur = traineCouleur[tr];
+
+        traine.Remove(traine.FirstOrDefault());
 
         //Pointiller du milieux
         for (int i = 1; i < Util.Context.Pixels.Hauteur - 1; i += 2)

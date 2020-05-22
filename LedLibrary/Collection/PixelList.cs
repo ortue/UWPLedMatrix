@@ -52,7 +52,7 @@ namespace LedLibrary.Collection
     {
       //Fond
       foreach (Pixel pixel in this)
-        if (pixel.Couleur.Egal(new Couleur { R = 0, G = 0, B = 0 }))
+        if (pixel.Couleur.IsNoir)
           pixel.SetColor(new Couleur { B = (byte)(5 + pixel.Coord.Y * 2) });
     }
 
@@ -115,8 +115,8 @@ namespace LedLibrary.Collection
       //for (int i = 0; i < 5; i++)
       //  GetCoordonnee(GetTempsCoord(DateTime.Now.Millisecond / (double)100 * 6, i)).SetColor(new Couleur { R = 255 / 2, G = 0 / 2, B = 0 / 2 });//43,78,114
 
-      for (int i = 0; i < 6; i++)
-        GetCoordonnee(GetTempsCoord((DateTime.Now.Millisecond / (double)100 * 6) - i, 9)).SetColor(new Couleur { R = new List<byte> { 128, 64, 32, 16, 8, 4 }[i] });
+      for (int i = 0; i < 9; i++)
+        GetCoordonnee(GetTempsCoord((DateTime.Now.Millisecond / (double)100 * 6) - i, 9)).SetColor(new Couleur { R = new List<byte> { 128, 64, 32, 16, 8, 8, 8, 4, 4 }[i], B = 5 });
 
       //Print(Coordonnee.Get(1, 1, Largeur, Hauteur), DateTime.Now.Second.ToString(), new Color());
     }
@@ -272,19 +272,19 @@ namespace LedLibrary.Collection
     /// <param name="degree"></param>
     /// <param name="rayon"></param>
     /// <returns></returns>
-    //private Coordonnee GetCercleCoord(Coordonnee centre, int degree, int rayon)
-    //{
-    //	Coordonnee coord = new Coordonnee(Largeur, Hauteur);
+    private Coordonnee GetCercleCoord(Coordonnee centre, int degree, int rayon)
+    {
+      Coordonnee coord = new Coordonnee(Largeur, Hauteur);
 
-    //	if (degree >= 0 && degree <= 180)
-    //		coord.X = centre.X + (int)(rayon * Math.Sin(Math.PI * degree / 180));
-    //	else
-    //		coord.X = centre.X - (int)(rayon * -Math.Sin(Math.PI * degree / 180)) - 1;
+      if (degree >= 0 && degree <= 180)
+        coord.X = centre.X + (int)(rayon * Math.Sin(Math.PI * degree / 180));
+      else
+        coord.X = centre.X - (int)(rayon * -Math.Sin(Math.PI * degree / 180)) - 1;
 
-    //	coord.Y = centre.Y - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
+      coord.Y = centre.Y - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
 
-    //	return CheckCoord(coord);
-    //}
+      return coord.CheckCoord();
+    }
 
     /// <summary>
     /// Print

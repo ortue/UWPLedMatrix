@@ -11,11 +11,12 @@ namespace WebMatrix.Context
 {
   public static class Util
   {
-    public static HttpClient Client = new HttpClient() { BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather?q=Sainte-Marthe-sur-le-Lac&mode=xml&units=metric&appid=52534a6f666e45fb30ace3343cea4a47") };
-
     public static int TaskNbr { get; set; }
+    public static current Meteo { get; set; }
     public static TaskGoList TaskGo { get; set; }
     public static LedMatrixContext Context { get; set; }
+
+    public static HttpClient Client = new HttpClient() { BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather?q=Sainte-Marthe-sur-le-Lac&mode=xml&units=metric&appid=52534a6f666e45fb30ace3343cea4a47") };
 
     /// <summary>
     /// Start Task
@@ -53,6 +54,8 @@ namespace WebMatrix.Context
     {
       Context = new LedMatrixContext();
       TaskGo = new TaskGoList();
+      
+      GetMeteo();
     }
 
     /// <summary>
@@ -68,9 +71,9 @@ namespace WebMatrix.Context
     /// GetMeteo
     /// </summary>
     /// <returns></returns>
-    public static current GetMeteo()
+    public static void GetMeteo()
     {
-      return Task.Run(() =>
+      Meteo = Task.Run(() =>
       {
         Task<HttpResponseMessage> response = Client.GetAsync(Client.BaseAddress);
 
