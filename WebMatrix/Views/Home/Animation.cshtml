@@ -1,7 +1,12 @@
-﻿
+﻿@using LedLibrary.Entities
+@model WebMatrix.Models.AnimationModel
 @{
-    ViewData["Title"] = "Animation";
+  ViewData["Title"] = "Animation";
 }
 
-<h1>Animation</h1>
-
+@foreach (ImageClass animation in Model.Animations)
+{
+  <a href="@Url.Action("Animation", new { id = animation.FileNameID })" class="btn @Model.IsSelected(animation.FileNameID) btn-circle btn-lg" style="margin:6px;">
+    <img src="~/@animation.FileName" style="width: 100%;height: 100%;object-fit: contain; " />
+  </a>
+}

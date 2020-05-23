@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 
 namespace LedLibrary.Entities
@@ -11,11 +12,17 @@ namespace LedLibrary.Entities
     public string FileName { get; set; }
     public int Height { get; set; }
     public int Width { get; set; }
+    public CouleurList Couleurs { get; set; }
+
+    public string FileNameID
+    {
+      get { return Path.GetFileNameWithoutExtension(FileName); }
+    }
+
     public int NbrByte
     {
       get { return Width * Height * 3; }
     }
-    public CouleurList Couleurs { get; set; }
 
     public bool Animation
     {
@@ -23,7 +30,6 @@ namespace LedLibrary.Entities
     }
 
     private int _frameCount;
-
     public int FrameCount
     {
       get
@@ -46,9 +52,9 @@ namespace LedLibrary.Entities
 
       using (Image image = Image.FromFile(fileNameOfImage))
       {
-        Size size = new Size(image.Width, image.Height);
-        Height = size.Height;
-        Width = size.Width;
+        //Size size = new Size(image.Width, image.Height);
+        Height = image.Height;
+        Width = image.Width;
 
         if (ImageAnimator.CanAnimate(image))
         {

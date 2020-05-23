@@ -16,7 +16,8 @@ namespace LedLibrary.Collection
     public ImageClassList(string path)
     {
       foreach (string file in Directory.GetFiles(path))
-        Add(new ImageClass(file));
+        if (file.ToUpper().Contains(".GIF"))
+          Add(new ImageClass(file));
     }
 
     /// <summary>
@@ -36,7 +37,7 @@ namespace LedLibrary.Collection
     /// <param name="pixels"></param>
     public void SetPixel(string icon, PixelList pixels)
     {
-      if(this.SingleOrDefault(a => a.FileName.Contains(icon)) is ImageClass imageClass)
+      if (this.SingleOrDefault(a => a.FileName.Contains(icon)) is ImageClass imageClass)
         imageClass.SetÞixelFrame(0, pixels, 0, false);
     }
   }

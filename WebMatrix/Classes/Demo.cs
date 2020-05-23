@@ -115,7 +115,7 @@ namespace WebMatrix.Classes
 
       List<Couleur> traineCouleur = new List<Couleur> { new Couleur(), new Couleur { R = 6, G = 6, B = 46 } };
 
-      for (int tr = 0; tr < 2; tr++)
+      for (int tr = 0; tr < 1; tr++)
         traine.Add(new KeyValuePair<decimal, decimal>(pong.X, pong.Y));
 
       while (Util.TaskWork(task))
@@ -123,7 +123,7 @@ namespace WebMatrix.Classes
         //Effacer la balle apres
         traine.Add(new KeyValuePair<decimal, decimal>(pong.X, pong.Y));
 
-        for (int tr = 0; tr < 2; tr++)
+        for (int tr = 0; tr < 1; tr++)
           Util.Context.Pixels.GetCoordonnee(traine[tr].Key, traine[tr].Value).Couleur = traineCouleur[tr];
 
         traine.Remove(traine.FirstOrDefault());

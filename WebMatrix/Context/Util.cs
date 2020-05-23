@@ -14,6 +14,7 @@ namespace WebMatrix.Context
     public static int TaskNbr { get; set; }
     public static current Meteo { get; set; }
     public static TaskGoList TaskGo { get; set; }
+    public static ImageClass LastAutorun { get; set; }
     public static LedMatrixContext Context { get; set; }
 
     public static HttpClient Client = new HttpClient() { BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather?q=Sainte-Marthe-sur-le-Lac&mode=xml&units=metric&appid=52534a6f666e45fb30ace3343cea4a47") };

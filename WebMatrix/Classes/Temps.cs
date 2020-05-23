@@ -34,7 +34,7 @@ namespace WebMatrix.Classes
     public static void Meteo()
     {
       Util.Setup();
-      ImageClassList meteoImgs = new ImageClassList("MeteoImg");
+      ImageClassList meteoImgs = new ImageClassList("Images/Meteo");
 
       Task.Run(() =>
       {
