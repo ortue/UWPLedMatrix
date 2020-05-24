@@ -29,12 +29,19 @@ namespace WebMatrix.Controllers
 
       Task.Run(() => Demo.Go(id));
 
+      //Éteindre le raspberry linux
+      if (id == 1000)
+        Process.Start(new ProcessStartInfo()
+        {
+          FileName = "sudo",
+          Arguments = "shutdown -h now"
+        });
+
       return View();
     }
 
     public IActionResult Spectrum(int? id)
     {
-      System.Diagnostics.Process.Start(new ProcessStartInfo() { FileName = "sudo", Arguments = "shutdown -h" });
 
 
       return View();

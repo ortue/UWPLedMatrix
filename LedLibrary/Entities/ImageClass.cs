@@ -64,7 +64,10 @@ namespace LedLibrary.Entities
           List<byte[]> frames = new List<byte[]>();
 
           for (int i = 0; i < FrameCount; i++)
-            frames.Add(BitmapToByte(image));
+          {
+            image.SelectActiveFrame(dimension, i);
+            frames.Add(BitmapToByte((Image)image.Clone()));
+          }
 
           Couleurs = new CouleurList(frames);
         }
@@ -81,7 +84,7 @@ namespace LedLibrary.Entities
     public byte[] BitmapToByte(Image image)
     {
       int i = 0;
-      byte[] frame = new byte[NbrByte];
+      byte[] octets = new byte[NbrByte];
       Bitmap bitmap = new Bitmap((Image)image.Clone());
 
       for (int y = 0; y < Height; y++)
@@ -89,18 +92,18 @@ namespace LedLibrary.Entities
         {
           Color color = bitmap.GetPixel(x, y);
 
-          if (frame.Count() > i)
+          if (octets.Count() > i)
           {
             //int argb = 0;
 
             //frame[i++] = color.A;
-            frame[i++] = color.R;
-            frame[i++] = color.G;
-            frame[i++] = color.B;
+            octets[i++] = color.R;
+            octets[i++] = color.G;
+            octets[i++] = color.B;
           }
         }
 
-      return frame;
+      return octets;
     }
 
     /// <summary>
