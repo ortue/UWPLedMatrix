@@ -13,6 +13,7 @@ namespace WebMatrix.Context
   {
     public static int TaskNbr { get; set; }
     public static current Meteo { get; set; }
+    public static int Background { get; set; }
     public static TaskGoList TaskGo { get; set; }
     public static ImageClass LastAutorun { get; set; }
     public static LedMatrixContext Context { get; set; }
@@ -55,7 +56,9 @@ namespace WebMatrix.Context
     {
       Context = new LedMatrixContext();
       TaskGo = new TaskGoList();
-      
+
+      Background = 0;
+
       GetMeteo();
     }
 

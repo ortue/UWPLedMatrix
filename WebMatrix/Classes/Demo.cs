@@ -1,4 +1,6 @@
-﻿using LedLibrary.Entities;
+﻿using LedLibrary.Classes;
+using LedLibrary.Entities;
+using Microsoft.CodeAnalysis.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,10 @@ namespace WebMatrix.Classes
         case 1:
           Demo2();
           break;
+
+        case 2:
+          Demo3();
+          break;
       }
     }
 
@@ -33,8 +39,8 @@ namespace WebMatrix.Classes
     {
       // Initialize the led strip
       Util.Setup();
-
       int task = Util.StartTask();
+
       int[] bot = new int[20] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
       while (Util.TaskWork(task))
@@ -102,31 +108,20 @@ namespace WebMatrix.Classes
     }
 
     /// <summary>
-    /// Demo2
+    /// Pong
     /// </summary>
     public static void Demo2()
     {
       // Initialize the led strip
       Util.Setup();
-      Pong pong = new Pong();
       int task = Util.StartTask();
+      Pong pong = new Pong();
       Couleur scoreColor = new Couleur { R = 127, G = 127, B = 127 };
-      List<KeyValuePair<decimal, decimal>> traine = new List<KeyValuePair<decimal, decimal>>();
-
-      List<Couleur> traineCouleur = new List<Couleur> { new Couleur(), new Couleur { R = 6, G = 6, B = 46 } };
-
-      for (int tr = 0; tr < 1; tr++)
-        traine.Add(new KeyValuePair<decimal, decimal>(pong.X, pong.Y));
 
       while (Util.TaskWork(task))
       {
         //Effacer la balle apres
-        traine.Add(new KeyValuePair<decimal, decimal>(pong.X, pong.Y));
-
-        for (int tr = 0; tr < 1; tr++)
-          Util.Context.Pixels.GetCoordonnee(traine[tr].Key, traine[tr].Value).Couleur = traineCouleur[tr];
-
-        traine.Remove(traine.FirstOrDefault());
+        Util.Context.Pixels.GetCoordonnee(pong.X, pong.Y).SetColor();
 
         //Pointiller du milieux
         for (int i = 1; i < Util.Context.Pixels.Hauteur - 1; i += 2)
@@ -168,10 +163,12 @@ namespace WebMatrix.Classes
           int p1Int = (int)Math.Round(pong.Pad1, 0);
           int p2Int = (int)Math.Round(pong.Pad2, 0);
 
-          if (!(Util.Context.Pixels.GetCoordonnee(1, p1Int + i).Couleur == scoreColor && paddle == new Couleur()))
+          //Pour effacer la palette quand on la bouge, sans effacer le score
+          if (!(Util.Context.Pixels.GetCoordonnee(1, p1Int + i).Couleur.Egal(scoreColor) && paddle.IsNoir))
             Util.Context.Pixels.GetCoordonnee(1, p1Int + i).SetColor(paddle);
 
-          if (!(Util.Context.Pixels.GetCoordonnee(18, p2Int + i).Couleur == scoreColor && paddle == new Couleur()))
+          //Pour effacer la palette quand on la bouge, sans effacer le score
+          if (!(Util.Context.Pixels.GetCoordonnee(18, p2Int + i).Couleur.Egal(scoreColor) && paddle.IsNoir))
             Util.Context.Pixels.GetCoordonnee(18, p2Int + i).SetColor(paddle);
         }
 
@@ -190,6 +187,37 @@ namespace WebMatrix.Classes
         if (pong.Vitesse > 0)
           using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
             waitHandle.Wait(TimeSpan.FromMilliseconds(pong.Vitesse));
+      }
+    }
+
+    /// <summary>
+    /// Cercle
+    /// </summary>
+    public static void Demo3()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+
+      int i = 0;
+
+      while (Util.TaskWork(task))
+      {
+        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 5, Y = 5 }, i, 5)).SetColor(new Couleur { R = 127, B = 5 });
+        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 14, Y = 5 }, i, 5)).SetColor(new Couleur { R = 127, B = 5 });
+        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 4, Y = 14 }, i, 5)).SetColor(new Couleur { R = 127, B = 5 });
+        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 14, Y = 14 }, i, 5)).SetColor(new Couleur { R = 127, B = 5 });
+
+        i += 5;
+
+        if (i > 360)
+          i = 0;
+
+        //Background
+        //Util.Context.Pixels.BackGround();
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
+
       }
     }
   }

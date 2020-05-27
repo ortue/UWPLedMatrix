@@ -159,7 +159,7 @@ namespace WebMatrix.Classes
       {
         YY *= Deviation();
         but = Score();
-        XX -= (XX * 2);
+        XX -= RebonPalette();
 
         if (Vitesse > 0)
           Vitesse--;
@@ -173,6 +173,18 @@ namespace WebMatrix.Classes
       }
 
       return but;
+    }
+
+    /// <summary>
+    /// Vérifier que la balle ne rebondisse pas plus d'une fois.
+    /// </summary>
+    /// <returns></returns>
+    public decimal RebonPalette()
+    {
+      if (XX > 0 && X > 10 || XX < 0 && X < 10)
+        return XX * 2;
+
+      return 0;
     }
 
     /// <summary>

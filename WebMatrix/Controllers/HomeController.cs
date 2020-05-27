@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
-using LedLibrary.Collection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebMatrix.Classes;
@@ -24,25 +24,35 @@ namespace WebMatrix.Controllers
       if (id == null && Util.TaskNbr == 0)
       {
         Random random = new Random();
-        id = random.Next(0, 2);
+        id = random.Next(0, 3);
       }
 
       Task.Run(() => Demo.Go(id));
 
       //Éteindre le raspberry linux
       if (id == 1000)
+      {
+        Process.Start(new ProcessStartInfo()
+        {
+          FileName = "pkill",
+          Arguments = "--oldest chrome"
+        });
+
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        waitHandle.Wait(TimeSpan.FromSeconds(5));
+
         Process.Start(new ProcessStartInfo()
         {
           FileName = "sudo",
           Arguments = "shutdown -h now"
         });
+      }
 
       return View();
     }
 
     public IActionResult Spectrum(int? id)
     {
-
 
       return View();
     }
@@ -67,8 +77,6 @@ namespace WebMatrix.Controllers
     {
       AnimationModel model = new AnimationModel(id);
 
-
-
       return View(model);
     }
 
@@ -77,7 +85,5 @@ namespace WebMatrix.Controllers
     {
       return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-
-
   }
 }

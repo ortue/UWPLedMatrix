@@ -3,7 +3,6 @@ using LedLibrary.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 
 namespace LedLibrary.Collection
@@ -48,12 +47,40 @@ namespace LedLibrary.Collection
     /// <summary>
     /// BackGround
     /// </summary>
-    public void BackGround()
+    public void BackGround(int bg = 2)
     {
-      //Fond
-      foreach (Pixel pixel in this)
-        if (pixel.Couleur.IsNoir)
-          pixel.SetColor(new Couleur { B = (byte)(5 + pixel.Coord.Y * 2) });
+      switch (bg)
+      {
+        case 1:
+          Random r = new Random();
+
+          foreach (Pixel pixel in this)
+            if (pixel.Couleur.IsNoir)
+              pixel.SetColor(new Couleur { B = (byte)r.Next(5, 20) });
+          break;
+
+        case 2:
+          int sec = DateTime.Now.Millisecond / 50;
+
+          List<int> b = new List<int>
+          {
+            2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+            11, 10, 9, 8, 7, 6, 5, 4, 3, 2,
+            2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+            11, 10, 9, 8, 7, 6, 5, 4, 3, 2
+          };
+
+          foreach (Pixel pixel in this)
+            if (pixel.Couleur.IsNoir)
+              pixel.SetColor(new Couleur { B = (byte)b[sec + pixel.Coord.Y] });
+          break;
+
+        default:
+          foreach (Pixel pixel in this)
+            if (pixel.Couleur.IsNoir)
+              pixel.SetColor(new Couleur { B = (byte)(5 + pixel.Coord.Y * 2) });
+          break;
+      }
     }
 
     /// <summary>
@@ -272,7 +299,7 @@ namespace LedLibrary.Collection
     /// <param name="degree"></param>
     /// <param name="rayon"></param>
     /// <returns></returns>
-    private Coordonnee GetCercleCoord(Coordonnee centre, int degree, int rayon)
+    public Coordonnee GetCercleCoord(Coordonnee centre, int degree, int rayon)
     {
       Coordonnee coord = new Coordonnee(Largeur, Hauteur);
 
