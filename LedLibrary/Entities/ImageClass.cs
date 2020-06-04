@@ -50,30 +50,40 @@ namespace LedLibrary.Entities
     {
       FileName = fileNameOfImage;
 
-      using (Image image = Image.FromFile(fileNameOfImage))
+      using (Image image = Image.FromFile(FileName))
       {
-        //Size size = new Size(image.Width, image.Height);
         Height = image.Height;
         Width = image.Width;
 
-        if (ImageAnimator.CanAnimate(image))
-        {
-          FrameDimension dimension = new FrameDimension(image.FrameDimensionsList[0]);
-          FrameCount = image.GetFrameCount(dimension);
-
-          List<byte[]> frames = new List<byte[]>();
-
-          for (int i = 0; i < FrameCount; i++)
-          {
-            image.SelectActiveFrame(dimension, i);
-            frames.Add(BitmapToByte((Image)image.Clone()));
-          }
-
-          Couleurs = new CouleurList(frames);
-        }
-        else
-          Couleurs = new CouleurList(BitmapToByte(image));
+        FrameDimension dimension = new FrameDimension(image.FrameDimensionsList[0]);
+        FrameCount = image.GetFrameCount(dimension);
       }
+    }
+
+    /// <summary>
+    /// Parses individual Bitmap frames from a multi-frame Bitmap into an array of Bitmaps
+    /// </summary>
+    /// <param name="Animation"></param>
+    /// <returns></returns>
+    private Bitmap[] ParseFrames(Bitmap Animation)
+    {
+      // Allocate a Bitmap array to hold individual frames from the animation
+      Bitmap[] Frames = new Bitmap[FrameCount];
+
+      // Copy the animation Bitmap frames into the Bitmap array
+      for (int Index = 0; Index < FrameCount; Index++)
+      {
+        // Set the current frame within the animation to be copied into the Bitmap array element
+        Animation.SelectActiveFrame(FrameDimension.Time, Index);
+
+        // Create a new Bitmap element within the Bitmap array in which to copy the next frame
+        Frames[Index] = new Bitmap(Animation.Size.Width, Animation.Size.Height);
+
+        // Copy the current animation frame into the new Bitmap array element
+        Graphics.FromImage(Frames[Index]).DrawImage(Animation, new Point(0, 0));
+      }
+
+      return Frames;
     }
 
     /// <summary>
@@ -81,11 +91,11 @@ namespace LedLibrary.Entities
     /// </summary>
     /// <param name="image"></param>
     /// <returns></returns>
-    public byte[] BitmapToByte(Image image)
+    public byte[] BitmapToByte(Bitmap bitmap)
     {
       int i = 0;
       byte[] octets = new byte[NbrByte];
-      Bitmap bitmap = new Bitmap((Image)image.Clone());
+      //Bitmap bitmap = new Bitmap((Image)image.Clone());
 
       for (int y = 0; y < Height; y++)
         for (int x = 0; x < Width; x++)
@@ -111,8 +121,23 @@ namespace LedLibrary.Entities
     /// </summary>
     /// <param name="frame"></param>
     /// <param name="pixels"></param>
-    public void SetÞixelFrame(int frame, PixelList pixels, int slide, bool fadeOut = false)
+    public void SetÞixelFrame(int frame, PixelList pixels, int slide, bool fadeOut)
     {
+      using (Image image = Image.FromFile(FileName))
+      {
+        List<byte[]> frames = new List<byte[]>();
+
+        if (FrameCount > 1)
+        {
+          foreach (Bitmap bitmap in ParseFrames((Bitmap)image))
+            frames.Add(BitmapToByte(bitmap));
+        }
+        else
+          frames.Add(BitmapToByte((Bitmap)image));
+
+        Couleurs = new CouleurList(frames);
+      }
+
       int heightOffset = (pixels.Hauteur - Height) / 2;
       int widthOffset = (pixels.Largeur - Width) / 2;
       int newLine = pixels.Largeur - Width;

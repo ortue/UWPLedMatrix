@@ -19,42 +19,66 @@ namespace WebMatrix.Models
     public AnimationModel(string id)
     {
       FileNameID = id;
+      Util.Setup();
+      Util.Context.Autorun = false;
       Animations = new ImageClassList("Images/Animation");
 
-      if (Animations.SingleOrDefault(a => a.FileNameID == FileNameID) is ImageClass imageClass)
-        ShowAnimation(imageClass);
+      if (string.IsNullOrWhiteSpace(FileNameID))
+      {
+        Task.Run(() =>
+        {
+          Util.Context.Autorun = true;
+
+          int i = 0;
+
+          while (Util.Context.Autorun)
+          {
+            FileNameID = Animations[i++].FileNameID;
+            ShowAnimation();
+
+            using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
+              waitHandle.Wait(TimeSpan.FromSeconds(10));
+
+            if (Animations.Count <= i)
+              i = 0;
+          }
+        });
+      }
+      else
+        ShowAnimation();
     }
 
     /// <summary>
     /// ShowAnimation
     /// </summary>
     /// <param name="imageClass"></param>
-    private void ShowAnimation(ImageClass imageClass)
+    private void ShowAnimation()
     {
-      Util.Setup();
-
-      Task.Run(() =>
+      if (Animations.SingleOrDefault(a => a.FileNameID == FileNameID) is ImageClass imageClass)
       {
-        int task = Util.StartTask();
-        int frame = 0;
-
-        //Fade Out
-        if (Util.LastAutorun is ImageClass lastAutoRun)
+        Task.Run(() =>
         {
-          for (int slide = 0; slide < lastAutoRun.Width; slide++)
-            SetAnimation(lastAutoRun, frame++, slide, true);
-        }
+          int task = Util.StartTask();
+          int frame = 0;
 
-        //Fade In
-        for (int slide = imageClass.Width; slide >= 0; slide--)
-          SetAnimation(imageClass, frame++, slide);
+          //Fade Out
+          if (Animations.SingleOrDefault(a => a.FileNameID == Util.LastAutoRun) is ImageClass lastAutoRun)
+          {
+            for (int slide = 0; slide < lastAutoRun.Width; slide++)
+              SetAnimation(lastAutoRun, frame++, slide, true);
+          }
 
-        Util.LastAutorun = imageClass;
+          //Fade In
+          for (int slide = imageClass.Width; slide >= 0; slide--)
+            SetAnimation(imageClass, frame++, slide);
 
-        //Animation
-        while (imageClass.Animation && Util.TaskWork(task))
-          SetAnimation(imageClass, frame++, 0);
-      });
+          Util.LastAutoRun = imageClass.FileNameID;
+
+          //Animation
+          while (imageClass.Animation && Util.TaskWork(task))
+            SetAnimation(imageClass, frame++, 0);
+        });
+      }
     }
 
     /// <summary>

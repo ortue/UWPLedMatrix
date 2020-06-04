@@ -35,11 +35,11 @@ namespace WebMatrix.Controllers
         Process.Start(new ProcessStartInfo()
         {
           FileName = "pkill",
-          Arguments = "--oldest chrome"
+          Arguments = "--oldest chromium"
         });
 
         using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-        waitHandle.Wait(TimeSpan.FromSeconds(5));
+        waitHandle.Wait(TimeSpan.FromSeconds(2));
 
         Process.Start(new ProcessStartInfo()
         {

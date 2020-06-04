@@ -16,8 +16,8 @@ namespace LedLibrary.Collection
     public ImageClassList(string path)
     {
       foreach (string file in Directory.GetFiles(path))
-        if (file.ToUpper().Contains(".GIF"))
-          Add(new ImageClass(file));
+        if (file.ToUpper().Contains("GIF"))
+          Add(new ImageClass(file));    
     }
 
     /// <summary>

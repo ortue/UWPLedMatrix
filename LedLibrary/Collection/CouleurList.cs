@@ -9,6 +9,14 @@ namespace LedLibrary.Collection
 		/// <summary>
 		/// Constructeur
 		/// </summary>
+		public CouleurList()
+		{ 
+		
+		}
+
+		/// <summary>
+		/// Constructeur
+		/// </summary>
 		/// <param name="pixel"></param>
 		public CouleurList(byte[] pixels)
 		{

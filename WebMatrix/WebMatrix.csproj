@@ -18,6 +18,17 @@
 
   <ItemGroup>
     <None Remove="Images\1up.png" />
+    <None Remove="Images\Animation\1up.png" />
+    <None Remove="Images\Animation\bioniccommando.png" />
+    <None Remove="Images\Animation\GodOfPoverty.png" />
+    <None Remove="Images\Animation\KoopaTroopaShellGreen.png" />
+    <None Remove="Images\Animation\LuigiStanding.png" />
+    <None Remove="Images\Animation\MagicMushroom.png" />
+    <None Remove="Images\Animation\Mario.Bak" />
+    <None Remove="Images\Animation\MarioStanding.png" />
+    <None Remove="Images\Animation\megaman.png" />
+    <None Remove="Images\Animation\ZeldaSpriteFood.png" />
+    <None Remove="Images\Animation\ZeldaSpriteHeartContainer.png" />
     <None Remove="Images\bioniccommando.png" />
     <None Remove="Images\BlackMageLeft.gif" />
     <None Remove="Images\Cecil.gif" />
@@ -59,8 +70,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Accord.Math" Version="3.8.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+    <PackageReference Include="Accord.Math" Version="3.8.2-alpha" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
     <PackageReference Include="NAudio" Version="1.10.0" />
     <PackageReference Include="Unosquare.Raspberry.IO" Version="0.27.0" />
     <PackageReference Include="Unosquare.WiringPi" Version="0.5.0" />
@@ -69,25 +80,36 @@
   <ItemGroup>
     <ProjectReference Include="..\LedLibrary\LedLibrary.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Images\Animation\1up.png">
+    <None Update="Images\Animation\1up.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\bioniccommando.png">
+    <None Update="Images\Animation\bioniccommando.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\BlackMageLeft.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\Bloober.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\BuzzyBeetleDark.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\Cecil.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\CheepCheepRed.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\ChefPeterPepperF.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\Commyloose.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\Enemy01.gif">
@@ -99,25 +121,40 @@
     <None Update="Images\Animation\Enterprise.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Images\Animation\GametRedL.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Images\Animation\GeegaOrangeR.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\GodOfPoverty.png">
+    <None Update="Images\Animation\GodOfPoverty.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\HighJump.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\JumpBlock.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\KobilR.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\KoopaTroopaShellGreen.png">
+    <None Update="Images\Animation\KoopaTroopaShellGreen.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\LittleGoomba.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\LuigiStanding.png">
+    <None Update="Images\Animation\LuigiStanding.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\MagicMushroom.png">
+    <None Update="Images\Animation\MagicMushroom.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\MagicWing.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\MainCharacterF.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\Mario.gif">
@@ -126,16 +163,28 @@
     <None Update="Images\Animation\MarioSmallR.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\MarioStanding.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Images\Animation\MarioWalkingR.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\megaman.png">
+    <None Update="Images\Animation\megaman.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\MrEggL.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\MrHotDogL.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\NettlerL.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\POWD.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\QuestionBlock.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\QuestionBlock2.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\ScrewAttack.gif">
@@ -156,6 +205,9 @@
     <None Update="Images\Animation\ToadSmallR.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Images\Animation\WeaponEnergyBall.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Images\Animation\WhiteMage-Walk-Front.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -165,31 +217,52 @@
     <None Update="Images\Animation\ZeldaSpriteArmos.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Images\Animation\ZeldaSpriteEnemyCloud.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Images\Animation\ZeldaSpriteFairy.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\ZeldaSpriteFire.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\ZeldaSpriteFood.png">
+    <None Update="Images\Animation\ZeldaSpriteFood.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\ZeldaSpriteHeart.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\ZeldaSpriteHeartContainer.png">
+    <None Update="Images\Animation\ZeldaSpriteHeartContainer.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\ZeldaSpriteKeeseBlue.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\ZeldaSpriteLinkFront.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Images\Animation\ZeldaSpriteLinkLeft.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Images\Animation\ZeldaSpriteOctorokRedDown.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\ZeldaSpriteRopeLeft.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Animation\ZeldaSpriteStalfos.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Images\Animation\ZeldaSpriteTektiteRed.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Images\Animation\ZeldaSpriteTriforce.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\ZeldaSpriteWallMasterUL.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Animation\ZoomerRed.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Meteo\01d.gif">

@@ -6,7 +6,7 @@
 
 @foreach (ImageClass animation in Model.Animations)
 {
-  <a href="@Url.Action("Animation", new { id = animation.FileNameID })" class="btn @Model.IsSelected(animation.FileNameID) btn-circle btn-lg" style="margin:6px;">
+  <a href="@Url.Action("Animation", new { id = animation.FileNameID })" class="btn @Model.IsSelected(animation.FileNameID) btn-circle btn-lg" style="margin:4px;">
     <img src="~/@animation.FileName" style="width: 100%;height: 100%;object-fit: contain; " />
   </a>
 }

@@ -55,6 +55,25 @@ namespace LedLibrary.Entities
     }
 
     /// <summary>
+    /// Constructeur
+    /// </summary>
+    /// <param name="frameCompteur"></param>
+    /// <param name="position"></param>
+    /// <param name="r"></param>
+    /// <param name="g"></param>
+    /// <param name="b"></param>
+    public Couleur(int frameCompteur, int position, int r, int g, int b)
+    {
+      FrameCompteur = frameCompteur;
+      Position = position;
+
+      //A = A;
+      R = (byte)r;
+      G = (byte)g;
+      B = (byte)b;
+    }
+
+    /// <summary>
     /// Get
     /// </summary>
     /// <param name="r"></param>
