@@ -8,7 +8,6 @@ namespace WebMatrix.Context
   {
     public PixelList Pixels { get; set; }
     public DotStarStrip PixelStrip { get; set; }
-    public bool Autorun { get; set; }
 
     /// <summary>
     /// Nombre de Led de Largeur par defaut

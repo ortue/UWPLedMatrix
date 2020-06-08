@@ -19,19 +19,17 @@ namespace WebMatrix.Models
     public AnimationModel(string id)
     {
       FileNameID = id;
-      Util.Setup();
-      Util.Context.Autorun = false;
       Animations = new ImageClassList("Images/Animation");
 
-      if (string.IsNullOrWhiteSpace(FileNameID))
+      if (string.IsNullOrWhiteSpace(FileNameID) && !Util.Autorun)
       {
         Task.Run(() =>
         {
-          Util.Context.Autorun = true;
+          Util.Autorun = true;
 
           int i = 0;
 
-          while (Util.Context.Autorun)
+          while (Util.Autorun)
           {
             FileNameID = Animations[i++].FileNameID;
             ShowAnimation();
@@ -44,8 +42,12 @@ namespace WebMatrix.Models
           }
         });
       }
-      else
+      else if (!string.IsNullOrWhiteSpace(FileNameID))
+      {
+        Util.Autorun = false;
+
         ShowAnimation();
+      }
     }
 
     /// <summary>
@@ -56,6 +58,8 @@ namespace WebMatrix.Models
     {
       if (Animations.SingleOrDefault(a => a.FileNameID == FileNameID) is ImageClass imageClass)
       {
+        Util.Setup();
+
         Task.Run(() =>
         {
           int task = Util.StartTask();

@@ -1,5 +1,6 @@
 ﻿using LedLibrary.Classes;
 using LedLibrary.Entities;
+using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.CodeAnalysis.Operations;
 using System;
 using System.Collections.Generic;
@@ -200,13 +201,22 @@ namespace WebMatrix.Classes
       int task = Util.StartTask();
 
       int i = 0;
+      int j = 0;
+      int k = 0;
+      int l = 0;
 
       while (Util.TaskWork(task))
       {
         Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 5, Y = 5 }, i, 5)).SetColor(new Couleur { R = 127, B = 5 });
-        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 14, Y = 5 }, i, 5)).SetColor(new Couleur { R = 127, B = 5 });
-        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 4, Y = 14 }, i, 5)).SetColor(new Couleur { R = 127, B = 5 });
-        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 14, Y = 14 }, i, 5)).SetColor(new Couleur { R = 127, B = 5 });
+
+        j = 360 - i;
+        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 14, Y = 5 }, j, 5)).SetColor(new Couleur { R = 127, B = 5 });
+
+        k = (180 + 360) % 360 - i;
+        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 5, Y = 14 }, k, 5)).SetColor(new Couleur { R = 127, B = 5 });
+
+        l = (180 + i) % 360;
+        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 14, Y = 14 }, l, 5)).SetColor(new Couleur { R = 127, B = 5 });
 
         i += 5;
 

@@ -199,9 +199,6 @@
     <None Update="Images\Animation\spinywalk.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\Spiral.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Images\Animation\ToadSmallR.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

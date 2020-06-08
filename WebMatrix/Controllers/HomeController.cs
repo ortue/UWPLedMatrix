@@ -27,6 +27,9 @@ namespace WebMatrix.Controllers
         id = random.Next(0, 3);
       }
 
+      if (id != null)
+        Util.Autorun = false;
+
       Task.Run(() => Demo.Go(id));
 
       //Éteindre le raspberry linux
@@ -53,19 +56,23 @@ namespace WebMatrix.Controllers
 
     public IActionResult Spectrum(int? id)
     {
+      //Util.Autorun = false;
 
       return View();
     }
 
     public IActionResult Temps(int? id)
     {
+
       switch (id)
       {
         case 0:
+          Util.Autorun = false;
           Classes.Temps.Horloge();
           break;
 
         case 1:
+          Util.Autorun = false;
           Classes.Temps.Meteo();
           break;
       }
