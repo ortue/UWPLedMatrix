@@ -196,7 +196,7 @@ namespace WebMatrix.Classes
     /// </summary>
     public static void Demo3()
     {
-      // Initialize the led strip
+       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
 
