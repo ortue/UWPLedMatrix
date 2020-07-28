@@ -91,16 +91,16 @@ namespace LedLibrary.Entities
     /// </summary>
     public void FramePad(int? left, int? right, int? top, int? bottom)
     {
-      if (left != null) 
+      if (left != null)
         padL = (int)left;
 
-      if (right != null) 
+      if (right != null)
         padR = (int)right;
 
-      if (top != null) 
+      if (top != null)
         padT = (int)top;
 
-      if (bottom != null) 
+      if (bottom != null)
         padB = (int)bottom;
 
       graphPos = new Point(padL, padT);
@@ -458,7 +458,7 @@ namespace LedLibrary.Entities
       }
       catch (Exception ex)
       {
-        System.Console.WriteLine("Exception plotting");
+        System.Console.WriteLine("Exception plotting " + ex.ToString());
       }
 
       gfxGraph.SmoothingMode = originalSmoothingMode;

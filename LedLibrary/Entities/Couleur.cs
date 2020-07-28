@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace LedLibrary.Entities
 {
   public class Couleur
@@ -86,7 +88,7 @@ namespace LedLibrary.Entities
     }
 
     /// <summary>
-    /// 
+    /// FromArgb
     /// </summary>
     /// <param name="Red"></param>
     /// <param name="Green"></param>
@@ -98,7 +100,21 @@ namespace LedLibrary.Entities
     }
 
     /// <summary>
-    /// 
+    /// Rnd
+    /// </summary>
+    /// <returns></returns>
+    public static Couleur Rnd()
+    {
+      Random random = new Random();
+      int r = random.Next(0, 127);
+      int g = random.Next(0, 127);
+      int b = random.Next(0, 127);
+
+      return FromArgb((byte)r, (byte)g, (byte)b);
+    }
+
+    /// <summary>
+    /// Egal
     /// </summary>
     /// <param name="color"></param>
     /// <returns></returns>

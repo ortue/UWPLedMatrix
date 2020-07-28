@@ -1,9 +1,7 @@
 ﻿using LedLibrary.Classes;
+using LedLibrary.Collection;
 using LedLibrary.Entities;
-using Microsoft.AspNetCore.SignalR.Protocol;
-using Microsoft.CodeAnalysis.Operations;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using WebMatrix.Context;
@@ -54,16 +52,14 @@ namespace WebMatrix.Classes
 
         Random random = new Random();
         int x = random.Next(0, Util.Context.Pixels.Largeur);
-        int r = random.Next(0, 127);
-        int g = random.Next(0, 127);
-        int b = random.Next(0, 127);
-
         int y = 0;
+
+        Couleur couleur = Couleur.Rnd();
 
         while (y < Util.Context.Pixels.Hauteur - bot[x])
         {
           EffacerDernier(x, y);
-          Util.Context.Pixels.GetCoordonnee(x, y).Set(r, g, b);
+          Util.Context.Pixels.GetCoordonnee(x, y).SetColor(couleur);
           Util.SetLeds();
 
           int temp = 100;
@@ -196,38 +192,24 @@ namespace WebMatrix.Classes
     /// </summary>
     public static void Demo3()
     {
-       // Initialize the led strip
+      // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
-
-      int i = 0;
-      int j = 0;
-      int k = 0;
-      int l = 0;
+      CercleList cercles = new CercleList(4);
 
       while (Util.TaskWork(task))
       {
-        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 5, Y = 5 }, i, 5)).SetColor(new Couleur { R = 127, B = 5 });
+        cercles.Variation();
 
-        j = 360 - i;
-        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 14, Y = 5 }, j, 5)).SetColor(new Couleur { R = 127, B = 5 });
+        foreach (Cercle cercle in cercles)
+          Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(cercle.Centre, cercle.DegreeInter, cercle.Rayon)).SetColor(cercle.Couleur);
 
-        k = (180 + 360) % 360 - i;
-        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 5, Y = 14 }, k, 5)).SetColor(new Couleur { R = 127, B = 5 });
-
-        l = (180 + i) % 360;
-        Util.Context.Pixels.GetCoordonnee(Util.Context.Pixels.GetCercleCoord(new Coordonnee { X = 14, Y = 14 }, l, 5)).SetColor(new Couleur { R = 127, B = 5 });
-
-        i += 5;
-
-        if (i > 360)
-          i = 0;
+        cercles.SetDegree(5);
 
         //Background
         //Util.Context.Pixels.BackGround();
         Util.SetLeds();
         Util.Context.Pixels.Reset();
-
       }
     }
   }
