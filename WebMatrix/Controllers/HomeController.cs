@@ -24,7 +24,7 @@ namespace WebMatrix.Controllers
       if (id == null && Util.TaskNbr == 0)
       {
         Random random = new Random();
-        id = random.Next(0, 3);
+        id = random.Next(0, 4);
       }
 
       if (id != null)

@@ -28,6 +28,10 @@ namespace WebMatrix.Classes
         case 2:
           Demo3();
           break;
+
+        case 3:
+          Demo4();
+          break;
       }
     }
 
@@ -210,6 +214,31 @@ namespace WebMatrix.Classes
         //Util.Context.Pixels.BackGround();
         Util.SetLeds();
         Util.Context.Pixels.Reset();
+      }
+    }
+
+    /// <summary>
+    /// EGC
+    /// </summary>
+    public static void Demo4()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+      EGCList egcs = new EGCList(16, Util.Context.Largeur);
+
+      while (Util.TaskWork(task))
+      {
+        egcs.Next();
+
+        foreach (EGC egc in egcs)
+          Util.Context.Pixels.GetCoordonnee(egc.X, egc.Y).SetColor(egc.Couleur);
+
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
+
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(10));
       }
     }
   }

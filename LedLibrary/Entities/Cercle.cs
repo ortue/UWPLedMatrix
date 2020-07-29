@@ -1,9 +1,8 @@
-﻿using LedLibrary.Entities;
+﻿using LedLibrary.Classes;
+using LedLibrary.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace LedLibrary.Classes
+namespace LedLibrary.Entities
 {
   public class Cercle
   {

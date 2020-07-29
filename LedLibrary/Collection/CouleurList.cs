@@ -1,10 +1,9 @@
 ﻿using LedLibrary.Entities;
-using System;
 using System.Collections.Generic;
 
 namespace LedLibrary.Collection
 {
-	public class CouleurList : List<Couleur>
+  public class CouleurList : List<Couleur>
 	{
 		/// <summary>
 		/// Constructeur
