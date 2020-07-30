@@ -59,26 +59,38 @@ namespace LedLibrary.Collection
 
         for (int i = 0; i <= Math.Abs(saut); i++)
         {
-          int tmpX = premier.X;
-          int tmpY = premier.Y;
+          EGC tmpEgc = new EGC(premier);
 
           premier.NextX(saut, i < Math.Abs(saut));
 
           foreach (EGC egc in this.Where(e => !e.Premier))
           {
-            int dernierX = egc.X;
-            int dernierY = egc.Y;
+            EGC dernierEgc = new EGC(egc);
 
             if (egc.X == premier.X - 1)
               egc.Couleur = Couleur.Get(32, 127, 32);
             else
-              egc.Couleur = Couleur.Get(2, 4, 2);
+            {
+              int fade = 0;
+              int distance = premier.Compteur - egc.Compteur;
 
-            egc.X = tmpX;
-            egc.Y = tmpY;
+              if (distance <= 5)
+                fade = 3;
 
-            tmpX = dernierX;
-            tmpY = dernierY;
+              if (distance > 5 && distance <= 10)
+                fade = 2;
+
+              if (distance > 10 && distance <= 15)
+                fade = 1;
+
+              egc.Couleur = Couleur.Get(fade, fade * 3, fade);
+            }
+
+            egc.X = tmpEgc.X;
+            egc.Y = tmpEgc.Y;
+            egc.Compteur = tmpEgc.Compteur;
+
+            tmpEgc = new EGC(dernierEgc);
           }
         }
       }

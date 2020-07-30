@@ -13,6 +13,14 @@
     /// <summary>
     /// Constructeur
     /// </summary>
+    public EGC(EGC egc)
+    {
+      Mapping(egc);
+    }
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
     public EGC(bool premier, int largeur, int hauteur)
     {
       X = 0;
@@ -22,10 +30,8 @@
       Hauteur = hauteur;
       Premier = premier;
 
-      if (Premier)
+      if(Premier)
         Couleur = Couleur.Get(32, 127, 32);
-      else
-        Couleur = Couleur.Get(2, 4, 2);
     }
 
     /// <summary>
@@ -42,6 +48,17 @@
 
       if (!stop)
         X = Compteur++ % Largeur;
+    }
+
+    /// <summary>
+    /// Mapping
+    /// </summary>
+    /// <param name="egc"></param>
+    private void Mapping(EGC egc)
+    {
+      X = egc.X;
+      Y = egc.Y;
+      Compteur = egc.Compteur;
     }
   }
 }
