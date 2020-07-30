@@ -225,11 +225,19 @@ namespace WebMatrix.Classes
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
-      EGCList egcs = new EGCList(16, Util.Context.Largeur);
+      EGCList egcs = new EGCList(40, Util.Context.Largeur, Util.Context.Hauteur);
 
       while (Util.TaskWork(task))
       {
-        egcs.Next();
+        for (int y = 2; y < 20; y += 5)
+          for (int x = 0; x < 20; x++)
+            Util.Context.Pixels.GetCoordonnee(x, y).SetColor(Couleur.Get(0, 4, 2));
+
+        for (int x = 2; x < 20; x += 5)
+          for (int y = 0; y < 20; y++)
+            Util.Context.Pixels.GetCoordonnee(x, y).SetColor(Couleur.Get(0, 4, 2));
+
+        Coeur(egcs.Next(9));
 
         foreach (EGC egc in egcs)
           Util.Context.Pixels.GetCoordonnee(egc.X, egc.Y).SetColor(egc.Couleur);
@@ -238,8 +246,69 @@ namespace WebMatrix.Classes
         Util.Context.Pixels.Reset();
 
         using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-        waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(30));
       }
+    }
+
+    /// <summary>
+    /// Coeur
+    /// </summary>
+    public static void Coeur(bool battement)
+    {
+      if(!battement)
+      Util.Context.Pixels.GetCoordonnee(13, 1).SetColor(Couleur.Get(10, 0, 0));
+
+      Util.Context.Pixels.GetCoordonnee(14, 1).SetColor(Couleur.Get(10, 0, 0));
+
+      Util.Context.Pixels.GetCoordonnee(16, 1).SetColor(Couleur.Get(10, 0, 0));
+
+      if (!battement)
+        Util.Context.Pixels.GetCoordonnee(17, 1).SetColor(Couleur.Get(10, 0, 0));
+
+      if (!battement)
+        Util.Context.Pixels.GetCoordonnee(12, 2).SetColor(Couleur.Get(10, 0, 0));
+
+      Util.Context.Pixels.GetCoordonnee(13, 2).SetColor(Couleur.Get(10, 0, 0));
+      Util.Context.Pixels.GetCoordonnee(14, 2).SetColor(Couleur.Get(10, 0, 0));
+      Util.Context.Pixels.GetCoordonnee(15, 2).SetColor(Couleur.Get(10, 0, 0));
+      Util.Context.Pixels.GetCoordonnee(16, 2).SetColor(Couleur.Get(10, 0, 0));
+      Util.Context.Pixels.GetCoordonnee(17, 2).SetColor(Couleur.Get(10, 0, 0));
+
+      if (!battement)
+        Util.Context.Pixels.GetCoordonnee(18, 2).SetColor(Couleur.Get(10, 0, 0));
+
+      if (!battement)
+        Util.Context.Pixels.GetCoordonnee(12, 3).SetColor(Couleur.Get(10, 0, 0));
+
+      Util.Context.Pixels.GetCoordonnee(13, 3).SetColor(Couleur.Get(10, 0, 0));
+      Util.Context.Pixels.GetCoordonnee(14, 3).SetColor(Couleur.Get(10, 0, 0));
+      Util.Context.Pixels.GetCoordonnee(15, 3).SetColor(Couleur.Get(10, 0, 0));
+      Util.Context.Pixels.GetCoordonnee(16, 3).SetColor(Couleur.Get(10, 0, 0));
+      Util.Context.Pixels.GetCoordonnee(17, 3).SetColor(Couleur.Get(10, 0, 0));
+
+      if (!battement)
+        Util.Context.Pixels.GetCoordonnee(18, 3).SetColor(Couleur.Get(10, 0, 0));
+
+      if (!battement)
+        Util.Context.Pixels.GetCoordonnee(13, 4).SetColor(Couleur.Get(10, 0, 0));
+
+      Util.Context.Pixels.GetCoordonnee(14, 4).SetColor(Couleur.Get(10, 0, 0));
+      Util.Context.Pixels.GetCoordonnee(15, 4).SetColor(Couleur.Get(10, 0, 0));
+      Util.Context.Pixels.GetCoordonnee(16, 4).SetColor(Couleur.Get(10, 0, 0));
+
+      if (!battement)
+        Util.Context.Pixels.GetCoordonnee(17, 4).SetColor(Couleur.Get(10, 0, 0));
+
+      if (!battement)
+        Util.Context.Pixels.GetCoordonnee(14, 5).SetColor(Couleur.Get(10, 0, 0));
+
+      Util.Context.Pixels.GetCoordonnee(15, 5).SetColor(Couleur.Get(10, 0, 0));
+
+      if (!battement)
+        Util.Context.Pixels.GetCoordonnee(16, 5).SetColor(Couleur.Get(10, 0, 0));
+
+      if (!battement)
+        Util.Context.Pixels.GetCoordonnee(15, 6).SetColor(Couleur.Get(10, 0, 0));
     }
   }
 }
