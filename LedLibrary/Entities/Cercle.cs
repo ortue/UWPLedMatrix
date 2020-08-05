@@ -19,6 +19,7 @@ namespace LedLibrary.Entities
         switch (Inter)
         {
           case 1:
+          case 5:
             return Degree;
 
           case 2:
@@ -52,6 +53,9 @@ namespace LedLibrary.Entities
 
           case 4:
             return new Coordonnee { X = 14, Y = 14 };
+
+          case 5:
+            return new Coordonnee { X = 10, Y = 10 };
         }
 
         return new Coordonnee { X = 14, Y = 14 };
@@ -72,9 +76,9 @@ namespace LedLibrary.Entities
     /// Constructeur
     /// </summary>
     /// <param name="degree"></param>
-    public Cercle(int degree)
+    public Cercle(int degree, int inter)
     {
-      Inter = 1;
+      Inter = inter;
       Rayon = 5;
       Probabilite = 4;
       Degree = degree;

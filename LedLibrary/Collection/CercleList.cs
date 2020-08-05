@@ -10,10 +10,10 @@ namespace LedLibrary.Collection
     /// Constructeur
     /// </summary>
     /// <param name="nombre"></param>
-    public CercleList(int nombre)
+    public CercleList(int nombre, int inter, int degre)
     {
       for (int i = 0; i < nombre; i++)
-        Add(new Cercle(i * 90));
+        Add(new Cercle(i * degre, inter));
     }
 
     /// <summary>

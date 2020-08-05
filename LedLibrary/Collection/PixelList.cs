@@ -331,6 +331,33 @@ namespace LedLibrary.Collection
 
         if (chaine[i] == ':' || chaine[i] == ' ' || chaine[i] == '.')
           coord.Droite(2);
+        else if (chaine[i] == '-')
+          coord.Droite(3);
+        else
+          coord.Droite(4);
+      }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="coord"></param>
+    /// <param name="chaine"></param>
+    /// <param name="couleur"></param>
+    public void PrintText(Coordonnee coord, string chaine, Couleur couleur)
+    {
+      int y = coord.Y;
+
+      for (int i = 0; i < chaine.Length; i++)
+      {
+        coord.Y = y;
+
+        PrintLettre(coord, chaine[i], couleur);
+
+        if (chaine[i] == ':' || chaine[i] == ' ' || chaine[i] == '.')
+          coord.Droite(2);
+        else if (chaine[i] == '-')
+          coord.Droite(3);
         else
           coord.Droite(4);
       }
@@ -346,6 +373,43 @@ namespace LedLibrary.Collection
     public void Print(int x, int y, string chaine, Couleur couleur)
     {
       Print(Coordonnee.Get(x, y, Largeur, Hauteur), chaine, couleur);
+    }
+
+    /// <summary>
+    /// SetNouvelle
+    /// </summary>
+    public void SetNouvelle(List<string> nouvelles)
+    {
+      Couleur couleur = new Couleur { R = 64, G = 0, B = 0 };
+      Couleur nouvelleCouleur = new Couleur { R = 127, G = 32, B = 32 };
+
+      //Cadran
+      string leading = "";
+      string deuxPoint = " ";
+      int heure = DateTime.Now.Hour;
+
+      if (heure == 0)
+        heure = 12;
+
+      if (heure > 12)
+        heure -= 12;
+
+      if (DateTime.Now.Millisecond < 500)
+        deuxPoint = ":";
+
+      if (heure < 10)
+        leading = " ";
+
+
+      
+      if (nouvelles != null)
+        Print(Coordonnee.Get(2, 2, Largeur, Hauteur), nouvelles[0], nouvelleCouleur);
+
+
+      Print(Coordonnee.Get(1, 8, Largeur, Hauteur), DateTime.Now.ToString("MM-dd"), couleur);
+      Print(Coordonnee.Get(2, 14, Largeur, Hauteur), leading + heure + deuxPoint + DateTime.Now.ToString("mm"), couleur);
+
+      BackGround();
     }
 
     /// <summary>
@@ -605,6 +669,11 @@ namespace LedLibrary.Collection
           break;
 
         case ' ':
+          break;
+
+        case '-':
+          GetCoordonnee(coo.Bas(2)).SetColor(couleur);
+          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
           break;
 
         case 'H':

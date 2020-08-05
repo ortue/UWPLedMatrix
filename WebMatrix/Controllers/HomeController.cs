@@ -24,7 +24,7 @@ namespace WebMatrix.Controllers
       if (id == null && Util.TaskNbr == 0)
       {
         Random random = new Random();
-        id = random.Next(0, 4);
+        id = random.Next(0, 5);
       }
 
       if (id != null)
@@ -74,6 +74,11 @@ namespace WebMatrix.Controllers
         case 1:
           Util.Autorun = false;
           Classes.Temps.Meteo();
+          break;
+
+        case 2:
+          Util.Autorun = false;
+          Classes.Temps.Nouvelle();
           break;
       }
 

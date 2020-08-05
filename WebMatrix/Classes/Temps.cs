@@ -59,5 +59,32 @@ namespace WebMatrix.Classes
         }
       });
     }
+
+    /// <summary>
+    /// Nouvelle
+    /// </summary>
+    public static void Nouvelle()
+    {
+      Util.Setup();
+
+      Task.Run(() =>
+      {
+        DateTime update = DateTime.Now.AddMinutes(-60);
+        int task = Util.StartTask();
+
+        while (Util.TaskWork(task))
+        {
+          Util.Context.Pixels.SetNouvelle(Util.Nouvelles);
+          Util.SetLeds();
+          Util.Context.Pixels.Reset();
+
+          if (update.AddMinutes(60) < DateTime.Now)
+          {
+            update = DateTime.Now;
+            Util.GetNouvelle();
+          }
+        }
+      });
+    }
   }
 }
