@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace LedLibrary.Entities
 {
-	public class Pixel : INotifyPropertyChanged
+	public class Pixel 
 	{
 		public int Numero { get; set; }
 		public int Position { get; set; }
@@ -28,8 +28,8 @@ namespace LedLibrary.Entities
 			set
 			{
 				_red = value;
-				OnPropertyChanged("Red");
-				OnPropertyChanged("Couleur");
+				//OnPropertyChanged("Red");
+				//OnPropertyChanged("Couleur");
 			}
 		}
 
@@ -40,8 +40,8 @@ namespace LedLibrary.Entities
 			set
 			{
 				_green = value;
-				OnPropertyChanged("Green");
-				OnPropertyChanged("Couleur");
+				//OnPropertyChanged("Green");
+				//OnPropertyChanged("Couleur");
 			}
 		}
 
@@ -52,8 +52,8 @@ namespace LedLibrary.Entities
 			set
 			{
 				_blue = value;
-				OnPropertyChanged("Blue");
-				OnPropertyChanged("Couleur");
+				//OnPropertyChanged("Blue");
+				//OnPropertyChanged("Couleur");
 			}
 		}
 
@@ -67,12 +67,12 @@ namespace LedLibrary.Entities
 				Green = value.G;
 				Blue = value.B;
 
-				OnPropertyChanged("Couleur");
+				//OnPropertyChanged("Couleur");
 
-				//OnPropertyChanged("Alpha");
-				OnPropertyChanged("Red");
-				OnPropertyChanged("Green");
-				OnPropertyChanged("Blue");
+				////OnPropertyChanged("Alpha");
+				//OnPropertyChanged("Red");
+				//OnPropertyChanged("Green");
+				//OnPropertyChanged("Blue");
 			}
 		}
 
@@ -126,10 +126,10 @@ namespace LedLibrary.Entities
 			Couleur = new Couleur { R = (byte)r, G = (byte)g, B = (byte)b };
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
-		protected void OnPropertyChanged(string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+		//public event PropertyChangedEventHandler PropertyChanged;
+		//protected void OnPropertyChanged(string propertyName = null)
+		//{
+		//	PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		//}
 	}
 }

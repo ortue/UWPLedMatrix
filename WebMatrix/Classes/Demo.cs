@@ -202,13 +202,21 @@ namespace WebMatrix.Classes
     /// </summary>
     public static void Demo3()
     {
-      // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
+      Random random = new Random();
+      DateTime temp = DateTime.Now;
       CercleList cercles = new CercleList(4, 1, 90);
 
       while (Util.TaskWork(task))
       {
+        if (temp.AddMinutes(1) < DateTime.Now)
+        {
+          temp = DateTime.Now; 
+          int r = random.Next(2, 12);
+          cercles = new CercleList(r, 1, 360 / r);
+        }
+
         cercles.Variation();
 
         foreach (Cercle cercle in cercles)
@@ -217,7 +225,6 @@ namespace WebMatrix.Classes
         cercles.SetDegree(5);
 
         //Background
-        //Util.Context.Pixels.BackGround();
         Util.SetLeds();
         Util.Context.Pixels.Reset();
       }
@@ -298,12 +305,21 @@ namespace WebMatrix.Classes
     public static void Demo5()
     {
       // Initialize the led strip
+      int i = 0;
       Util.Setup();
       int task = Util.StartTask();
+      Random random = new Random();
       CercleList cercles = new CercleList(3, 5, 120);
 
       while (Util.TaskWork(task))
       {
+        if (i++ % 250 == 249)
+        {
+          int r = random.Next(2, 9);
+
+          cercles = new CercleList(r, 5, 360 / r);
+        }
+
         for (double rayon = 1; rayon < 15; rayon += 0.4)
           foreach (Cercle cercle in cercles)
             if (Cercle(360 - (cercle.DegreeInter - (int)(rayon * 10)) % 360, rayon) is Coordonnee coord)

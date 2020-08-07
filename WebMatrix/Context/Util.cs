@@ -20,6 +20,12 @@ namespace WebMatrix.Context
     public static TaskGoList TaskGo { get; set; }
     public static string LastAutoRun { get; set; }
     public static List<string> Nouvelles { get; set; }
+
+    public static string NouvelleStr
+    {
+      get { return string.Join("", Nouvelles); }
+    }
+
     public static LedMatrixContext Context { get; set; }
 
     //c812ff96b7594775ae0b19df9309aae9

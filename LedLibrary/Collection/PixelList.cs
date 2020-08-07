@@ -2,12 +2,11 @@
 using LedLibrary.Entities;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace LedLibrary.Collection
 {
-  public class PixelList : ObservableCollection<Pixel>
+  public class PixelList : List<Pixel>
   {
     public Emplacement Emplacement { get; set; }
     public int NbrLed { get; set; }
@@ -401,7 +400,7 @@ namespace LedLibrary.Collection
         leading = " ";
 
 
-      
+
       if (nouvelles != null)
         Print(Coordonnee.Get(2, 2, Largeur, Hauteur), nouvelles[0], nouvelleCouleur);
 

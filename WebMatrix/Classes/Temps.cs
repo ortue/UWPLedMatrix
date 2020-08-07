@@ -74,7 +74,11 @@ namespace WebMatrix.Classes
 
         while (Util.TaskWork(task))
         {
-          Util.Context.Pixels.SetNouvelle(Util.Nouvelles);
+          //Util.Context.Pixels.SetNouvelle(Util.Nouvelles);
+
+          CaractereList caracteres = new CaractereList(Util.NouvelleStr);
+
+
           Util.SetLeds();
           Util.Context.Pixels.Reset();
 

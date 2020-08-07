@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LedLibrary.Classes
+namespace LedLibrary.Entities
 {
 	public class Coordonnee
 	{
