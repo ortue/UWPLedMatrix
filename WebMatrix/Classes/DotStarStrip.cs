@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using LedLibrary.Entities;
+﻿using LedLibrary.Entities;
+using System.Collections.Generic;
 using Unosquare.RaspberryIO;
 using Unosquare.RaspberryIO.Abstractions;
 using Unosquare.WiringPi;
@@ -32,14 +32,14 @@ namespace WebMatrix.Classes
       // By initializing an int array of that specific length, it gets initialized with ints of default value (0).  :)
       EndFrame = new byte[endFrameSize];
 
-        Begin(10000000);
+      Begin(10000000);
     }
 
     /// <summary>
     /// Initializes the SPI connection to the strip
     /// </summary>
     /// <returns>Task representing the async action</returns>
-    public void Begin(int spiFrequency )
+    public void Begin(int spiFrequency)
     {
       //ClockFrequency = 10 000 000,
       //Pi.Spi.DefaultFrequency 8 000 000 int

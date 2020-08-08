@@ -1,5 +1,3 @@
-using System;
-
 namespace WebMatrix.Models
 {
   public class ErrorViewModel

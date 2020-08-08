@@ -1,8 +1,6 @@
-﻿using LedLibrary.Classes;
-using LedLibrary.Collection;
+﻿using LedLibrary.Collection;
 using LedLibrary.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using WebMatrix.Context;
@@ -212,7 +210,7 @@ namespace WebMatrix.Classes
       {
         if (temp.AddMinutes(1) < DateTime.Now)
         {
-          temp = DateTime.Now; 
+          temp = DateTime.Now;
           int r = random.Next(2, 12);
           cercles = new CercleList(r, 1, 360 / r);
         }

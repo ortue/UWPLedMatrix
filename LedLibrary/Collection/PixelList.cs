@@ -377,10 +377,9 @@ namespace LedLibrary.Collection
     /// <summary>
     /// SetNouvelle
     /// </summary>
-    public void SetNouvelle(List<string> nouvelles)
+    public void SetNouvelle(PoliceList caracteres)
     {
       Couleur couleur = new Couleur { R = 64, G = 0, B = 0 };
-      Couleur nouvelleCouleur = new Couleur { R = 127, G = 32, B = 32 };
 
       //Cadran
       string leading = "";
@@ -399,11 +398,13 @@ namespace LedLibrary.Collection
       if (heure < 10)
         leading = " ";
 
+      if (caracteres != null)
+      {
+        Couleur nouvelleCouleur = new Couleur { R = 127, G = 32, B = 32 };
 
-
-      if (nouvelles != null)
-        Print(Coordonnee.Get(2, 2, Largeur, Hauteur), nouvelles[0], nouvelleCouleur);
-
+        foreach (Police lettre in caracteres.Where(c => c.Point))
+          GetCoordonnee(lettre.X, lettre.Y + 1).SetColor(nouvelleCouleur);
+      }
 
       Print(Coordonnee.Get(1, 8, Largeur, Hauteur), DateTime.Now.ToString("MM-dd"), couleur);
       Print(Coordonnee.Get(2, 14, Largeur, Hauteur), leading + heure + deuxPoint + DateTime.Now.ToString("mm"), couleur);

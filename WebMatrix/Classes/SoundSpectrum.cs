@@ -13,7 +13,7 @@ namespace WebMatrix.Classes
     public BufferedWaveProvider bwp;
 
     //TODO:lier avec les coinfiguration de led
-    public Figure fig = new Figure(20 ,20);
+    public Figure fig = new Figure(20, 20);
 
 
     private List<XYData> XYDataList = new List<XYData>();
@@ -118,9 +118,9 @@ namespace WebMatrix.Classes
       // optionally adjust the scale to automatically fit the data
       //if (needsAutoScaling)
       //{
-        //scottPlotUC1.AxisAuto();
-        //scottPlotUC2.AxisAuto();
-        //needsAutoScaling = false;
+      //scottPlotUC1.AxisAuto();
+      //scottPlotUC2.AxisAuto();
+      //needsAutoScaling = false;
       //}
 
       //scottPlotUC1.PlotSignal(Ys, RATE);
@@ -136,14 +136,14 @@ namespace WebMatrix.Classes
     public double[] FFT(double[] data)
     {
       double[] fft = new double[data.Length];
-      
+
       Complex[] fftComplex = new Complex[data.Length];
-      
+
       for (int i = 0; i < data.Length; i++)
         fftComplex[i] = new Complex(data[i], 0.0);
-      
+
       FourierTransform.FFT(fftComplex, FourierTransform.Direction.Forward);
-      
+
       for (int i = 0; i < data.Length; i++)
         fft[i] = fftComplex[i].Magnitude;
 
@@ -163,9 +163,9 @@ namespace WebMatrix.Classes
     {
       //fig.BenchmarkThis(showBenchmark);
 
-      if (redrawFrame) 
+      if (redrawFrame)
         fig.FrameRedraw();
-      else 
+      else
         fig.GraphClear();
 
       // plot XY points

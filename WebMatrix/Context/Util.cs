@@ -23,7 +23,13 @@ namespace WebMatrix.Context
 
     public static string NouvelleStr
     {
-      get { return string.Join("", Nouvelles); }
+      get
+      {
+        if (Nouvelles != null)
+          return string.Join(string.Empty, Nouvelles);
+
+        return string.Empty;
+      }
     }
 
     public static LedMatrixContext Context { get; set; }
