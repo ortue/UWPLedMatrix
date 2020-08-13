@@ -36,19 +36,21 @@ namespace LedLibrary.Collection
 
       while (distance < fin && text.Length > i)
       {
-        char lettre = text[i++];
+        int offset = 0;
+        char lettre = ' ';
+
+        if (debut + i > -1 && text.Length > debut + i)
+          lettre = text[debut + i];
+
         int largeur = PoliceList.GetLargeur(lettre);
 
-        int offset = 0;
-
-        if (distance <= debut && debut < distance + largeur)
-        {
-
-        }
+        if (distance == 0)
+          offset = debut % largeur;
 
         Add(new Caractere(offset, lettre));
 
         distance += largeur;
+        i++;
       }
     }
   }

@@ -403,7 +403,8 @@ namespace LedLibrary.Collection
         Couleur nouvelleCouleur = new Couleur { R = 127, G = 32, B = 32 };
 
         foreach (Police lettre in caracteres.Where(c => c.Point))
-          GetCoordonnee(lettre.X, lettre.Y + 1).SetColor(nouvelleCouleur);
+          if (GetCoordonnee(lettre.X, lettre.Y + 1) is Pixel pixel)
+            pixel.SetColor(nouvelleCouleur);
       }
 
       Print(Coordonnee.Get(1, 8, Largeur, Hauteur), DateTime.Now.ToString("MM-dd"), couleur);

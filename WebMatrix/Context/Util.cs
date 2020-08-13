@@ -4,11 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.ServiceModel.Syndication;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using WebMatrix.Classes;
 
 namespace WebMatrix.Context
 {
@@ -26,7 +29,7 @@ namespace WebMatrix.Context
       get
       {
         if (Nouvelles != null)
-          return string.Join(string.Empty, Nouvelles);
+          return Regex.Replace(string.Join(string.Empty, Nouvelles[0]), @"http[^\s]+", "");
 
         return string.Empty;
       }
@@ -93,6 +96,9 @@ namespace WebMatrix.Context
     /// <returns></returns>
     public static void GetMeteo()
     {
+      //await Task.Run(() => DoWork());
+
+
       Meteo = Task.Run(() =>
       {
         HttpClient Client = new HttpClient() { BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather?q=Sainte-Marthe-sur-le-Lac&mode=xml&units=metric&appid=52534a6f666e45fb30ace3343cea4a47") };
@@ -115,9 +121,34 @@ namespace WebMatrix.Context
     /// <summary>
     /// GetNouvelle
     /// </summary>
-    public static void GetNouvelle()
+    //public static void GetNouvelleTest()
+    //{
+    //  Nouvelles = Task.Run(() =>
+    //  {
+    //    string url = "https://ici.radio-canada.ca/rss/4159";
+
+    //    XmlReader reader = XmlReader.Create(url);
+    //    SyndicationFeed feed = SyndicationFeed.Load(reader);
+    //    reader.Close();
+
+    //    List<string> nouvelles = new List<string>();
+
+    //    foreach (SyndicationItem item in feed.Items)
+    //    {
+    //      nouvelles.Add(item.Title.Text.ToUpper() + ".");
+    //      nouvelles.Add(item.Summary.Text.ToUpper().Replace("<P>", "").Replace("</P>", ""));
+    //    }
+
+    //    return nouvelles;
+    //  }).Result;
+    //}
+
+
+    public static List<string> GetNouvelle()
     {
-      Nouvelles = Task.Run(() =>
+      List<string> nouvelles = new List<string>();
+
+      try
       {
         string url = "https://ici.radio-canada.ca/rss/4159";
 
@@ -125,16 +156,28 @@ namespace WebMatrix.Context
         SyndicationFeed feed = SyndicationFeed.Load(reader);
         reader.Close();
 
-        List<string> nouvelles = new List<string>();
-
         foreach (SyndicationItem item in feed.Items)
         {
           nouvelles.Add(item.Title.Text.ToUpper() + ".");
           nouvelles.Add(item.Summary.Text.ToUpper().Replace("<P>", "").Replace("</P>", ""));
         }
+      }
+      catch (Exception ex)
+      {
+        return new List<string> { ex.Message.ToUpper() };
+      }
 
-        return nouvelles;
-      }).Result;
+      return nouvelles;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static async void GetNouvelleAsync()
+    {
+      Task<List<string>> task = new Task<List<string>>(GetNouvelle);
+      task.Start();
+      Nouvelles = await task;
     }
   }
 }

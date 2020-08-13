@@ -61,11 +61,11 @@ namespace LedLibrary.Collection
       {
         return new List<bool>
         {
-          false, true, false, false,
-          true, false, true, false,
-          true, false, false, false,
-          true, false, true, false,
-          false, true, false, false
+          false, true, true, false, false,
+          true, false, false, true, false,
+          true, false, false, false, false,
+          true, false, false, true, false,
+          false, true, true, false, false
         };
       }
     }
@@ -121,11 +121,11 @@ namespace LedLibrary.Collection
       {
         return new List<bool>
         {
-          true, true, true, false,
-          true, false, false, false,
-          true, true, true, false,
-          true, false, true, false,
-          true, false, true, false
+          false, true, true, true, false,
+          true, false, false, false, false,
+          true, false, true, true, false,
+          true, false, false, true, false,
+          false, true, true, false, false
         };
       }
     }
@@ -272,8 +272,8 @@ namespace LedLibrary.Collection
         return new List<bool>
         {
           false, true, true, false, false,
-          true, false, true, false, false,
-          true, false, true, false, false,
+          true, false, false, true, false,
+          true, false, false, true, false,
           true, false, true, false, false,
           false, true, false, true, false
         };
@@ -377,9 +377,9 @@ namespace LedLibrary.Collection
         return new List<bool>
         {
           true, false, true, false,
-          true, false, true, true,
+          true, false, true, false,
           false, true, false, false,
-          true, false, true, true,
+          true, false, true, false,
           true, false, true, false,
         };
       }
@@ -414,6 +414,218 @@ namespace LedLibrary.Collection
         };
       }
     }
+
+    public static List<bool> Zero
+    {
+      get
+      {
+        return new List<bool>
+        {
+          true, true, true, false,
+          true, false, true, false,
+          true, false, true, false,
+          true, false, true, false,
+          true, true, true, false
+        };
+      }
+    }
+
+    public static List<bool> Un
+    {
+      get
+      {
+        return new List<bool>
+        {
+          false, true, false, false,
+          true, true, false, false,
+          false, true, false, false,
+          false, true, false, false,
+          true, true, true, false
+        };
+      }
+    }
+
+    public static List<bool> Deux
+    {
+      get
+      {
+        return new List<bool>
+        {
+          true, true, true, false,
+          false, false, true, false,
+          true, true, true, false,
+          true, false, false, false,
+          true, true, true, false
+        };
+      }
+    }
+
+    public static List<bool> Trois
+    {
+      get
+      {
+        return new List<bool>
+        {
+          true, true, true, false,
+          false, false, true, false,
+          true, true, true, false,
+          false, false, true, false,
+          true, true, true, false
+        };
+      }
+    }
+
+    public static List<bool> Quatre
+    {
+      get
+      {
+        return new List<bool>
+        {
+          true, false, true, false,
+          true, false, true, false,
+          true, true, true, false,
+          false, false, true, false,
+          false, false, true, false
+        };
+      }
+    }
+
+    public static List<bool> Cinq
+    {
+      get
+      {
+        return new List<bool>
+        {
+          true, true, true, false,
+          true, false, false, false,
+          true, true, true, false,
+          false, false, true, false,
+          true, true, true, false
+        };
+      }
+    }
+
+    public static List<bool> Six
+    {
+      get
+      {
+        return new List<bool>
+        {
+          true, true, true, false,
+          true, false, false, false,
+          true, true, true, false,
+          true, false, true, false,
+          true, true, true, false
+        };
+      }
+    }
+
+    public static List<bool> Sept
+    {
+      get
+      {
+        return new List<bool>
+        {
+          true, true, true, false,
+          false, false, true, false,
+          false, false, true, false,
+          false, false, true, false,
+          false, false, true, false
+        };
+      }
+    }
+
+    public static List<bool> Huit
+    {
+      get
+      {
+        return new List<bool>
+        {
+          true, true, true, false,
+          true, false, true, false,
+          true, true, true, false,
+          true, false, true, false,
+          true, true, true, false
+        };
+      }
+    }
+
+    public static List<bool> Neuf
+    {
+      get
+      {
+        return new List<bool>
+        {
+          true, true, true, false,
+          true, false, true, false,
+          true, true, true, false,
+          false, false, true, false,
+          false, false, true, false
+        };
+      }
+    }
+
+    public static List<bool> Point
+    {
+      get
+      {
+        return new List<bool>
+        {
+          false, false,
+          false, false,
+          false, false,
+          false, false,
+          true, false
+        };
+      }
+    }
+
+    public static List<bool> DeuxPoint
+    {
+      get
+      {
+        return new List<bool>
+        {
+          false, false,
+          true, false,
+          false, false,
+          true, false,
+          false, false
+        };
+      }
+    }
+
+    public static List<bool> Virgule
+    {
+      get
+      {
+        return new List<bool>
+        {
+          false, false, false,
+          false, false, false,
+          false, false, false,
+          false, true, false,
+          true, false, false
+        };
+      }
+    }
+
+    public static List<bool> Guillemet
+    {
+      get
+      {
+        return new List<bool>
+        {
+          true, false, 
+          true, false, 
+          false, false,
+          false, false,
+          false, false
+        };
+      }
+    }
+
+    
 
     /// <summary>
     /// Constructeur
@@ -522,6 +734,51 @@ namespace LedLibrary.Collection
 
         case 'Z':
           return GetPolice(offSet, position, Z);
+
+
+        case '0':
+          return GetPolice(offSet, position, Zero);
+
+        case '1':
+          return GetPolice(offSet, position, Un);
+
+        case '2':
+          return GetPolice(offSet, position, Deux);
+
+        case '3':
+          return GetPolice(offSet, position, Trois);
+
+        case '4':
+          return GetPolice(offSet, position, Quatre);
+
+        case '5':
+          return GetPolice(offSet, position, Cinq);
+
+        case '6':
+          return GetPolice(offSet, position, Six);
+
+        case '7':
+          return GetPolice(offSet, position, Sept);
+
+        case '8':
+          return GetPolice(offSet, position, Huit);
+
+        case '9':
+          return GetPolice(offSet, position, Neuf);
+
+
+        case '.':
+          return GetPolice(offSet, position, Point);
+
+        case ',':
+          return GetPolice(offSet, position, Virgule);
+
+        case '\'':
+          return GetPolice(offSet, position, Guillemet);
+
+        case ':':
+          return GetPolice(offSet, position, DeuxPoint);
+
       }
 
       return null;
@@ -536,9 +793,18 @@ namespace LedLibrary.Collection
     {
       switch (lettre)
       {
+        case '!':
+        case ':':
+        case '.':
         case ' ':
+        case '\'':
           return 1;
 
+        case ',':
+          return 2;
+
+        case 'C':
+        case 'G':
         case 'K':
         case 'N':
         case 'Q':
