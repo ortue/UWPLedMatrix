@@ -1,8 +1,4 @@
-﻿using LedLibrary.Classes;
-using LedLibrary.Collection;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using LedLibrary.Collection;
 
 namespace LedLibrary.Entities
 {
@@ -16,10 +12,9 @@ namespace LedLibrary.Entities
     /// Constructeur
     /// </summary>
     /// <param name="lettre"></param>
-    public Caractere(int offset, char lettre)
+    public Caractere(char lettre)
     {
       Lettre = lettre;
-      Offset = offset;
     }
 
     /// <summary>
@@ -27,9 +22,9 @@ namespace LedLibrary.Entities
     /// </summary>
     /// <param name="position"></param>
     /// <returns></returns>
-    public PoliceList Polices(int position)
+    public PoliceList Polices(int offset, int position)
     {
-      return PoliceList.GetPolice(position, Offset, Lettre);
+      return PoliceList.GetPolice(offset, position, Lettre);
     }
   }
 }

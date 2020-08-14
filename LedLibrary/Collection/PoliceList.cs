@@ -616,8 +616,8 @@ namespace LedLibrary.Collection
       {
         return new List<bool>
         {
-          true, false, 
-          true, false, 
+          true, false,
+          true, false,
           false, false,
           false, false,
           false, false
@@ -625,7 +625,7 @@ namespace LedLibrary.Collection
       }
     }
 
-    
+
 
     /// <summary>
     /// Constructeur
@@ -650,7 +650,7 @@ namespace LedLibrary.Collection
     /// </summary>
     /// <param name="lettre"></param>
     /// <returns></returns>
-    public static PoliceList GetPolice(int position, int offSet, char lettre)
+    public static PoliceList GetPolice(int offSet, int position, char lettre)
     {
       switch (lettre)
       {
@@ -698,7 +698,8 @@ namespace LedLibrary.Collection
 
         case 'N':
           return GetPolice(offSet, position, N);
-
+          
+        case 'Ô':
         case 'O':
           return GetPolice(offSet, position, O);
 
@@ -843,7 +844,7 @@ namespace LedLibrary.Collection
     /// <param name="offSet"></param>
     private void AddNew(bool point, int offSet)
     {
-      if (new Police(Largeur, Count, Position, point) is Police police && police.X >= offSet)
+      if (new Police(Largeur, Count, Position, point) is Police police)//&& police.X >= offSet
         Add(police);
     }
 

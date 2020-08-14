@@ -55,7 +55,7 @@ namespace WebMatrix.Classes
           if (update.AddMinutes(5) < DateTime.Now)
           {
             update = DateTime.Now;
-            Util.GetMeteo();
+            Util.GetMeteoAsync();
           }
         }
       });
@@ -73,20 +73,20 @@ namespace WebMatrix.Classes
         int debut = -20;
         int task = Util.StartTask();
         DateTime update = DateTime.Now.AddMinutes(-60);
+        CaractereList caracteres = new CaractereList(20);
 
         while (Util.TaskWork(task))
         {
-          if (Util.NouvelleStr.Length < debut++)
+          if (!string.IsNullOrWhiteSpace(Util.NouvelleStr) && Util.NouvelleStr.Length < debut++)
             debut = -20;
 
-          CaractereList caracteres = new CaractereList(Util.NouvelleStr, debut, 20);
-
-          Util.Context.Pixels.SetNouvelle(caracteres.Caracteres);
+          caracteres.SetText(Util.NouvelleStr);
+          Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut));
           Util.SetLeds();
           Util.Context.Pixels.Reset();
 
           using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-            waitHandle.Wait(TimeSpan.FromMilliseconds(200));
+            waitHandle.Wait(TimeSpan.FromMilliseconds(100));
 
           if (update.AddMinutes(60) < DateTime.Now)
           {

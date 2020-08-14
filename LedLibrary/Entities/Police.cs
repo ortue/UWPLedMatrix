@@ -7,6 +7,16 @@
     public bool Point { get; set; }
 
     /// <summary>
+    /// Espace
+    /// </summary>
+    /// <param name="x"></param>
+    public Police(int x)
+    {
+      X = x;
+      Point = false;
+    }
+
+    /// <summary>
     /// Constructeur
     /// </summary>
     /// <param name="largeur"></param>

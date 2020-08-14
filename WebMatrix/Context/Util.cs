@@ -2,11 +2,13 @@
 using LedLibrary.Entities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.ServiceModel.Syndication;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
@@ -29,7 +31,7 @@ namespace WebMatrix.Context
       get
       {
         if (Nouvelles != null)
-          return Regex.Replace(string.Join(string.Empty, Nouvelles[0]), @"http[^\s]+", "");
+          return RemoveDiacritics(Regex.Replace(string.Join(string.Empty, Nouvelles), @"http[^\s]+", ""));
 
         return string.Empty;
       }
@@ -76,8 +78,6 @@ namespace WebMatrix.Context
       Context = new LedMatrixContext();
       TaskGo = new TaskGoList();
 
-      //Background = 0;
-
       GetMeteo();
     }
 
@@ -94,12 +94,9 @@ namespace WebMatrix.Context
     /// GetMeteo
     /// </summary>
     /// <returns></returns>
-    public static void GetMeteo()
+    public static current GetMeteo()
     {
-      //await Task.Run(() => DoWork());
-
-
-      Meteo = Task.Run(() =>
+      try
       {
         HttpClient Client = new HttpClient() { BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather?q=Sainte-Marthe-sur-le-Lac&mode=xml&units=metric&appid=52534a6f666e45fb30ace3343cea4a47") };
         Task<HttpResponseMessage> response = Client.GetAsync(Client.BaseAddress);
@@ -114,45 +111,35 @@ namespace WebMatrix.Context
         }
         else
           return null;
+      }
+      catch
+      {
+        return null;
+      }
 
-      }).Result;
+    }
+
+    /// <summary>
+    /// GetMeteoAsync
+    /// </summary>
+    public static async void GetMeteoAsync()
+    {
+      Task<current> task = new Task<current>(GetMeteo);
+      task.Start();
+      Meteo = await task;
     }
 
     /// <summary>
     /// GetNouvelle
     /// </summary>
-    //public static void GetNouvelleTest()
-    //{
-    //  Nouvelles = Task.Run(() =>
-    //  {
-    //    string url = "https://ici.radio-canada.ca/rss/4159";
-
-    //    XmlReader reader = XmlReader.Create(url);
-    //    SyndicationFeed feed = SyndicationFeed.Load(reader);
-    //    reader.Close();
-
-    //    List<string> nouvelles = new List<string>();
-
-    //    foreach (SyndicationItem item in feed.Items)
-    //    {
-    //      nouvelles.Add(item.Title.Text.ToUpper() + ".");
-    //      nouvelles.Add(item.Summary.Text.ToUpper().Replace("<P>", "").Replace("</P>", ""));
-    //    }
-
-    //    return nouvelles;
-    //  }).Result;
-    //}
-
-
+    /// <returns></returns>
     public static List<string> GetNouvelle()
     {
       List<string> nouvelles = new List<string>();
 
       try
       {
-        string url = "https://ici.radio-canada.ca/rss/4159";
-
-        XmlReader reader = XmlReader.Create(url);
+        XmlReader reader = XmlReader.Create("https://ici.radio-canada.ca/rss/4159");
         SyndicationFeed feed = SyndicationFeed.Load(reader);
         reader.Close();
 
@@ -171,13 +158,29 @@ namespace WebMatrix.Context
     }
 
     /// <summary>
-    /// 
+    /// GetNouvelleAsync
     /// </summary>
     public static async void GetNouvelleAsync()
     {
-      Task<List<string>> task = new Task<List<string>>(GetNouvelle);
+      using Task<List<string>> task = new Task<List<string>>(GetNouvelle);
       task.Start();
       Nouvelles = await task;
+    }
+
+    static string RemoveDiacritics(string text)
+    {
+      string normalizedString = text.Normalize(NormalizationForm.FormD);
+      StringBuilder stringBuilder = new StringBuilder();
+
+      foreach (char c in normalizedString)
+      {
+        UnicodeCategory unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+
+        if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+          stringBuilder.Append(c);
+      }
+
+      return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
     }
   }
 }
