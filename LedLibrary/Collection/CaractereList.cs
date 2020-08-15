@@ -87,29 +87,28 @@ namespace LedLibrary.Collection
     public PoliceList GetCaracteres(int debut)
     {
       int i = 0;
+      int offset = 0;
       int position = 0;
       PoliceList polices = new PoliceList();
 
+      while (position < debut && Count > i)
+        if (this[i++].Polices(0, position) is PoliceList lettre)
+        {
+          position += lettre.Largeur;
+          offset = lettre.Largeur - (position - debut);
+        }
+
+      position = 0;
 
       while (debut++ < 0)
         polices.AddRange(PoliceList.GetPolice(0, position++, ' '));
 
-      while (position < debut && Count > i)
-        if (this[i++].Polices(0, position) is PoliceList lettre)
-          position += lettre.Largeur;
-
-      position = 0;
-
       while (position < Largeur && Count > i)
-      {
-        int offset = 0;
-
         if (this[i++].Polices(offset, position) is PoliceList lettre)
         {
           polices.AddRange(lettre);
           position += lettre.Largeur;
         }
-      }
 
       return polices;
     }

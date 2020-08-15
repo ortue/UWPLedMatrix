@@ -145,6 +145,8 @@ namespace WebMatrix.Context
 
         foreach (SyndicationItem item in feed.Items)
         {
+
+//Si y a un ? ne pas mettre de point
           nouvelles.Add(item.Title.Text.ToUpper() + ".");
           nouvelles.Add(item.Summary.Text.ToUpper().Replace("<P>", "").Replace("</P>", ""));
         }

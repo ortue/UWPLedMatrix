@@ -8,6 +8,7 @@ namespace LedLibrary.Collection
   {
     public int Largeur { get; set; }
     public int Position { get; set; }
+    public int Compteur { get; set; }
     public static int Hauteur { get { return 5; } }
 
     public static List<bool> Espace
@@ -121,7 +122,7 @@ namespace LedLibrary.Collection
       {
         return new List<bool>
         {
-          false, true, true, true, false,
+          false, true, true, false, false,
           true, false, false, false, false,
           true, false, true, true, false,
           true, false, false, true, false,
@@ -241,11 +242,11 @@ namespace LedLibrary.Collection
       {
         return new List<bool>
         {
-          false, true, false, false,
-          true, false, true, false,
-          true, false, true, false,
-          true, false, true, false,
-          false, true, false, false
+          false, true, true, false, false,
+          true, false, false, true, false,
+          true, false, false, true, false,
+          true, false, false, true, false,
+          false, true, true, false, false
         };
       }
     }
@@ -301,11 +302,11 @@ namespace LedLibrary.Collection
       {
         return new List<bool>
         {
-          true, true, true, false,
+          false, true, true, false,
           true, false, false, false,
           true, true, true, false,
           false, false, true, false,
-          true, true, true, false
+          true, true, false, false
         };
       }
     }
@@ -331,11 +332,11 @@ namespace LedLibrary.Collection
       {
         return new List<bool>
         {
-          true, false, true, false,
-          true, false, true, false,
-          true, false, true, false,
-          true, false, true, false,
-          false, true, false, false
+          true, false, false, true, false,
+          true, false, false, true, false,
+          true, false, false, true, false,
+          true, false, false, true, false,
+          false, true, true, false, false
         };
       }
     }
@@ -625,6 +626,36 @@ namespace LedLibrary.Collection
       }
     }
 
+    public static List<bool> Interrogation
+    {
+      get
+      {
+        return new List<bool>
+        {
+          true, true, false, false,
+          false, false, true, false,
+          true, true, false, false,
+          false, false, false, false,
+          true, false, false, false,
+        };
+      }
+    }
+
+    public static List<bool> Moins
+    {
+      get
+      {
+        return new List<bool>
+        {
+          false, false, false,
+          false, false, false,
+          true, true, false,
+          false, false, false,
+          true, false, false
+        };
+      }
+    }
+
 
 
     /// <summary>
@@ -698,8 +729,7 @@ namespace LedLibrary.Collection
 
         case 'N':
           return GetPolice(offSet, position, N);
-          
-        case 'Ô':
+
         case 'O':
           return GetPolice(offSet, position, O);
 
@@ -780,6 +810,12 @@ namespace LedLibrary.Collection
         case ':':
           return GetPolice(offSet, position, DeuxPoint);
 
+        case '?':
+          return GetPolice(offSet, position, Interrogation);
+
+        case '-':
+          return GetPolice(offSet, position, Moins);
+
       }
 
       return null;
@@ -794,21 +830,26 @@ namespace LedLibrary.Collection
     {
       switch (lettre)
       {
+        case ' ':
+          return 1;
+
+        case '\'':
         case '!':
         case ':':
         case '.':
-        case ' ':
-        case '\'':
-          return 1;
-
-        case ',':
           return 2;
+
+        case '-':
+        case ',':
+          return 3;
 
         case 'C':
         case 'G':
         case 'K':
         case 'N':
+        case 'O':
         case 'Q':
+        case 'U':
           return 5;
 
         case 'M':
@@ -844,7 +885,7 @@ namespace LedLibrary.Collection
     /// <param name="offSet"></param>
     private void AddNew(bool point, int offSet)
     {
-      if (new Police(Largeur, Count, Position, point) is Police police)//&& police.X >= offSet
+      if (new Police(Largeur, Compteur++, Position - offSet, point) is Police police && police.X >= offSet)
         Add(police);
     }
 

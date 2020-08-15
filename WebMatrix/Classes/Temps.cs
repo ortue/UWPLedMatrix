@@ -44,8 +44,8 @@ namespace WebMatrix.Classes
 
         while (Util.TaskWork(task))
         {
-          if (Util.Meteo.weather is currentWeather weather)
-            meteoImgs.SetPixel(weather.icon, Util.Context.Pixels);
+          if (Util.Meteo is current meteo)
+            meteoImgs.SetPixel(meteo.weather.icon, Util.Context.Pixels);
 
           Util.Context.Pixels.SetMeteo(Util.Meteo);
 

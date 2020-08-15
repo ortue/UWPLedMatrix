@@ -438,11 +438,11 @@ namespace LedLibrary.Collection
       if (heure < 10)
         leading = " ";
 
-      if (meteo.temperature is currentTemperature temperature)
-        Print(Coordonnee.Get(4, 2, Largeur, Hauteur), temperature.value.ToString("0") + "°C", couleur);
+      if (meteo != null)
+        Print(Coordonnee.Get(4, 2, Largeur, Hauteur), meteo.temperature.value.ToString("0") + "°C", couleur);
 
-      if (meteo.humidity is currentHumidity humidity)
-        Print(Coordonnee.Get(2, 8, Largeur, Hauteur), "H " + humidity.value.ToString() + "%", couleur);
+      if (meteo != null)
+        Print(Coordonnee.Get(2, 8, Largeur, Hauteur), "H " + meteo.humidity.value.ToString() + "%", couleur);
 
       Print(Coordonnee.Get(2, 14, Largeur, Hauteur), leading + heure + deuxPoint + DateTime.Now.ToString("mm"), couleur);
 
