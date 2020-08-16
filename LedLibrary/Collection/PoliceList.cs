@@ -656,6 +656,37 @@ namespace LedLibrary.Collection
       }
     }
 
+    public static List<bool> OuvrirGuillemet
+    {
+      get
+      {
+        return new List<bool>
+        {
+          false, false, false, false, false, false,
+          false, true, false, false, true, false,
+          true, false, false, true, false, false,
+          false, true, false, false, true, false,
+          false, false, false, false, false, false
+        };
+      }
+    }
+
+    public static List<bool> FermerGuillemet
+    {
+      get
+      {
+        return new List<bool>
+        {
+          false, false, false, false, false, false,
+          true, false, false, true, false, false,
+          false, true, false, false, true, false,
+          true, false, false, true, false, false,
+          false, false, false, false, false, false
+        };
+      }
+    }
+
+
 
 
     /// <summary>
@@ -683,142 +714,55 @@ namespace LedLibrary.Collection
     /// <returns></returns>
     public static PoliceList GetPolice(int offSet, int position, char lettre)
     {
-      switch (lettre)
+      return lettre switch
       {
-        case ' ':
-          return GetPolice(offSet, position, Espace);
-
-        case 'A':
-          return GetPolice(offSet, position, A);
-
-        case 'B':
-          return GetPolice(offSet, position, B);
-
-        case 'C':
-          return GetPolice(offSet, position, C);
-
-        case 'D':
-          return GetPolice(offSet, position, D);
-
-        case 'E':
-          return GetPolice(offSet, position, E);
-
-        case 'F':
-          return GetPolice(offSet, position, F);
-
-        case 'G':
-          return GetPolice(offSet, position, G);
-
-        case 'H':
-          return GetPolice(offSet, position, H);
-
-        case 'I':
-          return GetPolice(offSet, position, I);
-
-        case 'J':
-          return GetPolice(offSet, position, J);
-
-        case 'K':
-          return GetPolice(offSet, position, K);
-
-        case 'L':
-          return GetPolice(offSet, position, L);
-
-        case 'M':
-          return GetPolice(offSet, position, M);
-
-        case 'N':
-          return GetPolice(offSet, position, N);
-
-        case 'O':
-          return GetPolice(offSet, position, O);
-
-        case 'P':
-          return GetPolice(offSet, position, P);
-
-        case 'Q':
-          return GetPolice(offSet, position, Q);
-
-        case 'R':
-          return GetPolice(offSet, position, R);
-
-        case 'S':
-          return GetPolice(offSet, position, S);
-
-        case 'T':
-          return GetPolice(offSet, position, T);
-
-        case 'U':
-          return GetPolice(offSet, position, U);
-
-        case 'V':
-          return GetPolice(offSet, position, V);
-
-        case 'W':
-          return GetPolice(offSet, position, W);
-
-        case 'X':
-          return GetPolice(offSet, position, X);
-
-        case 'Y':
-          return GetPolice(offSet, position, Y);
-
-        case 'Z':
-          return GetPolice(offSet, position, Z);
-
-
-        case '0':
-          return GetPolice(offSet, position, Zero);
-
-        case '1':
-          return GetPolice(offSet, position, Un);
-
-        case '2':
-          return GetPolice(offSet, position, Deux);
-
-        case '3':
-          return GetPolice(offSet, position, Trois);
-
-        case '4':
-          return GetPolice(offSet, position, Quatre);
-
-        case '5':
-          return GetPolice(offSet, position, Cinq);
-
-        case '6':
-          return GetPolice(offSet, position, Six);
-
-        case '7':
-          return GetPolice(offSet, position, Sept);
-
-        case '8':
-          return GetPolice(offSet, position, Huit);
-
-        case '9':
-          return GetPolice(offSet, position, Neuf);
-
-
-        case '.':
-          return GetPolice(offSet, position, Point);
-
-        case ',':
-          return GetPolice(offSet, position, Virgule);
-
-        case '\'':
-          return GetPolice(offSet, position, Guillemet);
-
-        case ':':
-          return GetPolice(offSet, position, DeuxPoint);
-
-        case '?':
-          return GetPolice(offSet, position, Interrogation);
-
-        case '-':
-          return GetPolice(offSet, position, Moins);
-
-      }
-
-      return null;
+        ' ' => GetPolice(offSet, position, Espace),
+        'A' => GetPolice(offSet, position, A),
+        'B' => GetPolice(offSet, position, B),
+        'C' => GetPolice(offSet, position, C),
+        'D' => GetPolice(offSet, position, D),
+        'E' => GetPolice(offSet, position, E),
+        'F' => GetPolice(offSet, position, F),
+        'G' => GetPolice(offSet, position, G),
+        'H' => GetPolice(offSet, position, H),
+        'I' => GetPolice(offSet, position, I),
+        'J' => GetPolice(offSet, position, J),
+        'K' => GetPolice(offSet, position, K),
+        'L' => GetPolice(offSet, position, L),
+        'M' => GetPolice(offSet, position, M),
+        'N' => GetPolice(offSet, position, N),
+        'O' => GetPolice(offSet, position, O),
+        'P' => GetPolice(offSet, position, P),
+        'Q' => GetPolice(offSet, position, Q),
+        'R' => GetPolice(offSet, position, R),
+        'S' => GetPolice(offSet, position, S),
+        'T' => GetPolice(offSet, position, T),
+        'U' => GetPolice(offSet, position, U),
+        'V' => GetPolice(offSet, position, V),
+        'W' => GetPolice(offSet, position, W),
+        'X' => GetPolice(offSet, position, X),
+        'Y' => GetPolice(offSet, position, Y),
+        'Z' => GetPolice(offSet, position, Z),
+        '0' => GetPolice(offSet, position, Zero),
+        '1' => GetPolice(offSet, position, Un),
+        '2' => GetPolice(offSet, position, Deux),
+        '3' => GetPolice(offSet, position, Trois),
+        '4' => GetPolice(offSet, position, Quatre),
+        '5' => GetPolice(offSet, position, Cinq),
+        '6' => GetPolice(offSet, position, Six),
+        '7' => GetPolice(offSet, position, Sept),
+        '8' => GetPolice(offSet, position, Huit),
+        '9' => GetPolice(offSet, position, Neuf),
+        '.' => GetPolice(offSet, position, Point),
+        ',' => GetPolice(offSet, position, Virgule),
+        '\'' => GetPolice(offSet, position, Guillemet),
+        ':' => GetPolice(offSet, position, DeuxPoint),
+        '?' => GetPolice(offSet, position, Interrogation),
+        '-' => GetPolice(offSet, position, Moins),
+        '«' => GetPolice(offSet, position, OuvrirGuillemet),
+        '»' => GetPolice(offSet, position, FermerGuillemet),
+        _ => null,
+      };
     }
 
     /// <summary>
@@ -828,38 +772,15 @@ namespace LedLibrary.Collection
     /// < returns ></ returns >
     public static int GetLargeur(char lettre)
     {
-      switch (lettre)
+      return lettre switch
       {
-        case ' ':
-          return 1;
-
-        case '\'':
-        case '!':
-        case ':':
-        case '.':
-          return 2;
-
-        case '-':
-        case ',':
-          return 3;
-
-        case 'C':
-        case 'G':
-        case 'K':
-        case 'N':
-        case 'O':
-        case 'Q':
-        case 'U':
-          return 5;
-
-        case 'M':
-        case 'V':
-        case 'W':
-          return 6;
-
-        default:
-          return 4;
-      }
+        ' ' => 1,
+        char x when x == '\'' || x == '!' || x == ':' || x == '.' => 2,
+        char x when x == '-' || x == ',' => 3,
+        char x when x == 'C' || x == 'G' || x == 'K' || x == 'N' || x == 'O' || x == 'Q' || x == 'U' => 5,
+        char x when x == '«' || x == '»' => 6,
+        _ => 4
+      };
     }
 
     /// <summary>
@@ -879,219 +800,21 @@ namespace LedLibrary.Collection
     }
 
     /// <summary>
-    /// AddNew
+    /// Ajouter les pixel de la lettre, gestion des fractions de lettre
     /// </summary>
     /// <param name="point"></param>
     /// <param name="offSet"></param>
     private void AddNew(bool point, int offSet)
     {
-      if (new Police(Largeur, Compteur++, Position - offSet, point) is Police police && police.X >= offSet)
+      if (new Police(Largeur, Compteur++, Position - offSet, point) is Police police )//&& police.X >= offSet
         Add(police);
     }
-
-    //private void PrintLettre(Coordonnee coord, char lettre, Couleur couleur)
-    //{
-    //  Coordonnee coo = new Coordonnee(coord);
-
-    //switch (lettre)
-    //{
-    //  case '0':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    break;
-
-    //  case '1':
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Gauche(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Droite(1).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    break;
-
-    //  case '2':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    break;
-
-    //  case '3':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    break;
-
-
-    //  case '4':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    break;
-
-    //  case '5':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    break;
-
-    //  case '6':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    break;
-
-    //  case '7':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    break;
-
-    //  case '8':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    break;
-
-    //  case '9':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    break;
-
-    //  case 'C':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    break;
 
     //  case '°':
     //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
     //    GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
     //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
     //    GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
-    //    break;
-
-    //  case ':':
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Bas(2)).SetColor(couleur);
-    //    break;
-
-    //  case '.':
-    //    GetCoordonnee(coo.Bas(4)).SetColor(couleur);
     //    break;
 
     //  case '%':
@@ -1103,30 +826,5 @@ namespace LedLibrary.Collection
     //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
     //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
     //    break;
-
-    //  case ' ':
-    //    break;
-
-    //  case '-':
-    //    GetCoordonnee(coo.Bas(2)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    break;
-
-    //  case 'H':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-    //    GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-    //    break;
-    //}
-    //}
-
   }
 }

@@ -8,26 +8,7 @@ namespace LedLibrary.Collection
   public class CaractereList : List<Caractere>
   {
     public int Largeur { get; set; }
-    public string Text { get; set; }
     public string TextTmp { get; set; }
-
-    //public PoliceList Caracteres
-    //{
-    //  get
-    //  {
-    //    int position = 0;
-    //    PoliceList polices = new PoliceList();
-
-    //    foreach (Caractere caractere in this)
-    //      if (caractere.Polices(position) is PoliceList lettre)
-    //      {
-    //        polices.AddRange(lettre);
-    //        position += lettre.Largeur;
-    //      }
-
-    //    return polices;
-    //  }
-    //}
 
     /// <summary>
     /// Constructeur
@@ -39,34 +20,9 @@ namespace LedLibrary.Collection
     }
 
     /// <summary>
-    /// Constructeur
+    /// SetText
     /// </summary>
-    /// <param name="text"></param>
-    //public CaractereList(string text, int debut, int fin, bool a)
-    //{
-    //  int i = 0;
-    //  int distance = 0;
-
-    //  while (distance < fin && text.Length > i)
-    //  {
-    //    int offset = 0;
-    //    char lettre = ' ';
-
-    //    if (debut + i > -1 && text.Length > debut + i)
-    //      lettre = text[debut + i];
-
-    //    int largeur = PoliceList.GetLargeur(lettre);
-
-    //    if (distance == 0)
-    //      offset = debut % largeur;
-
-    //    Add(new Caractere(offset, lettre));
-
-    //    distance += largeur;
-    //    i++;
-    //  }
-    //}
-
+    /// <param name="nouvelleStr"></param>
     public void SetText(string nouvelleStr)
     {
       if (TextTmp != nouvelleStr)
@@ -91,6 +47,7 @@ namespace LedLibrary.Collection
       int position = 0;
       PoliceList polices = new PoliceList();
 
+      //Définir le offset de la fraction de lettre qui disparait du coté gauche
       while (position < debut && Count > i)
         if (this[i++].Polices(0, position) is PoliceList lettre)
         {
@@ -100,15 +57,20 @@ namespace LedLibrary.Collection
 
       position = 0;
 
+      //Espace du coté gauche au début du défilement
       while (debut++ < 0)
         polices.AddRange(PoliceList.GetPolice(0, position++, ' '));
 
-      while (position < Largeur && Count > i)
+      while (position <= Largeur && Count > i)
         if (this[i++].Polices(offset, position) is PoliceList lettre)
         {
           polices.AddRange(lettre);
           position += lettre.Largeur;
         }
+
+      //Fraction de la derniere lettre du coté droit
+      if (Count > i && this[i++].Polices(offset, position) is PoliceList derniereLettre)
+        polices.AddRange(derniereLettre);
 
       return polices;
     }

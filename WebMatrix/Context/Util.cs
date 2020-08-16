@@ -145,10 +145,8 @@ namespace WebMatrix.Context
 
         foreach (SyndicationItem item in feed.Items)
         {
-
-//Si y a un ? ne pas mettre de point
-          nouvelles.Add(item.Title.Text.ToUpper() + ".");
-          nouvelles.Add(item.Summary.Text.ToUpper().Replace("<P>", "").Replace("</P>", ""));
+          nouvelles.Add(StriperText(item.Title.Text));
+          nouvelles.Add(StriperText(item.Summary.Text));
         }
       }
       catch (Exception ex)
@@ -157,6 +155,25 @@ namespace WebMatrix.Context
       }
 
       return nouvelles;
+    }
+
+    /// <summary>
+    /// StriperText
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    private static string StriperText(string text)
+    {
+      text = text.Replace("<p>", "");
+      text = text.Replace("</p>", "");
+      text = text.Replace("<em>", "");
+      text = text.Replace("</em>", "");
+
+      if (text.LastOrDefault() is char lettre)
+        if (lettre != '.' && lettre != '!' && lettre != '?')
+          text += ".";
+
+      return text.ToUpper();
     }
 
     /// <summary>
