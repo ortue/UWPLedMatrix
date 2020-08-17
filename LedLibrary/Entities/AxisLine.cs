@@ -15,7 +15,7 @@ namespace LedLibrary.Entities
     /// <param name="lineWidth"></param>
     /// <param name="lineColor"></param>
     /// <param name="label"></param>
-    public AxisLine(double Ypos, float lineWidth, Color lineColor, string label = null)
+    public AxisLine(double Ypos, float lineWidth, Color lineColor)
     {
       Value = Ypos;
       LineWidth = lineWidth;

@@ -257,11 +257,11 @@ namespace LedLibrary.Collection
       {
         return new List<bool>
         {
-          true, true, false, false,
-          true, false, true, false,
-          true, true, false, false,
-          true, false, false, false,
-          true, false, false, false
+          true, true, true, false, false,
+          true, false, false, true, false,
+          true, true, true, false, false,
+          true, false, false, false, false,
+          true, false, false, false, false
         };
       }
     }
@@ -596,6 +596,21 @@ namespace LedLibrary.Collection
       }
     }
 
+    public static List<bool> PointVirgule
+    {
+      get
+      {
+        return new List<bool>
+        {
+          false, false, false,
+          false, true, false,
+          false, false, false,
+          false, true, false,
+          true, false, false
+        };
+      }
+    }
+
     public static List<bool> Virgule
     {
       get
@@ -651,7 +666,7 @@ namespace LedLibrary.Collection
           false, false, false,
           true, true, false,
           false, false, false,
-          true, false, false
+          false, false, false
         };
       }
     }
@@ -686,7 +701,20 @@ namespace LedLibrary.Collection
       }
     }
 
-
+    public static List<bool> Pourcent
+    {
+      get
+      {
+        return new List<bool>
+        {
+          false, true, false, false, true, false,
+          true, false, true, true, false, false,
+          false, true, true, true, false, false,
+          false, true, true, false, true, false,
+          true, false, false, true, false, false
+        };
+      }
+    }
 
 
     /// <summary>
@@ -757,10 +785,12 @@ namespace LedLibrary.Collection
         ',' => GetPolice(offSet, position, Virgule),
         '\'' => GetPolice(offSet, position, Guillemet),
         ':' => GetPolice(offSet, position, DeuxPoint),
+        ';' => GetPolice(offSet, position, PointVirgule),
         '?' => GetPolice(offSet, position, Interrogation),
         '-' => GetPolice(offSet, position, Moins),
         '«' => GetPolice(offSet, position, OuvrirGuillemet),
         '»' => GetPolice(offSet, position, FermerGuillemet),
+        '%' => GetPolice(offSet, position, Pourcent),
         _ => null,
       };
     }
@@ -776,9 +806,9 @@ namespace LedLibrary.Collection
       {
         ' ' => 1,
         char x when x == '\'' || x == '!' || x == ':' || x == '.' => 2,
-        char x when x == '-' || x == ',' => 3,
+        char x when x == '-' || x == ',' || x == ';' => 3,
         char x when x == 'C' || x == 'G' || x == 'K' || x == 'N' || x == 'O' || x == 'Q' || x == 'U' => 5,
-        char x when x == '«' || x == '»' => 6,
+        char x when x == '«' || x == '»' || x == '%' => 6,
         _ => 4
       };
     }
@@ -806,7 +836,7 @@ namespace LedLibrary.Collection
     /// <param name="offSet"></param>
     private void AddNew(bool point, int offSet)
     {
-      if (new Police(Largeur, Compteur++, Position - offSet, point) is Police police )//&& police.X >= offSet
+      if (new Police(Largeur, Compteur++, Position - offSet, point) is Police police)//&& police.X >= offSet
         Add(police);
     }
 

@@ -86,7 +86,7 @@ namespace WebMatrix.Classes
           Util.Context.Pixels.Reset();
 
           using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-            waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+            waitHandle.Wait(TimeSpan.FromMilliseconds(1));
 
           if (update.AddMinutes(60) < DateTime.Now)
           {

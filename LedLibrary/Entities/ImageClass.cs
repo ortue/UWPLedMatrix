@@ -50,14 +50,12 @@ namespace LedLibrary.Entities
     {
       FileName = fileNameOfImage;
 
-      using (Image image = Image.FromFile(FileName))
-      {
-        Height = image.Height;
-        Width = image.Width;
+      using Image image = Image.FromFile(FileName);
+      Height = image.Height;
+      Width = image.Width;
 
-        FrameDimension dimension = new FrameDimension(image.FrameDimensionsList[0]);
-        FrameCount = image.GetFrameCount(dimension);
-      }
+      FrameDimension dimension = new FrameDimension(image.FrameDimensionsList[0]);
+      FrameCount = image.GetFrameCount(dimension);
     }
 
     /// <summary>

@@ -15,7 +15,7 @@ namespace LedMatrix.Classes
     /// Name of the SPI controller to use for communication.
     /// </summary>
     /// <remarks>Hardcoding to SPI1 because it generally has a cleaner signal.  Could use SPI0 at a lower frequency, though.</remarks>
-    private const string SpiControllerName = "SPI1";
+    //private const string SpiControllerName = "SPI1";
 
     /// <summary>
     /// Line the SPI library uses to signal chip select.

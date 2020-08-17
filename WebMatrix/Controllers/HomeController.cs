@@ -62,8 +62,7 @@ namespace WebMatrix.Controllers
     }
 
     public IActionResult Temps(int? id)
-    {
-
+    {          
       switch (id)
       {
         case 0:

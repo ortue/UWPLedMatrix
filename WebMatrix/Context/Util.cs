@@ -169,11 +169,11 @@ namespace WebMatrix.Context
       text = text.Replace("<em>", "");
       text = text.Replace("</em>", "");
 
-      if (text.LastOrDefault() is char lettre)
+      if (text.TrimEnd().LastOrDefault() is char lettre)
         if (lettre != '.' && lettre != '!' && lettre != '?')
           text += ".";
 
-      return text.ToUpper();
+      return text.ToUpper() + " ";
     }
 
     /// <summary>

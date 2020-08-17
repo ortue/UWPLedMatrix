@@ -1,6 +1,7 @@
 ﻿using LedLibrary.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 
 namespace LedLibrary.Collection
@@ -52,7 +53,14 @@ namespace LedLibrary.Collection
         if (this[i++].Polices(0, position) is PoliceList lettre)
         {
           position += lettre.Largeur;
-          offset = lettre.Largeur - (position - debut);
+
+          //if (lettre.Largeur - (position - debut) > 0)
+            offset = lettre.Largeur - (position - debut);
+
+          //int allo = 0;
+          //if (offset != 0)
+          //  allo = offset;
+
         }
 
       position = 0;

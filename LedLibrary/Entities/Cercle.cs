@@ -40,25 +40,15 @@ namespace LedLibrary.Entities
     {
       get
       {
-        switch (Inter)
+        return Inter switch
         {
-          case 1:
-            return new Coordonnee { X = 5, Y = 5 };
-
-          case 2:
-            return new Coordonnee { X = 14, Y = 5 };
-
-          case 3:
-            return new Coordonnee { X = 5, Y = 14 };
-
-          case 4:
-            return new Coordonnee { X = 14, Y = 14 };
-
-          case 5:
-            return new Coordonnee { X = 10, Y = 10 };
-        }
-
-        return new Coordonnee { X = 14, Y = 14 };
+          1 => new Coordonnee { X = 5, Y = 5 },
+          2 => new Coordonnee { X = 14, Y = 5 },
+          3 => new Coordonnee { X = 5, Y = 14 },
+          4 => new Coordonnee { X = 14, Y = 14 },
+          5 => new Coordonnee { X = 10, Y = 10 },
+          _ => new Coordonnee { X = 14, Y = 14 },
+        };
       }
     }
 
