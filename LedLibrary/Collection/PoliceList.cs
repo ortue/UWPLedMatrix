@@ -17,11 +17,11 @@ namespace LedLibrary.Collection
       {
         return new List<bool>
         {
-          false,
-          false,
-          false,
-          false,
-          false
+          false, false,
+          false, false,
+          false, false,
+          false, false,
+          false, false
         };
       }
     }
@@ -804,8 +804,7 @@ namespace LedLibrary.Collection
     {
       return lettre switch
       {
-        ' ' => 1,
-        char x when x == '\'' || x == '!' || x == ':' || x == '.' => 2,
+        char x when x == ' ' || x == '\'' || x == '!' || x == ':' || x == '.' => 2,
         char x when x == '-' || x == ',' || x == ';' => 3,
         char x when x == 'C' || x == 'G' || x == 'K' || x == 'N' || x == 'O' || x == 'Q' || x == 'U' => 5,
         char x when x == '«' || x == '»' || x == '%' => 6,
