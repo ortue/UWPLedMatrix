@@ -25,10 +25,10 @@ namespace LedLibrary.Collection
     /// </summary>
     /// <param name="icon"></param>
     /// <returns></returns>
-    public ImageClass GetName(string icon)
-    {
-      return this.SingleOrDefault(a => a.FileName.Contains(icon));
-    }
+    //public ImageClass GetName(string icon)
+    //{
+    //  return this.SingleOrDefault(a => a.FileName.Contains(icon));
+    //}
 
     /// <summary>
     /// SetPixel

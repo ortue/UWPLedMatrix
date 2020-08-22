@@ -1,15 +1,31 @@
 ﻿using LedLibrary.Entities;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 
 namespace LedLibrary.Collection
 {
   public class PoliceList : List<Police>
   {
-    public int Largeur { get; set; }
+    public int Offset { get; set; }
+    public char Lettre { get; set; }
     public int Position { get; set; }
     public int Compteur { get; set; }
-    public static int Hauteur { get { return 5; } }
+
+    public int Largeur
+    {
+      get
+      {
+        return Lettre switch
+        {
+          char x when x == ' ' || x == '\'' || x == '!' || x == ':' || x == '.' => 2,
+          char x when x == '-' || x == ',' || x == ';' => 3,
+          char x when x == 'C' || x == 'G' || x == 'K' || x == 'N' || x == 'O' || x == 'Q' || x == 'U' || x == 'P' => 5,
+          char x when x == '«' || x == '»' || x == '%' || x == 'V' || x == 'M' || x == 'W' => 6,
+          _ => 4
+        };
+      }
+    }
 
     public static List<bool> Espace
     {
@@ -716,7 +732,6 @@ namespace LedLibrary.Collection
       }
     }
 
-
     /// <summary>
     /// Constructeur
     /// </summary>
@@ -729,11 +744,11 @@ namespace LedLibrary.Collection
     /// Constructeur
     /// </summary>
     /// <param name="largeur"></param>
-    public PoliceList(int largeur, int position)
-    {
-      Largeur = largeur;
-      Position = position;
-    }
+    //public PoliceList(int largeur, int position)
+    //{
+    //  Largeur = largeur;
+    //  Position = position;
+    //}
 
     /// <summary>
     /// GetPolice
@@ -742,88 +757,77 @@ namespace LedLibrary.Collection
     /// <returns></returns>
     public static PoliceList GetPolice(int offSet, int position, char lettre)
     {
+      PoliceList polices = new PoliceList
+      {
+        Lettre = lettre,
+        Offset = offSet,
+        Position = position
+      };
+
       return lettre switch
       {
-        ' ' => GetPolice(offSet, position, Espace),
-        'A' => GetPolice(offSet, position, A),
-        'B' => GetPolice(offSet, position, B),
-        'C' => GetPolice(offSet, position, C),
-        'D' => GetPolice(offSet, position, D),
-        'E' => GetPolice(offSet, position, E),
-        'F' => GetPolice(offSet, position, F),
-        'G' => GetPolice(offSet, position, G),
-        'H' => GetPolice(offSet, position, H),
-        'I' => GetPolice(offSet, position, I),
-        'J' => GetPolice(offSet, position, J),
-        'K' => GetPolice(offSet, position, K),
-        'L' => GetPolice(offSet, position, L),
-        'M' => GetPolice(offSet, position, M),
-        'N' => GetPolice(offSet, position, N),
-        'O' => GetPolice(offSet, position, O),
-        'P' => GetPolice(offSet, position, P),
-        'Q' => GetPolice(offSet, position, Q),
-        'R' => GetPolice(offSet, position, R),
-        'S' => GetPolice(offSet, position, S),
-        'T' => GetPolice(offSet, position, T),
-        'U' => GetPolice(offSet, position, U),
-        'V' => GetPolice(offSet, position, V),
-        'W' => GetPolice(offSet, position, W),
-        'X' => GetPolice(offSet, position, X),
-        'Y' => GetPolice(offSet, position, Y),
-        'Z' => GetPolice(offSet, position, Z),
-        '0' => GetPolice(offSet, position, Zero),
-        '1' => GetPolice(offSet, position, Un),
-        '2' => GetPolice(offSet, position, Deux),
-        '3' => GetPolice(offSet, position, Trois),
-        '4' => GetPolice(offSet, position, Quatre),
-        '5' => GetPolice(offSet, position, Cinq),
-        '6' => GetPolice(offSet, position, Six),
-        '7' => GetPolice(offSet, position, Sept),
-        '8' => GetPolice(offSet, position, Huit),
-        '9' => GetPolice(offSet, position, Neuf),
-        '.' => GetPolice(offSet, position, Point),
-        ',' => GetPolice(offSet, position, Virgule),
-        '\'' => GetPolice(offSet, position, Guillemet),
-        ':' => GetPolice(offSet, position, DeuxPoint),
-        ';' => GetPolice(offSet, position, PointVirgule),
-        '?' => GetPolice(offSet, position, Interrogation),
-        '-' => GetPolice(offSet, position, Moins),
-        '«' => GetPolice(offSet, position, OuvrirGuillemet),
-        '»' => GetPolice(offSet, position, FermerGuillemet),
-        '%' => GetPolice(offSet, position, Pourcent),
+        ' ' => GetPolice(polices, Espace),
+        'A' => GetPolice(polices, A),
+        'B' => GetPolice(polices, B),
+        'C' => GetPolice(polices, C),
+        'D' => GetPolice(polices, D),
+        'E' => GetPolice(polices, E),
+        'F' => GetPolice(polices, F),
+        'G' => GetPolice(polices, G),
+        'H' => GetPolice(polices, H),
+        'I' => GetPolice(polices, I),
+        'J' => GetPolice(polices, J),
+        'K' => GetPolice(polices, K),
+        'L' => GetPolice(polices, L),
+        'M' => GetPolice(polices, M),
+        'N' => GetPolice(polices, N),
+        'O' => GetPolice(polices, O),
+        'P' => GetPolice(polices, P),
+        'Q' => GetPolice(polices, Q),
+        'R' => GetPolice(polices, R),
+        'S' => GetPolice(polices, S),
+        'T' => GetPolice(polices, T),
+        'U' => GetPolice(polices, U),
+        'V' => GetPolice(polices, V),
+        'W' => GetPolice(polices, W),
+        'X' => GetPolice(polices, X),
+        'Y' => GetPolice(polices, Y),
+        'Z' => GetPolice(polices, Z),
+        '0' => GetPolice(polices, Zero),
+        '1' => GetPolice(polices, Un),
+        '2' => GetPolice(polices, Deux),
+        '3' => GetPolice(polices, Trois),
+        '4' => GetPolice(polices, Quatre),
+        '5' => GetPolice(polices, Cinq),
+        '6' => GetPolice(polices, Six),
+        '7' => GetPolice(polices, Sept),
+        '8' => GetPolice(polices, Huit),
+        '9' => GetPolice(polices, Neuf),
+        '.' => GetPolice(polices, Point),
+        ',' => GetPolice(polices, Virgule),
+        '\'' => GetPolice(polices, Guillemet),
+        ':' => GetPolice(polices, DeuxPoint),
+        ';' => GetPolice(polices, PointVirgule),
+        '?' => GetPolice(polices, Interrogation),
+        '-' => GetPolice(polices, Moins),
+        '«' => GetPolice(polices, OuvrirGuillemet),
+        '»' => GetPolice(polices, FermerGuillemet),
+        '%' => GetPolice(polices, Pourcent),
         _ => null,
       };
     }
 
-    /// <summary>
-    /// GetLargeur
-    /// </summary>
-    /// <param name = "lettre" ></ param >
-    /// < returns ></ returns >
-    public static int GetLargeur(char lettre)
-    {
-      return lettre switch
-      {
-        char x when x == ' ' || x == '\'' || x == '!' || x == ':' || x == '.' => 2,
-        char x when x == '-' || x == ',' || x == ';' => 3,
-        char x when x == 'C' || x == 'G' || x == 'K' || x == 'N' || x == 'O' || x == 'Q' || x == 'U' => 5,
-        char x when x == '«' || x == '»' || x == '%' => 6,
-        _ => 4
-      };
-    }
 
     /// <summary>
     /// GetPolice
     /// </summary>
-    /// <param name="largeur"></param>
+    /// <param name="polices"></param>
     /// <param name="points"></param>
     /// <returns></returns>
-    public static PoliceList GetPolice(int offSet, int position, List<bool> points)
+    public static PoliceList GetPolice(PoliceList polices, List<bool> points)
     {
-      PoliceList polices = new PoliceList(points.Count / Hauteur, position);
-
       foreach (bool point in points)
-        polices.AddNew(point, offSet);
+        polices.AddNew(point, polices.Offset);
 
       return polices;
     }

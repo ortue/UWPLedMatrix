@@ -44,7 +44,6 @@ namespace LedLibrary.Collection
     public PoliceList GetCaracteres(int debut)
     {
       int i = 0;
-      int offset = 0;
       int position = 0;
       PoliceList polices = new PoliceList();
 
@@ -53,31 +52,27 @@ namespace LedLibrary.Collection
         if (this[i++].Polices(0, position) is PoliceList lettre)
         {
           position += lettre.Largeur;
-
-          //if (lettre.Largeur - (position - debut) > 0)
-            offset = lettre.Largeur - (position - debut);
-
-          //int allo = 0;
-          //if (offset != 0)
-          //  allo = offset;
-
+          polices.Offset = lettre.Largeur - (position - debut);
         }
 
       position = 0;
+
+      if (polices.Offset != 0)
+        i--;
 
       //Espace du coté gauche au début du défilement
       while (debut++ < 0)
         polices.AddRange(PoliceList.GetPolice(0, position++, ' '));
 
       while (position <= Largeur && Count > i)
-        if (this[i++].Polices(offset, position) is PoliceList lettre)
+        if (this[i++].Polices(polices.Offset, position) is PoliceList lettre)
         {
           polices.AddRange(lettre);
           position += lettre.Largeur;
         }
 
       //Fraction de la derniere lettre du coté droit
-      if (Count > i && this[i++].Polices(offset, position) is PoliceList derniereLettre)
+      if (Count > i && this[i++].Polices(polices.Offset, position) is PoliceList derniereLettre)
         polices.AddRange(derniereLettre);
 
       return polices;

@@ -67,10 +67,8 @@ namespace WebMatrix.Models
 
           //Fade Out
           if (Animations.SingleOrDefault(a => a.FileNameID == Util.LastAutoRun) is ImageClass lastAutoRun)
-          {
             for (int slide = 0; slide < lastAutoRun.Width; slide++)
               SetAnimation(lastAutoRun, frame++, slide, true);
-          }
 
           //Fade In
           for (int slide = imageClass.Width; slide >= 0; slide--)

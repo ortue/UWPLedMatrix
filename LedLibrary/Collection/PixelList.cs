@@ -377,7 +377,7 @@ namespace LedLibrary.Collection
     /// <summary>
     /// SetNouvelle
     /// </summary>
-    public void SetNouvelle(List<Police> caracteres)
+    public void SetNouvelle(PoliceList caracteres, int debut)
     {
       Couleur couleur = new Couleur { R = 64, G = 0, B = 0 };
 
