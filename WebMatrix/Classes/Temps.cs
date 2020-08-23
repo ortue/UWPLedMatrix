@@ -71,20 +71,16 @@ namespace WebMatrix.Classes
 
       Task.Run(() =>
       {
-        int debut = -20;
+        int debut = ResetNouvelle();
         int task = Util.StartTask();
         DateTime update = DateTime.Now.AddMinutes(-60);
         CaractereList caracteres = new CaractereList(20);
 
-        RadioCanadaIcon();
-
         while (Util.TaskWork(task))
         {
+          //Reset après avoir défiler tout le texte
           if (!string.IsNullOrWhiteSpace(Util.NouvelleStr) && Util.NouvelleStr.Length < debut++)
-          {
-            debut = -20;
-            RadioCanadaIcon();
-          }
+            debut = ResetNouvelle();
 
           caracteres.SetText(Util.NouvelleStr);
           Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut), debut);
@@ -92,8 +88,9 @@ namespace WebMatrix.Classes
           Util.Context.Pixels.Reset();
 
           using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-            waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+            waitHandle.Wait(TimeSpan.FromMilliseconds(50));
 
+          //Mettre a jour les nouvelle aux heures
           if (update.AddMinutes(60) < DateTime.Now)
           {
             update = DateTime.Now;
@@ -104,33 +101,30 @@ namespace WebMatrix.Classes
     }
 
     /// <summary>
+    /// ResetNouvelle
+    /// </summary>
+    private static int ResetNouvelle()
+    {
+      RadioCanadaIcon("RadioCanada");
+
+      return -20;
+    }
+
+    /// <summary>
     /// RadioCanadaIcon
     /// </summary>
-    private static void RadioCanadaIcon()
+    /// <param name="filename"></param>
+    private static void RadioCanadaIcon(string filename)
     {
-      ImageClassList Animations = new ImageClassList("Images");
-
-      if (Animations.SingleOrDefault(a => a.FileNameID == "RadioCanada") is ImageClass imageClass)
+      if (new ImageClassList("Images").SingleOrDefault(a => a.FileNameID == filename) is ImageClass imageClass)
       {
-        Util.Setup();
+        //Fade In
+        for (int slide = imageClass.Width; slide >= 0; slide--)
+          SetAnimation(imageClass, 0, slide);
 
-        Task.Run(() =>
-        {
-          int task = Util.StartTask();
-
-          //Fade Out
-          if (Animations.SingleOrDefault(a => a.FileNameID == Util.LastAutoRun) is ImageClass lastAutoRun)
-            for (int slide = 0; slide < lastAutoRun.Width; slide++)
-              SetAnimation(lastAutoRun, 0, slide, true);
-
-          //Fade In
-          for (int slide = imageClass.Width; slide >= 0; slide--)
-            SetAnimation(imageClass, 0, slide);
-
-          //Animation
-          while (imageClass.Animation && Util.TaskWork(task))
-            SetAnimation(imageClass, 0, 0);
-        });
+        //Fade Out
+        for (int slide = 0; slide < imageClass.Width; slide++)
+          SetAnimation(imageClass, 0, slide, true);
       }
     }
 
@@ -146,10 +140,6 @@ namespace WebMatrix.Classes
       imageClass.SetÞixelFrame(frame++, Util.Context.Pixels, slide, fadeOut);
       Util.SetLeds();
       Util.Context.Pixels.Reset();
-
-      if (slide == 0)
-        using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-          waitHandle.Wait(TimeSpan.FromMilliseconds(60));
     }
   }
 }

@@ -1,7 +1,5 @@
 ﻿using LedLibrary.Entities;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Threading;
 
 namespace LedLibrary.Collection
 {
@@ -18,149 +16,47 @@ namespace LedLibrary.Collection
       {
         return Lettre switch
         {
-          char x when x == ' ' || x == '\'' || x == '!' || x == ':' || x == '.' => 2,
-          char x when x == '-' || x == ',' || x == ';' => 3,
-          char x when x == 'C' || x == 'G' || x == 'K' || x == 'N' || x == 'O' || x == 'Q' || x == 'U' || x == 'P' => 5,
-          char x when x == '«' || x == '»' || x == '%' || x == 'V' || x == 'M' || x == 'W' => 6,
+          ' ' => 2,
+          '\'' => 2,
+          '’' => 2,
+          '!' => 2,
+          ':' => 2,
+          '.' => 2,
+
+          '-' => 3,
+          ',' => 3,
+          ';' => 3,
+
+          'C' => 5,
+          'G' => 5,
+          'K' => 5,
+          'N' => 5,
+          'O' => 5,
+          'P' => 5,
+          'Q' => 5,
+          'U' => 5,
+
+          '«' => 6,
+          '»' => 6,
+          '%' => 6,
+          'M' => 6,
+          'W' => 6,
+          'V' => 6,
+
           _ => 4
         };
       }
     }
 
-    public static List<bool> Espace
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, false,
-          false, false,
-          false, false,
-          false, false,
-          false, false
-        };
-      }
-    }
-
-    public static List<bool> A
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, true, false, false,
-          true, false, true, false,
-          true, true, true, false,
-          true, false, true, false,
-          true, false, true, false
-        };
-      }
-    }
-
-    public static List<bool> B
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, true, false, false,
-          true, false, true, false,
-          true, true, false, false,
-          true, false, true, false,
-          true, true, true, false
-        };
-      }
-    }
-
-    public static List<bool> C
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, true, true, false, false,
-          true, false, false, true, false,
-          true, false, false, false, false,
-          true, false, false, true, false,
-          false, true, true, false, false
-        };
-      }
-    }
-
-    public static List<bool> D
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, true, false, false,
-          true, false, true, false,
-          true, false, true, false,
-          true, false, true, false,
-          true, true, false, false
-        };
-      }
-    }
-
-    public static List<bool> E
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, true, true, false,
-          true, false, false, false,
-          true, true, false, false,
-          true, false, false, false,
-          true, true, true, false
-        };
-      }
-    }
-
-    public static List<bool> F
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, true, true, false,
-          true, false, false, false,
-          true, true, false, false,
-          true, false, false, false,
-          true, false, false, false
-        };
-      }
-    }
-
-    public static List<bool> G
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, true, true, false, false,
-          true, false, false, false, false,
-          true, false, true, true, false,
-          true, false, false, true, false,
-          false, true, true, false, false
-        };
-      }
-    }
-
-    public static List<bool> H
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, false, true, false,
-          true, false, true, false,
-          true, true, true, false,
-          true, false, true, false,
-          true, false, true, false
-        };
-      }
-    }
+    public static List<bool> Espace => new List<bool> { false, false, false, false, false, false, false, false, false, false };
+    public static List<bool> A => new List<bool> { false, true, false, false, true, false, true, false, true, true, true, false, true, false, true, false, true, false, true, false };
+    public static List<bool> B => new List<bool> { true, true, false, false, true, false, true, false, true, true, false, false, true, false, true, false, true, true, true, false };
+    public static List<bool> C => new List<bool> { false, true, true, false, false, true, false, false, true, false, true, false, false, false, false, true, false, false, true, false, false, true, true, false, false };
+    public static List<bool> D => new List<bool> { true, true, false, false, true, false, true, false, true, false, true, false, true, false, true, false, true, true, false, false };
+    public static List<bool> E => new List<bool> { true, true, true, false, true, false, false, false, true, true, false, false, true, false, false, false, true, true, true, false };
+    public static List<bool> F => new List<bool> { true, true, true, false, true, false, false, false, true, true, false, false, true, false, false, false, true, false, false, false };
+    public static List<bool> G => new List<bool> { false, true, true, false, false, true, false, false, false, false, true, false, true, true, false, true, false, false, true, false, false, true, true, false, false };
+    public static List<bool> H => new List<bool> { true, false, true, false, true, false, true, false, true, true, true, false, true, false, true, false, true, false, true, false };
 
     public static List<bool> I
     {
@@ -222,35 +118,8 @@ namespace LedLibrary.Collection
       }
     }
 
-    public static List<bool> M
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, false, false, false, true, false,
-          true, true, false, true, true, false,
-          true, false, true, false, true, false,
-          true, false, false, false, true, false,
-          true, false, false, false, true, false
-        };
-      }
-    }
-
-    public static List<bool> N
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, false, false, true, false,
-          true, true, false, true, false,
-          true, false, true, true, false,
-          true, false, false, true, false,
-          true, false, false, true, false,
-        };
-      }
-    }
+    public static List<bool> M => new List<bool> { true, false, false, false, true, false, true, true, false, true, true, false, true, false, true, false, true, false, true, false, false, false, true, false, true, false, false, false, true, false };
+    public static List<bool> N => new List<bool> { true, false, false, true, false, true, true, false, true, false, true, false, true, true, false, true, false, false, true, false, true, false, false, true, false };
 
     public static List<bool> O
     {
@@ -417,35 +286,8 @@ namespace LedLibrary.Collection
       }
     }
 
-    public static List<bool> Z
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, true, true, false,
-          false, false, true, false,
-          false, true, false, false,
-          true, false, false, false,
-          true, true, true, false
-        };
-      }
-    }
-
-    public static List<bool> Zero
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, true, true, false,
-          true, false, true, false,
-          true, false, true, false,
-          true, false, true, false,
-          true, true, true, false
-        };
-      }
-    }
+    public static List<bool> Z => new List<bool> { true, true, true, false, false, false, true, false, false, true, false, false, true, false, false, false, true, true, true, false };
+    public static List<bool> Zero => new List<bool> { true, true, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, true, true, false };
 
     public static List<bool> Un
     {
@@ -567,170 +409,17 @@ namespace LedLibrary.Collection
       }
     }
 
-    public static List<bool> Neuf
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, true, true, false,
-          true, false, true, false,
-          true, true, true, false,
-          false, false, true, false,
-          false, false, true, false
-        };
-      }
-    }
-
-    public static List<bool> Point
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, false,
-          false, false,
-          false, false,
-          false, false,
-          true, false
-        };
-      }
-    }
-
-    public static List<bool> DeuxPoint
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, false,
-          true, false,
-          false, false,
-          true, false,
-          false, false
-        };
-      }
-    }
-
-    public static List<bool> PointVirgule
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, false, false,
-          false, true, false,
-          false, false, false,
-          false, true, false,
-          true, false, false
-        };
-      }
-    }
-
-    public static List<bool> Virgule
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, false, false,
-          false, false, false,
-          false, false, false,
-          false, true, false,
-          true, false, false
-        };
-      }
-    }
-
-    public static List<bool> Guillemet
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, false,
-          true, false,
-          false, false,
-          false, false,
-          false, false
-        };
-      }
-    }
-
-    public static List<bool> Interrogation
-    {
-      get
-      {
-        return new List<bool>
-        {
-          true, true, false, false,
-          false, false, true, false,
-          true, true, false, false,
-          false, false, false, false,
-          true, false, false, false,
-        };
-      }
-    }
-
-    public static List<bool> Moins
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, false, false,
-          false, false, false,
-          true, true, false,
-          false, false, false,
-          false, false, false
-        };
-      }
-    }
-
-    public static List<bool> OuvrirGuillemet
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, false, false, false, false, false,
-          false, true, false, false, true, false,
-          true, false, false, true, false, false,
-          false, true, false, false, true, false,
-          false, false, false, false, false, false
-        };
-      }
-    }
-
-    public static List<bool> FermerGuillemet
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, false, false, false, false, false,
-          true, false, false, true, false, false,
-          false, true, false, false, true, false,
-          true, false, false, true, false, false,
-          false, false, false, false, false, false
-        };
-      }
-    }
-
-    public static List<bool> Pourcent
-    {
-      get
-      {
-        return new List<bool>
-        {
-          false, true, false, false, true, false,
-          true, false, true, true, false, false,
-          false, true, true, true, false, false,
-          false, true, true, false, true, false,
-          true, false, false, true, false, false
-        };
-      }
-    }
+    public static List<bool> Neuf => new List<bool> { true, true, true, false, true, false, true, false, true, true, true, false, false, false, true, false, false, false, true, false };
+    public static List<bool> Point => new List<bool> { false, false, false, false, false, false, false, false, true, false };
+    public static List<bool> DeuxPoint => new List<bool> { false, false, true, false, false, false, true, false, false, false };
+    public static List<bool> PointVirgule => new List<bool> { false, false, false, false, true, false, false, false, false, false, true, false, true, false, false };
+    public static List<bool> Virgule => new List<bool> { false, false, false, false, false, false, false, false, false, false, true, false, true, false, false };
+    public static List<bool> Guillemet => new List<bool> { true, false, true, false, false, false, false, false, false, false };
+    public static List<bool> Interrogation => new List<bool> { true, true, false, false, false, false, true, false, true, true, false, false, false, false, false, false, true, false, false, false };
+    public static List<bool> Moins => new List<bool> { false, false, false, false, false, false, true, true, false, false, false, false, false, false, false };
+    public static List<bool> OuvrirGuillemet => new List<bool> { false, false, false, false, false, false, false, true, false, false, true, false, true, false, false, true, false, false, false, true, false, false, true, false, false, false, false, false, false, false };
+    public static List<bool> FermerGuillemet => new List<bool> { false, false, false, false, false, false, true, false, false, true, false, false, false, true, false, false, true, false, true, false, false, true, false, false, false, false, false, false, false, false };
+    public static List<bool> Pourcent => new List<bool> { false, true, false, false, true, false, true, false, true, true, false, false, false, true, true, true, false, false, false, true, true, false, true, false, true, false, false, true, false, false };
 
     /// <summary>
     /// Constructeur
@@ -739,16 +428,6 @@ namespace LedLibrary.Collection
     {
 
     }
-
-    /// <summary>
-    /// Constructeur
-    /// </summary>
-    /// <param name="largeur"></param>
-    //public PoliceList(int largeur, int position)
-    //{
-    //  Largeur = largeur;
-    //  Position = position;
-    //}
 
     /// <summary>
     /// GetPolice
@@ -805,6 +484,7 @@ namespace LedLibrary.Collection
         '9' => GetPolice(polices, Neuf),
         '.' => GetPolice(polices, Point),
         ',' => GetPolice(polices, Virgule),
+        '’' => GetPolice(polices, Guillemet),
         '\'' => GetPolice(polices, Guillemet),
         ':' => GetPolice(polices, DeuxPoint),
         ';' => GetPolice(polices, PointVirgule),
@@ -848,16 +528,6 @@ namespace LedLibrary.Collection
     //    GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
     //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
     //    GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
-    //    break;
-
-    //  case '%':
-    //    GetCoordonnee(coo).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-    //    GetCoordonnee(coo.Droite(2)).SetColor(couleur);
     //    break;
   }
 }

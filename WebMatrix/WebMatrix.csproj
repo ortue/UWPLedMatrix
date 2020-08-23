@@ -318,6 +318,9 @@
     <None Update="Images\Meteo\50n.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Images\RadioCanada.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
