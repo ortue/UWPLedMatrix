@@ -1,5 +1,7 @@
 ﻿using LedLibrary.Entities;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace LedLibrary.Collection
 {
@@ -497,6 +499,17 @@ namespace LedLibrary.Collection
       };
     }
 
+    /// <summary>
+    /// GetLargeur
+    /// </summary>
+    /// <param name="lettre"></param>
+    /// <returns></returns>
+    public static int GetLargeur(char lettre)
+    {
+      PoliceList polices = new PoliceList { Lettre = lettre };
+
+      return polices.Largeur;
+    }
 
     /// <summary>
     /// GetPolice

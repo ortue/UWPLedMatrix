@@ -1,6 +1,7 @@
 ﻿using LedLibrary.Collection;
 using LedLibrary.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,53 @@ namespace WebMatrix.Classes
 {
   public class Temps
   {
+    public static List<string> Lorembarnaks
+    {
+      get
+      {
+        return new List<string>
+        {
+          "tabarnak", "tabarnouche", "tabarouette", "taboire", "tabarslaque", "tabarnane",
+          "câlisse", "câlique", "câline", "câline de bine", "câliboire", "caltor",
+          "crisse", "christie", "crime", "bout d'crisse",
+          "ostie", "astie", "estique", "ostifie", "esprit",
+          "ciboire", "saint-ciboire",
+          "torrieux", "torvisse",
+          "cimonaque", "saint-cimonaque",
+          "baptême", "batince", "batèche",
+          "bâtard",
+          "calvaire", "calvince", "calvinouche",
+          "mosus",
+          "maudit", "mautadit", "maudine", "mautadine",
+          "sacrament", "sacréfice", "saint-sacrament",
+          "viarge", "sainte-viarge", "bout d'viarge",
+          "ciarge", "saint-ciarge", "bout d'ciarge",
+          "cibouleau",
+          "cibole", "cibolac",
+          "enfant d'chienne",
+          "verrat",
+          "marde", "maudite marde", "mangeux d'marde",
+          "boswell",
+          "sacristi", "sapristi",
+          "Jésus de plâtre", "Jésus Marie Joseph", "p'tit Jésus", "doux Jésus",
+          "crucifix",
+          "patente à gosse", "cochonnerie", "cossin",
+          "viande à chien",
+          "cul", "saintes fesses",
+          "purée",
+          "etole",
+          "charogne", "charrue",
+          "gériboire", "géritole",
+          "colon"
+        };
+      }
+    }
+
+    public static string EspaceFin
+    {
+      get { return "                    "; }
+    }
+
     /// <summary>
     /// Horloge
     /// </summary>
@@ -71,6 +119,7 @@ namespace WebMatrix.Classes
 
       Task.Run(() =>
       {
+        int largeur = 0;
         int debut = ResetNouvelle();
         int task = Util.StartTask();
         DateTime update = DateTime.Now.AddMinutes(-60);
@@ -79,10 +128,10 @@ namespace WebMatrix.Classes
         while (Util.TaskWork(task))
         {
           //Reset après avoir défiler tout le texte
-          if (!string.IsNullOrWhiteSpace(Util.NouvelleStr) && Util.NouvelleStr.Length < debut++)
+          if (!string.IsNullOrWhiteSpace(Util.NouvelleStr) && largeur < debut++)
             debut = ResetNouvelle();
 
-          caracteres.SetText(Util.NouvelleStr);
+          largeur = caracteres.SetText(Util.NouvelleStr);
           Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut), debut);
           Util.SetLeds();
           Util.Context.Pixels.Reset();
@@ -96,6 +145,41 @@ namespace WebMatrix.Classes
             update = DateTime.Now;
             Util.GetNouvelleAsync();
           }
+        }
+      });
+    }
+
+    /// <summary>
+    /// LoremBarnak
+    /// </summary>
+    public static void LoremBarnak()
+    {
+      Util.Setup();
+
+      Task.Run(() =>
+      {
+        int largeur = 0;
+        int debut = -20;
+        int task = Util.StartTask();
+        string loremBarnak = GetLoremBarnak(10);
+        CaractereList caracteres = new CaractereList(20);
+
+        while (Util.TaskWork(task))
+        {
+          //Reset après avoir défiler tout le texte
+          if (!string.IsNullOrWhiteSpace(loremBarnak) && largeur < debut++)
+          {
+            debut = -20;
+            loremBarnak = GetLoremBarnak(10);
+          }
+
+          largeur = caracteres.SetText(loremBarnak);
+          Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut), debut);
+          Util.SetLeds();
+          Util.Context.Pixels.Reset();
+
+          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+          waitHandle.Wait(TimeSpan.FromMilliseconds(50));
         }
       });
     }
@@ -140,6 +224,51 @@ namespace WebMatrix.Classes
       imageClass.SetÞixelFrame(frame++, Util.Context.Pixels, slide, fadeOut);
       Util.SetLeds();
       Util.Context.Pixels.Reset();
+    }
+
+    /// <summary>
+    /// GetLoremBarnak
+    /// </summary>
+    /// <param name="taille"></param>
+    /// <returns></returns>
+    private static string GetLoremBarnak(int taille)
+    {
+      string loremBarnak = string.Empty;
+
+      List<string> lorembarnaks = Lorembarnaks;
+
+      Random random = new Random();
+
+      for (int i = 0; i < taille; i++)
+      {
+        int r = random.Next(0, lorembarnaks.Count);
+
+        if (i == 0)
+          loremBarnak += lorembarnaks[r] + " ";
+        else if (i == taille - 1)
+          loremBarnak += Article(lorembarnaks[r]) + "." + EspaceFin;
+        else
+          loremBarnak += Article(lorembarnaks[r]) + " ";
+
+        lorembarnaks.RemoveAt(r);
+      }
+
+      return Util.RemoveDiacritics(loremBarnak.ToUpper());
+    }
+
+    /// <summary>
+    /// Article
+    /// </summary>
+    /// <param name="loremBarnak"></param>
+    /// <returns></returns>
+    private static string Article(string loremBarnak)
+    {
+      List<char> voyelle = new List<char> { 'A', 'E', 'I', 'O', 'U', 'H', 'Y' };
+
+      if (voyelle.Contains(char.ToUpper(loremBarnak[0])))
+        return "D'" + loremBarnak;
+
+      return "DE " + loremBarnak;
     }
   }
 }

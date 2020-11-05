@@ -1,7 +1,5 @@
 ﻿using LedLibrary.Entities;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
 using System.Linq;
 
 namespace LedLibrary.Collection
@@ -9,6 +7,7 @@ namespace LedLibrary.Collection
   public class CaractereList : List<Caractere>
   {
     public int Largeur { get; set; }
+    public int LargeurTotal { get; set; }
     public string TextTmp { get; set; }
 
     /// <summary>
@@ -24,15 +23,21 @@ namespace LedLibrary.Collection
     /// SetText
     /// </summary>
     /// <param name="nouvelleStr"></param>
-    public void SetText(string nouvelleStr)
+    public int SetText(string nouvelleStr)
     {
       if (TextTmp != nouvelleStr)
       {
         TextTmp = nouvelleStr;
 
+        Clear();
+
         foreach (char lettre in TextTmp)
           Add(new Caractere(lettre));
+
+        LargeurTotal = this.Sum(p => p.Largeur);
       }
+
+      return LargeurTotal;
     }
 
     /// <summary>

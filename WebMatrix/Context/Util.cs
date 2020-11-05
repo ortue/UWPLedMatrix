@@ -184,7 +184,7 @@ namespace WebMatrix.Context
       Nouvelles = await task;
     }
 
-    static string RemoveDiacritics(string text)
+    public static string RemoveDiacritics(string text)
     {
       string normalizedString = text.Normalize(NormalizationForm.FormD);
       StringBuilder stringBuilder = new StringBuilder();

@@ -79,6 +79,13 @@ namespace WebMatrix.Controllers
           Util.Autorun = false;
           Classes.Temps.Nouvelle();
           break;
+
+
+        case 5:
+          Util.Autorun = false;
+          Classes.Temps.LoremBarnak();
+          break;
+          
       }
 
       return View();

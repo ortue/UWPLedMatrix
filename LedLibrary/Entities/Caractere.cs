@@ -5,8 +5,11 @@ namespace LedLibrary.Entities
   public class Caractere
   {
     public char Lettre { get; set; }
-    //public int Largeur { get; set; }
-    //public int Offset { get; set; }
+
+    public int Largeur
+    {
+      get { return PoliceList.GetLargeur(Lettre); }
+    }
 
     /// <summary>
     /// Constructeur
