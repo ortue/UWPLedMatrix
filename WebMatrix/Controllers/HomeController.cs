@@ -54,9 +54,17 @@ namespace WebMatrix.Controllers
       return View();
     }
 
+    public IActionResult Jeu(int? id)
+    {
+
+
+
+      return View();
+    }
+
+
     public IActionResult Spectrum(int? id)
     {
-      //Util.Autorun = false;
 
       return View();
     }
@@ -80,12 +88,10 @@ namespace WebMatrix.Controllers
           Classes.Temps.Nouvelle();
           break;
 
-
         case 5:
           Util.Autorun = false;
           Classes.Temps.LoremBarnak();
-          break;
-          
+          break;        
       }
 
       return View();

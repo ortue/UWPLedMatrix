@@ -16,30 +16,29 @@ namespace WebMatrix.Classes
     {
       switch (demo)
       {
-        case 0:
+        case 1:
           Demo1();
           break;
 
-        case 1:
+        case 2:
           Demo2();
           break;
 
-        case 2:
+        case 3:
           Demo3();
           break;
 
-        case 3:
+        case 4:
           Demo4();
           break;
 
-        case 7:
-          Demo8();
+        case 5:
+          Demo5();
           break;
 
-        case 8:
-          Demo9();
-          break;
-
+          //case 6:
+          //  Demo9();
+          //  break;
       }
     }
 
@@ -117,92 +116,9 @@ namespace WebMatrix.Classes
     }
 
     /// <summary>
-    /// Pong
-    /// </summary>
-    public static void Demo2()
-    {
-      // Initialize the led strip
-      Util.Setup();
-      int task = Util.StartTask();
-      Pong pong = new Pong();
-      Couleur scoreColor = new Couleur { R = 127, G = 127, B = 127 };
-
-      while (Util.TaskWork(task))
-      {
-        //Effacer la balle apres
-        Util.Context.Pixels.GetCoordonnee(pong.X, pong.Y).SetColor();
-
-        //Pointiller du milieux
-        for (int i = 1; i < Util.Context.Pixels.Hauteur - 1; i += 2)
-        {
-          Util.Context.Pixels.GetCoordonnee(9, i).Set(16, 16, 32);
-          Util.Context.Pixels.GetCoordonnee(10, i).Set(16, 16, 32);
-        }
-
-        //Mure des palettes, si y a un but pause 1.5 secondes
-        if (pong.Palette(Util.Context.Pixels.Largeur))
-          using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-            waitHandle.Wait(TimeSpan.FromMilliseconds(1500));
-
-        //Mure du haut et du bas
-        pong.Horizontal(Util.Context.Pixels.Hauteur);
-
-        //Position de la balle
-        pong.X += pong.XX;
-        pong.Y += pong.YY;
-
-        //Pointage
-        Util.Context.Pixels.Print(pong.ScorePad, 2, pong.ScoreP1.ToString(), scoreColor);
-        Util.Context.Pixels.Print(12, 2, pong.ScoreP2.ToString(), scoreColor);
-
-        //La balle
-        Util.Context.Pixels.GetCoordonnee(pong.X, pong.Y).Set(16, 16, 127);
-
-        //Position des palettes
-        pong.PositionPalette();
-
-        //Dessiner les palettes
-        for (int i = -3; i < 3; i++)
-        {
-          Couleur paddle = new Couleur();
-
-          if (i >= -2 && i < 3)
-            paddle = new Couleur { R = 64, G = 127, B = 64 };
-
-          int p1Int = (int)Math.Round(pong.Pad1, 0);
-          int p2Int = (int)Math.Round(pong.Pad2, 0);
-
-          //Pour effacer la palette quand on la bouge, sans effacer le score
-          if (!(Util.Context.Pixels.GetCoordonnee(1, p1Int + i).Couleur.Egal(scoreColor) && paddle.IsNoir))
-            Util.Context.Pixels.GetCoordonnee(1, p1Int + i).SetColor(paddle);
-
-          //Pour effacer la palette quand on la bouge, sans effacer le score
-          if (!(Util.Context.Pixels.GetCoordonnee(18, p2Int + i).Couleur.Egal(scoreColor) && paddle.IsNoir))
-            Util.Context.Pixels.GetCoordonnee(18, p2Int + i).SetColor(paddle);
-        }
-
-        //Bordure
-        for (int i = 0; i < Util.Context.Pixels.Largeur; i++)
-        {
-          Util.Context.Pixels.GetCoordonnee(i, 0).Set(64, 64, 127);
-          Util.Context.Pixels.GetCoordonnee(i, 19).Set(64, 64, 127);
-        }
-
-        //Background
-        Util.Context.Pixels.BackGround();
-        Util.SetLeds();
-        Util.Context.Pixels.Reset();
-
-        if (pong.Vitesse > 0)
-          using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-            waitHandle.Wait(TimeSpan.FromMilliseconds(pong.Vitesse));
-      }
-    }
-
-    /// <summary>
     /// Cercle
     /// </summary>
-    public static void Demo3()
+    public static void Demo2()
     {
       Util.Setup();
       int task = Util.StartTask();
@@ -235,7 +151,7 @@ namespace WebMatrix.Classes
     /// <summary>
     /// EGC
     /// </summary>
-    public static void Demo4()
+    public static void Demo3()
     {
       // Initialize the led strip
       Util.Setup();
@@ -258,9 +174,9 @@ namespace WebMatrix.Classes
     }
 
     /// <summary>
-    /// Oscilloscope
+    /// stroboscope
     /// </summary>
-    public static void Demo8()
+    public static void Demo4()
     {
       int i = 0;
       Util.Setup();
@@ -286,7 +202,7 @@ namespace WebMatrix.Classes
     /// <summary>
     /// Spiral
     /// </summary>
-    public static void Demo9()
+    public static void Demo5()
     {
       // Initialize the led strip
       int i = 0;
@@ -311,28 +227,6 @@ namespace WebMatrix.Classes
 
         cercles.SetDegree(9);
         Util.SetLeds();
-
-
-        //Util.Context.Pixels.GetCoordonnee(14, 14).SetColor(Couleur.Get(0, 0, 127));
-        //Util.Context.Pixels.GetCoordonnee(15, 14).SetColor(Couleur.Get(0, 0, 127));
-        //Util.Context.Pixels.GetCoordonnee(14, 15).SetColor(Couleur.Get(0, 0, 127));
-        //Util.Context.Pixels.GetCoordonnee(15, 15).SetColor(Couleur.Get(0, 0, 127));
-
-        //Util.Context.Pixels.GetCoordonnee(10, 10).SetColor(Couleur.Get(127, 0, 0));
-        //Util.Context.Pixels.GetCoordonnee(10, 11).SetColor(Couleur.Get(127, 0, 0));
-        //Util.Context.Pixels.GetCoordonnee(9, 12).SetColor(Couleur.Get(127, 0, 0));
-        //Util.Context.Pixels.GetCoordonnee(10, 12).SetColor(Couleur.Get(127, 0, 0));
-
-        //Util.Context.Pixels.GetCoordonnee(13, 5).SetColor(Couleur.Get(0, 127, 0));
-        //Util.Context.Pixels.GetCoordonnee(13, 6).SetColor(Couleur.Get(0, 127, 0));
-        //Util.Context.Pixels.GetCoordonnee(12, 6).SetColor(Couleur.Get(0, 127, 0));
-        //Util.Context.Pixels.GetCoordonnee(13, 7).SetColor(Couleur.Get(0, 127, 0));
-
-
-        //Util.Context.Pixels.GetCoordonnee(5, 5).SetColor(Couleur.Get(127, 127, 0));
-        //Util.Context.Pixels.GetCoordonnee(5, 6).SetColor(Couleur.Get(127, 127, 0));
-        //Util.Context.Pixels.GetCoordonnee(6, 6).SetColor(Couleur.Get(127, 127, 0));
-        //Util.Context.Pixels.GetCoordonnee(6, 7).SetColor(Couleur.Get(127, 127, 0));
       }
     }
 

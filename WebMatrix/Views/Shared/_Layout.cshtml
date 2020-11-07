@@ -27,17 +27,21 @@
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gray-900 sidebar sidebar-dark accordion" id="accordionSidebar">
+      <li class="nav-item active">
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/" style="margin-top:20px;margin-bottom:20px;">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fab fa-raspberry-pi"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Led Matrix</div>
-      </a>
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/" style="margin-top:20px;margin-bottom:20px;">
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fab fa-raspberry-pi"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">Led Matrix</div>
+        </a>
+      </li>
 
       <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+      <li>
+        <hr class="sidebar-divider my-0">
+      </li>
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
@@ -49,12 +53,18 @@
       </li>
 
       <li class="nav-item active">
+        <a class="nav-link" href="@Url.Action("Jeu", "Home", new { id = (int?)null })">
+          <i class="fas fa-fw fa-dragon"></i>
+          <span>Jeu</span>
+        </a>
+      </li>
+
+      <li class="nav-item active">
         <a class="nav-link" href="@Url.Action("Spectrum", "Home", new { id = (int?)null })">
           <i class="fas fa-fw fa-music"></i>
           <span>Spectrum</span>
         </a>
       </li>
-
 
       <li class="nav-item active">
         <a class="nav-link" href="@Url.Action("Temps", "Home", new { id = (int?)null })">
@@ -72,7 +82,9 @@
       </li>
 
       <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+      <li>
+        <hr class="sidebar-divider my-0">
+      </li>
 
       <li class="nav-item active">
         <a class="nav-link" href="@Url.Action("Index", "Home", new { id = 1000 })">
@@ -81,8 +93,9 @@
         </a>
       </li>
 
-      <hr class="sidebar-divider">
-
+      <li>
+        <hr class="sidebar-divider">
+      </li>
     </ul>
     <!-- End of Sidebar -->
     <!-- Content Wrapper -->

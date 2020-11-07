@@ -2,19 +2,14 @@
   ViewBag.Title = "Démo";
 }
 
+@using (Html.BeginForm("Index", "Home"))
+{
   <div class="container-fluid" style="background-color:black;">
-    <a href="@Url.Action("Index", "Home", new { id = 0 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
+    <a href="@Url.Action("Index", "Home", new { id = 1 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
       <span class="icon text-white-50" style="width:60px;">
         <i class="fab fa-mix"></i>
       </span>
       <span class="text" style="width:170px;">Chute</span>
-    </a>
-
-    <a href="@Url.Action("Index", "Home", new { id = 1 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
-      <span class="icon text-white-50" style="width:60px;">
-        <i class="fas fa-meteor"></i>
-      </span>
-      <span class="text" style="width:170px;">Pong</span>
     </a>
 
     <a href="@Url.Action("Index", "Home", new { id = 2 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
@@ -33,37 +28,31 @@
 
     <a href="@Url.Action("Index", "Home", new { id = 4 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
       <span class="icon text-white-50" style="width:60px;">
-        <i class="fas fa-th-large"></i>
-      </span>
-      <span class="text" style="width:170px;">Tetris</span>
-    </a>
-
-    <a href="@Url.Action("Index", "Home", new { id = 5 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
-      <span class="icon text-white-50" style="width:60px;">
-        <i class="fas fa-dragon"></i>
-      </span>
-      <span class="text" style="width:170px;">Serpent</span>
-    </a>
-
-    <a href="@Url.Action("Index", "Home", new { id = 6 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
-      <span class="icon text-white-50" style="width:60px;">
-        <i class="fas fa-infinity"></i>
-      </span>
-      <span class="text" style="width:170px;">Labyrinthe</span>
-    </a>
-
-    <a href="@Url.Action("Index", "Home", new { id = 7 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
-      <span class="icon text-white-50" style="width:60px;">
-        <i class="fas fa-infinity"></i>
-      </span>
-      <span class="text" style="width:170px;">Oscilloscope</span>
-    </a>
-
-    <a href="@Url.Action("Index", "Home", new { id = 8 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
-      <span class="icon text-white-50" style="width:60px;">
         <i class="fas fa-bullseye"></i>
       </span>
       <span class="text" style="width:170px;">Spiral</span>
     </a>
 
+    <button type="submit" name="id" value="5" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
+      <span class="icon text-white-50" style="width:60px;">
+        <i class="fas fa-infinity"></i>
+      </span>
+      <span class="text" style="width:170px;">Stroboscope</span>
+    </button>
+
+    <select name="CmbStroboscope" class="btn btn-primary btn-lg" style="background-color:#4e73df;color:white;border-color:#4e73df;margin:10px;width:232px;">
+      <option value="50">50 ms</option>
+      @for (int i = 100; i <= 1000; i += 100)
+      {
+        <option value="@i">@i ms</option>
+      }
+    </select>
+
+    <a href="@Url.Action("Index", "Home", new { id = 6 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
+      <span class="icon text-white-50" style="width:60px;">
+        <i class="fas fa-infinity"></i>
+      </span>
+      <span class="text" style="width:170px;">Oscilloscope</span>
+    </a>
   </div>
+}
