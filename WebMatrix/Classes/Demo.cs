@@ -1,4 +1,5 @@
-﻿using LedLibrary.Collection;
+﻿using LedLibrary.Classes;
+using LedLibrary.Collection;
 using LedLibrary.Entities;
 using System;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace WebMatrix.Classes
     /// <summary>
     /// Go
     /// </summary>
-    public static void Go(int? demo)
+    public static void Go(int? demo, Criteria criteria)
     {
       switch (demo)
       {
@@ -33,7 +34,7 @@ namespace WebMatrix.Classes
           break;
 
         case 5:
-          Demo5();
+          Demo5(criteria);
           break;
 
           //case 6:
@@ -174,35 +175,9 @@ namespace WebMatrix.Classes
     }
 
     /// <summary>
-    /// stroboscope
-    /// </summary>
-    public static void Demo4()
-    {
-      int i = 0;
-      Util.Setup();
-      int task = Util.StartTask();
-
-      while (Util.TaskWork(task))
-      {
-        foreach (Pixel pixel in Util.Context.Pixels)
-          if (i % 2 == 1)
-            pixel.SetColor();
-          else
-            pixel.SetColor(Couleur.Get(127, 127, 127));
-
-        i++;
-        Util.SetLeds();
-
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-        waitHandle.Wait(TimeSpan.FromMilliseconds(25));
-
-      }
-    }
-
-    /// <summary>
     /// Spiral
     /// </summary>
-    public static void Demo5()
+    public static void Demo4()
     {
       // Initialize the led strip
       int i = 0;
@@ -227,6 +202,32 @@ namespace WebMatrix.Classes
 
         cercles.SetDegree(9);
         Util.SetLeds();
+      }
+    }
+
+    /// <summary>
+    /// stroboscope
+    /// </summary>
+    public static void Demo5(Criteria criteria)
+    {
+      int i = 0;
+      Util.Setup();
+      int task = Util.StartTask();
+
+      while (Util.TaskWork(task))
+      {
+        foreach (Pixel pixel in Util.Context.Pixels)
+          if (i % 2 == 1)
+            pixel.SetColor();
+          else
+            pixel.SetColor(Couleur.Get(200, 200, 255));
+
+        i++;
+        Util.SetLeds();
+
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(criteria.CmbStroboscope));
+
       }
     }
 

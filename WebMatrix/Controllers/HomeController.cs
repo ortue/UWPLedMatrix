@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LedLibrary.Classes;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
@@ -19,18 +20,18 @@ namespace WebMatrix.Controllers
       _logger = logger;
     }
 
-    public IActionResult Index(int? id)
+    public IActionResult Index(int? id, Criteria criteria)
     {
       if (id == null && Util.TaskNbr == 0)
       {
         Random random = new Random();
-        id = random.Next(0, 5);
+        id = random.Next(1, 5);
       }
 
       if (id != null)
         Util.Autorun = false;
 
-      Task.Run(() => Demo.Go(id));
+      Task.Run(() => Demo.Go(id, criteria));
 
       //Éteindre le raspberry linux
       if (id == 1000)
@@ -51,13 +52,19 @@ namespace WebMatrix.Controllers
         });
       }
 
+      ViewBag.CmbStroboscope = criteria.CmbStroboscope;
+
       return View();
     }
 
     public IActionResult Jeu(int? id)
     {
-
-
+      switch (id)
+      {
+        case 0:
+          Classes.Jeu.Pong();
+          break;
+      }
 
       return View();
     }
@@ -70,7 +77,7 @@ namespace WebMatrix.Controllers
     }
 
     public IActionResult Temps(int? id)
-    {          
+    {
       switch (id)
       {
         case 0:
@@ -91,7 +98,7 @@ namespace WebMatrix.Controllers
         case 5:
           Util.Autorun = false;
           Classes.Temps.LoremBarnak();
-          break;        
+          break;
       }
 
       return View();

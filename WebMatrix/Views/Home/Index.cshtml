@@ -41,10 +41,17 @@
     </button>
 
     <select name="CmbStroboscope" class="btn btn-primary btn-lg" style="background-color:#4e73df;color:white;border-color:#4e73df;margin:10px;width:232px;">
-      <option value="50">50 ms</option>
-      @for (int i = 100; i <= 1000; i += 100)
+
+      @for (int i = 10; i <= 200; i += 10)
       {
-        <option value="@i">@i ms</option>
+        if (ViewBag.CmbStroboscope == i)
+        {
+          <option value="@i" selected>@i ms</option>
+        }
+        else
+        {
+          <option value="@i">@i ms</option>
+        }
       }
     </select>
 

@@ -1,9 +1,7 @@
-﻿using LedLibrary.Entities;
+﻿using LedLibrary.Collection;
+using LedLibrary.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using WebMatrix.Context;
 
 namespace WebMatrix.Classes
@@ -18,25 +16,9 @@ namespace WebMatrix.Classes
           Pong();
           break;
 
-        //case 2:
-        //  Demo2();
-        //  break;
-
-        //case 3:
-        //  Demo3();
-        //  break;
-
-        //case 4:
-        //  Demo4();
-        //  break;
-
-        //case 5:
-        //  Demo8();
-        //  break;
-
-        //case 6:
-        //  Demo9();
-        //  break;
+        case 3:
+          Labyrinthe();
+          break;
       }
     }
 
@@ -120,6 +102,32 @@ namespace WebMatrix.Classes
         if (pong.Vitesse > 0)
           using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
             waitHandle.Wait(TimeSpan.FromMilliseconds(pong.Vitesse));
+      }
+    }
+
+
+    /// <summary>
+    /// Labyrinthe
+    /// </summary>
+    public static void Labyrinthe()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+
+      Couleur Murs = new Couleur { R = 100, G = 100, B = 127 };
+
+      LabyrintheList labyrinthe = new LabyrintheList(Util.Context.Pixels);
+
+      while (Util.TaskWork(task))
+      {
+
+
+
+        Util.SetLeds();
+
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(10));
       }
     }
   }
