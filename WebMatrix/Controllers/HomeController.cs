@@ -62,7 +62,7 @@ namespace WebMatrix.Controllers
       switch (id)
       {
         case 0:
-          Classes.Jeu.Pong();
+          Task.Run(() => Classes.Jeu.Pong());
           break;
       }
 

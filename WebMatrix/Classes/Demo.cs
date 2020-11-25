@@ -220,7 +220,7 @@ namespace WebMatrix.Classes
           if (i % 2 == 1)
             pixel.SetColor();
           else
-            pixel.SetColor(Couleur.Get(200, 200, 255));
+            pixel.SetColor(Couleur.Get(100, 100, 127));
 
         i++;
         Util.SetLeds();
