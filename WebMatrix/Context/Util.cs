@@ -144,7 +144,9 @@ namespace WebMatrix.Context
         foreach (SyndicationItem item in feed.Items)
         {
           nouvelles.Add(StriperText(item.Title.Text));
-          nouvelles.Add(StriperText(item.Summary.Text));
+
+          if (item.Summary != null)
+            nouvelles.Add(StriperText(item.Summary.Text));
         }
       }
       catch (Exception ex)
