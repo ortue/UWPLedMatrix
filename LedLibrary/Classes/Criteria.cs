@@ -8,7 +8,7 @@
       get
       {
         if (_cmbStroboscope == 0)
-          return 30;
+          return 50;
 
         return _cmbStroboscope;
       }

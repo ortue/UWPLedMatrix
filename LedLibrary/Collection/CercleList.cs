@@ -28,7 +28,7 @@ namespace LedLibrary.Collection
     /// <summary>
     /// SetDegree
     /// </summary>
-    /// <param name="v"></param>
+    /// <param name="degree"></param>
     public void SetDegree(int degree)
     {
       foreach (Cercle cercle in this)

@@ -37,6 +37,11 @@ namespace WebMatrix.Classes
           Demo5(criteria);
           break;
 
+        case 6:
+          Demo6();
+          break;
+
+
           //case 6:
           //  Demo9();
           //  break;
@@ -146,6 +151,9 @@ namespace WebMatrix.Classes
         //Background
         Util.SetLeds();
         Util.Context.Pixels.Reset();
+
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(2));
       }
     }
 
@@ -227,7 +235,50 @@ namespace WebMatrix.Classes
 
         using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
         waitHandle.Wait(TimeSpan.FromMilliseconds(criteria.CmbStroboscope));
+      }
+    }
 
+    /// <summary>
+    /// Tunnel
+    /// </summary>
+    public static void Demo6()
+    {
+      // Initialize the led strip
+      int i = 0;
+      Util.Setup();
+      int task = Util.StartTask();
+      Random random = new Random();
+      CercleList cercles = new CercleList(1, 5, 120);
+
+      while (Util.TaskWork(task))
+      {
+
+        //if (i++ % 250 == 249)
+        //{
+        //  int r = random.Next(2, 9);
+
+        //  cercles = new CercleList(r, 5, 360 / r);
+        //}
+
+
+
+
+       // for (double rayon = 1; rayon < 30; rayon += 0.4)
+          foreach (Cercle cercle in cercles)
+            for (int degree = 0; degree < 360; degree++)
+              if (Cercle(degree, 10) is Coordonnee coord)
+                Util.Context.Pixels.GetCoordonnee(coord).SetColor(cercle.Couleur);
+
+
+
+
+
+
+        Util.Context.Pixels.Reset();
+
+
+
+        Util.SetLeds();
       }
     }
 
