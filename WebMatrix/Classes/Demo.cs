@@ -244,40 +244,18 @@ namespace WebMatrix.Classes
     public static void Demo6()
     {
       // Initialize the led strip
-      int i = 0;
       Util.Setup();
       int task = Util.StartTask();
-      Random random = new Random();
-      CercleList cercles = new CercleList(1, 5, 120);
+      CercleList cercles = new CercleList(4, 5);
 
       while (Util.TaskWork(task))
       {
+        foreach (Cercle cercle in cercles)
+          for (int degree = 0; degree < 360; degree += 5)
+            if (Cercle(degree, cercle.Rayon) is Coordonnee coord)
+              Util.Context.Pixels.GetCoordonnee(coord).SetColor(cercle.Couleur);
 
-        //if (i++ % 250 == 249)
-        //{
-        //  int r = random.Next(2, 9);
-
-        //  cercles = new CercleList(r, 5, 360 / r);
-        //}
-
-
-
-
-       // for (double rayon = 1; rayon < 30; rayon += 0.4)
-          foreach (Cercle cercle in cercles)
-            for (int degree = 0; degree < 360; degree++)
-              if (Cercle(degree, 10) is Coordonnee coord)
-                Util.Context.Pixels.GetCoordonnee(coord).SetColor(cercle.Couleur);
-
-
-
-
-
-
-        Util.Context.Pixels.Reset();
-
-
-
+        cercles.SetRayon(0.6);
         Util.SetLeds();
       }
     }

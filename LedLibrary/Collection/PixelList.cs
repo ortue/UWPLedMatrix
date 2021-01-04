@@ -298,7 +298,7 @@ namespace LedLibrary.Collection
     /// <param name="degree"></param>
     /// <param name="rayon"></param>
     /// <returns></returns>
-    public Coordonnee GetCercleCoord(Coordonnee centre, int degree, int rayon)
+    public Coordonnee GetCercleCoord(Coordonnee centre, int degree, double rayon)
     {
       Coordonnee coord = new Coordonnee(Largeur, Hauteur);
 

@@ -8,7 +8,7 @@ namespace LedLibrary.Entities
   {
     public int Probabilite { get; set; }
     public int Degree { get; set; }
-    public int Rayon { get; set; }
+    public double Rayon { get; set; }
     public int Inter { get; set; }
     public Couleur Couleur { get; set; }
 
@@ -66,12 +66,23 @@ namespace LedLibrary.Entities
     /// Constructeur
     /// </summary>
     /// <param name="degree"></param>
+    /// <param name="inter"></param>
     public Cercle(int degree, int inter)
     {
       Inter = inter;
       Rayon = 5;
       Probabilite = 4;
       Degree = degree;
+      Couleur = Couleur.Rnd();
+    }
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    /// <param name="rayon"></param>
+    public Cercle(int rayon)
+    {
+      Rayon = rayon;
       Couleur = Couleur.Rnd();
     }
 
@@ -115,6 +126,21 @@ namespace LedLibrary.Entities
 
       if (Degree > 360)
         Degree = 0;
+    }
+
+    /// <summary>
+    /// SetRayon
+    /// </summary>
+    /// <param name="rayon"></param>
+    public void SetRayon(double rayon)
+    {
+      Rayon += rayon;
+
+      if (Rayon > 19)
+      {
+        Rayon = 0;
+        Couleur = Couleur.Rnd();
+      }
     }
   }
 }
