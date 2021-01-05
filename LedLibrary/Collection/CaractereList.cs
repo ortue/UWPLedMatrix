@@ -46,7 +46,7 @@ namespace LedLibrary.Collection
     /// <param name="debut"></param>
     /// <param name="fin"></param>
     /// <returns></returns>
-    public PoliceList GetCaracteres(int debut)
+    public PoliceList GetCaracteres(int debut = 0)
     {
       int i = 0;
       int position = 0;

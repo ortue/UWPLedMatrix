@@ -9,7 +9,6 @@ namespace LedLibrary.Collection
   public class PixelList : List<Pixel>
   {
     public Emplacement Emplacement { get; set; }
-    //public int NbrLed { get; set; }
     public int Largeur { get; set; }
     public int Hauteur { get; set; }
 
@@ -29,22 +28,12 @@ namespace LedLibrary.Collection
     /// <summary>
     /// Constructeur
     /// </summary>
-    public PixelList()
-    { 
-    
-    }
-
-    /// <summary>
-    /// Constructeur
-    /// </summary>
     /// <param name="largeur"></param>
     /// <param name="hauteur"></param>
     public PixelList(int largeur, int hauteur)
     {
       Largeur = largeur;
       Hauteur = hauteur;
-      //NbrLed = Largeur * Hauteur;
-
       Emplacement = new Emplacement(Largeur, Hauteur);
 
       for (int i = 0; i < Largeur * Hauteur; i++)
@@ -94,7 +83,7 @@ namespace LedLibrary.Collection
     /// SetHorloge
     /// </summary>
     /// <returns></returns>
-    public void SetHorloge()
+    public void SetHorloge(PoliceList caracteres)
     {
       Couleur minuteCouleur = new Couleur { R = 39 / 2, G = 144 / 2, B = 176 / 2 };//39,144,176
       Couleur heureCouleur = new Couleur { R = 148 / 2, G = 200 / 2, B = 80 / 2 };//148,186,101
@@ -106,32 +95,9 @@ namespace LedLibrary.Collection
 
       GetCoordonnee(Coordonnee.Get(9, 0, Largeur, Hauteur)).SetColor(pointCouleur);
       GetCoordonnee(Coordonnee.Get(9, 19, Largeur, Hauteur)).SetColor(pointCouleur);
-
       BackGround();
 
-      //Fond Centre 
-      //for (int j = 1; j < 10; j++)
-      //	for (int i = 1; i < 359; i += 4)
-      //		GetCoordonnee(GetCercleCoord(Coordonnee.Get(10, 10, Largeur, Hauteur), i, j)).SetColor(new Color { R = (byte)(7 * j), G = (byte)(7 * j), B = (byte)(7 * j) });
-
-      //Cadran
-      string leading = "";
-      string deuxPoint = " ";
-      int hh = DateTime.Now.Hour;
-
-      if (hh == 0)
-        hh = 12;
-
-      if (hh > 12)
-        hh -= 12;
-
-      if (DateTime.Now.Millisecond < 500)
-        deuxPoint = ":";
-
-      if (hh < 10)
-        leading = " ";
-
-      Print(Coordonnee.Get(2, 13, Largeur, Hauteur), leading + hh + deuxPoint + DateTime.Now.ToString("mm"), new Couleur());
+      Print(caracteres, 1, 13, Couleur.Noir);
 
       //Aiguille
       int minute = DateTime.Now.Minute;
@@ -146,13 +112,8 @@ namespace LedLibrary.Collection
       for (int i = 0; i < 6; i++)
         GetCoordonnee(GetHeureCoord(heure, minute, i)).SetColor(heureCouleur);
 
-      //for (int i = 0; i < 5; i++)
-      //  GetCoordonnee(GetTempsCoord(DateTime.Now.Millisecond / (double)100 * 6, i)).SetColor(new Couleur { R = 255 / 2, G = 0 / 2, B = 0 / 2 });//43,78,114
-
       for (int i = 0; i < 9; i++)
         GetCoordonnee(GetTempsCoord((DateTime.Now.Millisecond / (double)100 * 6) - i, 9)).SetColor(new Couleur { R = new List<byte> { 128, 64, 32, 16, 8, 8, 8, 4, 4 }[i], B = 5 });
-
-      //Print(Coordonnee.Get(1, 1, Largeur, Hauteur), DateTime.Now.Second.ToString(), new Color());
     }
 
     /// <summary>
@@ -162,47 +123,6 @@ namespace LedLibrary.Collection
     {
       foreach (Pixel pixel in this)
         pixel.Couleur = Couleur.FromArgb(0, 0, 0);
-    }
-
-    /// <summary>
-    /// Carre
-    /// </summary>
-    //public void Carre(int position, int size, Color couleur)
-    //{
-    //	for (int j = 0; j < size; j++)
-    //		for (int i = position + (Largeur * j); i < size + position + (Largeur * j); i++)
-    //			GetPosition(i).SetColor(couleur);
-    //}
-
-    /// <summary>
-    /// SetCouleur
-    /// </summary>
-    /// <param name="position"></param>
-    /// <param name="color"></param>
-    public void SetCouleur(Pixel pixel)
-    {
-      if (this.SingleOrDefault(p => p.Numero == pixel.Numero && p.Position == pixel.Position) is Pixel pix)
-        pix.Couleur = pixel.Couleur;
-    }
-
-    /// <summary>
-    /// GetPosition
-    /// </summary>
-    /// <param name="position"></param>
-    /// <returns></returns>
-    public Pixel GetPosition(int position)
-    {
-      return this.SingleOrDefault(p => p.Position == position);
-    }
-
-    /// <summary>
-    /// GetNumero
-    /// </summary>
-    /// <param name="numero"></param>
-    /// <returns></returns>
-    public Pixel GetNumero(int numero)
-    {
-      return this.SingleOrDefault(p => p.Numero == numero);
     }
 
     /// <summary>
@@ -321,97 +241,21 @@ namespace LedLibrary.Collection
     }
 
     /// <summary>
-    /// Print
-    /// </summary>
-    /// <param name="coord"></param>
-    /// <param name="chaine"></param>
-    /// <param name="couleur"></param>
-    public void Print(Coordonnee coord, string chaine, Couleur couleur)
-    {
-      int y = coord.Y;
-
-      for (int i = 0; i < chaine.Length; i++)
-      {
-        coord.Y = y;
-
-        PrintLettre(coord, chaine[i], couleur);
-
-        if (chaine[i] == ':' || chaine[i] == ' ' || chaine[i] == '.')
-          coord.Droite(2);
-        else if (chaine[i] == '-')
-          coord.Droite(3);
-        else
-          coord.Droite(4);
-      }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="coord"></param>
-    /// <param name="chaine"></param>
-    /// <param name="couleur"></param>
-    public void PrintText(Coordonnee coord, string chaine, Couleur couleur)
-    {
-      int y = coord.Y;
-
-      for (int i = 0; i < chaine.Length; i++)
-      {
-        coord.Y = y;
-
-        PrintLettre(coord, chaine[i], couleur);
-
-        if (chaine[i] == ':' || chaine[i] == ' ' || chaine[i] == '.')
-          coord.Droite(2);
-        else if (chaine[i] == '-')
-          coord.Droite(3);
-        else
-          coord.Droite(4);
-      }
-    }
-
-    /// <summary>
-    /// Print
-    /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <param name="chaine"></param>
-    /// <param name="couleur"></param>
-    public void Print(int x, int y, string chaine, Couleur couleur)
-    {
-      Print(Coordonnee.Get(x, y, Largeur, Hauteur), chaine, couleur);
-    }
-
-    /// <summary>
     /// SetNouvelle
     /// </summary>
-    public void SetNouvelle(PoliceList caracteres, int debut)
+    public void SetNouvelle(PoliceList caracteres, string heure)
     {
-      string leading = "";
-      string deuxPoint = " ";
-      int heure = DateTime.Now.Hour;
-
-      if (heure == 0)
-        heure = 12;
-
-      if (heure > 12)
-        heure -= 12;
-
-      if (DateTime.Now.Millisecond < 500)
-        deuxPoint = ":";
-
-      if (heure < 10)
-        leading = " ";
-
-      if (caracteres != null)
-        foreach (Police lettre in caracteres.Where(c => c.Point))
-          if (GetCoordonnee(lettre.X, lettre.Y + 1) is Pixel pixel)
-            pixel.SetColor(Couleur.Get(32, 32, 127));
-
       Couleur couleur = Couleur.Get(64, 0, 0);
 
-      Print(Coordonnee.Get(1, 8, Largeur, Hauteur), DateTime.Now.ToString("MM-dd"), couleur);
-      Print(Coordonnee.Get(2, 14, Largeur, Hauteur), leading + heure + deuxPoint + DateTime.Now.ToString("mm"), couleur);
+      Print(caracteres, 0, 1, Couleur.Get(32, 32, 127));
+
+      CaractereList dates = new CaractereList(20);
+      dates.SetText(DateTime.Now.ToString("MM-dd"));
+      Print(dates.GetCaracteres(), 1, 7, couleur);
+
+      CaractereList heures = new CaractereList(20);
+      heures.SetText(heure);
+      Print(heures.GetCaracteres(), 2, 13, couleur);
 
       BackGround();
     }
@@ -420,280 +264,46 @@ namespace LedLibrary.Collection
     /// SetMeteo
     /// </summary>
     /// <param name="temp"></param>
-    public void SetMeteo(current meteo)
+    public void SetMeteo(current meteo, string heure)
     {
       Couleur couleur = new Couleur { R = 64, G = 0, B = 0 };
 
-      //Cadran
-      string leading = "";
-      string deuxPoint = " ";
-      int heure = DateTime.Now.Hour;
-
-      if (heure == 0)
-        heure = 12;
-
-      if (heure > 12)
-        heure -= 12;
-
-      if (DateTime.Now.Millisecond < 500)
-        deuxPoint = ":";
-
-      if (heure < 10)
-        leading = " ";
-
       if (meteo != null)
-        Print(Coordonnee.Get(4, 2, Largeur, Hauteur), meteo.temperature.value.ToString("0") + "°C", couleur);
+      {
+        string leading = "";
 
-      if (meteo != null)
-        Print(Coordonnee.Get(2, 8, Largeur, Hauteur), "H " + meteo.humidity.value.ToString() + "%", couleur);
+        if (meteo.temperature.value.ToString("0").Length < 2)
+          leading = "  ";
 
-      Print(Coordonnee.Get(2, 14, Largeur, Hauteur), leading + heure + deuxPoint + DateTime.Now.ToString("mm"), couleur);
+        CaractereList degres = new CaractereList(20);
+        degres.SetText(leading + meteo.temperature.value.ToString("0") + "°C");
+        Print(degres.GetCaracteres(), 1, 1, couleur);
+
+        CaractereList hums = new CaractereList(20);
+        hums.SetText("H " + meteo.humidity.value.ToString() + "%");
+        Print(hums.GetCaracteres(), 2, 7, couleur);
+      }
+
+      CaractereList heures = new CaractereList(20);
+      heures.SetText(heure);
+      Print(heures.GetCaracteres(), 2, 13, couleur);
 
       BackGround();
     }
 
     /// <summary>
-    /// PrintLettre
+    /// Print
     /// </summary>
-    /// <param name="coord"></param>
-    /// <param name="lettre"></param>
-    private void PrintLettre(Coordonnee coord, char lettre, Couleur couleur)
+    /// <param name="caracteres"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="couleur"></param>
+    public void Print(PoliceList caracteres, int x, int y, Couleur couleur)
     {
-      Coordonnee coo = new Coordonnee(coord);
-
-      switch (lettre)
-      {
-        case '0':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          break;
-
-        case '1':
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Gauche(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Droite(1).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          break;
-
-        case '2':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          break;
-
-        case '3':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          break;
-
-
-        case '4':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          break;
-
-        case '5':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          break;
-
-        case '6':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          break;
-
-        case '7':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          break;
-
-        case '8':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          break;
-
-        case '9':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          break;
-
-        case 'C':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          break;
-
-        case '°':
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-          GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
-          break;
-
-        case ':':
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Bas(2)).SetColor(couleur);
-          break;
-
-        case '.':
-          GetCoordonnee(coo.Bas(4)).SetColor(couleur);
-          break;
-
-        case '%':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Gauche(1).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-          break;
-
-        case ' ':
-          break;
-
-        case '-':
-          GetCoordonnee(coo.Bas(2)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          break;
-
-        case 'H':
-          GetCoordonnee(coo).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(1)).SetColor(couleur);
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-          GetCoordonnee(coo.Gauche(2).Bas(1)).SetColor(couleur);
-          GetCoordonnee(coo.Droite(2)).SetColor(couleur);
-          break;
-      }
+      if (caracteres != null)
+        foreach (Police lettre in caracteres.Where(c => c.Point))
+          if (GetCoordonnee(lettre.X + x, lettre.Y + y) is Pixel pixel)
+            pixel.SetColor(couleur);
     }
   }
 }

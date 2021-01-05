@@ -58,8 +58,15 @@ namespace WebMatrix.Classes
         pong.Y += pong.YY;
 
         //Pointage
-        Util.Context.Pixels.Print(pong.ScorePad, 2, pong.ScoreP1.ToString(), scoreColor);
-        Util.Context.Pixels.Print(12, 2, pong.ScoreP2.ToString(), scoreColor);
+        CaractereList pointages = new CaractereList(20);
+        pointages.SetText(pong.ScoreP1.ToString());
+        Util.Context.Pixels.Print(pointages.GetCaracteres(), 1, 2, scoreColor);
+
+        pointages.SetText(pong.ScoreP2.ToString());
+        Util.Context.Pixels.Print(pointages.GetCaracteres(), 12, 2, scoreColor);
+
+        //Util.Context.Pixels.Print(pong.ScorePad, 2, pong.ScoreP1.ToString(), scoreColor);
+        //Util.Context.Pixels.Print(12, 2, pong.ScoreP2.ToString(), scoreColor);
 
         //La balle
         Util.Context.Pixels.GetCoordonnee(pong.X, pong.Y).Set(16, 16, 127);

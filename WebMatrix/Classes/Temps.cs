@@ -34,7 +34,7 @@ namespace WebMatrix.Classes
           "ciarge", "saint-ciarge", "bout d'ciarge",
           "cibouleau",
           "cibole", "cibolac",
-          "enfant d'chienne",
+          "enfant d'chienne", "chien sale",
           "verrat",
           "marde", "maudite marde", "mangeux d'marde",
           "boswell",
@@ -58,6 +58,30 @@ namespace WebMatrix.Classes
       get { return "                    "; }
     }
 
+    public static string Heure
+    {
+      get 
+      {
+        string leading = "";
+        string deuxPoint = " ";
+        int hh = DateTime.Now.Hour;
+
+        if (hh == 0)
+          hh = 12;
+
+        if (hh > 12)
+          hh -= 12;
+
+        if (DateTime.Now.Millisecond < 500)
+          deuxPoint = ":";
+
+        if (hh < 10)
+          leading = "  ";
+
+        return leading + hh + deuxPoint + DateTime.Now.ToString("mm");
+      }
+    }
+
     /// <summary>
     /// Horloge
     /// </summary>
@@ -69,9 +93,13 @@ namespace WebMatrix.Classes
       {
         int task = Util.StartTask();
 
+        CaractereList caracteres = new CaractereList(20);
+
         while (Util.TaskWork(task))
         {
-          Util.Context.Pixels.SetHorloge();
+          caracteres.SetText(Heure);
+
+          Util.Context.Pixels.SetHorloge(caracteres.GetCaracteres());
           Util.SetLeds();
           Util.Context.Pixels.Reset();
         }
@@ -96,7 +124,7 @@ namespace WebMatrix.Classes
           if (Util.Meteo is current meteo)
             meteoImgs.SetPixel(meteo.weather.icon, Util.Context.Pixels);
 
-          Util.Context.Pixels.SetMeteo(Util.Meteo);
+          Util.Context.Pixels.SetMeteo(Util.Meteo, Heure);
 
           Util.SetLeds();
           Util.Context.Pixels.Reset();
@@ -132,7 +160,7 @@ namespace WebMatrix.Classes
             debut = ResetNouvelle();
 
           largeur = caracteres.SetText(Util.NouvelleStr);
-          Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut), debut);
+          Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut), Heure);
           Util.SetLeds();
           Util.Context.Pixels.Reset();
 
@@ -174,7 +202,7 @@ namespace WebMatrix.Classes
           }
 
           largeur = caracteres.SetText(loremBarnak);
-          Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut), debut);
+          Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut), Heure);
           Util.SetLeds();
           Util.Context.Pixels.Reset();
 

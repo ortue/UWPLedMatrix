@@ -73,7 +73,7 @@ namespace LedLibrary.Entities
       Rayon = 5;
       Probabilite = 4;
       Degree = degree;
-      Couleur = Couleur.Rnd();
+      Couleur = Couleur.Rnd;
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ namespace LedLibrary.Entities
     public Cercle(int rayon)
     {
       Rayon = rayon;
-      Couleur = Couleur.Rnd();
+      Couleur = Couleur.Rnd;
     }
 
     /// <summary>
@@ -139,7 +139,7 @@ namespace LedLibrary.Entities
       if (Rayon > 20)
       {
         Rayon = 1;
-        Couleur = Couleur.Rnd();
+        Couleur = Couleur.Rnd;
 
         if (random)
         {

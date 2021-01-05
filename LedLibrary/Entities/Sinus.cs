@@ -28,9 +28,9 @@ namespace LedLibrary.Entities
     public Sinus()
     {
       Random random = new Random();
-      XX = random.Next(400, 700) / 100d;
-      Hauteur = random.Next(70, 100) / 10d;
-      Couleur = Couleur.Rnd();
+      XX = random.Next(100, 1000) / 100d;
+      Hauteur = random.Next(70, 90) / 10d;
+      Couleur = Couleur.Rnd;
       X = 0;
       Y = 10;
     }
@@ -41,6 +41,7 @@ namespace LedLibrary.Entities
     public void Next()
     {
       X += XX;
+      //X+=1;
       Y = 10d + Math.Sin(X / Math.PI) * Hauteur;
     }
   }

@@ -17,6 +17,28 @@ namespace LedLibrary.Entities
       get { return R == 0 && G == 0 && B == 0; }
     }
 
+    public static Couleur Noir
+    {
+      get { return new Couleur(); }
+    }
+
+    /// <summary>
+    /// Rnd
+    /// </summary>
+    /// <returns></returns>
+    public static Couleur Rnd
+    {
+      get
+      {
+        Random random = new Random();
+        int r = random.Next(0, 127);
+        int g = random.Next(0, 127);
+        int b = random.Next(0, 127);
+
+        return FromArgb((byte)r, (byte)g, (byte)b);
+      }
+    }
+
     /// <summary>
     /// Constructeur
     /// </summary>
@@ -97,20 +119,6 @@ namespace LedLibrary.Entities
     public static Couleur FromArgb(byte Red, byte Green, byte Blue)
     {
       return new Couleur { R = Red, G = Green, B = Blue };
-    }
-
-    /// <summary>
-    /// Rnd
-    /// </summary>
-    /// <returns></returns>
-    public static Couleur Rnd()
-    {
-      Random random = new Random();
-      int r = random.Next(0, 127);
-      int g = random.Next(0, 127);
-      int b = random.Next(0, 127);
-
-      return FromArgb((byte)r, (byte)g, (byte)b);
     }
 
     /// <summary>

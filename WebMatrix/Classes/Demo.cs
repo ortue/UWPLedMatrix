@@ -71,7 +71,7 @@ namespace WebMatrix.Classes
         int x = random.Next(0, Util.Context.Pixels.Largeur);
         int y = 0;
 
-        Couleur couleur = Couleur.Rnd();
+        Couleur couleur = Couleur.Rnd;
 
         while (y < Util.Context.Pixels.Hauteur - bot[x])
         {
@@ -188,7 +188,7 @@ namespace WebMatrix.Classes
     public static void Demo4()
     {
       // Initialize the led strip
-      int i = 0;
+      int i = 1;
       Util.Setup();
       int task = Util.StartTask();
       Random random = new Random();
@@ -199,7 +199,6 @@ namespace WebMatrix.Classes
         if (i++ % 250 == 249)
         {
           int r = random.Next(2, 9);
-
           cercles = new CercleList(r, 5, 360 / r);
         }
 
@@ -273,18 +272,22 @@ namespace WebMatrix.Classes
 
       int x = 0;
       Random random = new Random();
-      SinusList sinus = new SinusList(random.Next(2, 3));
+      SinusList sinus = new SinusList(random.Next(1, 4));
 
       while (Util.TaskWork(task))
       {
         if (x++ % 10000 == 0)
-          sinus = new SinusList(random.Next(2, 3));
+          sinus = new SinusList(random.Next(1, 4));
 
         foreach (Sinus sin in sinus)
           Util.Context.Pixels.GetCoordonnee(sin.Coord).SetColor(sin.Couleur);
 
         sinus.Next();
+
+
+
         Util.SetLeds();
+
         Util.Context.Pixels.Reset();
       }
     }
