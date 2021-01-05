@@ -1,6 +1,4 @@
-﻿using LedLibrary.Classes;
-using LedLibrary.Entities;
-using System;
+﻿using System;
 
 namespace LedLibrary.Entities
 {
@@ -10,6 +8,8 @@ namespace LedLibrary.Entities
     public int Degree { get; set; }
     public double Rayon { get; set; }
     public int Inter { get; set; }
+    public int X { get; set; }
+    public int Y { get; set; }
     public Couleur Couleur { get; set; }
 
     public int DegreeInter
@@ -132,14 +132,26 @@ namespace LedLibrary.Entities
     /// SetRayon
     /// </summary>
     /// <param name="rayon"></param>
-    public void SetRayon(double rayon)
+    public void SetRayon(double rayon, bool random)
     {
       Rayon += rayon;
 
-      if (Rayon > 19)
+      if (Rayon > 20)
       {
-        Rayon = 0;
+        Rayon = 1;
         Couleur = Couleur.Rnd();
+
+        if (random)
+        {
+          Random r = new Random();
+          X = r.Next(4, 16);
+          Y = r.Next(4, 16);
+        }
+        else
+        {
+          X = 10;
+          Y = 10;
+        }
       }
     }
   }

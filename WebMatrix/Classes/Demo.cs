@@ -2,6 +2,7 @@
 using LedLibrary.Collection;
 using LedLibrary.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using WebMatrix.Context;
@@ -41,10 +42,9 @@ namespace WebMatrix.Classes
           Demo6();
           break;
 
-
-          //case 6:
-          //  Demo9();
-          //  break;
+        case 7:
+          Demo7();
+          break;
       }
     }
 
@@ -244,19 +244,48 @@ namespace WebMatrix.Classes
     public static void Demo6()
     {
       // Initialize the led strip
+      int i = 1;
       Util.Setup();
       int task = Util.StartTask();
-      CercleList cercles = new CercleList(4, 5);
+      CercleList cercles = new CercleList(3, 5);
 
       while (Util.TaskWork(task))
       {
         foreach (Cercle cercle in cercles)
           for (int degree = 0; degree < 360; degree += 5)
-            if (Cercle(degree, cercle.Rayon) is Coordonnee coord)
+            if (Cercle(degree, cercle.Rayon, cercle.X, cercle.Y) is Coordonnee coord)
               Util.Context.Pixels.GetCoordonnee(coord).SetColor(cercle.Couleur);
 
-        cercles.SetRayon(0.6);
+        cercles.SetRayon(0.5, i++ % 2000 > 1000);
+
         Util.SetLeds();
+      }
+    }
+
+    /// <summary>
+    /// Oscilloscope
+    /// </summary>
+    public static void Demo7()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+
+      int x = 0;
+      Random random = new Random();
+      SinusList sinus = new SinusList(random.Next(2, 3));
+
+      while (Util.TaskWork(task))
+      {
+        if (x++ % 10000 == 0)
+          sinus = new SinusList(random.Next(2, 3));
+
+        foreach (Sinus sin in sinus)
+          Util.Context.Pixels.GetCoordonnee(sin.Coord).SetColor(sin.Couleur);
+
+        sinus.Next();
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
       }
     }
 
@@ -312,17 +341,19 @@ namespace WebMatrix.Classes
     /// </summary>
     /// <param name="degree"></param>
     /// <param name="rayon"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
     /// <returns></returns>
-    public static Coordonnee Cercle(int degree, double rayon)
+    public static Coordonnee Cercle(int degree, double rayon, int x = 10, int y = 10)
     {
       Coordonnee coord = new Coordonnee(Util.Context.Largeur, Util.Context.Hauteur);
 
       if (degree >= 0 && degree <= 180)
-        coord.X = 10 + (int)(rayon * Math.Sin(Math.PI * degree / 180));
+        coord.X = x + (int)(rayon * Math.Sin(Math.PI * degree / 180));
       else
-        coord.X = 10 - (int)(rayon * -Math.Sin(Math.PI * degree / 180)) - 1;
+        coord.X = x - (int)(rayon * -Math.Sin(Math.PI * degree / 180)) - 1;
 
-      coord.Y = 10 - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
+      coord.Y = y - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
 
       if (coord.X < 0)
         return null;

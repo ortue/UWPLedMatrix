@@ -9,7 +9,7 @@ namespace LedLibrary.Collection
   public class PixelList : List<Pixel>
   {
     public Emplacement Emplacement { get; set; }
-    public int NbrLed { get; set; }
+    //public int NbrLed { get; set; }
     public int Largeur { get; set; }
     public int Hauteur { get; set; }
 
@@ -29,13 +29,21 @@ namespace LedLibrary.Collection
     /// <summary>
     /// Constructeur
     /// </summary>
+    public PixelList()
+    { 
+    
+    }
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
     /// <param name="largeur"></param>
     /// <param name="hauteur"></param>
     public PixelList(int largeur, int hauteur)
     {
       Largeur = largeur;
       Hauteur = hauteur;
-      NbrLed = Largeur * Hauteur;
+      //NbrLed = Largeur * Hauteur;
 
       Emplacement = new Emplacement(Largeur, Hauteur);
 

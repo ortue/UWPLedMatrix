@@ -1,6 +1,4 @@
-﻿using LedLibrary.Classes;
-using LedLibrary.Entities;
-using System;
+﻿using LedLibrary.Entities;
 using System.Collections.Generic;
 
 namespace LedLibrary.Collection
@@ -20,11 +18,10 @@ namespace LedLibrary.Collection
     }
 
     /// <summary>
-    ///Constructeur 
+    /// Constructeur
     /// </summary>
     /// <param name="nombre"></param>
-    /// <param name="inter"></param>
-    /// <param name="degre"></param>
+    /// <param name="rayon"></param>
     public CercleList(int nombre, int rayon)
     {
       for (int i = 0; i < nombre; i++)
@@ -54,10 +51,10 @@ namespace LedLibrary.Collection
     /// SetRayon
     /// </summary>
     /// <param name="v"></param>
-    public void SetRayon(double rayon)
+    public void SetRayon(double rayon, bool random)
     {
       foreach (Cercle cercle in this)
-        cercle.SetRayon(rayon);
+        cercle.SetRayon(rayon, random);
     }
   }
 }
