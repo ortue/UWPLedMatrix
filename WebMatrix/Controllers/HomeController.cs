@@ -64,11 +64,14 @@ namespace WebMatrix.Controllers
         case 0:
           Task.Run(() => Classes.Jeu.Pong());
           break;
+
+        case 2:
+          Task.Run(() => Classes.Jeu.Serpent());
+          break;
       }
 
       return View();
     }
-
 
     public IActionResult Spectrum(int? id)
     {
@@ -78,25 +81,32 @@ namespace WebMatrix.Controllers
 
     public IActionResult Temps(int? id)
     {
+      if (id != null)
+        Util.Autorun = false;
+
       switch (id)
       {
         case 0:
-          Util.Autorun = false;
           Classes.Temps.Horloge();
           break;
 
         case 1:
-          Util.Autorun = false;
           Classes.Temps.Meteo();
           break;
 
         case 2:
-          Util.Autorun = false;
           Classes.Temps.Nouvelle();
           break;
 
+        case 3:
+          Classes.Temps.Date();
+          break;
+
+        case 4:
+          Classes.Temps.Binaire();
+          break;
+
         case 5:
-          Util.Autorun = false;
           Classes.Temps.LoremBarnak();
           break;
       }

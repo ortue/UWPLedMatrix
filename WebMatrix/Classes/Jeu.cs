@@ -58,15 +58,8 @@ namespace WebMatrix.Classes
         pong.Y += pong.YY;
 
         //Pointage
-        CaractereList pointages = new CaractereList(20);
-        pointages.SetText(pong.ScoreP1.ToString());
-        Util.Context.Pixels.Print(pointages.GetCaracteres(), 1, 2, scoreColor);
-
-        pointages.SetText(pong.ScoreP2.ToString());
-        Util.Context.Pixels.Print(pointages.GetCaracteres(), 12, 2, scoreColor);
-
-        //Util.Context.Pixels.Print(pong.ScorePad, 2, pong.ScoreP1.ToString(), scoreColor);
-        //Util.Context.Pixels.Print(12, 2, pong.ScoreP2.ToString(), scoreColor);
+        Util.Context.Pixels.Print(pong.ScoreP1.ToString(), 1, 2, scoreColor);
+        Util.Context.Pixels.Print(pong.ScoreP2.ToString(), 12, 2, scoreColor);
 
         //La balle
         Util.Context.Pixels.GetCoordonnee(pong.X, pong.Y).Set(16, 16, 127);
@@ -112,6 +105,54 @@ namespace WebMatrix.Classes
       }
     }
 
+    /// <summary>
+    /// Serpent
+    /// </summary>
+    public static void Serpent()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+      Couleur scoreColor = new Couleur { R = 255, G = 255, B = 255 };
+      Random r = new Random();
+      JeuSerpent jeuSerpent = new JeuSerpent(Util.Context.Pixels.Largeur, Util.Context.Pixels.Hauteur);
+
+      while (Util.TaskWork(task))
+      {
+        //Pointage
+        Util.Context.Pixels.Print(jeuSerpent.Score.ToString(), 2, 12, scoreColor);
+
+
+
+
+        //La balle
+        Util.Context.Pixels.GetCoordonnee(jeuSerpent.X, jeuSerpent.Y).Set(r.Next(127), r.Next(127), r.Next(127));
+
+
+
+
+        //Bordure
+        for (int i = 0; i < Util.Context.Pixels.Largeur; i++)
+        {
+          Util.Context.Pixels.GetCoordonnee(i, 0).Set(64, 64, 127);
+          Util.Context.Pixels.GetCoordonnee(i, 19).Set(64, 64, 127);
+        }
+
+        for (int i = 0; i < Util.Context.Pixels.Hauteur; i++)
+        {
+          Util.Context.Pixels.GetCoordonnee(0, i).Set(64, 64, 127);
+          Util.Context.Pixels.GetCoordonnee(19, i).Set(64, 64, 127);
+        }
+
+        //Background
+        Util.Context.Pixels.BackGround(3);
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
+
+        using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
+          waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+      }
+    }
 
     /// <summary>
     /// Labyrinthe

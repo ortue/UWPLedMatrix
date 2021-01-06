@@ -60,7 +60,7 @@ namespace WebMatrix.Classes
 
     public static string Heure
     {
-      get 
+      get
       {
         string leading = "";
         string deuxPoint = " ";
@@ -208,6 +208,56 @@ namespace WebMatrix.Classes
 
           using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
           waitHandle.Wait(TimeSpan.FromMilliseconds(50));
+        }
+      });
+    }
+
+    /// <summary>
+    /// Nouvelle
+    /// </summary>
+    public static void Date()
+    {
+      Util.Setup();
+
+      Task.Run(() =>
+      {
+        int task = Util.StartTask();
+        CaractereList caracteres = new CaractereList(20);
+
+        while (Util.TaskWork(task))
+        {
+          caracteres.SetText(Heure);
+          Util.Context.Pixels.SetDate(caracteres.GetCaracteres());
+          Util.SetLeds();
+          Util.Context.Pixels.Reset();
+
+          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+          waitHandle.Wait(TimeSpan.FromMilliseconds(1));
+        }
+      });
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static void Binaire()
+    {
+      Util.Setup();
+
+      Task.Run(() =>
+      {
+        int task = Util.StartTask();
+        CaractereList caracteres = new CaractereList(20);
+
+        while (Util.TaskWork(task))
+        {
+          caracteres.SetText(Heure);
+          Util.Context.Pixels.SetBinaire(caracteres.GetCaracteres());
+          Util.SetLeds();
+          Util.Context.Pixels.Reset();
+
+          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+          waitHandle.Wait(TimeSpan.FromMilliseconds(1));
         }
       });
     }

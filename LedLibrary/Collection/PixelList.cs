@@ -45,6 +45,9 @@ namespace LedLibrary.Collection
     /// </summary>
     public void BackGround(int bg = 2)
     {
+      int sec = DateTime.Now.Millisecond / 50;
+      int milli = DateTime.Now.Millisecond % 20;
+
       switch (bg)
       {
         case 1:
@@ -56,8 +59,6 @@ namespace LedLibrary.Collection
           break;
 
         case 2:
-          int sec = DateTime.Now.Millisecond / 50;
-
           List<int> b = new List<int>
           {
             2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
@@ -69,6 +70,20 @@ namespace LedLibrary.Collection
           foreach (Pixel pixel in this)
             if (pixel.Couleur.IsNoir)
               pixel.SetColor(new Couleur { B = (byte)b[sec + pixel.Coord.Y] });
+          break;
+
+        case 3:
+          List<int> g = new List<int>
+          {
+            3, 6, 0, 0, 0, 0, 0, 0, 3, 6,
+            0, 0, 0, 3, 6, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 3, 6,
+            0, 3, 6, 0, 0, 0, 3, 6, 0, 0
+          };
+
+          foreach (Pixel pixel in this)
+            if (pixel.Couleur.IsNoir)
+              pixel.SetColor(new Couleur { G = (byte)g[milli + pixel.Coord.Y] });
           break;
 
         default:
@@ -117,12 +132,86 @@ namespace LedLibrary.Collection
     }
 
     /// <summary>
+    /// SetDate
+    /// </summary>
+    /// <param name="policeLists"></param>
+    /// <param name="heure"></param>
+    public void SetDate(PoliceList caracteres)
+    {
+      Couleur couleur = Couleur.Get(0, 0, 127);
+      Print(DateTime.Now.ToString("yyyy"), 4, 1, couleur);
+      Print(DateTime.Now.ToString("MM-dd"), 1, 7, couleur);
+      Print(caracteres, 2, 13, couleur);
+      BackGround(1);
+    }
+
+    /// <summary>
+    /// SetBinaire
+    /// </summary>
+    /// <param name="caracteres"></param>
+    public void SetBinaire(PoliceList caracteres)
+    {
+      Couleur couleur = Couleur.Get(31, 64, 127);
+      Couleur noir = Couleur.Get(1, 1, 1);
+
+      string heure = Convert.ToString(DateTime.Now.Hour, 2).PadLeft(6, '0');
+      string minute = Convert.ToString(DateTime.Now.Minute, 2).PadLeft(6, '0');
+      string seconde = Convert.ToString(DateTime.Now.Second, 2).PadLeft(6, '0');
+
+      for (int h = 0; h < 6; h++)
+        if (heure[h] == '1')
+        {
+          GetCoordonnee(Coordonnee.Get(2, h * 2 + 1, Largeur, Hauteur)).SetColor(couleur);
+          GetCoordonnee(Coordonnee.Get(3, h * 2 + 1, Largeur, Hauteur)).SetColor(couleur);
+          GetCoordonnee(Coordonnee.Get(4, h * 2 + 1, Largeur, Hauteur)).SetColor(couleur);
+        }
+        else
+        {
+          GetCoordonnee(Coordonnee.Get(2, h * 2 + 1, Largeur, Hauteur)).SetColor(noir);
+          GetCoordonnee(Coordonnee.Get(3, h * 2 + 1, Largeur, Hauteur)).SetColor(noir);
+          GetCoordonnee(Coordonnee.Get(4, h * 2 + 1, Largeur, Hauteur)).SetColor(noir);
+        }
+
+      for (int m = 0; m < 6; m++)
+        if (minute[m] == '1')
+        {
+          GetCoordonnee(Coordonnee.Get(9, m * 2 + 1, Largeur, Hauteur)).SetColor(couleur);
+          GetCoordonnee(Coordonnee.Get(10, m * 2 + 1, Largeur, Hauteur)).SetColor(couleur);
+          GetCoordonnee(Coordonnee.Get(11, m * 2 + 1, Largeur, Hauteur)).SetColor(couleur);
+        }
+        else
+        {
+          GetCoordonnee(Coordonnee.Get(9, m * 2 + 1, Largeur, Hauteur)).SetColor(noir);
+          GetCoordonnee(Coordonnee.Get(10, m * 2 + 1, Largeur, Hauteur)).SetColor(noir);
+          GetCoordonnee(Coordonnee.Get(11, m * 2 + 1, Largeur, Hauteur)).SetColor(noir);
+        }
+
+      for (int s = 0; s < 6; s++)
+        if (seconde[s] == '1')
+        {
+          GetCoordonnee(Coordonnee.Get(16, s * 2 + 1, Largeur, Hauteur)).SetColor(couleur);
+          GetCoordonnee(Coordonnee.Get(17, s * 2 + 1, Largeur, Hauteur)).SetColor(couleur);
+          GetCoordonnee(Coordonnee.Get(18, s * 2 + 1, Largeur, Hauteur)).SetColor(couleur);
+        }
+        else
+        {
+          GetCoordonnee(Coordonnee.Get(16, s * 2 + 1, Largeur, Hauteur)).SetColor(noir);
+          GetCoordonnee(Coordonnee.Get(17, s * 2 + 1, Largeur, Hauteur)).SetColor(noir);
+          GetCoordonnee(Coordonnee.Get(18, s * 2 + 1, Largeur, Hauteur)).SetColor(noir);
+        }
+
+      Print(caracteres, 2, 14, couleur);
+
+      BackGround(1);
+    }
+
+    /// <summary>
     /// Reset
     /// </summary>
     public void Reset()
     {
       foreach (Pixel pixel in this)
-        pixel.Couleur = Couleur.FromArgb(0, 0, 0);
+        pixel.Couleur = new Couleur();
     }
 
     /// <summary>
@@ -246,17 +335,9 @@ namespace LedLibrary.Collection
     public void SetNouvelle(PoliceList caracteres, string heure)
     {
       Couleur couleur = Couleur.Get(64, 0, 0);
-
       Print(caracteres, 0, 1, Couleur.Get(32, 32, 127));
-
-      CaractereList dates = new CaractereList(20);
-      dates.SetText(DateTime.Now.ToString("MM-dd"));
-      Print(dates.GetCaracteres(), 1, 7, couleur);
-
-      CaractereList heures = new CaractereList(20);
-      heures.SetText(heure);
-      Print(heures.GetCaracteres(), 2, 13, couleur);
-
+      Print(DateTime.Now.ToString("MM-dd"), 1, 7, couleur);
+      Print(heure, 2, 13, couleur);
       BackGround();
     }
 
@@ -275,19 +356,11 @@ namespace LedLibrary.Collection
         if (meteo.temperature.value.ToString("0").Length < 2)
           leading = "  ";
 
-        CaractereList degres = new CaractereList(20);
-        degres.SetText(leading + meteo.temperature.value.ToString("0") + "°C");
-        Print(degres.GetCaracteres(), 1, 1, couleur);
-
-        CaractereList hums = new CaractereList(20);
-        hums.SetText("H " + meteo.humidity.value.ToString() + "%");
-        Print(hums.GetCaracteres(), 2, 7, couleur);
+        Print(leading + meteo.temperature.value.ToString("0") + "°C", 1, 1, couleur);
+        Print("H " + meteo.humidity.value.ToString() + "%", 2, 7, couleur);
       }
 
-      CaractereList heures = new CaractereList(20);
-      heures.SetText(heure);
-      Print(heures.GetCaracteres(), 2, 13, couleur);
-
+      Print(heure, 2, 13, couleur);
       BackGround();
     }
 
@@ -304,6 +377,20 @@ namespace LedLibrary.Collection
         foreach (Police lettre in caracteres.Where(c => c.Point))
           if (GetCoordonnee(lettre.X + x, lettre.Y + y) is Pixel pixel)
             pixel.SetColor(couleur);
+    }
+
+    /// <summary>
+    /// Print
+    /// </summary>
+    /// <param name="texte"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="couleur"></param>
+    public void Print(string texte, int x, int y, Couleur couleur)
+    {
+      CaractereList textes = new CaractereList(Largeur);
+      textes.SetText(texte);
+      Print(textes.GetCaracteres(), x, y, couleur);
     }
   }
 }

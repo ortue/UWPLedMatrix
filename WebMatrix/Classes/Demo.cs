@@ -283,12 +283,11 @@ namespace WebMatrix.Classes
           Util.Context.Pixels.GetCoordonnee(sin.Coord).SetColor(sin.Couleur);
 
         sinus.Next();
-
-
-
         Util.SetLeds();
 
-        Util.Context.Pixels.Reset();
+//        if (x % 20 == 0)
+          Util.Context.Pixels.Reset();
+
       }
     }
 
