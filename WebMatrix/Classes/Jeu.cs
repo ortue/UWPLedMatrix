@@ -35,6 +35,8 @@ namespace WebMatrix.Classes
 
       while (Util.TaskWork(task))
       {
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+
         //Effacer la balle apres
         Util.Context.Pixels.GetCoordonnee(pong.X, pong.Y).SetColor();
 
@@ -47,8 +49,7 @@ namespace WebMatrix.Classes
 
         //Mure des palettes, si y a un but pause 1.5 secondes
         if (pong.Palette(Util.Context.Pixels.Largeur))
-          using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-            waitHandle.Wait(TimeSpan.FromMilliseconds(1500));
+          waitHandle.Wait(TimeSpan.FromMilliseconds(1500));
 
         //Mure du haut et du bas
         pong.Horizontal(Util.Context.Pixels.Hauteur);
@@ -58,8 +59,8 @@ namespace WebMatrix.Classes
         pong.Y += pong.YY;
 
         //Pointage
-        Util.Context.Pixels.Print(pong.ScoreP1.ToString(), 1, 2, scoreColor);
-        Util.Context.Pixels.Print(pong.ScoreP2.ToString(), 12, 2, scoreColor);
+        Util.Context.Pixels.Print(pong.ScoreP1.ToString("00"), 1, 2, scoreColor);
+        Util.Context.Pixels.Print(pong.ScoreP2.ToString("00"), 12, 2, scoreColor);
 
         //La balle
         Util.Context.Pixels.GetCoordonnee(pong.X, pong.Y).Set(16, 16, 127);
@@ -100,8 +101,7 @@ namespace WebMatrix.Classes
         Util.Context.Pixels.Reset();
 
         if (pong.Vitesse > 0)
-          using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-            waitHandle.Wait(TimeSpan.FromMilliseconds(pong.Vitesse));
+          waitHandle.Wait(TimeSpan.FromMilliseconds(pong.Vitesse));
       }
     }
 
@@ -113,23 +113,23 @@ namespace WebMatrix.Classes
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
-      Couleur scoreColor = new Couleur { R = 255, G = 255, B = 255 };
+
+      int cycle = 0;
+      double vitesse = 10;
       Random r = new Random();
+      Couleur scoreColor = new Couleur { R = 127, G = 127, B = 127 };
       JeuSerpent jeuSerpent = new JeuSerpent(Util.Context.Pixels.Largeur, Util.Context.Pixels.Hauteur);
 
       while (Util.TaskWork(task))
       {
+        if (vitesse > 2)
+          vitesse = 10 - jeuSerpent.Score / 25;
+
         //Pointage
-        Util.Context.Pixels.Print(jeuSerpent.Score.ToString(), 2, 12, scoreColor);
+        Util.Context.Pixels.Print(jeuSerpent.Score.ToString(), 2, 13, scoreColor);
 
-
-
-
-        //La balle
+        //La balle       
         Util.Context.Pixels.GetCoordonnee(jeuSerpent.X, jeuSerpent.Y).Set(r.Next(127), r.Next(127), r.Next(127));
-
-
-
 
         //Bordure
         for (int i = 0; i < Util.Context.Pixels.Largeur; i++)
@@ -144,14 +144,44 @@ namespace WebMatrix.Classes
           Util.Context.Pixels.GetCoordonnee(19, i).Set(64, 64, 127);
         }
 
+        //Mouvement
+        if (cycle++ % vitesse == 0)
+          jeuSerpent.Mouvement();
+
+        int degrade = 1;
+
+        //Serpent
+        foreach (Serpent serpent in jeuSerpent.Serpents)
+          if (CouleurSerpent(degrade++) is Couleur couleurSerpent)
+            Util.Context.Pixels.GetCoordonnee(serpent.X, serpent.Y).SetColor(couleurSerpent);
+
+        bool manger = jeuSerpent.Manger();
+        //bool mort = jeuSerpent.Mort();
+
         //Background
         Util.Context.Pixels.BackGround(3);
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-          waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(vitesse));
+
+        if (manger)// || mort)
+          waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
       }
+    }
+
+    /// <summary>
+    /// Couleur Serpent
+    /// </summary>
+    /// <param name="degrade"></param>
+    /// <returns></returns>
+    public static Couleur CouleurSerpent(int degrade)
+    {
+      if (degrade < 9)
+        return Couleur.Get(31 / degrade, 127 / degrade, 31 / degrade);
+
+      return Couleur.Get(31 / 9, 127 / 9, 31 / 9);
     }
 
     /// <summary>

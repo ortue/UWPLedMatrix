@@ -1,29 +1,126 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LedLibrary.Collection;
+using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebMatrix.Classes
 {
   public class JeuSerpent
   {
-    public decimal X { get; set; }
-    public decimal Y { get; set; }
+    public int X { get; set; }
+    public int Y { get; set; }
+    public int Largeur { get; set; }
+    public int Hauteur { get; set; }
     public int Score { get; set; }
     public int Vitesse { get; set; }
+    public SerpentList Serpents { get; set; }
+
+    public int DistanceX
+    {
+      get { return Math.Abs(Serpents.Tete.X - X); }
+    }
+
+    public int DistanceY
+    {
+      get { return Math.Abs(Serpents.Tete.Y - Y); }
+    }
 
     /// <summary>
     /// Constructeur
     /// </summary>
     public JeuSerpent(int largeur, int hauteur)
     {
-      Random r = new Random();
+      Largeur = largeur;
+      Hauteur = hauteur;
 
-      X = r.Next(1, largeur - 2);
-      Y = r.Next(1, hauteur - 2);
-
+      SetBalle();
+      Serpents = new SerpentList(Largeur, Hauteur);
     }
 
+    /// <summary>
+    /// SetBalle
+    /// </summary>
+    public void SetBalle()
+    {
+      Random r = new Random();
 
+      int i = 0;
+
+      while (Serpents.Any(s => s.X == X && s.Y == Y) && i++ < 10000)
+      {
+        X = r.Next(1, Largeur - 1);
+        Y = r.Next(1, Hauteur - 1);
+      }
+    }
+
+    /// <summary>
+    /// Mouvement
+    /// </summary>
+    public void Mouvement()
+    {
+      Direction();
+
+      Serpents.Mouvement();
+    }
+
+    /// <summary>
+    /// Direction
+    /// </summary>
+    public void Direction()
+    {
+      Serpents.DX = 0;
+      Serpents.DY = 0;
+
+      if (DistanceX <= DistanceY)
+      {
+        if (Serpents.Tete.Y < Y)
+          Serpents.DY = 1;
+
+        if (Serpents.Tete.Y > Y)
+          Serpents.DY = -1;
+      }
+      else
+      {
+        if (Serpents.Tete.X < X)
+          Serpents.DX = 1;
+
+        if (Serpents.Tete.X > X)
+          Serpents.DX = -1;
+      }
+    }
+
+    /// <summary>
+    /// Manger
+    /// </summary>
+    public bool Manger()
+    {
+      if (Serpents.Tete.X == X && Serpents.Tete.Y == Y)
+      {
+        Score++;
+        SetBalle();
+        Serpents.Mange();
+
+        return true;
+      }
+
+      return false;
+    }
+
+    /// <summary>
+    /// Mort
+    /// </summary>
+    /// <returns></returns>
+    public bool Mort()
+    {
+      if (Serpents.Mort())
+      {
+        Score = 0;
+        SetBalle();
+        Serpents = new SerpentList(Largeur, Hauteur);
+
+        return true;
+      }
+
+      return false;
+    }
   }
 }
