@@ -32,8 +32,8 @@ namespace WebMatrix.Classes
       Largeur = largeur;
       Hauteur = hauteur;
 
-      SetBalle();
       Serpents = new SerpentList(Largeur, Hauteur);
+      SetBalle();
     }
 
     /// <summary>
@@ -45,11 +45,14 @@ namespace WebMatrix.Classes
 
       int i = 0;
 
-      while (Serpents.Any(s => s.X == X && s.Y == Y) && i++ < 10000)
-      {
-        X = r.Next(1, Largeur - 1);
-        Y = r.Next(1, Hauteur - 1);
-      }
+      X = r.Next(1, Largeur - 1);
+      Y = r.Next(1, Hauteur - 1);
+
+      //while (Serpents.Any(s => s.X == X && s.Y == Y) && i++ < 10000)
+      //{
+      //  X = r.Next(1, Largeur - 1);
+      //  Y = r.Next(1, Hauteur - 1);
+      //}
     }
 
     /// <summary>
