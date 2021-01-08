@@ -48,11 +48,11 @@ namespace WebMatrix.Classes
       X = r.Next(1, Largeur - 1);
       Y = r.Next(1, Hauteur - 1);
 
-      //while (Serpents.Any(s => s.X == X && s.Y == Y) && i++ < 10000)
-      //{
-      //  X = r.Next(1, Largeur - 1);
-      //  Y = r.Next(1, Hauteur - 1);
-      //}
+      while (Serpents.Any(s => s.X == X && s.Y == Y) && i++ < 5000)
+      {
+        X = r.Next(1, Largeur - 1);
+        Y = r.Next(1, Hauteur - 1);
+      }
     }
 
     /// <summary>
@@ -70,6 +70,15 @@ namespace WebMatrix.Classes
     /// </summary>
     public void Direction()
     {
+      if (Serpents.DX == 0 && Serpents.DY == 0)
+      {
+      
+      
+      }
+
+
+
+
       Serpents.DX = 0;
       Serpents.DY = 0;
 

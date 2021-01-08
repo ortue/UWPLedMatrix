@@ -123,7 +123,7 @@ namespace WebMatrix.Classes
       while (Util.TaskWork(task))
       {
         if (vitesse > 2)
-          vitesse = 10 - jeuSerpent.Score / 25;
+          vitesse = 10 - jeuSerpent.Score / 15;
 
         //Pointage
         Util.Context.Pixels.Print(jeuSerpent.Score.ToString(), 2, 13, scoreColor);
