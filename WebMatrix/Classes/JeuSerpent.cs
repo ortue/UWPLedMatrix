@@ -1,5 +1,6 @@
 ﻿using LedLibrary.Collection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WebMatrix.Classes
@@ -41,9 +42,8 @@ namespace WebMatrix.Classes
     /// </summary>
     public void SetBalle()
     {
-      Random r = new Random();
-
       int i = 0;
+      Random r = new Random();
 
       X = r.Next(1, Largeur - 1);
       Y = r.Next(1, Hauteur - 1);
@@ -53,32 +53,49 @@ namespace WebMatrix.Classes
         X = r.Next(1, Largeur - 1);
         Y = r.Next(1, Hauteur - 1);
       }
+
+      Serpents.DX = 0;
+      Serpents.DY = 0;
     }
 
     /// <summary>
     /// Mouvement
     /// </summary>
-    public void Mouvement()
+    public bool Mouvement()
     {
-      Direction();
+      //Depart du serpent
+      if (Serpents.DX == 0 && Serpents.DY == 0)
+        Direction();
+
+      //Distance transversal atteint
+      if (DistanceX == 0 || DistanceY == 0)
+        Direction();
+
+      //Eviter obstacle
+      if (Serpents.Obstable())
+        if (Serpents.Possibilite() is List<KeyValuePair<int, int>> possibilites)
+        {
+          if (!possibilites.Any())
+          {
+            Mort();
+            return true;
+          }
+
+          Random r = new Random();
+          int choix = r.Next(0, possibilites.Count - 1);
+          Direction(possibilites[choix].Key, possibilites[choix].Value);
+        }
 
       Serpents.Mouvement();
+
+      return false;
     }
 
     /// <summary>
     /// Direction
     /// </summary>
-    public void Direction()
+    private void Direction()
     {
-      if (Serpents.DX == 0 && Serpents.DY == 0)
-      {
-      
-      
-      }
-
-
-
-
       Serpents.DX = 0;
       Serpents.DY = 0;
 
@@ -98,6 +115,17 @@ namespace WebMatrix.Classes
         if (Serpents.Tete.X > X)
           Serpents.DX = -1;
       }
+    }
+
+    /// <summary>
+    /// Direction
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    private void Direction(int x, int y)
+    {
+      Serpents.DX = x;
+      Serpents.DY = y;
     }
 
     /// <summary>
@@ -121,18 +149,11 @@ namespace WebMatrix.Classes
     /// Mort
     /// </summary>
     /// <returns></returns>
-    public bool Mort()
+    public void Mort()
     {
-      if (Serpents.Mort())
-      {
-        Score = 0;
-        SetBalle();
-        Serpents = new SerpentList(Largeur, Hauteur);
-
-        return true;
-      }
-
-      return false;
+      Score = 0;
+      SetBalle();
+      Serpents = new SerpentList(Largeur, Hauteur);
     }
   }
 }

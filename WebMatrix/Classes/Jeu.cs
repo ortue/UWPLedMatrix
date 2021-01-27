@@ -115,6 +115,7 @@ namespace WebMatrix.Classes
       int task = Util.StartTask();
 
       int cycle = 0;
+      bool mort = false;
       double vitesse = 10;
       Random r = new Random();
       Couleur scoreColor = new Couleur { R = 127, G = 127, B = 127 };
@@ -123,7 +124,7 @@ namespace WebMatrix.Classes
       while (Util.TaskWork(task))
       {
         if (vitesse > 2)
-          vitesse = 10 - jeuSerpent.Score / 15;
+          vitesse = 10 - jeuSerpent.Score / 6;
 
         //Pointage
         Util.Context.Pixels.Print(jeuSerpent.Score.ToString(), 2, 13, scoreColor);
@@ -146,7 +147,7 @@ namespace WebMatrix.Classes
 
         //Mouvement
         if (cycle++ % vitesse == 0)
-          jeuSerpent.Mouvement();
+          mort = jeuSerpent.Mouvement();
 
         int degrade = 1;
 
@@ -156,7 +157,6 @@ namespace WebMatrix.Classes
             Util.Context.Pixels.GetCoordonnee(serpent.X, serpent.Y).SetColor(couleurSerpent);
 
         bool manger = jeuSerpent.Manger();
-        //bool mort = jeuSerpent.Mort();
 
         //Background
         Util.Context.Pixels.BackGround(3);
@@ -166,8 +166,10 @@ namespace WebMatrix.Classes
         using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
         waitHandle.Wait(TimeSpan.FromMilliseconds(vitesse));
 
-        if (manger)// || mort)
+        if (manger || mort)
           waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
+
+        mort = false;
       }
     }
 

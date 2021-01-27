@@ -82,5 +82,60 @@ namespace LedLibrary.Collection
     {
       return this.Any(s => s.X == Tete.X && s.Y == Tete.Y);
     }
+
+    /// <summary>
+    /// Obstable
+    /// </summary>
+    /// <returns></returns>
+    public bool Obstable()
+    {
+      if (Tete.X + DX == 0 || Tete.X + DX >= Largeur - 1)
+        return true;
+
+      if (Tete.Y + DY == 0 || Tete.Y + DY >= Hauteur - 1)
+        return true;
+
+      return this.Any(s => s.X == Tete.X + DX && s.Y == Tete.Y + DY);
+    }
+
+    /// <summary>
+    /// Obstable
+    /// </summary>
+    /// <param name="dx"></param>
+    /// <param name="dy"></param>
+    /// <returns></returns>
+    public bool Obstable(int dx, int dy)
+    {
+      if (Tete.X + dx == 0 || Tete.X + dx >= Largeur - 1)
+        return true;
+
+      if (Tete.Y + dy == 0 || Tete.Y + dy >= Hauteur - 1)
+        return true;
+
+      return this.Any(s => s.X == Tete.X + dx && s.Y == Tete.Y + dy);
+    }
+
+    /// <summary>
+    /// Possibilite
+    /// </summary>
+    /// <returns></returns>
+    public List<KeyValuePair<int, int>> Possibilite()
+    {
+      List<KeyValuePair<int, int>> possibilite = new List<KeyValuePair<int, int>>();
+
+      if (!Obstable(0, 1))
+        possibilite.Add(new KeyValuePair<int, int>(0, 1));
+
+      if (!Obstable(1, 0))
+        possibilite.Add(new KeyValuePair<int, int>(1, 0));
+
+      if (!Obstable(0, -1))
+        possibilite.Add(new KeyValuePair<int, int>(0, -1));
+
+      if (!Obstable(-1, 0))
+        possibilite.Add(new KeyValuePair<int, int>(-1, 0));
+
+      return possibilite;
+    }
   }
 }
