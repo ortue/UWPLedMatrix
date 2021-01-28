@@ -113,21 +113,14 @@ namespace WebMatrix.Classes
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
-
       int cycle = 0;
-      bool mort = false;
-      double vitesse = 10;
       Random r = new Random();
-      Couleur scoreColor = new Couleur { R = 127, G = 127, B = 127 };
       JeuSerpent jeuSerpent = new JeuSerpent(Util.Context.Pixels.Largeur, Util.Context.Pixels.Hauteur);
 
       while (Util.TaskWork(task))
       {
-        if (vitesse > 2)
-          vitesse = 10 - jeuSerpent.Score / 6;
-
         //Pointage
-        Util.Context.Pixels.Print(jeuSerpent.Score.ToString(), 2, 13, scoreColor);
+        Util.Context.Pixels.Print(jeuSerpent.Score.ToString(), 2, 13, Couleur.Get(127, 127, 127));
 
         //La balle       
         Util.Context.Pixels.GetCoordonnee(jeuSerpent.X, jeuSerpent.Y).Set(r.Next(127), r.Next(127), r.Next(127));
@@ -146,9 +139,7 @@ namespace WebMatrix.Classes
         }
 
         //Mouvement
-        if (cycle++ % vitesse == 0)
-          mort = jeuSerpent.Mouvement();
-
+        bool mort = jeuSerpent.Mouvement(cycle++);
         int degrade = 1;
 
         //Serpent
@@ -156,6 +147,7 @@ namespace WebMatrix.Classes
           if (CouleurSerpent(degrade++) is Couleur couleurSerpent)
             Util.Context.Pixels.GetCoordonnee(serpent.X, serpent.Y).SetColor(couleurSerpent);
 
+        //Le serpent mange une balle
         bool manger = jeuSerpent.Manger();
 
         //Background
@@ -164,12 +156,10 @@ namespace WebMatrix.Classes
         Util.Context.Pixels.Reset();
 
         using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-        waitHandle.Wait(TimeSpan.FromMilliseconds(vitesse));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(jeuSerpent.Vitesse));
 
         if (manger || mort)
           waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
-
-        mort = false;
       }
     }
 

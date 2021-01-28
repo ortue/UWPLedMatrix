@@ -69,9 +69,11 @@ namespace LedLibrary.Collection
     /// <summary>
     /// Mange
     /// </summary>
-    public void Mange()
+    public bool Mange()
     {
       Add(new Serpent(Queue.X, Queue.Y));
+
+      return true;
     }
 
     /// <summary>

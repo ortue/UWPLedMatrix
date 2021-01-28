@@ -270,12 +270,6 @@
       <Version>6.2.10</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Library\Library.csproj">
-      <Project>{BA350CAA-69D8-4A2C-8DA8-4F2ECF4A9545}</Project>
-      <Name>Library</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
