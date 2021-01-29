@@ -65,6 +65,10 @@ namespace WebMatrix.Controllers
           Task.Run(() => Classes.Jeu.Pong());
           break;
 
+        case 1:
+          Task.Run(() => Classes.Jeu.Tetris());
+          break;
+
         case 2:
           Task.Run(() => Classes.Jeu.Serpent());
           break;

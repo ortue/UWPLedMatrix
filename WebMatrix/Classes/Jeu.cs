@@ -8,20 +8,6 @@ namespace WebMatrix.Classes
 {
   public class Jeu
   {
-    public static void Go(int? demo)
-    {
-      switch (demo)
-      {
-        case 1:
-          Pong();
-          break;
-
-        case 3:
-          Labyrinthe();
-          break;
-      }
-    }
-
     /// <summary>
     /// Pong
     /// </summary>
@@ -174,6 +160,31 @@ namespace WebMatrix.Classes
         return Couleur.Get(31 / degrade, 127 / degrade, 31 / degrade);
 
       return Couleur.Get(31 / 9, 127 / 9, 31 / 9);
+    }
+
+    public static void Tetris()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+      int cycle = 0;
+
+      while (Util.TaskWork(task))
+      {
+        //Pointage
+        Util.Context.Pixels.Print("0", 2, 13, Couleur.Get(127, 127, 127));
+
+        //Background
+        Util.Context.Pixels.BackGround(3);
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
+
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+
+//        if (manger || mort)
+//          waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
+      }
     }
 
     /// <summary>
