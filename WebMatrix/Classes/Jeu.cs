@@ -162,25 +162,61 @@ namespace WebMatrix.Classes
       return Couleur.Get(31 / 9, 127 / 9, 31 / 9);
     }
 
+    /// <summary>
+    /// Tetris
+    /// </summary>
     public static void Tetris()
     {
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
       int cycle = 0;
+      Tetris tetris = new Tetris();
 
       while (Util.TaskWork(task))
       {
         //Pointage
-        Util.Context.Pixels.Print("0", 2, 13, Couleur.Get(127, 127, 127));
+        Util.Context.Pixels.Print("0", 14, 8, Couleur.Get(127, 127, 127));
+
+        //Bordure
+        for (int i = 1; i < 11; i++)
+          Util.Context.Pixels.GetCoordonnee(i, 19).Set(64, 64, 127);
+
+        for (int i = 0; i < Util.Context.Pixels.Hauteur; i++)
+        {
+          Util.Context.Pixels.GetCoordonnee(1, i).Set(64, 64, 127);
+          Util.Context.Pixels.GetCoordonnee(11, i).Set(64, 64, 127);
+        }
+
+        for (int i = 13; i < 19; i++)
+          Util.Context.Pixels.GetCoordonnee(i, 6).Set(64, 64, 127);
+
+
+        //Next
+        tetris.Next();
+
+
+        Util.Context.Pixels.GetCoordonnee(15, 1).Set(127, 0, 127);
+        Util.Context.Pixels.GetCoordonnee(15, 2).Set(127, 0, 127);
+        Util.Context.Pixels.GetCoordonnee(16, 2).Set(127, 0, 127);
+        Util.Context.Pixels.GetCoordonnee(16, 3).Set(127, 0, 127);
+
+
+
+        //Piece
+        Util.Context.Pixels.GetCoordonnee(6, 1).Set(127, 127, 0);
+        Util.Context.Pixels.GetCoordonnee(6, 2).Set(127, 127, 0);
+        Util.Context.Pixels.GetCoordonnee(7, 2).Set(127, 127, 0);
+        Util.Context.Pixels.GetCoordonnee(6, 3).Set(127, 127, 0);
+
 
         //Background
-        Util.Context.Pixels.BackGround(3);
+        Util.Context.Pixels.BackGround(1);
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
         using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-        waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(10));
 
 //        if (manger || mort)
 //          waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
