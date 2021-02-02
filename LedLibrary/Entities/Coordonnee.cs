@@ -47,13 +47,13 @@ namespace LedLibrary.Entities
     /// Constructeur
     /// </summary>
     /// <param name="coord"></param>
-    public Coordonnee(Coordonnee coord)
-    {
-      X = coord.X;
-      Y = coord.Y;
-      MaxX = coord.MaxX;
-      MaxY = coord.MaxY;
-    }
+    //public Coordonnee(Coordonnee coord)
+    //{
+    //  X = coord.X;
+    //  Y = coord.Y;
+    //  MaxX = coord.MaxX;
+    //  MaxY = coord.MaxY;
+    //}
 
     /// <summary>
     /// Get
@@ -73,36 +73,36 @@ namespace LedLibrary.Entities
     /// </summary>
     /// <param name="x"></param>
     /// <returns></returns>
-    public Coordonnee Droite(int x)
-    {
-      X += x;
+    //public Coordonnee Droite(int x)
+    //{
+    //  X += x;
 
-      return CheckCoord();
-    }
+    //  return CheckCoord();
+    //}
 
     /// <summary>
     /// Gauche
     /// </summary>
     /// <param name="x"></param>
     /// <returns></returns>
-    public Coordonnee Gauche(int x)
-    {
-      X -= x;
+    //public Coordonnee Gauche(int x)
+    //{
+    //  X -= x;
 
-      return CheckCoord();
-    }
+    //  return CheckCoord();
+    //}
 
     /// <summary>
     /// Bas
     /// </summary>
     /// <param name="y"></param>
     /// <returns></returns>
-    public Coordonnee Bas(int y)
-    {
-      Y += y;
+    //public Coordonnee Bas(int y)
+    //{
+    //  Y += y;
 
-      return CheckCoord();
-    }
+    //  return CheckCoord();
+    //}
 
     /// <summary>
     /// CheckCoord

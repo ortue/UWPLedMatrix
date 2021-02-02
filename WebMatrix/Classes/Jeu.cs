@@ -193,7 +193,8 @@ namespace WebMatrix.Classes
 
 
         //Next
-        tetris.Next();
+        foreach (TetrisPiece next in tetris.Nexts)
+          Util.Context.Pixels.GetCoordonnee(next.X, next.Y).SetColor(next.Couleur);
 
 
         Util.Context.Pixels.GetCoordonnee(15, 1).Set(127, 0, 127);
@@ -201,13 +202,25 @@ namespace WebMatrix.Classes
         Util.Context.Pixels.GetCoordonnee(16, 2).Set(127, 0, 127);
         Util.Context.Pixels.GetCoordonnee(16, 3).Set(127, 0, 127);
 
+        //Piece tombé
+        foreach (TetrisPiece pieceTombe in tetris.PieceTombes)
+          Util.Context.Pixels.GetCoordonnee(pieceTombe.X, pieceTombe.Y).SetColor(pieceTombe.Couleur);
 
 
         //Piece
+        foreach (TetrisPiece piece in tetris.Pieces)
+          Util.Context.Pixels.GetCoordonnee(piece.X, piece.Y).SetColor(piece.Couleur);
+
+
+
+
         Util.Context.Pixels.GetCoordonnee(6, 1).Set(127, 127, 0);
         Util.Context.Pixels.GetCoordonnee(6, 2).Set(127, 127, 0);
         Util.Context.Pixels.GetCoordonnee(7, 2).Set(127, 127, 0);
         Util.Context.Pixels.GetCoordonnee(6, 3).Set(127, 127, 0);
+
+
+
 
 
         //Background

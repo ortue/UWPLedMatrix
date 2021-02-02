@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LedLibrary.Collection;
 
 namespace WebMatrix.Classes
 {
   public class Tetris
   {
+    public TetrisPieceList PieceTombes { get; set; }
+    public TetrisPieceList Nexts { get; set; }
+    public TetrisPieceList Pieces { get; set; }
 
-
-    public void Next()
-    {
-
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public Tetris()
+    { 
+    
     }
   }
 }
