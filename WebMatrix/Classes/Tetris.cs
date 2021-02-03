@@ -1,4 +1,5 @@
 ﻿using LedLibrary.Collection;
+using System;
 
 namespace WebMatrix.Classes
 {
@@ -12,8 +13,18 @@ namespace WebMatrix.Classes
     /// Constructeur
     /// </summary>
     public Tetris()
-    { 
-    
+    {
+      SetNext();
+    }
+
+    /// <summary>
+    /// SetNext
+    /// </summary>
+    private void SetNext()
+    {
+      Random r = new Random();
+
+      Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(r.Next(0, 6)));
     }
   }
 }

@@ -191,25 +191,19 @@ namespace WebMatrix.Classes
         for (int i = 13; i < 19; i++)
           Util.Context.Pixels.GetCoordonnee(i, 6).Set(64, 64, 127);
 
-
         //Next
         foreach (TetrisPiece next in tetris.Nexts)
-          Util.Context.Pixels.GetCoordonnee(next.X, next.Y).SetColor(next.Couleur);
+          Util.Context.Pixels.GetCoordonnee(next.X + 15, next.Y + 1).SetColor(next.Couleur);
 
 
-        Util.Context.Pixels.GetCoordonnee(15, 1).Set(127, 0, 127);
-        Util.Context.Pixels.GetCoordonnee(15, 2).Set(127, 0, 127);
-        Util.Context.Pixels.GetCoordonnee(16, 2).Set(127, 0, 127);
-        Util.Context.Pixels.GetCoordonnee(16, 3).Set(127, 0, 127);
 
         //Piece tombé
-        foreach (TetrisPiece pieceTombe in tetris.PieceTombes)
-          Util.Context.Pixels.GetCoordonnee(pieceTombe.X, pieceTombe.Y).SetColor(pieceTombe.Couleur);
+        //foreach (TetrisPiece pieceTombe in tetris.PieceTombes)
+        //  Util.Context.Pixels.GetCoordonnee(pieceTombe.X, pieceTombe.Y).SetColor(pieceTombe.Couleur);
 
-
-        //Piece
-        foreach (TetrisPiece piece in tetris.Pieces)
-          Util.Context.Pixels.GetCoordonnee(piece.X, piece.Y).SetColor(piece.Couleur);
+        ////Piece
+        //foreach (TetrisPiece piece in tetris.Pieces)
+        //  Util.Context.Pixels.GetCoordonnee(piece.X, piece.Y).SetColor(piece.Couleur);
 
 
 
@@ -231,8 +225,8 @@ namespace WebMatrix.Classes
         using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
         waitHandle.Wait(TimeSpan.FromMilliseconds(10));
 
-//        if (manger || mort)
-//          waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
+        //if (manger || mort)
+        //  waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
       }
     }
 
