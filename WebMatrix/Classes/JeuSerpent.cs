@@ -85,7 +85,7 @@ namespace WebMatrix.Classes
               return Mort();
 
             Random r = new Random();
-            int choix = r.Next(0, possibilites.Count - 1);
+            int choix = r.Next(0, possibilites.Count);
             Direction(possibilites[choix].Key, possibilites[choix].Value);
           }
 

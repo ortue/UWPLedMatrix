@@ -24,7 +24,7 @@ namespace WebMatrix.Classes
     {
       Random r = new Random();
 
-      Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(r.Next(0, 6)));
+      Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(r.Next(0, 7)));
     }
   }
 }
