@@ -176,7 +176,7 @@ namespace WebMatrix.Classes
       while (Util.TaskWork(task))
       {
         //Pointage
-        Util.Context.Pixels.Print("0", 14, 8, Couleur.Get(127, 127, 127));
+        Util.Context.Pixels.Print(tetris.Score.ToString(), 14, 8, Couleur.Get(127, 127, 127));
 
         //Bordure
         for (int i = 1; i < 11; i++)
@@ -195,27 +195,21 @@ namespace WebMatrix.Classes
         foreach (TetrisPiece next in tetris.Nexts)
           Util.Context.Pixels.GetCoordonnee(next.X + 15, next.Y + 1).SetColor(next.Couleur);
 
-
-
         //Piece tombé
-        //foreach (TetrisPiece pieceTombe in tetris.PieceTombes)
-        //  Util.Context.Pixels.GetCoordonnee(pieceTombe.X, pieceTombe.Y).SetColor(pieceTombe.Couleur);
+        foreach (TetrisPiece pieceTombe in tetris.PieceTombes)
+          if (Util.Context.Pixels.GetCoordonnee(pieceTombe.X, pieceTombe.Y) is Pixel pixel)
+            pixel.SetColor(pieceTombe.Couleur);
 
-        ////Piece
-        //foreach (TetrisPiece piece in tetris.Pieces)
-        //  Util.Context.Pixels.GetCoordonnee(piece.X, piece.Y).SetColor(piece.Couleur);
+        //Piece
+        foreach (TetrisPiece piece in tetris.Pieces)
+          if (Util.Context.Pixels.GetCoordonnee(piece.X + tetris.X, piece.Y + tetris.Y) is Pixel pixel)
+            pixel.SetColor(piece.Couleur);
 
+        //Mouvement
+        tetris.Mouvement(cycle++);
 
-
-
-        Util.Context.Pixels.GetCoordonnee(6, 1).Set(127, 127, 0);
-        Util.Context.Pixels.GetCoordonnee(6, 2).Set(127, 127, 0);
-        Util.Context.Pixels.GetCoordonnee(7, 2).Set(127, 127, 0);
-        Util.Context.Pixels.GetCoordonnee(6, 3).Set(127, 127, 0);
-
-
-
-
+        //Rendu en bas on travail
+        bool mort = tetris.Bottom();
 
         //Background
         Util.Context.Pixels.BackGround(1);
@@ -226,7 +220,12 @@ namespace WebMatrix.Classes
         waitHandle.Wait(TimeSpan.FromMilliseconds(10));
 
         //if (manger || mort)
-        //  waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
+
+        if (mort)
+        {
+          tetris = new Tetris();
+          waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
+        }
       }
     }
 

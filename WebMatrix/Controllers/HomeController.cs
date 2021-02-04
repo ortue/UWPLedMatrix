@@ -59,6 +59,9 @@ namespace WebMatrix.Controllers
 
     public IActionResult Jeu(int? id)
     {
+      if (id != null)
+        Util.Autorun = false;
+
       switch (id)
       {
         case 0:
