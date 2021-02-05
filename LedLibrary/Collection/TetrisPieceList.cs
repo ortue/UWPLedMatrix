@@ -11,6 +11,37 @@ namespace LedLibrary.Collection
       get { return this.FirstOrDefault().PieceID; }
     }
 
+    public int Rotation
+    {
+      get { return this.FirstOrDefault().Rotation; }
+    }
+
+    public int GetXBottom
+    {
+      get
+      {
+        int yMin = 0;
+        int xBottom = 2;
+
+        for (int x = 2; x < 11; x++)
+          if (this.Any(p => p.X == x))
+          {
+            if (this.Where(p => p.X == x).Min(p => p.Y) > yMin)
+            {
+              yMin = this.Where(p => p.X == x).Min(p => p.Y);
+              xBottom = x;
+            }
+          }
+          else
+          {
+            xBottom = x;
+            yMin = 19;
+          }
+
+        return xBottom;
+      }
+    }
+
     /// <summary>
     /// GetPiece
     /// </summary>
@@ -21,13 +52,13 @@ namespace LedLibrary.Collection
     {
       return pieceID switch
       {
-        0 => Carre(rotation),
-        1 => Barre(rotation),
-        2 => Elle(rotation),
-        3 => Erre(rotation),
-        4 => Te(rotation),
-        5 => Esse(rotation),
-        6 => Zede(rotation),
+        0 => Carre(rotation % 4),
+        1 => Barre(rotation % 4),
+        2 => Elle(rotation % 4),
+        3 => Erre(rotation % 4),
+        4 => Te(rotation % 4),
+        5 => Esse(rotation % 4),
+        6 => Zede(rotation % 4),
         _ => null
       };
     }
@@ -173,7 +204,7 @@ namespace LedLibrary.Collection
           new TetrisPiece(2) { Rotation = 3, X = 2, Y = 0, Couleur = couleur },
           new TetrisPiece(2) { Rotation = 3, X = 0, Y = 1, Couleur = couleur },
           new TetrisPiece(2) { Rotation = 3, X = 1, Y = 1, Couleur = couleur },
-          new TetrisPiece(2) { Rotation = 3, X = 2, Y = 2, Couleur = couleur }
+          new TetrisPiece(2) { Rotation = 3, X = 2, Y = 1, Couleur = couleur }
         },
         _ => null
       };
@@ -200,22 +231,22 @@ namespace LedLibrary.Collection
         1 => new TetrisPieceList()
         {
           new TetrisPiece(3) { Rotation = 1, X = 0, Y = 0, Couleur = couleur },
-          new TetrisPiece(3) { Rotation = 1, X = 0, Y = 1, Couleur = couleur },
-          new TetrisPiece(3) { Rotation = 1, X = 1, Y = 1, Couleur = couleur },
-          new TetrisPiece(3) { Rotation = 1, X = 1, Y = 2, Couleur = couleur }
+          new TetrisPiece(3) { Rotation = 1, X = 1, Y = 0, Couleur = couleur },
+          new TetrisPiece(3) { Rotation = 1, X = 2, Y = 0, Couleur = couleur },
+          new TetrisPiece(3) { Rotation = 1, X = 2, Y = 1, Couleur = couleur }
         },
         2 => new TetrisPieceList()
         {
-          new TetrisPiece(3) { Rotation = 2, X = 0, Y = 0, Couleur = couleur },
           new TetrisPiece(3) { Rotation = 2, X = 1, Y = 0, Couleur = couleur },
-          new TetrisPiece(3) { Rotation = 2, X = 0, Y = 1, Couleur = couleur },
-          new TetrisPiece(3) { Rotation = 2, X = 0, Y = 2, Couleur = couleur }
+          new TetrisPiece(3) { Rotation = 2, X = 1, Y = 1, Couleur = couleur },
+          new TetrisPiece(3) { Rotation = 2, X = 0, Y = 2, Couleur = couleur },
+          new TetrisPiece(3) { Rotation = 2, X = 1, Y = 2, Couleur = couleur }
         },
         3 => new TetrisPieceList()
         {
           new TetrisPiece(3) { Rotation = 3, X = 0, Y = 0, Couleur = couleur },
-          new TetrisPiece(3) { Rotation = 3, X = 1, Y = 0, Couleur = couleur },
-          new TetrisPiece(3) { Rotation = 3, X = 2, Y = 0, Couleur = couleur },
+          new TetrisPiece(3) { Rotation = 3, X = 0, Y = 1, Couleur = couleur },
+          new TetrisPiece(3) { Rotation = 3, X = 1, Y = 1, Couleur = couleur },
           new TetrisPiece(3) { Rotation = 3, X = 2, Y = 1, Couleur = couleur }
         },
         _ => null
@@ -288,7 +319,7 @@ namespace LedLibrary.Collection
         {
           new TetrisPiece(5) { Rotation = 1, X = 1, Y = 0, Couleur = couleur },
           new TetrisPiece(5) { Rotation = 1, X = 2, Y = 0, Couleur = couleur },
-          new TetrisPiece(5) { Rotation = 1, X = 0, Y = 0, Couleur = couleur },
+          new TetrisPiece(5) { Rotation = 1, X = 0, Y = 1, Couleur = couleur },
           new TetrisPiece(5) { Rotation = 1, X = 1, Y = 1, Couleur = couleur }
         },
         2 => new TetrisPieceList()
@@ -302,7 +333,7 @@ namespace LedLibrary.Collection
         {
           new TetrisPiece(5) { Rotation = 3, X = 1, Y = 0, Couleur = couleur },
           new TetrisPiece(5) { Rotation = 3, X = 2, Y = 0, Couleur = couleur },
-          new TetrisPiece(5) { Rotation = 3, X = 0, Y = 0, Couleur = couleur },
+          new TetrisPiece(5) { Rotation = 3, X = 0, Y = 1, Couleur = couleur },
           new TetrisPiece(5) { Rotation = 3, X = 1, Y = 1, Couleur = couleur }
         },
         _ => null
@@ -332,7 +363,7 @@ namespace LedLibrary.Collection
           new TetrisPiece(6) { Rotation = 1, X = 0, Y = 0, Couleur = couleur },
           new TetrisPiece(6) { Rotation = 1, X = 1, Y = 0, Couleur = couleur },
           new TetrisPiece(6) { Rotation = 1, X = 1, Y = 1, Couleur = couleur },
-          new TetrisPiece(6) { Rotation = 1, X = 1, Y = 2, Couleur = couleur }
+          new TetrisPiece(6) { Rotation = 1, X = 2, Y = 1, Couleur = couleur }
         },
         2 => new TetrisPieceList()
         {
@@ -346,7 +377,7 @@ namespace LedLibrary.Collection
           new TetrisPiece(6) { Rotation = 3, X = 0, Y = 0, Couleur = couleur },
           new TetrisPiece(6) { Rotation = 3, X = 1, Y = 0, Couleur = couleur },
           new TetrisPiece(6) { Rotation = 3, X = 1, Y = 1, Couleur = couleur },
-          new TetrisPiece(6) { Rotation = 3, X = 1, Y = 2, Couleur = couleur }
+          new TetrisPiece(6) { Rotation = 3, X = 2, Y = 1, Couleur = couleur }
         },
         _ => null
       };

@@ -55,10 +55,24 @@ namespace WebMatrix.Classes
     {
       if (cycle++ % Vitesse == 0)
       {
-
-
         Y++;
+
+        if (PieceTombes.GetXBottom > X)
+          X += 1;
+
+        if (PieceTombes.GetXBottom < X)
+          X -= 1;
+
+        //Rotate();
       }
+    }
+
+    /// <summary>
+    /// Rotate
+    /// </summary>
+    private void Rotate()
+    {
+      Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(Pieces.PieceID, Pieces.Rotation + 1));
     }
 
     /// <summary>
