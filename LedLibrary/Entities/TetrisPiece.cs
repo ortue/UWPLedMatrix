@@ -55,5 +55,16 @@ namespace LedLibrary.Entities
       Y = tetrisPiece.Y + y;
       Couleur = tetrisPiece.Couleur;
     }
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    public TetrisPiece(int x, int y)
+    {
+      X = x;
+      Y = y;
+    }
   }
 }

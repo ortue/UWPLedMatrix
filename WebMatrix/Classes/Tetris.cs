@@ -57,12 +57,19 @@ namespace WebMatrix.Classes
       {
         Y++;
 
+
+
+
+
+
+
+
         if (PieceTombes.GetXBottom > X)
           X += 1;
 
         if (PieceTombes.GetXBottom < X)
           X -= 1;
-
+       
         //Rotate();
       }
     }

@@ -1,4 +1,5 @@
 ﻿using LedLibrary.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -39,6 +40,42 @@ namespace LedLibrary.Collection
           }
 
         return xBottom;
+      }
+    }
+
+    /// <summary>
+    /// HorizontalScore
+    /// </summary>
+    /// <param name="pieces"></param>
+    public void HorizontalScore(TetrisPieceList pieces)
+    {
+      //Prendre les pixel les plus bas de la piece de tetris
+      TetrisPieceList pieceMax = new TetrisPieceList();
+
+      foreach (int x in pieces.Select(p => p.X).Distinct())
+        pieceMax.Add(new TetrisPiece(x, pieces.Where(p => p.X == x).Max(p => p.Y)));
+
+      //Prendre les pixel les plus haut de la base du jeu
+      List<KeyValuePair<int, int>> horisontalMin = new List<KeyValuePair<int, int>>();
+
+      for (int x = 2; x < 11; x++)
+        if (this.Any(p => p.X == x))
+          horisontalMin.Add(new KeyValuePair<int, int>(x, this.Where(p => p.X == x).Min(p => p.Y)));
+        else
+          horisontalMin.Add(new KeyValuePair<int, int>(x, 19));
+
+      //Trouver le pourcentage de fittage entre les deux collections, en bas de 10
+      List<KeyValuePair<int, int>> horizontalScore = new List<KeyValuePair<int, int>>();
+
+      for (int x = 2; x < 11; x++)
+      {
+        foreach (TetrisPiece max in pieceMax)
+        {
+          //if (horisontalMin.SingleOrDefault(h => h.Key == max.X + x).Value)
+          //{
+          //  //horizontalScore
+          //}
+        }
       }
     }
 
