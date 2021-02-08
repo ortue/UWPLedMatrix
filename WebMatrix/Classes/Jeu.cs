@@ -211,6 +211,9 @@ namespace WebMatrix.Classes
         //Rendu en bas on travail
         bool mort = tetris.Bottom();
 
+        //Enlever les lignes pleine
+
+
         //Background
         Util.Context.Pixels.BackGround(1);
         Util.SetLeds();

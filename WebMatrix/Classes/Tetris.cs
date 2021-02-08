@@ -1,6 +1,7 @@
 ﻿using LedLibrary.Collection;
 using LedLibrary.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WebMatrix.Classes
@@ -10,9 +11,11 @@ namespace WebMatrix.Classes
     public int X { get; set; }
     public int Y { get; set; }
     public int Score { get; set; }
+    public int RotationOptimal { get; set; }
     public TetrisPieceList Nexts { get; set; }
     public TetrisPieceList Pieces { get; set; }
     public TetrisPieceList PieceTombes { get; set; }
+    public TetrisHorizontalList TetrisHorizontals { get; set; }
 
     public double Vitesse
     {
@@ -25,6 +28,7 @@ namespace WebMatrix.Classes
     public Tetris()
     {
       PieceTombes = new TetrisPieceList();
+      TetrisHorizontals = new TetrisHorizontalList();
 
       NouvellePiece();
     }
@@ -45,6 +49,26 @@ namespace WebMatrix.Classes
         Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(Nexts.PieceID));
 
       Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(r.Next(0, 7)));
+
+      TetrisHorizontalList tetrisHorizontals = new TetrisHorizontalList();
+      TetrisHorizontalList tmpTetrisHorizontals = new TetrisHorizontalList();
+
+      for (int rotation = 0; rotation <= 6; rotation++)
+      {
+        TetrisPieceList tmpPiece = Rotate(rotation);
+        tmpTetrisHorizontals = PieceTombes.HorizontalScore(tmpPiece);
+
+        if (!tetrisHorizontals.Any())
+          tetrisHorizontals = tmpTetrisHorizontals;
+
+        if (tmpTetrisHorizontals.Max(t => t.Score) > tetrisHorizontals.Max(t => t.Score))
+        {
+          RotationOptimal = rotation;
+          tetrisHorizontals = tmpTetrisHorizontals;
+        }
+      }
+
+      TetrisHorizontals = tetrisHorizontals;
     }
 
     /// <summary>
@@ -57,29 +81,23 @@ namespace WebMatrix.Classes
       {
         Y++;
 
-
-
-
-
-
-
-
-        if (PieceTombes.GetXBottom > X)
+        if (TetrisHorizontals.ScoreX > X && X + Pieces.Largeur < 10)
           X += 1;
 
-        if (PieceTombes.GetXBottom < X)
+        if (TetrisHorizontals.ScoreX < X)
           X -= 1;
-       
-        //Rotate();
+
+        if (Pieces.Rotation < RotationOptimal)
+          Rotate(Pieces.Rotation + 1);
       }
     }
 
     /// <summary>
     /// Rotate
     /// </summary>
-    private void Rotate()
+    private TetrisPieceList Rotate(int rotation)
     {
-      Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(Pieces.PieceID, Pieces.Rotation + 1));
+      return new TetrisPieceList(TetrisPieceList.GetPiece(Pieces.PieceID, Pieces.Rotation + rotation));
     }
 
     /// <summary>

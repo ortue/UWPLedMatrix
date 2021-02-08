@@ -1,5 +1,4 @@
 ﻿using LedLibrary.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,43 +16,27 @@ namespace LedLibrary.Collection
       get { return this.FirstOrDefault().Rotation; }
     }
 
-    public int GetXBottom
+    public int Largeur
     {
-      get
-      {
-        int yMin = 0;
-        int xBottom = 2;
-
-        for (int x = 2; x < 11; x++)
-          if (this.Any(p => p.X == x))
-          {
-            if (this.Where(p => p.X == x).Min(p => p.Y) > yMin)
-            {
-              yMin = this.Where(p => p.X == x).Min(p => p.Y);
-              xBottom = x;
-            }
-          }
-          else
-          {
-            xBottom = x;
-            yMin = 19;
-          }
-
-        return xBottom;
-      }
+      get { return this.Max(p => p.X); }
     }
 
     /// <summary>
     /// HorizontalScore
     /// </summary>
     /// <param name="pieces"></param>
-    public void HorizontalScore(TetrisPieceList pieces)
+    public TetrisHorizontalList HorizontalScore(TetrisPieceList pieces)
     {
       //Prendre les pixel les plus bas de la piece de tetris
       TetrisPieceList pieceMax = new TetrisPieceList();
 
       foreach (int x in pieces.Select(p => p.X).Distinct())
         pieceMax.Add(new TetrisPiece(x, pieces.Where(p => p.X == x).Max(p => p.Y)));
+
+      //Remettre les coordonné pret de zéro pour calculer seulement la différence des Y
+      while (pieceMax.All(p => p.Y != 0))
+        foreach (TetrisPiece max in pieceMax)
+          max.Y--;
 
       //Prendre les pixel les plus haut de la base du jeu
       List<KeyValuePair<int, int>> horisontalMin = new List<KeyValuePair<int, int>>();
@@ -65,18 +48,49 @@ namespace LedLibrary.Collection
           horisontalMin.Add(new KeyValuePair<int, int>(x, 19));
 
       //Trouver le pourcentage de fittage entre les deux collections, en bas de 10
-      List<KeyValuePair<int, int>> horizontalScore = new List<KeyValuePair<int, int>>();
+      TetrisHorizontalList horizontalScore = new TetrisHorizontalList();
 
       for (int x = 2; x < 11; x++)
       {
-        foreach (TetrisPiece max in pieceMax)
-        {
-          //if (horisontalMin.SingleOrDefault(h => h.Key == max.X + x).Value)
-          //{
-          //  //horizontalScore
-          //}
-        }
+        int score = GetScore(x, pieceMax, horisontalMin);
+
+        horizontalScore.Add(new TetrisHorizontal(x, score));
       }
+
+      return horizontalScore;
+    }
+
+    /// <summary>
+    /// GetScore
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="horisontalMin"></param>
+    /// <returns></returns>
+    private int GetScore(int x, TetrisPieceList pieceMax, List<KeyValuePair<int, int>> horisontalMin)
+    {
+      int? tmpY = null;
+      List<bool> fit = new List<bool>();
+
+      foreach (TetrisPiece max in pieceMax.OrderBy(p => p.X))
+        if (horisontalMin.SingleOrDefault(h => h.Key == max.X + x) is KeyValuePair<int, int> min)
+        {
+          if (tmpY == null)
+          {
+            tmpY = min.Value;
+
+            fit.Add(true);
+          }
+          else if (min.Value == tmpY + max.Y)
+            fit.Add(true);
+          else
+            fit.Add(false);
+        }
+
+      //Si il y a un fit parfait on rajoute 6 pour privilégier ce move
+      if (fit.Count(f => f.Equals(true)) == pieceMax.Count)
+        return (int)((double)tmpY * (fit.Count(f => f.Equals(true)) / pieceMax.Count)) + 6;
+
+      return (int)((double)tmpY * (fit.Count(f => f.Equals(true)) / pieceMax.Count));
     }
 
     /// <summary>
