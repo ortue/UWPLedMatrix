@@ -176,43 +176,44 @@ namespace WebMatrix.Classes
       while (Util.TaskWork(task))
       {
         //Pointage
-        Util.Context.Pixels.Print(tetris.Score.ToString(), 14, 8, Couleur.Get(127, 127, 127));
+        Util.Context.Pixels.Print(tetris.ScoreUn, 15, 8, Couleur.Get(127, 127, 127));
+        Util.Context.Pixels.Print(tetris.ScoreDeux, 15, 14, Couleur.Get(127, 127, 127));
 
         //Bordure
-        for (int i = 1; i < 11; i++)
+        for (int i = 1; i < 12; i++)
           Util.Context.Pixels.GetCoordonnee(i, 19).Set(64, 64, 127);
 
         for (int i = 0; i < Util.Context.Pixels.Hauteur; i++)
         {
           Util.Context.Pixels.GetCoordonnee(1, i).Set(64, 64, 127);
-          Util.Context.Pixels.GetCoordonnee(11, i).Set(64, 64, 127);
+          Util.Context.Pixels.GetCoordonnee(12, i).Set(64, 64, 127);
         }
 
-        for (int i = 13; i < 19; i++)
+        for (int i = 13; i < 20; i++)
           Util.Context.Pixels.GetCoordonnee(i, 6).Set(64, 64, 127);
 
         //Next
         foreach (TetrisPiece next in tetris.Nexts)
-          Util.Context.Pixels.GetCoordonnee(next.X + 15, next.Y + 1).SetColor(next.Couleur);
+          Util.Context.Pixels.GetCoordonnee(next.X + 16, next.Y + 1).SetColor(next.Couleur);
 
         //Piece tombé
         foreach (TetrisPiece pieceTombe in tetris.PieceTombes)
           if (Util.Context.Pixels.GetCoordonnee(pieceTombe.X, pieceTombe.Y) is Pixel pixel)
             pixel.SetColor(pieceTombe.Couleur);
 
+        //Mouvement
+        tetris.Mouvement(cycle++);
+
         //Piece
         foreach (TetrisPiece piece in tetris.Pieces)
           if (Util.Context.Pixels.GetCoordonnee(piece.X + tetris.X, piece.Y + tetris.Y) is Pixel pixel)
             pixel.SetColor(piece.Couleur);
 
-        //Mouvement
-        tetris.Mouvement(cycle++);
-
         //Rendu en bas on travail
         bool mort = tetris.Bottom();
 
         //Enlever les lignes pleine
-
+        tetris.EffacerLigne();
 
         //Background
         Util.Context.Pixels.BackGround(1);
@@ -221,8 +222,6 @@ namespace WebMatrix.Classes
 
         using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
         waitHandle.Wait(TimeSpan.FromMilliseconds(10));
-
-        //if (manger || mort)
 
         if (mort)
         {

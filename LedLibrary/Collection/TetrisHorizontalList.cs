@@ -15,7 +15,5 @@ namespace LedLibrary.Collection
     {
       get { return this.FirstOrDefault(h => h.Score == MaxScore).X; }
     }
-
-
   }
 }

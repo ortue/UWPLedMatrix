@@ -21,6 +21,32 @@ namespace LedLibrary.Collection
       get { return this.Max(p => p.X); }
     }
 
+    public int Top
+    {
+      get
+      {
+        if (this.Any())
+          return this.Min(p => p.Y);
+
+        return 19;
+      }
+    }
+
+    /// <summary>
+    /// Vérifier si y a une ligne pleine pour arreter le jeu.
+    /// </summary>
+    public bool LignePleine
+    {
+      get
+      {
+        for (int y = 0; y < 19; y++)
+          if (this.Count(p => p.Y == y) == 10)
+            return true;
+
+        return false;
+      }
+    }
+
     /// <summary>
     /// HorizontalScore
     /// </summary>
@@ -41,7 +67,7 @@ namespace LedLibrary.Collection
       //Prendre les pixel les plus haut de la base du jeu
       List<KeyValuePair<int, int>> horisontalMin = new List<KeyValuePair<int, int>>();
 
-      for (int x = 2; x < 11; x++)
+      for (int x = 2; x < 12; x++)
         if (this.Any(p => p.X == x))
           horisontalMin.Add(new KeyValuePair<int, int>(x, this.Where(p => p.X == x).Min(p => p.Y)));
         else
@@ -50,7 +76,7 @@ namespace LedLibrary.Collection
       //Trouver le pourcentage de fittage entre les deux collections, en bas de 10
       TetrisHorizontalList horizontalScore = new TetrisHorizontalList();
 
-      for (int x = 2; x < 11; x++)
+      for (int x = 2; x < 12 - pieceMax.Largeur; x++)
       {
         int score = GetScore(x, pieceMax, horisontalMin);
 
@@ -68,7 +94,9 @@ namespace LedLibrary.Collection
     /// <returns></returns>
     private int GetScore(int x, TetrisPieceList pieceMax, List<KeyValuePair<int, int>> horisontalMin)
     {
+      int bonus = 0;
       int? tmpY = null;
+      int? tmpMaxY = null;
       List<bool> fit = new List<bool>();
 
       foreach (TetrisPiece max in pieceMax.OrderBy(p => p.X))
@@ -80,17 +108,52 @@ namespace LedLibrary.Collection
 
             fit.Add(true);
           }
-          else if (min.Value == tmpY + max.Y)
+          else if (min.Value == tmpY + max.Y - (tmpMaxY ?? 0))
             fit.Add(true);
           else
             fit.Add(false);
+
+          //Calculer la différence de hauteur avec le x precedent: tmpY + max.Y - TmpMaxY
+          if (tmpMaxY == null)
+            tmpMaxY = max.Y;
         }
 
       //Si il y a un fit parfait on rajoute 6 pour privilégier ce move
       if (fit.Count(f => f.Equals(true)) == pieceMax.Count)
-        return (int)((double)tmpY * (fit.Count(f => f.Equals(true)) / pieceMax.Count)) + 6;
+        bonus = 5 + pieceMax.Count;
 
-      return (int)((double)tmpY * (fit.Count(f => f.Equals(true)) / pieceMax.Count));
+      return (int)((double)tmpY * ((double)fit.Count(f => f.Equals(true)) / pieceMax.Count)) + bonus;
+    }
+
+    /// <summary>
+    /// EffacerLigne
+    /// </summary>
+    /// <param name="y"></param>
+    public void EffacerLigne(int y)
+    {
+      for (int x = 2; x < 12; x++)
+      {
+        if (this.FirstOrDefault(p => p.X == x && p.Y == y) is TetrisPiece pieceRemove)
+          Remove(pieceRemove);
+
+        foreach (TetrisPiece piece in this.Where(p => p.X == x && p.Y < y))
+          piece.Y++;
+      }
+    }
+
+    /// <summary>
+    /// AnimationEffacerLigne
+    /// </summary>
+    /// <param name="y"></param>
+    /// <param name="flash"></param>
+    public void AnimationEffacerLigne(int y, bool flash)
+    {
+      if (flash)
+        foreach (TetrisPiece piece in this.Where(p => p.Y == y))
+          piece.Couleur = Couleur.Noir;
+      else
+        foreach (TetrisPiece piece in this.Where(p => p.Y == y))
+          piece.Couleur = piece.TmpCouleur;
     }
 
     /// <summary>

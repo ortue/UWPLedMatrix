@@ -1,7 +1,6 @@
 ﻿using LedLibrary.Collection;
 using LedLibrary.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace WebMatrix.Classes
@@ -11,6 +10,7 @@ namespace WebMatrix.Classes
     public int X { get; set; }
     public int Y { get; set; }
     public int Score { get; set; }
+    public int LigneAnimation { get; set; }
     public int RotationOptimal { get; set; }
     public TetrisPieceList Nexts { get; set; }
     public TetrisPieceList Pieces { get; set; }
@@ -19,7 +19,30 @@ namespace WebMatrix.Classes
 
     public double Vitesse
     {
-      get { return 20 - Score / 2; }
+      get
+      {
+        if (10 - Score / 3 > 2)
+          return 10 - Score / 3;
+
+        return 2;
+      }
+      //get { return 1; }
+    }
+
+    public string ScoreUn
+    {
+      get { return Score.ToString().Substring(0, 1); }
+    }
+
+    public string ScoreDeux
+    {
+      get
+      {
+        if (Score > 9)
+          return Score.ToString().Substring(1, 1);
+
+        return string.Empty;
+      }
     }
 
     /// <summary>
@@ -28,7 +51,6 @@ namespace WebMatrix.Classes
     public Tetris()
     {
       PieceTombes = new TetrisPieceList();
-      TetrisHorizontals = new TetrisHorizontalList();
 
       NouvellePiece();
     }
@@ -40,6 +62,7 @@ namespace WebMatrix.Classes
     {
       Y = -3;
       X = 6;
+      RotationOptimal = 0;
 
       Random r = new Random();
 
@@ -50,10 +73,11 @@ namespace WebMatrix.Classes
 
       Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(r.Next(0, 7)));
 
+      TetrisHorizontals = new TetrisHorizontalList();
       TetrisHorizontalList tetrisHorizontals = new TetrisHorizontalList();
       TetrisHorizontalList tmpTetrisHorizontals = new TetrisHorizontalList();
 
-      for (int rotation = 0; rotation <= 6; rotation++)
+      for (int rotation = 0; rotation < 4; rotation++)
       {
         TetrisPieceList tmpPiece = Rotate(rotation);
         tmpTetrisHorizontals = PieceTombes.HorizontalScore(tmpPiece);
@@ -77,27 +101,57 @@ namespace WebMatrix.Classes
     /// <param name="cycle"></param>
     public void Mouvement(int cycle)
     {
-      if (cycle++ % Vitesse == 0)
+      if (cycle++ % Vitesse == 0 && LigneAnimation == 0)
       {
-        Y++;
+        //Y est la position de la piece
+        if (Y++ >= -1 || PieceTombes.Top < 10)
+        {
+          if (TetrisHorizontals.ScoreX > X && X + Pieces.Largeur < 11)
+            X += 1;
 
-        if (TetrisHorizontals.ScoreX > X && X + Pieces.Largeur < 10)
-          X += 1;
+          if (TetrisHorizontals.ScoreX < X)
+            X -= 1;
 
-        if (TetrisHorizontals.ScoreX < X)
-          X -= 1;
-
-        if (Pieces.Rotation < RotationOptimal)
-          Rotate(Pieces.Rotation + 1);
+          //TODO:Verifier pourquoi des fois les pieces ont l'air de rotater trop vite
+          if (Pieces.Rotation < RotationOptimal)
+            Pieces = Rotate(Pieces.Rotation + 1);
+        }
       }
     }
 
     /// <summary>
-    /// Rotate
+    /// EffacerLigne
     /// </summary>
-    private TetrisPieceList Rotate(int rotation)
+    public void EffacerLigne()
     {
-      return new TetrisPieceList(TetrisPieceList.GetPiece(Pieces.PieceID, Pieces.Rotation + rotation));
+      if (LigneAnimation < 20)
+      {
+        bool animation = false;
+
+        for (int y = 0; y < 19; y++)
+          if (PieceTombes.Count(p => p.Y == y) == 10)
+          {
+            animation = true;
+            PieceTombes.AnimationEffacerLigne(y, LigneAnimation % 2 == 0);
+          }
+
+        if (animation)
+          LigneAnimation++;
+      }
+      else
+      {
+        int bonus = 1;
+
+        for (int y = 0; y < 19; y++)
+          if (PieceTombes.Count(p => p.Y == y) == 10)
+          {
+            Score += bonus;
+            PieceTombes.EffacerLigne(y);
+            bonus *= 2;
+          }
+
+        LigneAnimation = 0;
+      }
     }
 
     /// <summary>
@@ -105,7 +159,7 @@ namespace WebMatrix.Classes
     /// </summary>
     public bool Bottom()
     {
-      if (CheckBottom())
+      if (CheckBottom() && !PieceTombes.LignePleine)
       {
         if (Y < -2)
           return true;
@@ -115,6 +169,14 @@ namespace WebMatrix.Classes
       }
 
       return false;
+    }
+
+    /// <summary>
+    /// Rotate
+    /// </summary>
+    private TetrisPieceList Rotate(int rotation)
+    {
+      return new TetrisPieceList(TetrisPieceList.GetPiece(Pieces.PieceID, rotation));
     }
 
     /// <summary>

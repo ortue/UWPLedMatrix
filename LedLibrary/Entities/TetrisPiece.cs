@@ -9,6 +9,7 @@ namespace LedLibrary.Entities
     public int X { get; set; }
     public int Y { get; set; }
     public Couleur Couleur { get; set; }
+    public Couleur TmpCouleur { get; set; }
 
     /// <summary>
     /// Constructeur
@@ -54,6 +55,7 @@ namespace LedLibrary.Entities
       X = tetrisPiece.X + x;
       Y = tetrisPiece.Y + y;
       Couleur = tetrisPiece.Couleur;
+      TmpCouleur = tetrisPiece.Couleur;
     }
 
     /// <summary>
