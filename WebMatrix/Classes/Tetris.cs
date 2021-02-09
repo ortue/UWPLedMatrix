@@ -21,8 +21,8 @@ namespace WebMatrix.Classes
     {
       get
       {
-        if (10 - Score / 3 > 2)
-          return 10 - Score / 3;
+        if (14 - Score / 3 > 2)
+          return 14 - Score / 3;
 
         return 2;
       }

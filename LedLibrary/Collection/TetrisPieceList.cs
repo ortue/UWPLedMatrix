@@ -1,4 +1,5 @@
 ﻿using LedLibrary.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -97,6 +98,7 @@ namespace LedLibrary.Collection
       int bonus = 0;
       int? tmpY = null;
       int? tmpMaxY = null;
+      int penalite = 0;
       List<bool> fit = new List<bool>();
 
       foreach (TetrisPiece max in pieceMax.OrderBy(p => p.X))
@@ -104,25 +106,35 @@ namespace LedLibrary.Collection
         {
           if (tmpY == null)
           {
+            //Premier pixel de la piece, placé a la hauteur du pixel du bas au x donné
             tmpY = min.Value;
 
             fit.Add(true);
           }
           else if (min.Value == tmpY + max.Y - (tmpMaxY ?? 0))
+          {
+            //Si les prochains pixel arrivent sur un pixel du bas
             fit.Add(true);
+          }
           else
+          {
+            //Si les prochains pixel arrive dans les airs ou bien par dessus un pixel du bas
             fit.Add(false);
+
+            //Enlever des pointages de l'ordre de 1 par pixel de hauteur qui sont bloqué pour éviter de bloquer des grandes rangé pour attendre apres les bars.
+            penalite += Math.Abs(min.Value - tmpY ?? 0 + max.Y - tmpMaxY ?? 0);
+          }
 
           //Calculer la différence de hauteur avec le x precedent: tmpY + max.Y - TmpMaxY
           if (tmpMaxY == null)
             tmpMaxY = max.Y;
         }
 
-      //Si il y a un fit parfait on rajoute 6 pour privilégier ce move
+      //Si il y a un fit parfait on rajoute 5 pour privilégier ce move
       if (fit.Count(f => f.Equals(true)) == pieceMax.Count)
         bonus = 5 + pieceMax.Count;
 
-      return (int)((double)tmpY * ((double)fit.Count(f => f.Equals(true)) / pieceMax.Count)) + bonus;
+      return (int)((double)tmpY * ((double)fit.Count(f => f.Equals(true)) / pieceMax.Count)) + bonus - penalite;
     }
 
     /// <summary>
@@ -245,7 +257,7 @@ namespace LedLibrary.Collection
     /// <returns></returns>
     public static TetrisPieceList Barre(int rotation)
     {
-      Couleur couleur = Couleur.Get(0, 0, 127);
+      Couleur couleur = Couleur.Get(16, 16, 127);
 
       return rotation switch
       {
