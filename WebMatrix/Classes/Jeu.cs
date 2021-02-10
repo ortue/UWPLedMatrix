@@ -240,16 +240,43 @@ namespace WebMatrix.Classes
       Util.Setup();
       int task = Util.StartTask();
 
-      Couleur Murs = new Couleur { R = 100, G = 100, B = 127 };
+      //LabyrintheList labyrinthe = new LabyrintheList(Util.Context.Pixels);
 
-      LabyrintheList labyrinthe = new LabyrintheList(Util.Context.Pixels);
+      Maze maze = new Maze(8, 8);
+      Couleur murs = new Couleur { R = 100, G = 100, B = 127 };
 
       while (Util.TaskWork(task))
       {
+        for (int y = 0; y < maze.Height; y++)
+        {
+          for (int x = 0; x < maze.Width; x++)
+          {
+            murs = new Couleur { R = (byte)(x * 6), G = 63, B = (byte)(y * 6) };
 
+            int xx = 1 + x * 2;
+            int yy = 1 + y * 2;
 
+            if (maze[x, y].HasFlag(CellState.Top))
+            {
+              Util.Context.Pixels.GetCoordonnee(xx, yy).SetColor(murs);
+              Util.Context.Pixels.GetCoordonnee(xx + 1, yy).SetColor(murs);
+            }
+            else
+              Util.Context.Pixels.GetCoordonnee(xx, yy).SetColor(murs);
+
+            if (maze[x, y].HasFlag(CellState.Left))
+              Util.Context.Pixels.GetCoordonnee(xx, yy + 1).SetColor(murs);
+          }
+        }
+
+        for (int y = 1; y <= 1 + maze.Height * 2; y++)
+          Util.Context.Pixels.GetCoordonnee(1 + maze.Width * 2, y).SetColor(new Couleur { R = (byte)(y * 6), G = 63, B = (byte)(y * 6) });
+
+        for (int x = 1; x <= 1 + maze.Width * 2; x++)
+          Util.Context.Pixels.GetCoordonnee(x, 1 + maze.Height * 2).SetColor(new Couleur { R = (byte)(x * 6), G = 63, B = (byte)(x * 6) });
 
         Util.SetLeds();
+        Util.Context.Pixels.Reset();
 
         using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
         waitHandle.Wait(TimeSpan.FromMilliseconds(10));

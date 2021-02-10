@@ -1,6 +1,7 @@
 ﻿using LedLibrary.Collection;
 using LedLibrary.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WebMatrix.Classes
@@ -12,6 +13,7 @@ namespace WebMatrix.Classes
     public int Score { get; set; }
     public int LigneAnimation { get; set; }
     public int RotationOptimal { get; set; }
+    public List<int> Poche { get; set; }
     public TetrisPieceList Nexts { get; set; }
     public TetrisPieceList Pieces { get; set; }
     public TetrisPieceList PieceTombes { get; set; }
@@ -64,14 +66,14 @@ namespace WebMatrix.Classes
       X = 6;
       RotationOptimal = 0;
 
-      Random r = new Random();
+      SetPoche();
 
       if (Nexts == null)
-        Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(r.Next(0, 7)));
+        Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
       else
         Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(Nexts.PieceID));
 
-      Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(r.Next(0, 7)));
+      Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
 
       TetrisHorizontals = new TetrisHorizontalList();
       TetrisHorizontalList tetrisHorizontals = new TetrisHorizontalList();
@@ -96,6 +98,39 @@ namespace WebMatrix.Classes
     }
 
     /// <summary>
+    /// SetPoche
+    /// </summary>
+    private void SetPoche()
+    {
+      Random r = new Random();
+
+      if (Poche == null || !Poche.Any())
+      {
+        Poche = new List<int>();
+
+        while (Poche.Count < 7)
+        {
+          int i = r.Next(0, 7);
+
+          if (!Poche.Any(p => p.Equals(i)))
+            Poche.Add(i);
+        }
+      }
+    }
+
+    /// <summary>
+    /// GetNext
+    /// </summary>
+    /// <returns></returns>
+    private int GetNext()
+    {
+      int id = Poche.FirstOrDefault();
+      Poche.Remove(id);
+
+      return id;
+    }
+
+    /// <summary>
     /// Mouvement
     /// </summary>
     /// <param name="cycle"></param>
@@ -112,7 +147,6 @@ namespace WebMatrix.Classes
           if (TetrisHorizontals.ScoreX < X)
             X -= 1;
 
-          //TODO:Verifier pourquoi des fois les pieces ont l'air de rotater trop vite
           if (Pieces.Rotation < RotationOptimal)
             Pieces = Rotate(Pieces.Rotation + 1);
         }
@@ -145,9 +179,8 @@ namespace WebMatrix.Classes
         for (int y = 0; y < 19; y++)
           if (PieceTombes.Count(p => p.Y == y) == 10)
           {
-            Score += bonus;
+            Score += bonus++;
             PieceTombes.EffacerLigne(y);
-            bonus *= 2;
           }
 
         LigneAnimation = 0;

@@ -75,6 +75,10 @@ namespace WebMatrix.Controllers
         case 2:
           Task.Run(() => Classes.Jeu.Serpent());
           break;
+
+        case 3:
+          Task.Run(() => Classes.Jeu.Labyrinthe());
+          break;
       }
 
       return View();
