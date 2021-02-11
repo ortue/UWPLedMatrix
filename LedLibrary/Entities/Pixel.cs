@@ -5,8 +5,6 @@
     public int Numero { get; set; }
     public int Position { get; set; }
     public Coordonnee Coord { get; set; }
-    //public Couleur Couleur { get; set; }
-
     public byte Red { get; set; }
     public byte Green { get; set; }
     public byte Blue { get; set; }

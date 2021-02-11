@@ -89,7 +89,7 @@ namespace LedLibrary.Collection
     /// Obstable
     /// </summary>
     /// <returns></returns>
-    public bool Obstable()
+    public bool Obstacle()
     {
       if (Tete.X + DX == 0 || Tete.X + DX >= Largeur - 1)
         return true;
@@ -101,12 +101,12 @@ namespace LedLibrary.Collection
     }
 
     /// <summary>
-    /// Obstable
+    /// Obstacle
     /// </summary>
     /// <param name="dx"></param>
     /// <param name="dy"></param>
     /// <returns></returns>
-    public bool Obstable(int dx, int dy)
+    public bool Obstacle(int dx, int dy)
     {
       if (Tete.X + dx == 0 || Tete.X + dx >= Largeur - 1)
         return true;
@@ -125,16 +125,16 @@ namespace LedLibrary.Collection
     {
       List<KeyValuePair<int, int>> possibilite = new List<KeyValuePair<int, int>>();
 
-      if (!Obstable(0, 1))
+      if (!Obstacle(0, 1))
         possibilite.Add(new KeyValuePair<int, int>(0, 1));
 
-      if (!Obstable(1, 0))
+      if (!Obstacle(1, 0))
         possibilite.Add(new KeyValuePair<int, int>(1, 0));
 
-      if (!Obstable(0, -1))
+      if (!Obstacle(0, -1))
         possibilite.Add(new KeyValuePair<int, int>(0, -1));
 
-      if (!Obstable(-1, 0))
+      if (!Obstacle(-1, 0))
         possibilite.Add(new KeyValuePair<int, int>(-1, 0));
 
       return possibilite;

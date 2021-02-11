@@ -78,7 +78,7 @@ namespace WebMatrix.Classes
           Direction();
 
         //Eviter obstacle
-        if (Serpents.Obstable())
+        if (Serpents.Obstacle())
           if (Serpents.Possibilite() is List<KeyValuePair<int, int>> possibilites)
           {
             if (!possibilites.Any())

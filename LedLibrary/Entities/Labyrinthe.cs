@@ -1,16 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LedLibrary.Entities
+﻿namespace LedLibrary.Entities
 {
   public class Labyrinthe
   {
-    public int ID { get; set; }
+    public int X { get; set; }
+    public int Y { get; set; }
+    public Couleur Couleur { get; set; }
 
-    public Labyrinthe(int id)
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    public Labyrinthe(int x, int y)
     {
-      ID = id;
+      X = x;
+      Y = y;
+      Couleur = new Couleur();
     }
   }
 }

@@ -209,11 +209,11 @@ namespace WebMatrix.Classes
           if (Util.Context.Pixels.GetCoordonnee(piece.X + tetris.X, piece.Y + tetris.Y) is Pixel pixel)
             pixel.SetColor(piece.Couleur);
 
-        //Rendu en bas on travail
-        bool mort = tetris.Bottom();
-
         //Enlever les lignes pleine
         tetris.EffacerLigne();
+
+        //Rendu en bas on travail
+        bool mort = tetris.Bottom();
 
         //Background
         Util.Context.Pixels.BackGround(1);
@@ -239,41 +239,41 @@ namespace WebMatrix.Classes
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
-
-      //LabyrintheList labyrinthe = new LabyrintheList(Util.Context.Pixels);
-
       Maze maze = new Maze(8, 8);
-      Couleur murs = new Couleur { R = 100, G = 100, B = 127 };
+      LabyrintheList labyrinthes = new LabyrintheList(1 + maze.Width * 2, 1 + maze.Height * 2);
+
+      for (int y = 0; y < maze.Height; y++)
+        for (int x = 0; x < maze.Width; x++)
+        {
+          int xx = 1 + x * 2;
+          int yy = 1 + y * 2;
+          labyrinthes.AddNew(xx, yy);
+
+          if (maze[x, y].HasFlag(CellState.Top))
+            labyrinthes.AddNew(xx + 1, yy);
+
+          if (maze[x, y].HasFlag(CellState.Left))
+            labyrinthes.AddNew(xx, yy + 1);
+
+          //Ligne du bas
+          labyrinthes.AddNew(xx, 1 + maze.Height * 2);
+          labyrinthes.AddNew(xx + 1, 1 + maze.Height * 2);
+
+          //Ligne de droite
+          labyrinthes.AddNew(1 + maze.Width * 2, yy);
+          labyrinthes.AddNew(1 + maze.Width * 2, yy + 1);
+          labyrinthes.AddNew(1 + maze.Width * 2, yy + 2);
+        }
+
+
 
       while (Util.TaskWork(task))
       {
-        for (int y = 0; y < maze.Height; y++)
-        {
-          for (int x = 0; x < maze.Width; x++)
-          {
-            murs = new Couleur { R = (byte)(x * 6), G = 63, B = (byte)(y * 6) };
+        foreach (Labyrinthe labyrinthe in labyrinthes)
+          Util.Context.Pixels.GetCoordonnee(labyrinthe.X, labyrinthe.Y).SetColor(labyrinthe.Couleur);
 
-            int xx = 1 + x * 2;
-            int yy = 1 + y * 2;
 
-            if (maze[x, y].HasFlag(CellState.Top))
-            {
-              Util.Context.Pixels.GetCoordonnee(xx, yy).SetColor(murs);
-              Util.Context.Pixels.GetCoordonnee(xx + 1, yy).SetColor(murs);
-            }
-            else
-              Util.Context.Pixels.GetCoordonnee(xx, yy).SetColor(murs);
 
-            if (maze[x, y].HasFlag(CellState.Left))
-              Util.Context.Pixels.GetCoordonnee(xx, yy + 1).SetColor(murs);
-          }
-        }
-
-        for (int y = 1; y <= 1 + maze.Height * 2; y++)
-          Util.Context.Pixels.GetCoordonnee(1 + maze.Width * 2, y).SetColor(new Couleur { R = (byte)(y * 6), G = 63, B = (byte)(y * 6) });
-
-        for (int x = 1; x <= 1 + maze.Width * 2; x++)
-          Util.Context.Pixels.GetCoordonnee(x, 1 + maze.Height * 2).SetColor(new Couleur { R = (byte)(x * 6), G = 63, B = (byte)(x * 6) });
 
         Util.SetLeds();
         Util.Context.Pixels.Reset();

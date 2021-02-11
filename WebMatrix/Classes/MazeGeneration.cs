@@ -31,7 +31,7 @@ namespace WebMatrix.Classes
     }
   }
 
-  //  [Flags]
+  [Flags]
   public enum CellState
   {
     Top = 1,
@@ -61,8 +61,8 @@ namespace WebMatrix.Classes
       Height = height;
       _cells = new CellState[width, height];
 
-      for (var x = 0; x < width; x++)
-        for (var y = 0; y < height; y++)
+      for (int x = 0; x < width; x++)
+        for (int y = 0; y < height; y++)
           _cells[x, y] = CellState.Initial;
 
       _rng = new Random();
@@ -77,17 +77,33 @@ namespace WebMatrix.Classes
 
     public IEnumerable<RemoveWallAction> GetNeighbours(Point p)
     {
-      if (p.X > 0) 
-        yield return new RemoveWallAction { Neighbour = new Point(p.X - 1, p.Y), Wall = CellState.Left };
+      if (p.X > 0)
+        yield return new RemoveWallAction
+        {
+          Neighbour = new Point(p.X - 1, p.Y),
+          Wall = CellState.Left
+        };
 
-      if (p.Y > 0) 
-        yield return new RemoveWallAction { Neighbour = new Point(p.X, p.Y - 1), Wall = CellState.Top };
+      if (p.Y > 0)
+        yield return new RemoveWallAction
+        {
+          Neighbour = new Point(p.X, p.Y - 1),
+          Wall = CellState.Top
+        };
 
-      if (p.X < Width - 1) 
-        yield return new RemoveWallAction { Neighbour = new Point(p.X + 1, p.Y), Wall = CellState.Right };
+      if (p.X < Width - 1)
+        yield return new RemoveWallAction
+        {
+          Neighbour = new Point(p.X + 1, p.Y),
+          Wall = CellState.Right
+        };
 
-      if (p.Y < Height - 1) 
-        yield return new RemoveWallAction { Neighbour = new Point(p.X, p.Y + 1), Wall = CellState.Bottom };
+      if (p.Y < Height - 1)
+        yield return new RemoveWallAction
+        {
+          Neighbour = new Point(p.X, p.Y + 1),
+          Wall = CellState.Bottom
+        };
     }
 
     public void VisitCell(int x, int y)
@@ -101,37 +117,5 @@ namespace WebMatrix.Classes
         VisitCell(p.Neighbour.X, p.Neighbour.Y);
       }
     }
-
-    //public void Display()
-    //{
-    //  string firstLine = string.Empty;
-    //  for (int y = 0; y < Height; y++)
-    //  {
-    //    var sbTop = new StringBuilder();
-    //    var sbMid = new StringBuilder();
-    //    for (int x = 0; x < Width; x++)
-    //    {
-    //      sbTop.Append(this[x, y].HasFlag(CellState.Top) ? "+--" : "+  ");
-    //      sbMid.Append(this[x, y].HasFlag(CellState.Left) ? "|  " : "   ");
-    //    }
-
-    //    if (firstLine == string.Empty)
-    //      firstLine = sbTop.ToString();
-
-    //    //Debug.WriteLine(sbTop + "+");
-    //    //Debug.WriteLine(sbMid + "|");
-    //    //Debug.WriteLine(sbMid + "|");
-    //  }
-    //  //Debug.WriteLine(firstLine);
-    //}
   }
-
-  //class Program
-  //{
-  //  static void Main()
-  //  {
-  //    var maze = new Maze(20, 20);
-  //    maze.Display();
-  //  }
-  //}
 }
