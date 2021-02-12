@@ -239,6 +239,42 @@ namespace WebMatrix.Classes
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
+      LabyrintheList labyrinthes = SetLabyrinthe();
+
+      while (Util.TaskWork(task))
+      {
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+
+        if (labyrinthes.Complet)
+        {
+          labyrinthes = SetLabyrinthe();
+          waitHandle.Wait(TimeSpan.FromMilliseconds(500));
+        }
+
+        foreach (Labyrinthe labyrinthe in labyrinthes)
+        {
+          if (labyrinthe.Mur && !labyrinthe.Couleur.Egal(new Couleur()))
+            labyrinthe.Couleur = Couleur.Get(127 - labyrinthe.X * 6, (labyrinthes.X + labyrinthes.Y) * 3, labyrinthe.Y * 6);
+
+          Util.Context.Pixels.GetCoordonnee(labyrinthe.X, labyrinthe.Y).SetColor(labyrinthe.Couleur);
+        }
+
+        Util.Context.Pixels.GetCoordonnee(labyrinthes.X, labyrinthes.Y).SetColor(Couleur.Get(127, 127, 127));
+        labyrinthes.Mouvement();
+
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
+
+        waitHandle.Wait(TimeSpan.FromMilliseconds(50));
+      }
+    }
+
+    /// <summary>
+    /// SetLabyrinthe
+    /// </summary>
+    /// <returns></returns>
+    private static LabyrintheList SetLabyrinthe()
+    {
       Maze maze = new Maze(8, 8);
       LabyrintheList labyrinthes = new LabyrintheList(1 + maze.Width * 2, 1 + maze.Height * 2);
 
@@ -247,40 +283,28 @@ namespace WebMatrix.Classes
         {
           int xx = 1 + x * 2;
           int yy = 1 + y * 2;
-          labyrinthes.AddNew(xx, yy);
+          labyrinthes.AddNew(xx, yy, true);
 
           if (maze[x, y].HasFlag(CellState.Top))
-            labyrinthes.AddNew(xx + 1, yy);
+            labyrinthes.AddNew(xx + 1, yy, true);
 
           if (maze[x, y].HasFlag(CellState.Left))
-            labyrinthes.AddNew(xx, yy + 1);
+            labyrinthes.AddNew(xx, yy + 1, true);
 
           //Ligne du bas
-          labyrinthes.AddNew(xx, 1 + maze.Height * 2);
-          labyrinthes.AddNew(xx + 1, 1 + maze.Height * 2);
+          labyrinthes.AddNew(xx, 1 + maze.Height * 2, true);
+          labyrinthes.AddNew(xx + 1, 1 + maze.Height * 2, true);
 
           //Ligne de droite
-          labyrinthes.AddNew(1 + maze.Width * 2, yy);
-          labyrinthes.AddNew(1 + maze.Width * 2, yy + 1);
-          labyrinthes.AddNew(1 + maze.Width * 2, yy + 2);
+          labyrinthes.AddNew(1 + maze.Width * 2, yy, true);
+          labyrinthes.AddNew(1 + maze.Width * 2, yy + 1, true);
+          labyrinthes.AddNew(1 + maze.Width * 2, yy + 2, true);
         }
 
+      labyrinthes.SetChemin();
+      labyrinthes.SetCheminParcouru();
 
-
-      while (Util.TaskWork(task))
-      {
-        foreach (Labyrinthe labyrinthe in labyrinthes)
-          Util.Context.Pixels.GetCoordonnee(labyrinthe.X, labyrinthe.Y).SetColor(labyrinthe.Couleur);
-
-
-
-
-        Util.SetLeds();
-        Util.Context.Pixels.Reset();
-
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-        waitHandle.Wait(TimeSpan.FromMilliseconds(10));
-      }
+      return labyrinthes;
     }
   }
 }
