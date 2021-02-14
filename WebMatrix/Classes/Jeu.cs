@@ -1,6 +1,7 @@
 ﻿using LedLibrary.Collection;
 using LedLibrary.Entities;
 using System;
+using System.Linq;
 using System.Threading;
 using WebMatrix.Context;
 
@@ -171,6 +172,7 @@ namespace WebMatrix.Classes
       Util.Setup();
       int task = Util.StartTask();
       int cycle = 0;
+      int topScore = 0;
       Tetris tetris = new Tetris();
 
       while (Util.TaskWork(task))
@@ -179,7 +181,7 @@ namespace WebMatrix.Classes
         Util.Context.Pixels.Print(tetris.ScoreUn, 15, 8, Couleur.Get(127, 127, 127));
         Util.Context.Pixels.Print(tetris.ScoreDeux, 15, 14, Couleur.Get(127, 127, 127));
 
-        foreach(TetrisPiece centaine in tetris.Centaines)
+        foreach (TetrisPiece centaine in tetris.Centaines)
           Util.Context.Pixels.GetCoordonnee(centaine.X, centaine.Y).Set(127, 127, 127);
 
         //Bordure
@@ -212,33 +214,71 @@ namespace WebMatrix.Classes
           if (Util.Context.Pixels.GetCoordonnee(piece.X + tetris.X, piece.Y + tetris.Y) is Pixel pixel)
             pixel.SetColor(piece.Couleur);
 
-        //Enlever les lignes pleine
-        tetris.EffacerLigne();
-
         //Rendu en bas on travail
         bool nouvellePiece = tetris.Bottom();
+
+        //Enlever les lignes pleine, avec une animation
+        if (tetris.EffacerLigne() is TetrisPieceList tetrisPieces)
+          TetrisAnimation(Util.Context.Pixels, tetrisPieces);
 
         //Background
         Util.Context.Pixels.BackGround(1);
         Util.SetLeds();
-        Util.Context.Pixels.Reset();
-
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-        //waitHandle.Wait(TimeSpan.FromMilliseconds(10));
 
         if (nouvellePiece)
         {
-          nouvellePiece = false;
-
           if (tetris.Mort)
           {
+            if (tetris.Score > topScore)
+              topScore = tetris.Score;
+
+            foreach (Pixel pixel in Util.Context.Pixels)
+              pixel.Fade(4);
+
+            Util.Context.Pixels.Print("TOP", 4, 2, Couleur.Get(127, 127, 127));
+            Util.Context.Pixels.Print(topScore.ToString(), 3, 12, Couleur.Get(127, 127, 127));
+            Util.SetLeds();
+
+            using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+            waitHandle.Wait(TimeSpan.FromMilliseconds(10000));
+
             tetris = new Tetris();
-            waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
           }
           else
-            tetris.NouvellePiece(1);
+            tetris.NouvellePiece();
         }
+
+        Util.Context.Pixels.Reset();
       }
+    }
+
+    /// <summary>
+    /// TetrisAnimation
+    /// </summary>
+    private static void TetrisAnimation(PixelList pixels, TetrisPieceList tetrisPieces)
+    {
+      if (tetrisPieces.Any())
+        for (int anime = 0; anime < 20; anime++)
+        {
+          foreach (TetrisPiece pieceTombe in tetrisPieces)
+            if (pixels.GetCoordonnee(pieceTombe.X, pieceTombe.Y) is Pixel pixel)
+            {
+              if (anime % 2 == 0)
+                foreach (TetrisPiece piece in tetrisPieces)
+                  piece.Couleur = Couleur.Noir;
+              else
+                foreach (TetrisPiece piece in tetrisPieces)
+                  piece.Couleur = piece.TmpCouleur;
+
+              pixel.SetColor(pieceTombe.Couleur);
+            }
+
+          pixels.BackGround(1);
+          Util.SetLeds();
+
+          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+          waitHandle.Wait(TimeSpan.FromMilliseconds(50));
+        }
     }
 
     /// <summary>

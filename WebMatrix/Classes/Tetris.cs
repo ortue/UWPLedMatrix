@@ -12,12 +12,16 @@ namespace WebMatrix.Classes
     public int Y { get; set; }
     public int Score { get; set; }
     public int XOptimal { get; set; }
-    public int LigneAnimation { get; set; }
     public int RotationOptimal { get; set; }
     public List<int> Poche { get; set; }
     public TetrisPieceList Nexts { get; set; }
     public TetrisPieceList Pieces { get; set; }
     public TetrisPieceList PieceTombes { get; set; }
+
+    public bool LignePleine
+    {
+      get { return PieceTombes.Lines > 0; }
+    }
 
     public bool Mort
     {
@@ -28,8 +32,8 @@ namespace WebMatrix.Classes
     {
       get
       {
-        if (10 - Score / 10 > 2)
-          return 10 - Score / 10;
+        if (20 - Score / 10 > 2)
+          return 20 - Score / 10;
 
         return 2;
       }
@@ -71,14 +75,14 @@ namespace WebMatrix.Classes
     {
       PieceTombes = new TetrisPieceList();
 
-      NouvellePiece(1);
+      NouvellePiece();
     }
 
     /// <summary>
     /// NouvellePiece
     /// </summary>
     /// <param name="version"></param>
-    public void NouvellePiece(int version)
+    public void NouvellePiece()
     {
       Y = -3;
       X = 6;
@@ -105,42 +109,6 @@ namespace WebMatrix.Classes
       XOptimal = tetrisHorizontals.ScoreX;
       RotationOptimal = tetrisHorizontals.ScoreRotation;
     }
-
-    /// <summary>
-    /// NouvellePiece
-    /// </summary>
-    //public void NouvellePiece()
-    //{
-    //  Y = -3;
-    //  X = 6;
-
-    //  SetPoche();
-
-    //  if (Nexts == null)
-    //    Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
-    //  else
-    //    Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(Nexts.PieceID));
-
-    //  Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
-
-    //  TetrisHorizontalList tetrisHorizontals = new TetrisHorizontalList();
-    //  TetrisHorizontalList tmpTetrisHorizontals = new TetrisHorizontalList();
-
-    //  for (int rotation = 0; rotation < 4; rotation++)
-    //  {
-    //    TetrisPieceList tmpPiece = Rotate(rotation);
-    //    tmpTetrisHorizontals = PieceTombes.HorizontalScore(tmpPiece);
-
-    //    if (!tetrisHorizontals.Any())
-    //      tetrisHorizontals = tmpTetrisHorizontals;
-
-    //    if (tmpTetrisHorizontals.Max(t => t.Score) > tetrisHorizontals.Max(t => t.Score))
-    //      tetrisHorizontals = tmpTetrisHorizontals;
-    //  }
-
-    //  XOptimal = tetrisHorizontals.ScoreX;
-    //  RotationOptimal = tetrisHorizontals.ScoreRotation;
-    //}
 
     /// <summary>
     /// SetPoche
@@ -181,7 +149,7 @@ namespace WebMatrix.Classes
     /// <param name="cycle"></param>
     public void Mouvement(int cycle)
     {
-      if (cycle++ % Vitesse == 0 && LigneAnimation == 0)
+      if (cycle++ % Vitesse == 0)// && LigneAnimation == 0)
       {
         //Y est la position de la piece
         if (Y++ >= -1 || PieceTombes.Top < 10)
@@ -201,37 +169,21 @@ namespace WebMatrix.Classes
     /// <summary>
     /// EffacerLigne
     /// </summary>
-    public void EffacerLigne()
+    /// <returns></returns>
+    public TetrisPieceList EffacerLigne()
     {
-      if (LigneAnimation < 20)
-      {
-        bool animation = false;
+      int bonus = 1;
+      TetrisPieceList tetrisPieces = new TetrisPieceList();
 
-        for (int y = 0; y < 19; y++)
-          if (PieceTombes.Count(p => p.Y == y) == 10)
-          {
-            animation = true;
-            PieceTombes.AnimationEffacerLigne(y, LigneAnimation % 2 == 0);
-          }
+      for (int y = -3; y < 19; y++)
+        if (PieceTombes.Count(p => p.Y == y) == 10)
+        {
+          Score += bonus;
+          bonus *= 2;
+          tetrisPieces.AddRange(PieceTombes.EffacerLigne(y));
+        }
 
-        if (animation)
-          LigneAnimation++;
-      }
-      else
-      {
-        int bonus = 1;
-
-        for (int y = 0; y < 19; y++)
-          if (PieceTombes.Count(p => p.Y == y) == 10)
-          {
-            Score += bonus;
-            bonus *= 2;
-
-            PieceTombes.EffacerLigne(y);
-          }
-
-        LigneAnimation = 0;
-      }
+      return tetrisPieces;
     }
 
     /// <summary>

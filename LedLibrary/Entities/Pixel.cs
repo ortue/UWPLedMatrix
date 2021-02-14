@@ -1,4 +1,6 @@
-﻿namespace LedLibrary.Entities
+﻿using System;
+
+namespace LedLibrary.Entities
 {
   public class Pixel
   {
@@ -60,7 +62,7 @@
     }
 
     /// <summary>
-    /// 
+    /// Set
     /// </summary>
     /// <param name="r"></param>
     /// <param name="g"></param>
@@ -68,6 +70,17 @@
     public void Set(int r, int g, int b)
     {
       Couleur = new Couleur { R = (byte)r, G = (byte)g, B = (byte)b };
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="fade"></param>
+    public void Fade(int fade)
+    {
+      Red = (byte)(Red / (byte)fade);
+      Green = (byte)(Green / (byte)fade);
+      Blue = (byte)(Blue / (byte)fade);
     }
   }
 }

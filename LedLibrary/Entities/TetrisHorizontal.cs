@@ -9,17 +9,6 @@
     /// <summary>
     /// Constructeur
     /// </summary>
-    /// <param name="x"></param>
-    /// <param name="score"></param>
-    public TetrisHorizontal(int x, int score)
-    {
-      X = x;
-      Score = score;
-    }
-
-    /// <summary>
-    /// Constructeur
-    /// </summary>
     /// <param name="rotation"></param>
     /// <param name="x"></param>
     /// <param name="score"></param>

@@ -1,6 +1,4 @@
-﻿using LedLibrary.Collection;
-
-namespace LedLibrary.Entities
+﻿namespace LedLibrary.Entities
 {
   public class TetrisPiece
   {
@@ -40,6 +38,7 @@ namespace LedLibrary.Entities
       X = tetrisPiece.X;
       Y = tetrisPiece.Y;
       Couleur = tetrisPiece.Couleur;
+      TmpCouleur = tetrisPiece.Couleur;
     }
 
     /// <summary>
@@ -75,19 +74,14 @@ namespace LedLibrary.Entities
     /// <summary>
     /// Constructeur
     /// </summary>
-    /// <param name="x"></param>
+    /// <param name="tetrisPiece"></param>
     /// <param name="y"></param>
-    public TetrisPiece(int x, int y)
-    {
-      X = x;
-      Y = y;
-    }
-
+    /// <param name="testScore"></param>
     public TetrisPiece(TetrisPiece tetrisPiece, int y, bool testScore)
     {
       PieceID = tetrisPiece.PieceID;
       Rotation = tetrisPiece.Rotation;
-      X = tetrisPiece.X ;
+      X = tetrisPiece.X;
       Y = tetrisPiece.Y + y;
       Couleur = tetrisPiece.Couleur;
       TmpCouleur = tetrisPiece.Couleur;
