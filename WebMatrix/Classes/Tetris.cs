@@ -109,38 +109,38 @@ namespace WebMatrix.Classes
     /// <summary>
     /// NouvellePiece
     /// </summary>
-    public void NouvellePiece()
-    {
-      Y = -3;
-      X = 6;
+    //public void NouvellePiece()
+    //{
+    //  Y = -3;
+    //  X = 6;
 
-      SetPoche();
+    //  SetPoche();
 
-      if (Nexts == null)
-        Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
-      else
-        Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(Nexts.PieceID));
+    //  if (Nexts == null)
+    //    Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
+    //  else
+    //    Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(Nexts.PieceID));
 
-      Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
+    //  Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
 
-      TetrisHorizontalList tetrisHorizontals = new TetrisHorizontalList();
-      TetrisHorizontalList tmpTetrisHorizontals = new TetrisHorizontalList();
+    //  TetrisHorizontalList tetrisHorizontals = new TetrisHorizontalList();
+    //  TetrisHorizontalList tmpTetrisHorizontals = new TetrisHorizontalList();
 
-      for (int rotation = 0; rotation < 4; rotation++)
-      {
-        TetrisPieceList tmpPiece = Rotate(rotation);
-        tmpTetrisHorizontals = PieceTombes.HorizontalScore(tmpPiece);
+    //  for (int rotation = 0; rotation < 4; rotation++)
+    //  {
+    //    TetrisPieceList tmpPiece = Rotate(rotation);
+    //    tmpTetrisHorizontals = PieceTombes.HorizontalScore(tmpPiece);
 
-        if (!tetrisHorizontals.Any())
-          tetrisHorizontals = tmpTetrisHorizontals;
+    //    if (!tetrisHorizontals.Any())
+    //      tetrisHorizontals = tmpTetrisHorizontals;
 
-        if (tmpTetrisHorizontals.Max(t => t.Score) > tetrisHorizontals.Max(t => t.Score))
-          tetrisHorizontals = tmpTetrisHorizontals;
-      }
+    //    if (tmpTetrisHorizontals.Max(t => t.Score) > tetrisHorizontals.Max(t => t.Score))
+    //      tetrisHorizontals = tmpTetrisHorizontals;
+    //  }
 
-      XOptimal = tetrisHorizontals.ScoreX;
-      RotationOptimal = tetrisHorizontals.ScoreRotation;
-    }
+    //  XOptimal = tetrisHorizontals.ScoreX;
+    //  RotationOptimal = tetrisHorizontals.ScoreRotation;
+    //}
 
     /// <summary>
     /// SetPoche

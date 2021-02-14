@@ -27,7 +27,6 @@ namespace LedLibrary.Entities
     public TetrisPiece()
     {
 
-
     }
 
     /// <summary>
