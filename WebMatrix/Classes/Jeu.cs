@@ -179,6 +179,9 @@ namespace WebMatrix.Classes
         Util.Context.Pixels.Print(tetris.ScoreUn, 15, 8, Couleur.Get(127, 127, 127));
         Util.Context.Pixels.Print(tetris.ScoreDeux, 15, 14, Couleur.Get(127, 127, 127));
 
+        foreach(TetrisPiece centaine in tetris.Centaines)
+          Util.Context.Pixels.GetCoordonnee(centaine.X, centaine.Y).Set(127, 127, 127);
+
         //Bordure
         for (int i = 1; i < 12; i++)
           Util.Context.Pixels.GetCoordonnee(i, 19).Set(64, 64, 127);
@@ -213,7 +216,7 @@ namespace WebMatrix.Classes
         tetris.EffacerLigne();
 
         //Rendu en bas on travail
-        bool mort = tetris.Bottom();
+        bool nouvellePiece = tetris.Bottom();
 
         //Background
         Util.Context.Pixels.BackGround(1);
@@ -221,12 +224,19 @@ namespace WebMatrix.Classes
         Util.Context.Pixels.Reset();
 
         using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-        waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+        //waitHandle.Wait(TimeSpan.FromMilliseconds(10));
 
-        if (mort)
+        if (nouvellePiece)
         {
-          tetris = new Tetris();
-          waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
+          nouvellePiece = false;
+
+          if (tetris.Mort)
+          {
+            tetris = new Tetris();
+            waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
+          }
+          else
+            tetris.NouvellePiece(1);
         }
       }
     }

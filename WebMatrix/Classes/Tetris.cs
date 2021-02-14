@@ -11,39 +11,56 @@ namespace WebMatrix.Classes
     public int X { get; set; }
     public int Y { get; set; }
     public int Score { get; set; }
+    public int XOptimal { get; set; }
     public int LigneAnimation { get; set; }
     public int RotationOptimal { get; set; }
     public List<int> Poche { get; set; }
     public TetrisPieceList Nexts { get; set; }
     public TetrisPieceList Pieces { get; set; }
     public TetrisPieceList PieceTombes { get; set; }
-    public TetrisHorizontalList TetrisHorizontals { get; set; }
+
+    public bool Mort
+    {
+      get { return PieceTombes.Top < -2; }
+    }
 
     public double Vitesse
     {
       get
       {
-        if (14 - Score / 3 > 2)
-          return 14 - Score / 3;
+        if (10 - Score / 10 > 2)
+          return 10 - Score / 10;
 
         return 2;
       }
-      //get { return 1; }
     }
 
     public string ScoreUn
     {
-      get { return Score.ToString().Substring(0, 1); }
+      get { return (Score % 100).ToString().Substring(0, 1); }
     }
 
     public string ScoreDeux
     {
       get
       {
-        if (Score > 9)
-          return Score.ToString().Substring(1, 1);
+        if ((Score % 100) > 9)
+          return (Score % 100).ToString().Substring(1, 1);
 
         return string.Empty;
+      }
+    }
+
+    public TetrisPieceList Centaines
+    {
+      get
+      {
+        TetrisPieceList centaines = new TetrisPieceList();
+
+        for (int y = 0; y < Score / 100; y++)
+          centaines.Add(new TetrisPiece { X = 13, Y = 7 + y });
+
+        return centaines;
       }
     }
 
@@ -54,17 +71,17 @@ namespace WebMatrix.Classes
     {
       PieceTombes = new TetrisPieceList();
 
-      NouvellePiece();
+      NouvellePiece(1);
     }
 
     /// <summary>
     /// NouvellePiece
     /// </summary>
-    public void NouvellePiece()
+    /// <param name="version"></param>
+    public void NouvellePiece(int version)
     {
       Y = -3;
       X = 6;
-      RotationOptimal = 0;
 
       SetPoche();
 
@@ -75,7 +92,37 @@ namespace WebMatrix.Classes
 
       Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
 
-      TetrisHorizontals = new TetrisHorizontalList();
+      TetrisHorizontalList tetrisHorizontals = new TetrisHorizontalList();
+
+      for (int rotation = 0; rotation < 4; rotation++)
+        for (int x = 2; x < 12; x++)
+          if (RotateX(rotation, x) is TetrisPieceList tmpPiece)
+          {
+            double score = PieceTombes.GetAiScore(tmpPiece);
+            tetrisHorizontals.Add(new TetrisHorizontal(rotation, x, score));
+          }
+
+      XOptimal = tetrisHorizontals.ScoreX;
+      RotationOptimal = tetrisHorizontals.ScoreRotation;
+    }
+
+    /// <summary>
+    /// NouvellePiece
+    /// </summary>
+    public void NouvellePiece()
+    {
+      Y = -3;
+      X = 6;
+
+      SetPoche();
+
+      if (Nexts == null)
+        Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
+      else
+        Pieces = new TetrisPieceList(TetrisPieceList.GetPiece(Nexts.PieceID));
+
+      Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
+
       TetrisHorizontalList tetrisHorizontals = new TetrisHorizontalList();
       TetrisHorizontalList tmpTetrisHorizontals = new TetrisHorizontalList();
 
@@ -88,13 +135,11 @@ namespace WebMatrix.Classes
           tetrisHorizontals = tmpTetrisHorizontals;
 
         if (tmpTetrisHorizontals.Max(t => t.Score) > tetrisHorizontals.Max(t => t.Score))
-        {
-          RotationOptimal = rotation;
           tetrisHorizontals = tmpTetrisHorizontals;
-        }
       }
 
-      TetrisHorizontals = tetrisHorizontals;
+      XOptimal = tetrisHorizontals.ScoreX;
+      RotationOptimal = tetrisHorizontals.ScoreRotation;
     }
 
     /// <summary>
@@ -141,10 +186,10 @@ namespace WebMatrix.Classes
         //Y est la position de la piece
         if (Y++ >= -1 || PieceTombes.Top < 10)
         {
-          if (TetrisHorizontals.ScoreX > X && X + Pieces.Largeur < 11)
+          if (XOptimal > X && X + Pieces.Largeur < 11)
             X += 1;
 
-          if (TetrisHorizontals.ScoreX < X)
+          if (XOptimal < X)
             X -= 1;
 
           if (Pieces.Rotation < RotationOptimal)
@@ -179,7 +224,9 @@ namespace WebMatrix.Classes
         for (int y = 0; y < 19; y++)
           if (PieceTombes.Count(p => p.Y == y) == 10)
           {
-            Score += bonus++;
+            Score += bonus;
+            bonus *= 2;
+
             PieceTombes.EffacerLigne(y);
           }
 
@@ -193,13 +240,7 @@ namespace WebMatrix.Classes
     public bool Bottom()
     {
       if (CheckBottom() && !PieceTombes.LignePleine)
-      {
-        if (Y < -2)
-          return true;
-
-        SetPieceTombe();
-        NouvellePiece();
-      }
+        return SetPieceTombe();
 
       return false;
     }
@@ -210,6 +251,21 @@ namespace WebMatrix.Classes
     private TetrisPieceList Rotate(int rotation)
     {
       return new TetrisPieceList(TetrisPieceList.GetPiece(Pieces.PieceID, rotation));
+    }
+
+    /// <summary>
+    /// RotateX
+    /// </summary>
+    /// <param name="rotation"></param>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    private TetrisPieceList RotateX(int rotation, int x)
+    {
+      if (new TetrisPieceList(TetrisPieceList.GetPiece(Pieces.PieceID, rotation), x) is TetrisPieceList tetrisPieces)
+        if (tetrisPieces.Largeur < 12)
+          return tetrisPieces;
+
+      return null;
     }
 
     /// <summary>
@@ -231,10 +287,12 @@ namespace WebMatrix.Classes
     /// <summary>
     /// SetPieceTombe
     /// </summary>
-    private void SetPieceTombe()
+    private bool SetPieceTombe()
     {
       foreach (TetrisPiece tetrisPiece in Pieces)
         PieceTombes.Add(new TetrisPiece(tetrisPiece, X, Y));
+
+      return true;
     }
   }
 }

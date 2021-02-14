@@ -7,6 +7,26 @@ namespace LedLibrary.Collection
 {
   public class TetrisPieceList : List<TetrisPiece>
   {
+    public double WeightHeight
+    {
+      get { return 0.510066; }
+    }
+
+    public double WeightLines
+    {
+      get { return 0.760666; }
+    }
+
+    public double WeightHoles
+    {
+      get { return 0.35663; }
+    }
+
+    public double WeightBumpiness
+    {
+      get { return 0.184483; }
+    }
+
     public int PieceID
     {
       get { return this.FirstOrDefault().PieceID; }
@@ -33,6 +53,61 @@ namespace LedLibrary.Collection
       }
     }
 
+    public double AggregateHeight
+    {
+      get
+      {
+        double height = 0;
+
+        for (int x = 2; x < 12; x++)
+          if (this.Any(p => p.X == x))
+            height += 19 - this.Where(p => p.X == x).Min(p => p.Y);
+
+        return height;
+      }
+    }
+
+    public double Lines
+    {
+      get
+      {
+        double lines = 0;
+
+        for (int y = 0; y < 19; y++)
+          if (this.Count(p => p.Y == y) == 10)
+            lines++;
+
+        return lines;
+      }
+    }
+
+    public double Holes
+    {
+      get
+      {
+        double holes = 0;
+
+        for (int x = 2; x < 12; x++)
+          if (this.Any(p => p.X == x))
+            holes += 19 - this.Where(p => p.X == x).Min(p => p.Y) - this.Count(p => p.X == x);
+
+        return holes;
+      }
+    }
+
+    public double Bumpiness
+    {
+      get
+      {
+        double bumpiness = 0;
+
+        for (int x = 2; x < 11; x++)
+          bumpiness += Math.Abs(ColumnHeight(x) - ColumnHeight(x + 1));
+
+        return bumpiness;
+      }
+    }
+
     /// <summary>
     /// Vérifier si y a une ligne pleine pour arreter le jeu.
     /// </summary>
@@ -46,6 +121,70 @@ namespace LedLibrary.Collection
 
         return false;
       }
+    }
+
+    /// <summary>
+    /// ColumnHeight
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    public int ColumnHeight(int x)
+    {
+      if (this.Any(p => p.X == x))
+        return 19 - this.Where(p => p.X == x).Min(p => p.Y);
+
+      return 0;
+    }
+
+    /// <summary>
+    /// GetAiScore
+    /// </summary>
+    /// <param name="pieces"></param>
+    /// <returns></returns>
+    public double GetAiScore(TetrisPieceList pieces)
+    {
+      int y = 0;
+
+      while (!CheckBottom(pieces, y) && y < 19)
+        y++;
+
+      foreach (TetrisPiece tetrisPiece in pieces)
+        Add(new TetrisPiece(tetrisPiece, y, true));
+
+      double score = -WeightHeight * AggregateHeight + WeightLines * Lines - WeightHoles * Holes - WeightBumpiness * Bumpiness;
+
+      RemoveTest();
+
+      return score;
+    }
+
+    /// <summary>
+    /// RemoveTest
+    /// </summary>
+    private void RemoveTest()
+    {
+      for (int y = -3; y < 19; y++)
+        for (int x = 2; x < 12; x++)
+          if (this.SingleOrDefault(t => t.X == x && t.Y == y && t.TestScore) is TetrisPiece piece)
+            Remove(piece);
+    }
+
+    /// <summary>
+    /// CheckBottom
+    /// </summary>
+    /// <param name="pieces"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    private bool CheckBottom(TetrisPieceList pieces, int y)
+    {
+      if (pieces.Max(p => p.Y) + y >= 18)
+        return true;
+
+      foreach (TetrisPiece tetrisPiece in pieces)
+        if (this.Any(p => p.X == tetrisPiece.X && p.Y == tetrisPiece.Y + y + 1))
+          return true;
+
+      return false;
     }
 
     /// <summary>
@@ -198,13 +337,23 @@ namespace LedLibrary.Collection
     }
 
     /// <summary>
-    /// TetrisPieceList
+    /// Constructeur
     /// </summary>
     /// <param name="typePieces"></param>
     public TetrisPieceList(TetrisPieceList typePieces)
     {
       foreach (TetrisPiece tetrisPiece in typePieces)
         Add(new TetrisPiece(tetrisPiece));
+    }
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    /// <param name="typePieces"></param>
+    public TetrisPieceList(TetrisPieceList typePieces, int x)
+    {
+      foreach (TetrisPiece tetrisPiece in typePieces)
+        Add(new TetrisPiece(tetrisPiece, x));
     }
 
     /// <summary>
