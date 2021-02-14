@@ -61,10 +61,23 @@ namespace WebMatrix.Classes
       {
         TetrisPieceList centaines = new TetrisPieceList();
 
-        for (int y = 0; y < Score / 100; y++)
+        for (int y = 0; y < (Score % 1000) / 100; y++)
           centaines.Add(new TetrisPiece { X = 13, Y = 7 + y });
 
         return centaines;
+      }
+    }
+
+    public TetrisPieceList Milliers
+    {
+      get
+      {
+        TetrisPieceList milliers = new TetrisPieceList();
+
+        for (int y = 0; y < Score / 1000; y++)
+          milliers.Add(new TetrisPiece { X = 13, Y = 7 + y });
+
+        return milliers;
       }
     }
 

@@ -184,6 +184,9 @@ namespace WebMatrix.Classes
         foreach (TetrisPiece centaine in tetris.Centaines)
           Util.Context.Pixels.GetCoordonnee(centaine.X, centaine.Y).Set(127, 127, 127);
 
+        foreach (TetrisPiece millier in tetris.Milliers)
+          Util.Context.Pixels.GetCoordonnee(millier.X, millier.Y).Set(127, 127, 0);
+
         //Bordure
         for (int i = 1; i < 12; i++)
           Util.Context.Pixels.GetCoordonnee(i, 19).Set(64, 64, 127);
