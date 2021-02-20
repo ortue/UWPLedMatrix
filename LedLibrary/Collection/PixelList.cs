@@ -11,6 +11,12 @@ namespace LedLibrary.Collection
     public Emplacement Emplacement { get; set; }
     public int Largeur { get; set; }
     public int Hauteur { get; set; }
+    public double[,] PlasmaArray { get; set; }
+
+    public int NbrBackground
+    {
+      get { return 5; }
+    }
 
     public List<Couleur> PixelColors
     {
@@ -43,19 +49,21 @@ namespace LedLibrary.Collection
     /// <summary>
     /// BackGround
     /// </summary>
-    public void BackGround(int bg = 2)
+    public decimal BackGround(int bg = 2, decimal cycle = 0, bool reverse = false)
     {
-      int sec = DateTime.Now.Millisecond / 50;
-      int milli = DateTime.Now.Millisecond % 20;
-
       switch (bg)
       {
         case 1:
+          int max = 20;
+
+          if (reverse)
+            max = 127;
+
           Random r = new Random();
 
           foreach (Pixel pixel in this)
-            if (pixel.Couleur.IsNoir)
-              pixel.SetColor(new Couleur { B = (byte)r.Next(5, 20) });
+            if (pixel.Couleur.IsNoir != reverse)
+              pixel.SetColor(new Couleur { B = (byte)r.Next(5, max) });
           break;
 
         case 2:
@@ -67,9 +75,17 @@ namespace LedLibrary.Collection
             11, 10, 9, 8, 7, 6, 5, 4, 3, 2
           };
 
+          int sec = DateTime.Now.Millisecond / 50;
+          int multi = 1;
+
+          if (reverse)
+            multi = 3;
+
           foreach (Pixel pixel in this)
-            if (pixel.Couleur.IsNoir)
-              pixel.SetColor(new Couleur { B = (byte)b[sec + pixel.Coord.Y] });
+            if (pixel.Couleur.IsNoir != reverse)
+              //pixel.SetColor(new Couleur { B = (byte)(b[sec + pixel.Coord.Y] * multi) });
+              pixel.SetColor(Couleur.Get(0, 0, b[sec + pixel.Coord.Y] * multi));
+
           break;
 
         case 3:
@@ -81,24 +97,37 @@ namespace LedLibrary.Collection
             0, 3, 0, 0, 0, 0, 0, 6, 0, 0
           };
 
+          int milli = DateTime.Now.Millisecond % 20;
+
           foreach (Pixel pixel in this)
-            if (pixel.Couleur.IsNoir)
+            if (pixel.Couleur.IsNoir != reverse)
               pixel.SetColor(new Couleur { G = (byte)g[milli + pixel.Coord.Y] });
+          break;
+
+        case 4:
+          int alpha = 32;
+
+          if (reverse)
+            alpha = 127;
+
+          cycle = Plasma(alpha, cycle, reverse);
           break;
 
         default:
           foreach (Pixel pixel in this)
-            if (pixel.Couleur.IsNoir)
+            if (pixel.Couleur.IsNoir != reverse)
               pixel.SetColor(new Couleur { B = (byte)(5 + pixel.Coord.Y * 2) });
           break;
       }
+
+      return cycle;
     }
 
     /// <summary>
     /// SetHorloge
     /// </summary>
     /// <returns></returns>
-    public void SetHorloge(PoliceList caracteres)
+    public decimal SetHorloge(PoliceList caracteres, decimal cycle, int bg)
     {
       Couleur minuteCouleur = new Couleur { R = 39 / 2, G = 144 / 2, B = 176 / 2 };//39,144,176
       Couleur heureCouleur = new Couleur { R = 148 / 2, G = 200 / 2, B = 80 / 2 };//148,186,101
@@ -110,7 +139,8 @@ namespace LedLibrary.Collection
 
       GetCoordonnee(Coordonnee.Get(9, 0, Largeur, Hauteur)).SetColor(pointCouleur);
       GetCoordonnee(Coordonnee.Get(9, 19, Largeur, Hauteur)).SetColor(pointCouleur);
-      BackGround();
+
+      cycle = BackGround(bg, cycle);
 
       Print(caracteres, 1, 13, Couleur.Noir);
 
@@ -129,6 +159,8 @@ namespace LedLibrary.Collection
 
       for (int i = 0; i < 9; i++)
         GetCoordonnee(GetTempsCoord((DateTime.Now.Millisecond / (double)100 * 6) - i, 9)).SetColor(new Couleur { R = new List<byte> { 128, 64, 32, 16, 8, 8, 8, 4, 4 }[i], B = 5 });
+
+      return cycle;
     }
 
     /// <summary>
@@ -142,7 +174,6 @@ namespace LedLibrary.Collection
       Print(DateTime.Now.ToString("yyyy"), 4, 1, couleur);
       Print(DateTime.Now.ToString("MM-dd"), 1, 7, couleur);
       Print(caracteres, 2, 13, couleur);
-      BackGround(1);
     }
 
     /// <summary>
@@ -201,8 +232,6 @@ namespace LedLibrary.Collection
         }
 
       Print(caracteres, 2, 14, couleur);
-
-      BackGround(1);
     }
 
     /// <summary>
@@ -391,6 +420,88 @@ namespace LedLibrary.Collection
       CaractereList textes = new CaractereList(Largeur);
       textes.SetText(texte);
       Print(textes.GetCaracteres(), x, y, couleur);
+    }
+
+    /// <summary>
+    /// Plasma
+    /// </summary>
+    /// <param name="alpha"></param>
+    /// <param name="cycle"></param>
+    public decimal Plasma(int alpha, decimal cycle = 0, bool reverse = false)
+    {
+      bool inter = false;
+      int multi = 49;
+
+      if (PlasmaArray == null)
+      {
+        PlasmaArray = new double[Largeur * (multi + 1), Hauteur];
+
+        for (int y = 0; y < Hauteur; y++)
+          for (int x = 0; x < Largeur * (multi + 1); x++)
+          {
+            double value = Math.Sin(x / 8.0);
+            value += Math.Sin(y / 4.0);
+            value += Math.Sin((x + y) / 8.0);
+            value += Math.Sin(Math.Sqrt(x * x + y * y) / 4.0);
+            value += 4; // shift range from -4 .. 4 to 0 .. 8
+            value /= 8; // bring range down to 0 .. 1
+
+            PlasmaArray[x, y] = value;
+          }
+      }
+
+      cycle += (decimal)0.02;
+
+      if (cycle % Largeur * multi == 0)
+      {
+        if (inter)
+          inter = false;
+        else
+          inter = true;
+      }
+
+      int offset = (int)(cycle % Largeur * multi);
+
+      if (inter)
+        offset = (int)(Largeur * multi - cycle % Largeur * multi);
+
+      for (int y = 0; y < Hauteur; y++)
+        for (int x = 0; x < Largeur; x++)
+          if (GetCoordonnee(x, y) is Pixel pixel)
+            if (pixel.Couleur.IsNoir != reverse)
+            {
+              double hue = (double)cycle % 1 + PlasmaArray[x + offset, y] % 1;
+              Couleur couleur = HSVtoRGB(hue, 1, 1, alpha);
+              pixel.SetColor(couleur);
+            }
+
+      return cycle;
+    }
+
+    /// <summary>
+    /// HSVtoRGB
+    /// </summary>
+    /// <param name="h"></param>
+    /// <param name="s"></param>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    private Couleur HSVtoRGB(double h, int s, int v, int alpha)
+    {
+      int i = (int)Math.Floor(h * 6);
+      double f = h * 6 - i;
+      int p = v * (1 - s);
+      double q = v * (1 - f * s);
+      double t = v * (1 - (1 - f) * s);
+
+      return (i % 6) switch
+      {
+        0 => Couleur.Get(v * alpha, (int)Math.Round(t * alpha), p * alpha),
+        1 => Couleur.Get((int)Math.Round(q * alpha), v * alpha, p * alpha),
+        2 => Couleur.Get(p * alpha, v * alpha, (int)Math.Round(t * alpha)),
+        3 => Couleur.Get(p * alpha, (int)Math.Round(q * alpha), v * alpha),
+        4 => Couleur.Get((int)Math.Round(t * alpha), p * alpha, v * alpha),
+        _ => Couleur.Get(v * alpha, p * alpha, (int)Math.Round(q * alpha))
+      };
     }
   }
 }

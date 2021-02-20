@@ -88,18 +88,23 @@ namespace WebMatrix.Classes
     public static void Horloge()
     {
       Util.Setup();
+      decimal cycle = 0;
+      Random r = new Random();
+      int bg = r.Next(1, Util.Context.Pixels.NbrBackground);
+
+      //Aime pas beaucoup le 3 ici
+      if (bg == 3)
+        bg = 2;
 
       Task.Run(() =>
       {
         int task = Util.StartTask();
-
         CaractereList caracteres = new CaractereList(20);
 
         while (Util.TaskWork(task))
         {
           caracteres.SetText(Heure);
-
-          Util.Context.Pixels.SetHorloge(caracteres.GetCaracteres());
+          cycle = Util.Context.Pixels.SetHorloge(caracteres.GetCaracteres(), cycle, bg);
           Util.SetLeds();
           Util.Context.Pixels.Reset();
         }
@@ -213,11 +218,19 @@ namespace WebMatrix.Classes
     }
 
     /// <summary>
-    /// Nouvelle
+    /// Date
     /// </summary>
     public static void Date()
     {
       Util.Setup();
+
+      decimal cycle = 0;
+      Random r = new Random();
+      int bg = r.Next(1, Util.Context.Pixels.NbrBackground);
+      bool reverse = r.Next(0, 2) == 1;
+
+      if (bg == 3 && reverse)
+        reverse = false;
 
       Task.Run(() =>
       {
@@ -228,21 +241,26 @@ namespace WebMatrix.Classes
         {
           caracteres.SetText(Heure);
           Util.Context.Pixels.SetDate(caracteres.GetCaracteres());
+          cycle = Util.Context.Pixels.BackGround(bg, cycle, reverse);
           Util.SetLeds();
           Util.Context.Pixels.Reset();
 
-          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-          waitHandle.Wait(TimeSpan.FromMilliseconds(1));
+          //using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+          //waitHandle.Wait(TimeSpan.FromMilliseconds(1));
         }
       });
     }
 
     /// <summary>
-    /// 
+    /// Binaire
     /// </summary>
     public static void Binaire()
     {
       Util.Setup();
+
+      decimal cycle = 0;
+      Random r = new Random();
+      int bg = r.Next(1, Util.Context.Pixels.NbrBackground);
 
       Task.Run(() =>
       {
@@ -253,11 +271,12 @@ namespace WebMatrix.Classes
         {
           caracteres.SetText(Heure);
           Util.Context.Pixels.SetBinaire(caracteres.GetCaracteres());
+          cycle = Util.Context.Pixels.BackGround(bg, cycle);
           Util.SetLeds();
           Util.Context.Pixels.Reset();
 
-          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-          waitHandle.Wait(TimeSpan.FromMilliseconds(1));
+          //using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+          //waitHandle.Wait(TimeSpan.FromMilliseconds(1));
         }
       });
     }

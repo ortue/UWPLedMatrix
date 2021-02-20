@@ -25,7 +25,7 @@ namespace WebMatrix.Controllers
       if (id == null && Util.TaskNbr == 0)
       {
         Random random = new Random();
-        id = random.Next(1, 5);
+        id = random.Next(1, 9);
       }
 
       if (id != null)
@@ -78,6 +78,10 @@ namespace WebMatrix.Controllers
 
         case 3:
           Task.Run(() => Classes.Jeu.Labyrinthe());
+          break;
+
+        case 4:
+          Task.Run(() => Classes.Jeu.Arkanoid());
           break;
       }
 

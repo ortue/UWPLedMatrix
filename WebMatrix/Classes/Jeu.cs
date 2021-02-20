@@ -293,14 +293,14 @@ namespace WebMatrix.Classes
       Util.Setup();
       int task = Util.StartTask();
       LabyrintheList labyrinthes = SetLabyrinthe();
+      decimal cycle = 0;
 
       while (Util.TaskWork(task))
       {
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-
         if (labyrinthes.Complet)
         {
           labyrinthes = SetLabyrinthe();
+          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
           waitHandle.Wait(TimeSpan.FromMilliseconds(500));
         }
 
@@ -312,13 +312,14 @@ namespace WebMatrix.Classes
           Util.Context.Pixels.GetCoordonnee(labyrinthe.X, labyrinthe.Y).SetColor(labyrinthe.Couleur);
         }
 
+        cycle = Util.Context.Pixels.BackGround(4, cycle, true);
         Util.Context.Pixels.GetCoordonnee(labyrinthes.X, labyrinthes.Y).SetColor(Couleur.Get(127, 127, 127));
         labyrinthes.Mouvement();
 
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        waitHandle.Wait(TimeSpan.FromMilliseconds(50));
+        //waitHandle.Wait(TimeSpan.FromMilliseconds(50));
       }
     }
 
@@ -358,6 +359,53 @@ namespace WebMatrix.Classes
       labyrinthes.SetCheminParcouru();
 
       return labyrinthes;
+    }
+
+    /// <summary>
+    /// Arkanoid
+    /// </summary>
+    public static void Arkanoid()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+      while (Util.TaskWork(task))
+      {
+        //Bordure
+        for (int x = 0; x < Util.Context.Pixels.Largeur; x++)
+          Util.Context.Pixels.GetCoordonnee(x, 0).Set(31, 31, 127);
+
+        for (int y = 0; y < Util.Context.Pixels.Hauteur; y++)
+        {
+          Util.Context.Pixels.GetCoordonnee(0, y).Set(31, 31, 127);
+          Util.Context.Pixels.GetCoordonnee(19, y).Set(31, 31, 127);
+        }
+
+        for (int y = 0; y < 2; y++)
+          for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
+            Util.Context.Pixels.GetCoordonnee(x, 5 + y).Set(63, 63, 127);
+
+        for (int y = 0; y < 2; y++)
+          for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
+            Util.Context.Pixels.GetCoordonnee(x, 7 + y).Set(63, 127, 63);
+
+        for (int y = 0; y < 2; y++)
+          for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
+            Util.Context.Pixels.GetCoordonnee(x, 9 + y).Set(127, 63, 127);
+
+
+        Util.Context.Pixels.GetCoordonnee(9, 18).Set(127, 127, 127);
+        Util.Context.Pixels.GetCoordonnee(10, 18).Set(127, 127, 127);
+        Util.Context.Pixels.GetCoordonnee(11, 18).Set(127, 127, 127);
+
+
+        Util.Context.Pixels.BackGround();
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
+
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(50));
+      }
     }
   }
 }

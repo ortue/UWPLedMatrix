@@ -45,6 +45,10 @@ namespace WebMatrix.Classes
         case 7:
           Demo7();
           break;
+
+        case 8:
+          Demo8();
+          break;
       }
     }
 
@@ -285,9 +289,7 @@ namespace WebMatrix.Classes
         sinus.Next();
         Util.SetLeds();
 
-//        if (x % 20 == 0)
-          Util.Context.Pixels.Reset();
-
+        Util.Context.Pixels.Reset();
       }
     }
 
@@ -370,6 +372,110 @@ namespace WebMatrix.Classes
         return null;
 
       return coord;
+    }
+
+    /// <summary>
+    /// Plasma
+    /// </summary>
+    public static void Demo8()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+      decimal cycle = 0;
+
+      while (Util.TaskWork(task))
+      {
+        cycle = Util.Context.Pixels.Plasma(127, cycle);
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
+      }
+    }
+
+    /// <summary>
+    /// Plasma
+    /// </summary>
+    public static void Demo8b()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+
+      decimal cycle = 0;
+      bool inter = false;
+      int multi = 49;
+      double hueShift = 0;
+      double[,] buffer = new double[Util.Context.Largeur * (multi + 1), Util.Context.Hauteur];
+
+      for (int y = 0; y < Util.Context.Hauteur; y++)
+        for (int x = 0; x < Util.Context.Largeur * (multi + 1); x++)
+        {
+          double value = Math.Sin(x / 8.0);
+          value += Math.Sin(y / 4.0);
+          value += Math.Sin((x + y) / 8.0);
+          value += Math.Sin(Math.Sqrt(x * x + y * y) / 4.0);
+          value += 4; // shift range from -4 .. 4 to 0 .. 8
+          value /= 8; // bring range down to 0 .. 1
+
+          buffer[x, y] = value;
+        }
+
+      while (Util.TaskWork(task))
+      {
+        hueShift = (hueShift + 0.02) % 1;
+
+        cycle += (decimal)0.02;
+
+        if (cycle % Util.Context.Largeur * multi == 0)
+        {
+          if (inter)
+            inter = false;
+          else
+            inter = true;
+        }
+
+        int offset = (int)(cycle % Util.Context.Largeur * multi);
+
+        if (inter)
+          offset = (int)(Util.Context.Largeur * multi - cycle % Util.Context.Largeur * multi);
+
+        for (int y = 0; y < Util.Context.Hauteur; y++)
+          for (int x = 0; x < Util.Context.Largeur; x++)
+          {
+            double hue = hueShift + buffer[x + offset, y] % 1;
+            Couleur couleur = HSVtoRGB(hue, 1, 1, 10);
+            Util.Context.Pixels.GetCoordonnee(x, y).SetColor(couleur);
+          }
+
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
+      }
+    }
+
+    /// <summary>
+    /// HSVtoRGB
+    /// </summary>
+    /// <param name="h"></param>
+    /// <param name="s"></param>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    private static Couleur HSVtoRGB(double h, int s, int v, int alpha)
+    {
+      int i = (int)Math.Floor(h * 6);
+      double f = h * 6 - i;
+      int p = v * (1 - s);
+      double q = v * (1 - f * s);
+      double t = v * (1 - (1 - f) * s);
+
+      return (i % 6) switch
+      {
+        0 => Couleur.Get(v * alpha, (int)Math.Round(t * alpha), p * alpha),
+        1 => Couleur.Get((int)Math.Round(q * alpha), v * alpha, p * alpha),
+        2 => Couleur.Get(p * alpha, v * alpha, (int)Math.Round(t * alpha)),
+        3 => Couleur.Get(p * alpha, (int)Math.Round(q * alpha), v * alpha),
+        4 => Couleur.Get((int)Math.Round(t * alpha), p * alpha, v * alpha),
+        _ => Couleur.Get(v * alpha, p * alpha, (int)Math.Round(q * alpha))
+      };
     }
   }
 }
