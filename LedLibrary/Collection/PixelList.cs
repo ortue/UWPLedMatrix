@@ -12,6 +12,7 @@ namespace LedLibrary.Collection
     public int Largeur { get; set; }
     public int Hauteur { get; set; }
     public double[,] PlasmaArray { get; set; }
+    public double HueShift { get; set; }
 
     public int NbrBackground
     {
@@ -429,8 +430,9 @@ namespace LedLibrary.Collection
     /// <param name="cycle"></param>
     public decimal Plasma(int alpha, decimal cycle = 0, bool reverse = false)
     {
-      bool inter = false;
-      int multi = 49;
+      //int multi = 49;
+      int multi = 24;
+      HueShift = (HueShift + 0.02) % 1;
 
       if (PlasmaArray == null)
       {
@@ -450,27 +452,20 @@ namespace LedLibrary.Collection
           }
       }
 
-      cycle += (decimal)0.02;
+      cycle += (decimal)0.5;
+      //cycle += 1;
 
-      if (cycle % Largeur * multi == 0)
-      {
-        if (inter)
-          inter = false;
-        else
-          inter = true;
-      }
+      int offset = (int)(cycle % (Largeur * multi));
 
-      int offset = (int)(cycle % Largeur * multi);
-
-      if (inter)
-        offset = (int)(Largeur * multi - cycle % Largeur * multi);
+      if ((int)(cycle / (Largeur * multi)) % 2 == 1)
+        offset = (int)(Largeur * multi - cycle % (Largeur * multi));
 
       for (int y = 0; y < Hauteur; y++)
         for (int x = 0; x < Largeur; x++)
           if (GetCoordonnee(x, y) is Pixel pixel)
             if (pixel.Couleur.IsNoir != reverse)
             {
-              double hue = (double)cycle % 1 + PlasmaArray[x + offset, y] % 1;
+              double hue = HueShift % 1 + PlasmaArray[x + offset, y] % 1;
               Couleur couleur = HSVtoRGB(hue, 1, 1, alpha);
               pixel.SetColor(couleur);
             }
