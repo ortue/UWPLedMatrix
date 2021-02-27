@@ -29,9 +29,9 @@ namespace LedLibrary.Entities
     Font fontTitle = new Font(font, 20, FontStyle.Bold);
     Font fontAxis = new Font(font, 12, FontStyle.Bold);
 
-    public string labelY = "";
-    public string labelX = "";
-    public string labelTitle = "";
+    public string labelY = string.Empty;
+    public string labelX = string.Empty;
+    public string labelTitle = string.Empty;
 
     private int padL = 50, padT = 47, padR = 50, padB = 47;
 
@@ -67,8 +67,11 @@ namespace LedLibrary.Entities
     public void Resize(int width, int height)
     {
       // sanity check (make sure the graph area is at least 1px by 1px
-      if (width - padL - padR < 1) width = padL + padR + 1;
-      if (height - padT - padB < 1) height = padT + padB + 1;
+      if (width - padL - padR < 1)
+        width = padL + padR + 1;
+
+      if (height - padT - padB < 1)
+        height = padT + padB + 1;
 
       // figure resized, so resize the frame bitmap
       bmpFrame = new Bitmap(width, height);
@@ -116,10 +119,11 @@ namespace LedLibrary.Entities
       // prepare things useful for drawing
       Pen penAxis = new Pen(new SolidBrush(colorAxis));
       Pen penGrid = new Pen(colorGridLines) { DashPattern = new float[] { 4, 4 } };
+
       Brush brush = new SolidBrush(colorAxis);
       StringFormat sfCenter = new StringFormat { Alignment = StringAlignment.Center };
-      StringFormat sfRight = new StringFormat();
-      sfRight.Alignment = StringAlignment.Far;
+      StringFormat sfRight = new StringFormat { Alignment = StringAlignment.Far };
+
       int posB = bmpGraph.Height + padT;
       int posCx = bmpGraph.Width / 2 + padL;
       int posCy = bmpGraph.Height / 2 + padT;
@@ -451,14 +455,12 @@ namespace LedLibrary.Entities
         gfxGraph.DrawLines(penLine, points.ToArray());
 
         if (dataPointsPerPixel < .5)
-        {
           foreach (Point pt in points)
             gfxGraph.FillEllipse(markerBrush, pt.X - markerSize / 2, pt.Y - markerSize / 2, markerSize, markerSize);
-        }
       }
       catch (Exception ex)
       {
-        System.Console.WriteLine("Exception plotting " + ex.ToString());
+        Console.WriteLine("Exception plotting " + ex.ToString());
       }
 
       gfxGraph.SmoothingMode = originalSmoothingMode;

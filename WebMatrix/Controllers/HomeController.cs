@@ -1,6 +1,7 @@
 ﻿using LedLibrary.Classes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NAudio.Wave;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -88,8 +89,21 @@ namespace WebMatrix.Controllers
       return View();
     }
 
-    public IActionResult Spectrum(int? id)
+    public IActionResult Musique(int? id)
     {
+      if (id != null)
+        Util.Autorun = false;
+
+      switch (id)
+      {
+        case 0:
+          Task.Run(() => Classes.Musique.Spectrum1());
+          break;
+
+        case 1:
+          Task.Run(() => Classes.Musique.Spectrum2());
+          break;
+      }
 
       return View();
     }
