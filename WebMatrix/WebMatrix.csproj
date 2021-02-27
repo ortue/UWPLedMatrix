@@ -71,8 +71,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Accord.Math" Version="3.8.2-alpha" />
-    <PackageReference Include="NAudio" Version="1.10.0" />
     <PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0" />
     <PackageReference Include="Unosquare.Raspberry.IO" Version="0.27.0" />
     <PackageReference Include="Unosquare.WiringPi" Version="0.5.0" />

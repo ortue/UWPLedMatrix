@@ -1,7 +1,6 @@
 ﻿using LedLibrary.Classes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using NAudio.Wave;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -103,6 +102,11 @@ namespace WebMatrix.Controllers
         case 1:
           Task.Run(() => Classes.Musique.Spectrum2());
           break;
+
+        case 2:
+          Task.Run(() => Classes.Musique.Graph());
+          break;
+
       }
 
       return View();
