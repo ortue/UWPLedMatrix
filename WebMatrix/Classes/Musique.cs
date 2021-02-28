@@ -22,7 +22,6 @@ namespace WebMatrix.Classes
 
       using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 8000, ALFormat.Mono8, 256);
       audioCapture.Start();
-      audioCapture.ReadSamples(audioBuffer, 256);
 
       while (Util.TaskWork(task))
       {
@@ -78,7 +77,6 @@ namespace WebMatrix.Classes
       byte[] audioBuffer = new byte[256];
       using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 8000, ALFormat.Mono8, 256);
       audioCapture.Start();
-      audioCapture.ReadSamples(audioBuffer, 256);
 
       while (Util.TaskWork(task))
       {
@@ -148,7 +146,6 @@ namespace WebMatrix.Classes
       byte[] audioBuffer = new byte[256];
       using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 8000, ALFormat.Mono8, 256);
       audioCapture.Start();
-      audioCapture.ReadSamples(audioBuffer, 256);
 
       while (Util.TaskWork(task))
       {
@@ -156,7 +153,13 @@ namespace WebMatrix.Classes
         audioCapture.ReadSamples(audioBuffer, 256);
 
         //TODO:Ajuster l'amplitude en fonction du volume, avec le audioBuffer.Max(), 64=7 128=5 256=3, genre
-        float amplitude = 5.0f;// * (128-audioBuffer.Max()) / 127;
+        float amplitude = 5;
+
+        if (audioBuffer.Max() < 96)
+          amplitude = 7;
+
+        if (audioBuffer.Max() > 160)
+          amplitude = 3;
 
         for (int i = 0; i < 256; i++)
           fft[i] = (audioBuffer[i] - 128) * amplitude;
