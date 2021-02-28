@@ -138,7 +138,7 @@ namespace WebMatrix.Classes
     /// <summary>
     /// Graph
     /// </summary>
-    public static void Graph()
+    public static void Graph1()
     {
       // Initialize the led strip
       Util.Setup();
@@ -169,6 +169,51 @@ namespace WebMatrix.Classes
           double facteur = 13.42;
           int y = (int)(fft[(int)(x * facteur)] / facteur) + 10;
           byte red = (byte)Math.Abs(fft[(int)(x * facteur)]);
+
+          if (Util.Context.Pixels.GetCoordonnee(x, y) is Pixel pixel)
+            pixel.Set(red, 0, 127 - red);
+        }
+
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
+      }
+    }
+
+    /// <summary>
+    /// Graph
+    /// </summary>
+    public static void Graph2()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+      byte[] audioBuffer = new byte[256];
+      using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 8000, ALFormat.Mono8, 256);
+      audioCapture.Start();
+
+      while (Util.TaskWork(task))
+      {
+        double[] fft = new double[256];
+        audioCapture.ReadSamples(audioBuffer, 256);
+
+        //TODO:Ajuster l'amplitude en fonction du volume, avec le audioBuffer.Max(), 64=7 128=5 256=3, genre
+        //TODO:Enlever le facture qui est un deuxieme amplitude, 
+        float amplitude = 5;
+
+        if (audioBuffer.Max() < 96)
+          amplitude = 7;
+
+        if (audioBuffer.Max() > 160)
+          amplitude = 3;
+
+        for (int i = 0; i < 256; i++)
+          fft[i] = (audioBuffer[i] - 128) * amplitude;
+
+        for (int x = 0; x < 20; x++)
+        {
+          double facteur = 13.42;
+          int y = (int)(fft[x * 2] / facteur) + 10;
+          byte red = (byte)Math.Abs(fft[x * 2]);
 
           if (Util.Context.Pixels.GetCoordonnee(x, y) is Pixel pixel)
             pixel.Set(red, 0, 127 - red);

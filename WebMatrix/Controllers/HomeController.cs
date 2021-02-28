@@ -104,9 +104,12 @@ namespace WebMatrix.Controllers
           break;
 
         case 2:
-          Task.Run(() => Classes.Musique.Graph());
+          Task.Run(() => Classes.Musique.Graph1());
           break;
 
+        case 3:
+          Task.Run(() => Classes.Musique.Graph2());
+          break;
       }
 
       return View();
