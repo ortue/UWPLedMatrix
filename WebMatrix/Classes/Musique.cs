@@ -389,8 +389,6 @@ namespace WebMatrix.Classes
               if (Util.Context.Pixels.GetCoordonnee(xx, 19 - y) is Pixel pixel)
                 if (pixel.Couleur.IsNoir)
                   pixel.Set(y * 5, (19 - y) * 5, 0);
-          //pixel.Set(y * 5, 0, (19 - y) * 5);
-
 
           xx++;
         }
