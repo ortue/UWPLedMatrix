@@ -260,8 +260,10 @@ namespace WebMatrix.Classes
     /// </summary>
     private static void TetrisAnimation(PixelList pixels, TetrisPieceList tetrisPieces)
     {
+      pixels.BackGround(1);
+
       if (tetrisPieces.Any())
-        for (int anime = 0; anime < 20; anime++)
+        for (int anime = 0; anime < 10; anime++)
         {
           foreach (TetrisPiece pieceTombe in tetrisPieces)
             if (pixels.GetCoordonnee(pieceTombe.X, pieceTombe.Y) is Pixel pixel)
@@ -276,11 +278,10 @@ namespace WebMatrix.Classes
               pixel.SetColor(pieceTombe.Couleur);
             }
 
-          pixels.BackGround(1);
           Util.SetLeds();
 
           using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-          waitHandle.Wait(TimeSpan.FromMilliseconds(50));
+          waitHandle.Wait(TimeSpan.FromMilliseconds(40));
         }
     }
 

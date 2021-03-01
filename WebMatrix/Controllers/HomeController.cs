@@ -110,6 +110,10 @@ namespace WebMatrix.Controllers
         case 3:
           Task.Run(() => Classes.Musique.Graph2());
           break;
+
+        case 4:
+          Task.Run(() => Classes.Musique.SpectrumGraph());
+          break;
       }
 
       return View();
