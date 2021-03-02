@@ -462,66 +462,66 @@ namespace WebMatrix.Classes
     /// <summary>
     /// Spectrum
     /// </summary>
-    public static void Spectrum1()
-    {
-      // Initialize the led strip
-      Util.Setup();
-      int task = Util.StartTask();
+    //public static void Spectrum1()
+    //{
+    //  // Initialize the led strip
+    //  Util.Setup();
+    //  int task = Util.StartTask();
 
-      using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 8000, ALFormat.Mono8, 256);
-      audioCapture.Start();
+    //  using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 8000, ALFormat.Mono8, 256);
+    //  audioCapture.Start();
 
-      byte[] audioBuffer = new byte[256];
+    //  byte[] audioBuffer = new byte[256];
 
-      while (Util.TaskWork(task))
-      {
-        //byte[] fftData = new byte[audioBuffer.Length];
-        double[] fft = new double[audioBuffer.Length];
+    //  while (Util.TaskWork(task))
+    //  {
+    //    //byte[] fftData = new byte[audioBuffer.Length];
+    //    double[] fft = new double[audioBuffer.Length];
 
-        float amplitude = 0.5f;
+    //    float amplitude = 0.5f;
 
-        LomontFFT fftTransoformer = new LomontFFT();
-        audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
+    //    LomontFFT fftTransoformer = new LomontFFT();
+    //    audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
 
-        for (int i = 0; i < audioBuffer.Length; i++)
-          fft[i] = (audioBuffer[i] - 128) * amplitude;
+    //    for (int i = 0; i < audioBuffer.Length; i++)
+    //      fft[i] = (audioBuffer[i] - 128) * amplitude;
 
-        //fftTransoformer.TableFFT(fft, true);
+    //    //fftTransoformer.TableFFT(fft, true);
 
-        Complex[] complex =Transform.FFT(fft);
+    //    Complex[] complex =Transform.FFT(fft);
 
-        //for (int i = 0; i < audioBuffer.Length; i += 2)
-        //{
-        //  double fftmag = Math.Sqrt((fft[i] * fft[i]) + (fft[i + 1] * fft[i + 1]));
-        //  fftData[i] = (byte)fftmag;
-        //  fftData[i + 1] = fftData[i];
-        //}
+    //    //for (int i = 0; i < audioBuffer.Length; i += 2)
+    //    //{
+    //    //  double fftmag = Math.Sqrt((fft[i] * fft[i]) + (fft[i + 1] * fft[i + 1]));
+    //    //  fftData[i] = (byte)fftmag;
+    //    //  fftData[i + 1] = fftData[i];
+    //    //}
 
-        int xx = 0;
-        int step = (complex.Length / 20);
-        for (int x = 0; x < complex.Length - step - 1; x += step)
-        {
-          double moyenne = 0;
+    //    int xx = 0;
+    //    int step = (complex.Length / 20);
+    //    for (int x = 0; x < complex.Length - step - 1; x += step)
+    //    {
+    //      double moyenne = 0;
 
-          for (int i = x; i < x + step; i++)
-            moyenne += complex[i].Magnitude;
+    //      for (int i = x; i < x + step; i++)
+    //        moyenne += complex[i].Magnitude;
 
-          double yMax = moyenne / step;
+    //      double yMax = moyenne / step;
 
-          for (int y = 0; y < 20; y++)
-            if (y < Math.Ceiling(yMax))
-              if (Util.Context.Pixels.GetCoordonnee(xx, 19 - y) is Pixel pixel)
-                pixel.Set(y * 5, 0, (19 - y) * 5);
+    //      for (int y = 0; y < 20; y++)
+    //        if (y < Math.Ceiling(yMax))
+    //          if (Util.Context.Pixels.GetCoordonnee(xx, 19 - y) is Pixel pixel)
+    //            pixel.Set(y * 5, 0, (19 - y) * 5);
 
-          xx++;
-        }
+    //      xx++;
+    //    }
 
-        Util.SetLeds();
+    //    Util.SetLeds();
 
-        for (int x = 0; x < 20; x++)
-          if (Util.Context.Pixels.Where(p => p.Coord.X == x && !p.Couleur.IsNoir).OrderBy(p => p.Coord.Y).FirstOrDefault() is Pixel pixel)
-            pixel.Couleur = Couleur.Noir;
-      }
-    }
+    //    for (int x = 0; x < 20; x++)
+    //      if (Util.Context.Pixels.Where(p => p.Coord.X == x && !p.Couleur.IsNoir).OrderBy(p => p.Coord.Y).FirstOrDefault() is Pixel pixel)
+    //        pixel.Couleur = Couleur.Noir;
+    //  }
+    //}
   }
 }
