@@ -15,7 +15,6 @@
       set { _cmbStroboscope = value; }
     }
 
-
     private float _cmbAmplitude;
     public float CmbAmplitude
     {
