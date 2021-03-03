@@ -14,5 +14,35 @@
       }
       set { _cmbStroboscope = value; }
     }
+
+
+    private float _cmbAmplitude;
+    public float CmbAmplitude
+    {
+      get
+      {
+        if (_cmbAmplitude == 0)
+          return 1f;
+
+        return _cmbAmplitude;
+      }
+      set { _cmbAmplitude = value; }
+    }
+
+    public float AmplitudeSpectrum
+    {
+      get { return CmbAmplitude; }
+    }
+
+    public float AmplitudeGraph
+    {
+      get
+      {
+        if (CmbAmplitude > 2)
+          return 1f;
+
+        return CmbAmplitude / 2f;
+      }
+    }
   }
 }

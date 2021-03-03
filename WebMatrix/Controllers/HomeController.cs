@@ -88,33 +88,31 @@ namespace WebMatrix.Controllers
       return View();
     }
 
-    public IActionResult Musique(int? id)
+    public IActionResult Musique(int? id, Criteria criteria)
     {
       if (id != null)
         Util.Autorun = false;
 
       switch (id)
       {
-        //case 0:
-        //  Task.Run(() => Classes.Musique.Spectrum1());
-        //  break;
-
         case 1:
-          Task.Run(() => Classes.Musique.Spectrum2());
+          Task.Run(() => Classes.Musique.Spectrum2(criteria));
           break;
 
         case 2:
-          Task.Run(() => Classes.Musique.Graph1());
+          Task.Run(() => Classes.Musique.Graph1(criteria));
           break;
 
         case 3:
-          Task.Run(() => Classes.Musique.Graph2());
+          Task.Run(() => Classes.Musique.Graph2(criteria));
           break;
 
         case 4:
-          Task.Run(() => Classes.Musique.SpectrumGraph());
+          Task.Run(() => Classes.Musique.SpectrumGraph(criteria));
           break;
       }
+
+      ViewBag.CmbAmplitude = criteria.CmbAmplitude;
 
       return View();
     }

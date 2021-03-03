@@ -24,7 +24,7 @@ namespace WebMatrix.Classes
   /// Properties A and B allow selecting various FFT sign and scaling                                          
   /// conventions.                                                                                             
   /// </summary>                                                                                               
-  public class LomontFFT
+  public static class LomontFFT
   {
     /// <summary>                                                                                            
     /// Compute the forward or inverse Fourier Transform of data, with                                       
@@ -36,8 +36,11 @@ namespace WebMatrix.Classes
     /// and imaginary parts</param>                                                                          
     /// <param name="forward">true for a forward transform, false for                                        
     /// inverse transform</param>                                                                            
-    public void FFT(double[] data, bool forward)
+    public static void FFT(double[] data, bool forward)
     {
+      A = 0;
+      B = 1;
+
       var n = data.Length;
       // checks n is a power of 2 in 2's complement format                                                 
       if ((n & (n - 1)) != 0)
@@ -95,7 +98,7 @@ namespace WebMatrix.Classes
     /// and imaginary parts</param>                                                                          
     /// <param name="forward">true for a forward transform, false for                                        
     /// inverse transform</param>                                                                            
-    public void TableFFT(double[] data, bool forward)
+    public static void TableFFT(double[] data, bool forward)
     {
       var n = data.Length;
 
@@ -115,16 +118,16 @@ namespace WebMatrix.Classes
       double sign = forward ? B : -B;
       var mmax = 1;
       var tptr = 0;
-      
+
       while (n > mmax)
       {
         var istep = 2 * mmax;
-        
+
         for (var m = 0; m < istep; m += 2)
         {
           var wr = cosTable[tptr];
           var wi = sign * sinTable[tptr++];
-          
+
           for (var k = m; k < 2 * n; k += 2 * istep)
           {
             var j = k + istep;
@@ -157,7 +160,7 @@ namespace WebMatrix.Classes
     /// and imaginary parts</param>                                                                          
     /// <param name="forward">true for a forward transform, false for                                        
     /// inverse transform</param>                                                                            
-    public void RealFFT(double[] data, bool forward)
+    public static void RealFFT(double[] data, bool forward)
     {
       var n = data.Length; // # of real inputs, 1/2 the complex length                                     
                            // checks n is a power of 2 in 2's complement format                                                 
@@ -166,7 +169,7 @@ namespace WebMatrix.Classes
         throw new ArgumentException("data length " + n + " in FFT is not a power of 2");
 
       var sign = -1.0; // assume inverse FFT, this controls how algebra below works   
-      
+
       if (forward)
       { // do packed FFT. This can be changed to FFT to save memory                                        
         TableFFT(data, true);
@@ -252,7 +255,7 @@ namespace WebMatrix.Classes
     ///     ( 1,-1)  - signal processing                                                                     
     /// Usual values for A are 1, 0, or -1                                                                   
     /// </summary>                                                                                           
-    public int A { get; set; }
+    public static int A { get; set; }
 
     /// <summary>                                                                                            
     /// Determine how phase works on the forward and inverse transforms.                                     
@@ -267,13 +270,13 @@ namespace WebMatrix.Classes
     /// output data.                                                                                         
     /// Usual values for B are 1 or -1.                                                                      
     /// </summary>                                                                                           
-    public int B { get; set; }
+    public static int B { get; set; }
 
-    public LomontFFT()
-    {
-      A = 0;
-      B = 1;
-    }
+    //public LomontFFT()
+    //{
+    //  A = 0;
+    //  B = 1;
+    //}
 
     #region Internals
 
@@ -283,7 +286,7 @@ namespace WebMatrix.Classes
     /// <param name="data"></param>                                                                          
     /// <param name="n"></param>                                                                             
     /// <param name="forward"></param>                                                                       
-    void Scale(double[] data, int n, bool forward)
+    private static void Scale(double[] data, int n, bool forward)
     {
       // forward scaling if needed                                                                         
       if ((forward) && (A != 1))
@@ -309,7 +312,7 @@ namespace WebMatrix.Classes
     /// Fills in tables for speed. Done automatically in TableFFT                                            
     /// </summary>                                                                                           
     /// <param name="size">The size of the FFT in samples</param>                                            
-    void Initialize(int size)
+    private static void Initialize(int size)
     {
       // NOTE: if you port to non garbage collected languages                                              
       // like C# or Java be sure to free these correctly                                                   
@@ -350,14 +353,14 @@ namespace WebMatrix.Classes
     /// </summary>                                                                                           
     /// <param name="data"></param>                                                                          
     /// <param name="n"></param>                                                                             
-    static void Reverse(double[] data, int n)
+    private static void Reverse(double[] data, int n)
     {
       // bit reverse the indices. This is exercise 5 in section                                            
       // 7.2.1.1 of Knuth's TAOCP the idea is a binary counter                                             
       // in k and one with bits reversed in j                                                              
       int j = 0, k = 0; // Knuth R1: initialize                                                            
       var top = n / 2;  // this is Knuth's 2^(n-1)     
-      
+
       while (true)
       {
         // Knuth R2: swap - swap j+1 and k+2^(n-1), 2 entries each                                       
@@ -408,8 +411,8 @@ namespace WebMatrix.Classes
     /// <summary>                                                                                            
     /// Pre-computed sine/cosine tables for speed                                                            
     /// </summary>                                                                                           
-    double[] cosTable;
-    double[] sinTable;
+    private static double[] cosTable;
+    private static double[] sinTable;
     #endregion
   }
-}                                          
+}
