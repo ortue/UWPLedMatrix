@@ -39,9 +39,9 @@
       get
       {
         if (CmbAmplitude > 2)
-          return 1f;
+          return 2f / 3f;
 
-        return CmbAmplitude / 2f;
+        return CmbAmplitude / 3f;
       }
     }
   }
