@@ -1,4 +1,5 @@
 ﻿using LedLibrary.Classes;
+using LedLibrary.Collection;
 using LedLibrary.Entities;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
@@ -204,6 +205,96 @@ namespace WebMatrix.Classes
         Util.SetLeds();
         Util.Context.Pixels.Reset();
       }
+    }
+
+    /// <summary>
+    /// VuMeter
+    /// </summary>
+    /// <param name="criteria"></param>
+    public static void VuMeter()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+      byte[] audioBuffer = new byte[256];
+      using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 8000, ALFormat.Mono8, audioBuffer.Length);
+      audioCapture.Start();
+      CaractereList caracteres = new CaractereList(20);
+      double max = 0;
+
+      while (Util.TaskWork(task))
+      {
+        max -= 1;
+        double[] fft = new double[audioBuffer.Length];
+        audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
+
+        for (int i = 0; i < audioBuffer.Length; i++)
+          fft[i] = (audioBuffer[i] - 128) * 0.703125;
+
+        if (fft.Max(a => Math.Abs(a)) > max)
+          max = fft.Max(a => Math.Abs(a));
+
+        foreach (Pixel pixel in Util.Context.Pixels)
+          pixel.Set(127, 127, 127);
+
+        caracteres.SetText("VU");
+        Util.Context.Pixels.Print(caracteres.GetCaracteres(), 5, 12, Couleur.Noir);
+
+        Couleur couleurMax = Couleur.Noir;
+
+        //lumiere max
+        if (max > 80)
+          couleurMax = Couleur.Get(127, 0, 0);
+
+        Util.Context.Pixels.GetCoordonnee(16, 2).SetColor(couleurMax);
+        Util.Context.Pixels.GetCoordonnee(17, 2).SetColor(couleurMax);
+        Util.Context.Pixels.GetCoordonnee(16, 3).SetColor(couleurMax);
+        Util.Context.Pixels.GetCoordonnee(17, 3).SetColor(couleurMax);
+
+        //dessin
+
+
+
+        //base
+        Util.Context.Pixels.GetCoordonnee(8, 18).SetColor(Couleur.Noir);
+        Util.Context.Pixels.GetCoordonnee(9, 18).SetColor(Couleur.Noir);
+        Util.Context.Pixels.GetCoordonnee(10, 18).SetColor(Couleur.Noir);
+        Util.Context.Pixels.GetCoordonnee(11, 18).SetColor(Couleur.Noir);
+
+        Util.Context.Pixels.GetCoordonnee(7, 19).SetColor(Couleur.Noir);
+        Util.Context.Pixels.GetCoordonnee(8, 19).SetColor(Couleur.Noir);
+        Util.Context.Pixels.GetCoordonnee(9, 19).SetColor(Couleur.Noir);
+        Util.Context.Pixels.GetCoordonnee(10, 19).SetColor(Couleur.Noir);
+        Util.Context.Pixels.GetCoordonnee(11, 19).SetColor(Couleur.Noir);
+        Util.Context.Pixels.GetCoordonnee(12, 19).SetColor(Couleur.Noir);
+
+        //aiguille
+        for (int r = 2; r < 18; r++)
+          Util.Context.Pixels.GetCoordonnee(GetCercleCoord(max + 315, r)).SetColor(Couleur.Noir);
+
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
+      }
+    }
+
+    /// <summary>
+    ///GetCercleCoord
+    /// </summary>
+    /// <param name="degree"></param>
+    /// <param name="rayon"></param>
+    /// <returns></returns>
+    private static Coordonnee GetCercleCoord(double degree, int rayon)
+    {
+      Coordonnee coord = new Coordonnee(20, 20);
+
+      if (degree % 360 >= 0 && degree % 360 <= 180)
+        coord.X = 10 + (int)(rayon * Math.Sin(Math.PI * degree / 180));
+      else
+        coord.X = 10 - (int)(rayon * -Math.Sin(Math.PI * degree / 180)) - 1;
+
+      coord.Y = 19 - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
+
+      return coord.CheckCoord();
     }
   }
 }

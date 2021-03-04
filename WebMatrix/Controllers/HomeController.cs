@@ -95,6 +95,10 @@ namespace WebMatrix.Controllers
 
       switch (id)
       {
+        case 0:
+          Task.Run(() => Classes.Musique.VuMeter());
+          break;
+
         case 1:
           Task.Run(() => Classes.Musique.Spectrum2(criteria));
           break;

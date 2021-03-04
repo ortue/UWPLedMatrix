@@ -244,9 +244,6 @@ namespace WebMatrix.Classes
           cycle = Util.Context.Pixels.BackGround(bg, cycle, reverse);
           Util.SetLeds();
           Util.Context.Pixels.Reset();
-
-          //using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-          //waitHandle.Wait(TimeSpan.FromMilliseconds(1));
         }
       });
     }
@@ -274,9 +271,6 @@ namespace WebMatrix.Classes
           cycle = Util.Context.Pixels.BackGround(bg, cycle);
           Util.SetLeds();
           Util.Context.Pixels.Reset();
-
-          //using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-          //waitHandle.Wait(TimeSpan.FromMilliseconds(1));
         }
       });
     }
