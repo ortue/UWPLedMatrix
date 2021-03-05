@@ -100,20 +100,24 @@ namespace WebMatrix.Controllers
           break;
 
         case 1:
-          Task.Run(() => Classes.Musique.Spectrum2(criteria));
+          Task.Run(() => Classes.Musique.Spectrum2());
           break;
 
         case 2:
-          Task.Run(() => Classes.Musique.Graph1(criteria));
+          Task.Run(() => Classes.Musique.Graph1());
           break;
 
         case 3:
-          Task.Run(() => Classes.Musique.Graph2(criteria));
+          Task.Run(() => Classes.Musique.Graph2());
           break;
 
         case 4:
-          Task.Run(() => Classes.Musique.SpectrumGraph(criteria));
+          Task.Run(() => Classes.Musique.SpectrumGraph());
           break;
+
+        //case 5:
+        //  Task.Run(() => Classes.Musique.Test1());
+        //  break;
       }
 
       ViewBag.CmbAmplitude = criteria.CmbAmplitude;
