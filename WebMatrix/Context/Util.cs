@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.ServiceModel.Syndication;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
@@ -22,6 +24,7 @@ namespace WebMatrix.Context
     public static current Meteo { get; set; }
     public static TaskGoList TaskGo { get; set; }
     public static string LastAutoRun { get; set; }
+    public static string Musique { get; set; }
     public static List<string> Nouvelles { get; set; }
 
     public static string NouvelleStr
@@ -200,6 +203,44 @@ namespace WebMatrix.Context
       }
 
       return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+    }
+
+    /// <summary>
+    /// GetMusiqueAsync
+    /// </summary>
+    public static async void GetMusiqueAsync()
+    {
+      using Task<string> task = new Task<string>(GetMusique);
+      task.Start();
+      Musique = await task;
+    }
+
+    /// <summary>
+    /// GetMusique
+    /// </summary>
+    /// <returns></returns>
+    public static string GetMusique()
+    {
+      HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://pc-musique:8080/jsonrpc");
+      httpWebRequest.ContentType = "application/json";
+      httpWebRequest.Method = "POST";
+
+      using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+      {
+        string json = "{\"jsonrpc\": \"2.0\",\"method\": \"Player.GetItem\",\"params\": { \"properties\": [\"title\",\"album\",\"artist\",\"duration\"],\"playerid\": 0},\"id\": \"AudioGetItem\"} ";
+        streamWriter.Write(json);
+      }
+
+      HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+      using StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream());
+      MusiqueJSONRoot root = JsonSerializer.Deserialize<MusiqueJSONRoot>(streamReader.ReadToEnd());
+
+      string artist = string.Empty;
+
+      if (root.result.item.artist != null && root.result.item.artist[0] != null)
+        artist = root.result.item.artist[0];
+
+      return RemoveDiacritics(artist + " - " + root.result.item.title).ToUpper();
     }
   }
 }

@@ -155,6 +155,10 @@ namespace WebMatrix.Controllers
         case 5:
           Classes.Temps.LoremBarnak();
           break;
+
+        case 6:
+          Classes.Temps.Musique();
+          break;
       }
 
       return View();

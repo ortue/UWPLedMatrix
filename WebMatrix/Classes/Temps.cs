@@ -218,6 +218,55 @@ namespace WebMatrix.Classes
     }
 
     /// <summary>
+    /// Musique
+    /// </summary>
+    public static void Musique()
+    {
+      Util.Setup();
+
+      Task.Run(() =>
+      {
+        int largeur = 0;
+        int debut = -20;
+        int task = Util.StartTask();
+        CaractereList caracteres = new CaractereList(20);
+        Util.GetMusiqueAsync();
+        decimal cycle = 0;
+        Random r = new Random();
+        int bg = r.Next(1, Util.Context.Pixels.NbrBackground);
+        bool reverse = r.Next(0, 2) == 1;
+
+        if (bg == 3 && reverse)
+          reverse = false;
+
+        while (Util.TaskWork(task))
+        {
+          //Reset après avoir défiler tout le texte
+          if (!string.IsNullOrWhiteSpace(Util.Musique) && largeur < debut++)
+          {
+            debut = -20;
+            Util.GetMusiqueAsync();
+          }
+
+          largeur = caracteres.SetText(Util.Musique);
+          //Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut), Heure);
+
+          Couleur couleur = Couleur.Get(64, 0, 0);
+          Util.Context.Pixels.Print(caracteres.GetCaracteres(debut), 0, 1, Couleur.Get(32, 32, 127));
+          Util.Context.Pixels.Print(DateTime.Now.ToString("MM-dd"), 1, 7, couleur);
+          Util.Context.Pixels.Print(Heure, 2, 13, couleur);
+          cycle = Util.Context.Pixels.BackGround(bg, cycle, reverse);
+
+          Util.SetLeds();
+          Util.Context.Pixels.Reset();
+
+          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+          waitHandle.Wait(TimeSpan.FromMilliseconds(50));
+        }
+      });
+    }
+
+    /// <summary>
     /// Date
     /// </summary>
     public static void Date()
