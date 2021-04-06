@@ -221,26 +221,34 @@ namespace WebMatrix.Context
     /// <returns></returns>
     public static string GetMusique()
     {
-      HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://pc-musique:8080/jsonrpc");
-      httpWebRequest.ContentType = "application/json";
-      httpWebRequest.Method = "POST";
-
-      using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+      try
       {
-        string json = "{\"jsonrpc\": \"2.0\",\"method\": \"Player.GetItem\",\"params\": { \"properties\": [\"title\",\"album\",\"artist\",\"duration\"],\"playerid\": 0},\"id\": \"AudioGetItem\"} ";
-        streamWriter.Write(json);
+
+        HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://pc-musique:8080/jsonrpc");
+        httpWebRequest.ContentType = "application/json";
+        httpWebRequest.Method = "POST";
+
+        using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+        {
+          string json = "{\"jsonrpc\": \"2.0\",\"method\": \"Player.GetItem\",\"params\": { \"properties\": [\"title\",\"album\",\"artist\",\"duration\"],\"playerid\": 0},\"id\": \"AudioGetItem\"} ";
+          streamWriter.Write(json);
+        }
+
+        HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+        using StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream());
+        MusiqueJSONRoot root = JsonSerializer.Deserialize<MusiqueJSONRoot>(streamReader.ReadToEnd());
+
+        string artist = string.Empty;
+
+        if (root.result.item.artist != null && root.result.item.artist[0] != null)
+          artist = root.result.item.artist[0] + " - ";
+
+        return RemoveDiacritics(artist + root.result.item.title).ToUpper();
       }
-
-      HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-      using StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream());
-      MusiqueJSONRoot root = JsonSerializer.Deserialize<MusiqueJSONRoot>(streamReader.ReadToEnd());
-
-      string artist = string.Empty;
-
-      if (root.result.item.artist != null && root.result.item.artist[0] != null)
-        artist = root.result.item.artist[0];
-
-      return RemoveDiacritics(artist + " - " + root.result.item.title).ToUpper();
+      catch (Exception ex)
+      {
+        return ex.ToString().ToUpper();
+      }
     }
   }
 }

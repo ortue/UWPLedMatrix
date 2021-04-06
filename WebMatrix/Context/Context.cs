@@ -36,6 +36,7 @@ namespace WebMatrix.Context
     /// <summary>
     /// Constructeur
     /// </summary>
+    /// 
     public LedMatrixContext()
     {
       if (Environment.MachineName != "PC-BENOIT")

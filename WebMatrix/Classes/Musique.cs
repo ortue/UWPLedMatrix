@@ -1,5 +1,4 @@
-﻿using LedLibrary.Classes;
-using LedLibrary.Collection;
+﻿using LedLibrary.Collection;
 using LedLibrary.Entities;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
@@ -34,7 +33,7 @@ namespace WebMatrix.Classes
           fft[i] = (audioBuffer[i] - 128) * 0.78125;
 
         double max = fft.Max(a => Math.Abs(a));
-        double amplitude = ((101 - max) / 100) * 5;
+        double amplitude = ((101 - max) / 100) * 2.5;
 
         for (int i = 0; i < audioBuffer.Length; i++)
           fft[i] = (audioBuffer[i] - 128) * amplitude;
@@ -183,7 +182,7 @@ namespace WebMatrix.Classes
         double amplitude = ((101 - max) / 100) * 0.5;
 
         for (int i = 0; i < audioBuffer.Length; i++)
-          fft[i] = (audioBuffer[i] - 128) * amplitude;//criteria.AmplitudeGraph;
+          fft[i] = (audioBuffer[i] - 128) * amplitude;
 
         for (int x = 0; x < Util.Context.Largeur; x++)
         {
@@ -197,7 +196,7 @@ namespace WebMatrix.Classes
         }
 
         for (int i = 0; i < audioBuffer.Length; i++)
-          fft[i] = (audioBuffer[i] - 128) * (amplitude * 10);
+          fft[i] = (audioBuffer[i] - 128) * (amplitude * 5);
 
         byte[] fftData = new byte[fft.Length];
 

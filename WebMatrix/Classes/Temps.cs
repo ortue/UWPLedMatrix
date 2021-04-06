@@ -236,20 +236,22 @@ namespace WebMatrix.Classes
         int bg = r.Next(1, Util.Context.Pixels.NbrBackground);
         bool reverse = r.Next(0, 2) == 1;
 
+        DateTime refresh = DateTime.Now;
+
         if (bg == 3 && reverse)
           reverse = false;
 
         while (Util.TaskWork(task))
         {
           //Reset après avoir défiler tout le texte
-          if (!string.IsNullOrWhiteSpace(Util.Musique) && largeur < debut++)
+          if (refresh >= DateTime.Now.AddSeconds(10) || largeur < debut++)
           {
             debut = -20;
             Util.GetMusiqueAsync();
+            refresh = DateTime.Now;
           }
 
           largeur = caracteres.SetText(Util.Musique);
-          //Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut), Heure);
 
           Couleur couleur = Couleur.Get(64, 0, 0);
           Util.Context.Pixels.Print(caracteres.GetCaracteres(debut), 0, 1, Couleur.Get(32, 32, 127));
