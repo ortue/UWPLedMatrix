@@ -326,4 +326,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="C:\Users\Benoit Vendette\.nuget\packages\fftw.net\1.0.1\build\netstandard1.3\libfftw3-3-x64.dll" />
+  </ItemGroup>
+
 </Project>

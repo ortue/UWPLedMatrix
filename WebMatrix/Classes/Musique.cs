@@ -399,6 +399,126 @@ namespace WebMatrix.Classes
       return coord.CheckCoord();
     }
 
+    /// <summary>
+    /// Spectrum3
+    /// </summary>
+    public static void Spectrum3()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+      byte[] audioBuffer = new byte[256];
+      using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 8000, ALFormat.Mono8, audioBuffer.Length);
+      audioCapture.Start();
+
+      while (Util.TaskWork(task))
+      {
+        audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
+
+        double[] fft = new double[audioBuffer.Length];
+
+        for (int i = 0; i < audioBuffer.Length; i++)
+          fft[i] = (audioBuffer[i] - 128);
+
+        //Graph(audioBuffer, fft);
+        Spectrum(audioBuffer, fft, 0.15);
+
+        Util.SetLeds();
+
+        for (int x = 0; x < Util.Context.Largeur; x++)
+          if (Util.Context.Pixels.Where(p => p.Coord.X == x && !p.Couleur.IsNoir).OrderBy(p => p.Coord.Y).FirstOrDefault() is Pixel pixel)
+            pixel.Couleur = Couleur.Noir;
+      }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="audioBuffer"></param>
+    /// <param name="fft"></param>
+    private static void Graph(byte[] audioBuffer, double[] fft)
+    {
+      double max = fft.Max(a => Math.Abs(a));
+      double amplitude = ((101 - max) / 100) * 0.5;
+
+      for (int i = 0; i < audioBuffer.Length; i++)
+        fft[i] = (audioBuffer[i] - 128) * amplitude;
+
+      for (int x = 0; x < Util.Context.Largeur; x++)
+      {
+        int y = (int)(fft[x * 2]) + 10;
+        byte red = (byte)Math.Abs(fft[x * 2] * 11);
+
+        if (Util.Context.Pixels.GetCoordonnee(x, y) is Pixel pixel)
+          pixel.Set(red, 0, 127 - red);
+      }
+    }
+
+    /// <summary>
+    /// Spectrum
+    /// </summary>
+    /// <param name="audioBuffer"></param>
+    /// <param name="fft"></param>
+    private static void Spectrum(byte[] audioBuffer, double[] fft, double amplitude)
+    {
+      LomFFT LomFFT = new LomFFT();
+      LomFFT.RealFFT(fft, true);
+
+      float[] fftData = new float[audioBuffer.Length / 2];
+      double lengthSqrt = Math.Sqrt(audioBuffer.Length);
+
+      for (int j = 0; j < audioBuffer.Length / 2; j++)
+      {
+        double re = fft[2 * j] * lengthSqrt;
+        double img = fft[2 * j + 1] * lengthSqrt;
+
+        // do the Abs calculation and add with Math.Sqrt(audio_data.Length);
+        // i.e. the magnitude spectrum
+        fftData[j] = (float)(Math.Sqrt(re * re + img * img) * amplitude);
+      }
+
+      int xx = 0;
+      int step = (fftData.Length / Util.Context.Largeur);
+
+      for (int x = 0; x < fftData.Length - step; x += step)
+      {
+        double moyenne = 0;
+
+        for (int i = x; i < x + step; i++)
+          moyenne += fftData[i];
+
+        //Calcul du restant a droite
+        if (xx == 19)
+          for (int i = x + step; i < fftData.Count(); i++)
+            moyenne += fftData[i];
+
+        double yMax = moyenne / step * Ajustement(xx);
+
+        for (int y = 0; y < Util.Context.Hauteur; y++)
+          if (y < Math.Ceiling(yMax))
+            if (Util.Context.Pixels.GetCoordonnee(xx, 19 - y) is Pixel pixel)
+              pixel.Set(y * 5, 0, (19 - y) * 5);
+
+        xx++;
+      }
+    }
+
+    /// <summary>
+    /// Ajustement
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    private static double Ajustement(int x)
+    {
+      return x switch
+      {
+        0 => 0.5,
+        1 => 0.7,
+        3 => 0.9,
+        _ => 1,
+      };
+    }
+
 
     //public static void Test1()
     //{

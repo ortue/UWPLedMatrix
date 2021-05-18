@@ -88,6 +88,12 @@ namespace WebMatrix.Controllers
       return View();
     }
 
+    /// <summary>
+    /// Musique
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="criteria"></param>
+    /// <returns></returns>
     public IActionResult Musique(int? id, Criteria criteria)
     {
       if (id != null)
@@ -115,9 +121,9 @@ namespace WebMatrix.Controllers
           Task.Run(() => Classes.Musique.SpectrumGraph());
           break;
 
-        //case 5:
-        //  Task.Run(() => Classes.Musique.Test1());
-        //  break;
+        case 5:
+          Task.Run(() => Classes.Musique.Spectrum3());
+          break;
       }
 
       ViewBag.CmbAmplitude = criteria.CmbAmplitude;
