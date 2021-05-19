@@ -1,4 +1,6 @@
-﻿namespace LedLibrary.Classes
+﻿using System;
+
+namespace LedLibrary.Classes
 {
   public class Criteria
   {
@@ -15,33 +17,18 @@
       set { _cmbStroboscope = value; }
     }
 
-    private float _cmbAmplitude;
-    public float CmbAmplitude
+    public static bool AffHeure { get; set; }
+    public static bool AffTitre { get; set; }
+    public string BtnHeure { get; set; }
+    public string BtnTitre { get; set; }
+
+    public void SetBtn()
     {
-      get
-      {
-        if (_cmbAmplitude == 0)
-          return 1f;
+      if (BtnHeure == "Heure")
+        AffHeure = !AffHeure;
 
-        return _cmbAmplitude;
-      }
-      set { _cmbAmplitude = value; }
-    }
-
-    public float AmplitudeSpectrum
-    {
-      get { return CmbAmplitude; }
-    }
-
-    public float AmplitudeGraph
-    {
-      get
-      {
-        if (CmbAmplitude > 2)
-          return 2f / 3f;
-
-        return CmbAmplitude / 3f;
-      }
+      if (BtnTitre == "Titre")
+        AffTitre = !AffTitre;
     }
   }
 }

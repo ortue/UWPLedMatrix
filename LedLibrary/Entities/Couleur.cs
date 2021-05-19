@@ -22,6 +22,21 @@ namespace LedLibrary.Entities
       get { return new Couleur(); }
     }
 
+    public bool IsRouge
+    {
+      get { return R > 0 && G == 0 && B == 0; }
+    }
+
+    public static Couleur Rouge
+    {
+      get { return new Couleur { R = 127 }; }
+    }
+
+    public static Couleur RougePale
+    {
+      get { return new Couleur { R = 15 }; }
+    }
+
     /// <summary>
     /// Rnd
     /// </summary>

@@ -99,34 +99,38 @@ namespace WebMatrix.Controllers
       if (id != null)
         Util.Autorun = false;
 
+      criteria.SetBtn();
+
       switch (id)
       {
         case 0:
-          Task.Run(() => Classes.Musique.VuMeter());
+          Task.Run(() => Classes.Musique.Spectrum());
           break;
 
         case 1:
-          Task.Run(() => Classes.Musique.Spectrum2());
+          Task.Run(() => Classes.Musique.Graph(criteria));
           break;
 
         case 2:
-          Task.Run(() => Classes.Musique.Graph1());
+          Task.Run(() => Classes.Musique.VuMeter());
           break;
 
         case 3:
-          Task.Run(() => Classes.Musique.Graph2());
-          break;
-
-        case 4:
-          Task.Run(() => Classes.Musique.SpectrumGraph());
-          break;
-
-        case 5:
-          Task.Run(() => Classes.Musique.Spectrum3());
+          Task.Run(() => Classes.Musique.Spectrograph());
           break;
       }
 
-      ViewBag.CmbAmplitude = criteria.CmbAmplitude;
+      ViewBag.id = id;
+
+      if (Criteria.AffHeure)
+        ViewBag.AffHeure = "btn-info";
+      else
+        ViewBag.AffHeure = "btn-secondary";
+
+      if (Criteria.AffTitre)
+        ViewBag.AffTitre = "btn-info";
+      else
+        ViewBag.AffTitre = "btn-secondary";
 
       return View();
     }
