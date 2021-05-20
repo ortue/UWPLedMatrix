@@ -165,7 +165,7 @@ namespace LedLibrary.Collection
     {
       for (int y = -3; y < 19; y++)
         for (int x = 2; x < 12; x++)
-          if (this.SingleOrDefault(t => t.X == x && t.Y == y && t.TestScore) is TetrisPiece piece)
+          if (Find(t => t.X == x && t.Y == y && t.TestScore) is TetrisPiece piece)
             Remove(piece);
     }
 

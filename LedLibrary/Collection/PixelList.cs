@@ -252,7 +252,7 @@ namespace LedLibrary.Collection
     /// <returns></returns>
     public Pixel GetCoordonnee(int x, int y)
     {
-      return this.SingleOrDefault(p => p.Coord.X == x && p.Coord.Y == y);
+      return Find(p => p.Coord.X == x && p.Coord.Y == y);
     }
 
     /// <summary>
@@ -279,7 +279,7 @@ namespace LedLibrary.Collection
       if (yy < 0)
         yy = 0;
 
-      return this.SingleOrDefault(p => p.Coord.X == xx && p.Coord.Y == yy);
+      return Find(p => p.Coord.X == xx && p.Coord.Y == yy);
     }
 
     /// <summary>
@@ -289,7 +289,7 @@ namespace LedLibrary.Collection
     /// <returns></returns>
     public Pixel GetCoordonnee(Coordonnee coordonnee)
     {
-      return this.SingleOrDefault(p => p.Coord.X == coordonnee.X && p.Coord.Y == coordonnee.Y);
+      return Find(p => p.Coord.X == coordonnee.X && p.Coord.Y == coordonnee.Y);
     }
 
     /// <summary>

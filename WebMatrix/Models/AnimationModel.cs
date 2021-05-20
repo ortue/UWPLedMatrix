@@ -56,7 +56,7 @@ namespace WebMatrix.Models
     /// <param name="imageClass"></param>
     private void ShowAnimation()
     {
-      if (Animations.SingleOrDefault(a => a.FileNameID == FileNameID) is ImageClass imageClass)
+      if (Animations.Find(a => a.FileNameID == FileNameID) is ImageClass imageClass)
       {
         Util.Setup();
 
@@ -66,7 +66,7 @@ namespace WebMatrix.Models
           int frame = 0;
 
           //Fade Out
-          if (Animations.SingleOrDefault(a => a.FileNameID == Util.LastAutoRun) is ImageClass lastAutoRun)
+          if (Animations.Find(a => a.FileNameID == Util.LastAutoRun) is ImageClass lastAutoRun)
             for (int slide = 0; slide < lastAutoRun.Width; slide++)
               SetAnimation(lastAutoRun, frame++, slide, true);
 

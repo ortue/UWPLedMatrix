@@ -108,7 +108,7 @@ namespace WebMatrix.Controllers
           break;
 
         case 1:
-          Task.Run(() => Classes.Musique.Graph(criteria));
+          Task.Run(() => Classes.Musique.Graph());
           break;
 
         case 2:

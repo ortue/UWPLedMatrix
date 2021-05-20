@@ -22,12 +22,12 @@ namespace LedLibrary.Collection
 
     private bool Obstacle
     {
-      get { return this.SingleOrDefault(l => l.X == X + DX && l.Y == Y + DY && l.Mur) != null; }
+      get { return Find(l => l.X == X + DX && l.Y == Y + DY && l.Mur) != null; }
     }
 
     private bool Intersection
     {
-      get { return this.SingleOrDefault(l => l.X == X && l.Y == Y && l.Intersection) != null; }
+      get { return Find(l => l.X == X && l.Y == Y && l.Intersection) != null; }
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ namespace LedLibrary.Collection
     /// </summary>
     public void SetCheminParcouru()
     {
-      if (this.SingleOrDefault(l => l.X == X && l.Y == Y) is Labyrinthe labyrinthe)
+      if (Find(l => l.X == X && l.Y == Y) is Labyrinthe labyrinthe)
         labyrinthe.CheminParcouru++;
     }
 
@@ -127,28 +127,28 @@ namespace LedLibrary.Collection
 
       LabyrintheList labyrinthes = new LabyrintheList();
 
-      if (this.SingleOrDefault(l => l.X == X - 1 && l.Y == Y && l.Chemin) is Labyrinthe l1)
+      if (Find(l => l.X == X - 1 && l.Y == Y && l.Chemin) is Labyrinthe l1)
       {
         l1.DX = -1;
         l1.DY = 0;
         labyrinthes.Add(l1);
       }
 
-      if (this.SingleOrDefault(l => l.X == X + 1 && l.Y == Y && l.Chemin) is Labyrinthe l2)
+      if (Find(l => l.X == X + 1 && l.Y == Y && l.Chemin) is Labyrinthe l2)
       {
         l2.DX = 1;
         l2.DY = 0;
         labyrinthes.Add(l2);
       }
 
-      if (this.SingleOrDefault(l => l.X == X && l.Y == Y - 1 && l.Chemin) is Labyrinthe l3)
+      if (Find(l => l.X == X && l.Y == Y - 1 && l.Chemin) is Labyrinthe l3)
       {
         l3.DX = 0;
         l3.DY = -1;
         labyrinthes.Add(l3);
       }
 
-      if (this.SingleOrDefault(l => l.X == X && l.Y == Y + 1 && l.Chemin) is Labyrinthe l4)
+      if (Find(l => l.X == X && l.Y == Y + 1 && l.Chemin) is Labyrinthe l4)
       {
         l4.DX = 0;
         l4.DY = 1;
@@ -169,7 +169,7 @@ namespace LedLibrary.Collection
     {
       for (int y = 2; y < Hauteur; y++)
         for (int x = 2; x < Largeur; x++)
-          if (this.SingleOrDefault(l => l.X == x && l.Y == y) == null)
+          if (Find(l => l.X == x && l.Y == y) == null)
             AddNew(x, y, false);
 
       foreach (Labyrinthe labyrinthe in this.Where(l => l.Chemin))

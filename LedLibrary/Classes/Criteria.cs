@@ -17,13 +17,32 @@ namespace LedLibrary.Classes
       set { _cmbStroboscope = value; }
     }
 
+    public static bool Spectrum { get; set; }
     public static bool AffHeure { get; set; }
     public static bool AffTitre { get; set; }
     public string BtnHeure { get; set; }
     public string BtnTitre { get; set; }
 
+    public static int CycleMod
+    {
+      get
+      {
+        int cycleMod = 12;
+
+        if (AffHeure)
+          cycleMod -= 2;
+
+        if (Spectrum)
+          cycleMod -= 3;
+
+        return cycleMod;
+      }
+    }
+
     public void SetBtn()
     {
+      Spectrum = false;
+
       if (BtnHeure == "Heure")
         AffHeure = !AffHeure;
 

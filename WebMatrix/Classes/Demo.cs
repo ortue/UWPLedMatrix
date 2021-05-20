@@ -213,6 +213,9 @@ namespace WebMatrix.Classes
 
         cercles.SetDegree(9);
         Util.SetLeds();
+
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(8));
       }
     }
 
@@ -259,7 +262,7 @@ namespace WebMatrix.Classes
             if (Cercle(degree, cercle.Rayon, cercle.X, cercle.Y) is Coordonnee coord)
               Util.Context.Pixels.GetCoordonnee(coord).SetColor(cercle.Couleur);
 
-        cercles.SetRayon(0.5, i++ % 2000 > 1000);
+        cercles.SetRayon(0.3, i++ % 2000 > 1000);
 
         Util.SetLeds();
       }
@@ -389,6 +392,9 @@ namespace WebMatrix.Classes
         cycle = Util.Context.Pixels.Plasma(127, cycle);
         Util.SetLeds();
         Util.Context.Pixels.Reset();
+
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(2));
       }
     }
 

@@ -32,6 +32,11 @@ namespace LedLibrary.Entities
       get { return new Couleur { R = 127 }; }
     }
 
+    //public static Couleur RougeMoyen
+    //{
+    //  get { return new Couleur { R = 31 }; }
+    //}
+
     public static Couleur RougePale
     {
       get { return new Couleur { R = 15 }; }

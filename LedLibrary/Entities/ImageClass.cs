@@ -147,13 +147,13 @@ namespace LedLibrary.Entities
         if (fadeOut)
         {
           if (couleur.Position % Width >= slide) // Pour faire l'effet du slide vers la gauche
-            if (pixels.SingleOrDefault(p => p.Position == couleur.Position + pixelOffset - slide) is Pixel pixel)
+            if (pixels.Find(p => p.Position == couleur.Position + pixelOffset - slide) is Pixel pixel)
               pixel.Couleur = couleur;
         }
         else
         {
           if (couleur.Position % Width < Width - slide) // Pour faire l'effet du slide de la droite
-            if (pixels.SingleOrDefault(p => p.Position == couleur.Position + pixelOffset + slide) is Pixel pixel)
+            if (pixels.Find(p => p.Position == couleur.Position + pixelOffset + slide) is Pixel pixel)
               pixel.Couleur = couleur;
         }
 

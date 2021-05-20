@@ -229,7 +229,7 @@ namespace WebMatrix.Classes
         int largeur = 0;
         int debut = -20;
         int task = Util.StartTask();
-        CaractereList caracteres = new CaractereList(20);
+        CaractereList caracteres = new CaractereList(Util.Context.Largeur);
         Util.GetMusiqueAsync();
         decimal cycle = 0;
         Random r = new Random();
@@ -342,15 +342,23 @@ namespace WebMatrix.Classes
     /// <param name="filename"></param>
     private static void RadioCanadaIcon(string filename)
     {
-      if (new ImageClassList("Images").SingleOrDefault(a => a.FileNameID == filename) is ImageClass imageClass)
+      if (new ImageClassList("Images").Find(a => a.FileNameID == filename) is ImageClass imageClass)
       {
+        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+
         //Fade In
         for (int slide = imageClass.Width; slide >= 0; slide--)
+        {
           SetAnimation(imageClass, 0, slide);
+          waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+        }
 
         //Fade Out
         for (int slide = 0; slide < imageClass.Width; slide++)
+        {
           SetAnimation(imageClass, 0, slide, true);
+          waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+        }
       }
     }
 

@@ -295,13 +295,13 @@ namespace WebMatrix.Classes
       int task = Util.StartTask();
       LabyrintheList labyrinthes = SetLabyrinthe();
       decimal cycle = 0;
+      using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
 
       while (Util.TaskWork(task))
       {
         if (labyrinthes.Complet)
         {
           labyrinthes = SetLabyrinthe();
-          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
           waitHandle.Wait(TimeSpan.FromMilliseconds(500));
         }
 
@@ -315,12 +315,14 @@ namespace WebMatrix.Classes
 
         cycle = Util.Context.Pixels.BackGround(4, cycle, true);
         Util.Context.Pixels.GetCoordonnee(labyrinthes.X, labyrinthes.Y).SetColor(Couleur.Get(127, 127, 127));
-        labyrinthes.Mouvement();
+
+        if (cycle % 2 == 0)
+          labyrinthes.Mouvement();
 
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        //waitHandle.Wait(TimeSpan.FromMilliseconds(50));
+        //waitHandle.Wait(TimeSpan.FromMilliseconds(25));
       }
     }
 

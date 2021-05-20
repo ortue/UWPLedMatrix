@@ -138,7 +138,7 @@ namespace WebMatrix.Classes
       X = 10;
       Y = 10;
 
-      Vitesse = 40;
+      Vitesse = 50;
 
       ScoreP1 = 0;
       ScoreP2 = 0;

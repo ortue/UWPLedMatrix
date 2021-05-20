@@ -60,7 +60,7 @@ namespace WebMatrix.Context
     /// <returns></returns>
     public static bool TaskWork(int id)
     {
-      return TaskGo.SingleOrDefault(t => t.ID == id)?.Work ?? false;
+      return TaskGo.Find(t => t.ID == id)?.Work ?? false;
     }
 
     /// <summary>
