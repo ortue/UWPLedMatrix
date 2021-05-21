@@ -91,7 +91,7 @@ namespace WebMatrix.Classes
 
       while (Util.TaskWork(task))
       {
-        max -= 1;
+        max -= 0.5;
 
         double[] fft = Capture(audioCapture, audioBuffer);
 
@@ -399,7 +399,7 @@ namespace WebMatrix.Classes
       if (Criteria.AffHeure)
       {
         foreach (Pixel pixel in Util.Context.Pixels.Where(p => p.Couleur.IsRouge && p.Coord.Y > 12))
-        pixel.Couleur = Couleur.Noir;
+          pixel.Couleur = Couleur.Noir;
 
         CaractereList textes = new CaractereList(Util.Context.Largeur);
         textes.SetText(Temps.Heure);
@@ -462,31 +462,107 @@ namespace WebMatrix.Classes
         fftData[j] = (float)(Math.Sqrt(re * re + img * img) * amplitude);
       }
 
-      int xx = 0;
-      int step = (fftData.Length / Util.Context.Largeur);
-
-      for (int x = 0; x < fftData.Length - step; x += step)
+      for (int x = 0; x < Util.Context.Largeur; x++)
       {
-        double moyenne = 0;
+        double yMax = x switch
+        {
+          0 => fftData[x] * 0.5 - 3,
+          1 => fftData[x] * 0.6 - 1,
+          2 => fftData[x] * 0.7 - 1,
 
-        for (int i = x; i < x + step; i++)
-          moyenne += fftData[i];
+          11 => fftData.Skip(10).Take(3).Average() - 1,
+          12 => fftData.Skip(13).Take(5).Average() - 1,
+          13 => fftData.Skip(18).Take(7).Average() - 1,
+          14 => fftData.Skip(25).Take(9).Average() - 1,
+          15 => fftData.Skip(34).Take(11).Average() - 1,
+          16 => fftData.Skip(45).Take(13).Average() * 1.5 - 1,
+          17 => fftData.Skip(58).Take(17).Average() * 2 - 1,
+          18 => fftData.Skip(75).Take(22).Average() * 3 - 1,
+          19 => fftData.Skip(97).Take(30).Average() * 4 - 1,
 
-        //Calcul du restant a droite
-        if (xx == 19)
-          for (int i = x + step; i < fftData.Count(); i++)
-            moyenne += fftData[i];
-
-        double yMax = moyenne / step * Ajustement(xx);
+          _ => fftData[x] * 0.8 - 1
+        };
 
         for (int y = 0; y < Util.Context.Hauteur; y++)
           if (y < Math.Ceiling(yMax))
-            if (Util.Context.Pixels.GetCoordonnee(xx, 19 - y) is Pixel pixel)
+            if (Util.Context.Pixels.GetCoordonnee(x, 19 - y) is Pixel pixel)
               pixel.Set(y * 5, 0, (20 - y) * 5);
-
-        xx++;
       }
+
+
+
+
+      //int xx = 0;
+      //int step = (fftData.Length / Util.Context.Largeur);
+
+      //for (int x = 0; x < fftData.Length - step; x += step)
+      //{
+      //  double moyenne = 0;
+
+      //  for (int i = x; i < x + step; i++)
+      //    moyenne += fftData[i];
+
+
+
+      //  double yMax = moyenne / step * Ajustement(xx);
+
+      //  for (int y = 0; y < Util.Context.Hauteur; y++)
+      //    if (y < Math.Ceiling(yMax))
+      //      if (Util.Context.Pixels.GetCoordonnee(xx, 19 - y) is Pixel pixel)
+      //        pixel.Set(y * 5, 0, (20 - y) * 5);
+
+      //  xx++;
+      //}
     }
+
+    ///// <summary>
+    ///// Spectrum
+    ///// </summary>
+    ///// <param name="audioBuffer"></param>
+    ///// <param name="fft"></param>
+    //private static void Spectrum(byte[] audioBuffer, double[] fft, double amplitude)
+    //{
+    //  LomFFT LomFFT = new LomFFT();
+    //  LomFFT.RealFFT(fft, true);
+
+    //  float[] fftData = new float[audioBuffer.Length / 2];
+    //  double lengthSqrt = Math.Sqrt(audioBuffer.Length);
+
+    //  for (int j = 0; j < audioBuffer.Length / 2; j++)
+    //  {
+    //    double re = fft[2 * j] * lengthSqrt;
+    //    double img = fft[2 * j + 1] * lengthSqrt;
+
+    //    // do the Abs calculation and add with Math.Sqrt(audio_data.Length);
+    //    // i.e. the magnitude spectrum
+    //    fftData[j] = (float)(Math.Sqrt(re * re + img * img) * amplitude);
+    //  }
+
+    //  int xx = 0;
+    //  int step = (fftData.Length / Util.Context.Largeur);
+
+    //  for (int x = 0; x < fftData.Length - step; x += step)
+    //  {
+    //    double moyenne = 0;
+
+    //    for (int i = x; i < x + step; i++)
+    //      moyenne += fftData[i];
+
+    //    //Calcul du restant a droite
+    //    if (xx == 19)
+    //      for (int i = x + step; i < fftData.Count(); i++)
+    //        moyenne += fftData[i];
+
+    //    double yMax = moyenne / step * Ajustement(xx);
+
+    //    for (int y = 0; y < Util.Context.Hauteur; y++)
+    //      if (y < Math.Ceiling(yMax))
+    //        if (Util.Context.Pixels.GetCoordonnee(xx, 19 - y) is Pixel pixel)
+    //          pixel.Set(y * 5, 0, (20 - y) * 5);
+
+    //    xx++;
+    //  }
+    //}
 
     /// <summary>
     /// Ajustement
@@ -500,7 +576,7 @@ namespace WebMatrix.Classes
         0 => 0.5,
         1 => 0.7,
         3 => 0.9,
-        _ => 1,
+        _ => 1
       };
     }
   }
