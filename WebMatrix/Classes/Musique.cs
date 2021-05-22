@@ -29,9 +29,12 @@ namespace WebMatrix.Classes
       while (Util.TaskWork(task))
       {
         double[] fft = Capture(audioCapture, audioBuffer);
-        Spectrum(audioBuffer, fft, 0.15);
+        float[] fftData = SetFFT(audioBuffer, fft);
+
+        Spectrum(fftData, 0.05);
         debut = AffTitre(cycle, debut);
         AffHeure();
+
         Util.SetLeds();
 
         Spectrum(cycle++);
@@ -254,7 +257,9 @@ namespace WebMatrix.Classes
       while (Util.TaskWork(task))
       {
         double[] fft = Capture(audioCapture, audioBuffer);
-        Spectrograph(audioBuffer, fft);
+        float[] fftData = SetFFT(audioBuffer, fft);
+
+        Spectrograph(fftData);
         Spectrograph(cycle++);
         Util.SetLeds();
       }
@@ -280,10 +285,10 @@ namespace WebMatrix.Classes
     /// <summary>
     /// Spectrograph Défillement
     /// </summary>
-    /// <param name="spectrographArray"></param>
+    /// <param name="cycle"></param>
     private static void Spectrograph(int cycle)
     {
-      if (cycle % 8 == 0)
+      if (cycle % 6 == 0)
         for (int x = 0; x < Util.Context.Largeur - 1; x++)
           for (int y = 0; y < Util.Context.Hauteur; y++)
             if (Util.Context.Pixels.GetCoordonnee(x, y) is Pixel pixel)
@@ -296,40 +301,11 @@ namespace WebMatrix.Classes
     /// </summary>
     /// <param name="audioBuffer"></param>
     /// <param name="fft"></param>
-    private static void Spectrograph(byte[] audioBuffer, double[] fft)
+    private static void Spectrograph(float[] fftData)
     {
-      LomFFT LomFFT = new LomFFT();
-      LomFFT.RealFFT(fft, true);
-
-      float[] fftData = new float[audioBuffer.Length / 2];
-      double lengthSqrt = Math.Sqrt(audioBuffer.Length);
-
-      for (int j = 0; j < audioBuffer.Length / 2; j++)
+      for (int y = 0; y < Util.Context.Hauteur; y++)
       {
-        double re = fft[2 * j] * lengthSqrt;
-        double img = fft[2 * j + 1] * lengthSqrt;
-
-        // do the Abs calculation and add with Math.Sqrt(audio_data.Length);
-        // i.e. the magnitude spectrum
-        fftData[j] = (float)Math.Sqrt(re * re + img * img);
-      }
-
-      int yy = 0;
-      int step = fftData.Length / Util.Context.Largeur;
-
-      for (int x = 0; x < fftData.Length - step - 2; x += step)
-      {
-        double moyenne = 0;
-
-        for (int i = x; i < x + step; i++)
-          moyenne += fftData[i];
-
-        //Calcul du restant a droite
-        if (yy == 19)
-          for (int i = x + step; i < fftData.Count(); i++)
-            moyenne += fftData[i];
-
-        int volume = (int)(((moyenne / step) - 10) * Ajustement(19 - yy));
+        int volume = (int)Volume(fftData, y, 0.15);
 
         if (volume < 0)
           volume = 0;
@@ -350,10 +326,8 @@ namespace WebMatrix.Classes
           vert = (byte)(volume - 255);
         }
 
-        if (Util.Context.Pixels.GetCoordonnee(19, 19 - yy) is Pixel pixel)
+        if (Util.Context.Pixels.GetCoordonnee(19, 19 - y) is Pixel pixel)
           pixel.SetColor(Couleur.Get(rouge, vert, bleu));
-
-        yy++;
       }
     }
 
@@ -424,7 +398,7 @@ namespace WebMatrix.Classes
       audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
 
       double max = fft.Max(a => Math.Abs(a));
-      double amplitude = ((101 - max) / 100) * 0.5;
+      double amplitude = (101 - max) / 100 * 0.5;
 
       for (int i = 0; i < audioBuffer.Length; i++)
         fft[i] = (audioBuffer[i] - 128) * amplitude;
@@ -440,11 +414,14 @@ namespace WebMatrix.Classes
     }
 
     /// <summary>
-    /// Spectrum
+    /// SetFFT
+    /// do the Abs calculation and add with Math.Sqrt(audio_data.Length);
+    /// i.e. the magnitude spectrum
     /// </summary>
     /// <param name="audioBuffer"></param>
     /// <param name="fft"></param>
-    private static void Spectrum(byte[] audioBuffer, double[] fft, double amplitude)
+    /// <returns></returns>
+    private static float[] SetFFT(byte[] audioBuffer, double[] fft)
     {
       LomFFT LomFFT = new LomFFT();
       LomFFT.RealFFT(fft, true);
@@ -456,127 +433,89 @@ namespace WebMatrix.Classes
       {
         double re = fft[2 * j] * lengthSqrt;
         double img = fft[2 * j + 1] * lengthSqrt;
-
-        // do the Abs calculation and add with Math.Sqrt(audio_data.Length);
-        // i.e. the magnitude spectrum
-        fftData[j] = (float)(Math.Sqrt(re * re + img * img) * amplitude);
+        fftData[j] = (float)(Math.Sqrt(re * re + img * img));
       }
 
+      return fftData;
+    }
+
+    /// <summary>
+    /// Spectrum
+    /// </summary>
+    /// <param name="audioBuffer"></param>
+    /// <param name="fft"></param>
+    private static void Spectrum(float[] fftData, double amplitude)
+    {
       for (int x = 0; x < Util.Context.Largeur; x++)
       {
-        double yMax = x switch
-        {
-          0 => fftData[x] * 0.5 - 3,
-          1 => fftData[x] * 0.6 - 1,
-          2 => fftData[x] * 0.7 - 1,
-
-          11 => fftData.Skip(10).Take(3).Average() - 1,
-          12 => fftData.Skip(13).Take(5).Average() - 1,
-          13 => fftData.Skip(18).Take(7).Average() - 1,
-          14 => fftData.Skip(25).Take(9).Average() - 1,
-          15 => fftData.Skip(34).Take(11).Average() - 1,
-          16 => fftData.Skip(45).Take(13).Average() * 1.5 - 1,
-          17 => fftData.Skip(58).Take(17).Average() * 2 - 1,
-          18 => fftData.Skip(75).Take(22).Average() * 3 - 1,
-          19 => fftData.Skip(97).Take(30).Average() * 4 - 1,
-
-          _ => fftData[x] * 0.8 - 1
-        };
+        double yMax = Magnitude(fftData, x, amplitude);
 
         for (int y = 0; y < Util.Context.Hauteur; y++)
           if (y < Math.Ceiling(yMax))
             if (Util.Context.Pixels.GetCoordonnee(x, 19 - y) is Pixel pixel)
               pixel.Set(y * 5, 0, (20 - y) * 5);
       }
-
-
-
-
-      //int xx = 0;
-      //int step = (fftData.Length / Util.Context.Largeur);
-
-      //for (int x = 0; x < fftData.Length - step; x += step)
-      //{
-      //  double moyenne = 0;
-
-      //  for (int i = x; i < x + step; i++)
-      //    moyenne += fftData[i];
-
-
-
-      //  double yMax = moyenne / step * Ajustement(xx);
-
-      //  for (int y = 0; y < Util.Context.Hauteur; y++)
-      //    if (y < Math.Ceiling(yMax))
-      //      if (Util.Context.Pixels.GetCoordonnee(xx, 19 - y) is Pixel pixel)
-      //        pixel.Set(y * 5, 0, (20 - y) * 5);
-
-      //  xx++;
-      //}
     }
 
-    ///// <summary>
-    ///// Spectrum
-    ///// </summary>
-    ///// <param name="audioBuffer"></param>
-    ///// <param name="fft"></param>
-    //private static void Spectrum(byte[] audioBuffer, double[] fft, double amplitude)
-    //{
-    //  LomFFT LomFFT = new LomFFT();
-    //  LomFFT.RealFFT(fft, true);
-
-    //  float[] fftData = new float[audioBuffer.Length / 2];
-    //  double lengthSqrt = Math.Sqrt(audioBuffer.Length);
-
-    //  for (int j = 0; j < audioBuffer.Length / 2; j++)
-    //  {
-    //    double re = fft[2 * j] * lengthSqrt;
-    //    double img = fft[2 * j + 1] * lengthSqrt;
-
-    //    // do the Abs calculation and add with Math.Sqrt(audio_data.Length);
-    //    // i.e. the magnitude spectrum
-    //    fftData[j] = (float)(Math.Sqrt(re * re + img * img) * amplitude);
-    //  }
-
-    //  int xx = 0;
-    //  int step = (fftData.Length / Util.Context.Largeur);
-
-    //  for (int x = 0; x < fftData.Length - step; x += step)
-    //  {
-    //    double moyenne = 0;
-
-    //    for (int i = x; i < x + step; i++)
-    //      moyenne += fftData[i];
-
-    //    //Calcul du restant a droite
-    //    if (xx == 19)
-    //      for (int i = x + step; i < fftData.Count(); i++)
-    //        moyenne += fftData[i];
-
-    //    double yMax = moyenne / step * Ajustement(xx);
-
-    //    for (int y = 0; y < Util.Context.Hauteur; y++)
-    //      if (y < Math.Ceiling(yMax))
-    //        if (Util.Context.Pixels.GetCoordonnee(xx, 19 - y) is Pixel pixel)
-    //          pixel.Set(y * 5, 0, (20 - y) * 5);
-
-    //    xx++;
-    //  }
-    //}
-
     /// <summary>
-    /// Ajustement
+    /// Magnitude
     /// </summary>
+    /// <param name="fftData"></param>
     /// <param name="x"></param>
+    /// <param name="amplitude"></param>
     /// <returns></returns>
-    private static double Ajustement(int x)
+    private static double Magnitude(float[] fftData, int x, double amplitude)
     {
       return x switch
       {
-        0 => 0.5,
-        1 => 0.7,
-        3 => 0.9,
-        _ => 1
+        0 => (fftData[x] - 140) * amplitude,
+
+        1 => (fftData[x] - 8) * amplitude * 0.6,
+        2 => (fftData[x] - 16) * amplitude * 0.7,
+        3 => (fftData[x] - 26) * amplitude * 0.8,
+
+        11 => (fftData.Skip(10).Take(3).Average() - 11) * amplitude,
+        12 => (fftData.Skip(13).Take(5).Average() - 11) * amplitude,
+        13 => (fftData.Skip(18).Take(7).Average() - 11) * amplitude * 2,
+        14 => (fftData.Skip(25).Take(9).Average() - 10) * amplitude * 2,
+        15 => (fftData.Skip(34).Take(11).Average() - 10) * amplitude * 2,
+        16 => (fftData.Skip(45).Take(13).Average() - 9) * amplitude * 3,
+        17 => (fftData.Skip(58).Take(17).Average() - 8) * amplitude * 4,
+        18 => (fftData.Skip(75).Take(22).Average() - 9) * amplitude * 5,
+        19 => (fftData.Skip(97).Take(30).Average() - 7) * amplitude * 6,
+
+        _ => (fftData[x] - 20) * amplitude * 0.8
+      };
+    }
+
+    /// <summary>
+    /// Magnitude
+    /// </summary>
+    /// <param name="fftData"></param>
+    /// <param name="x"></param>
+    /// <param name="amplitude"></param>
+    /// <returns></returns>
+    private static double Volume(float[] fftData, int x, double amplitude)
+    {
+      return x switch
+      {
+        0 => (fftData[x] - 100) * amplitude,
+
+        1 => (fftData[x] - 2) * amplitude,// * 0.6,
+        2 => (fftData[x] - 2) * amplitude,// * 0.7,
+        3 => (fftData[x] - 2) * amplitude,// * 0.8,
+
+        11 => (fftData.Skip(10).Take(3).Average() -2) * amplitude,
+        12 => (fftData.Skip(13).Take(5).Average() - 2) * amplitude,
+        13 => (fftData.Skip(18).Take(7).Average() - 4) * amplitude * 2,
+        14 => (fftData.Skip(25).Take(9).Average() - 4) * amplitude * 2,
+        15 => (fftData.Skip(34).Take(11).Average() - 4) * amplitude * 2,
+        16 => (fftData.Skip(45).Take(13).Average() - 4) * amplitude * 3,
+        17 => (fftData.Skip(58).Take(17).Average() - 5) * amplitude * 4,
+        18 => (fftData.Skip(75).Take(22).Average() - 6) * amplitude * 5,
+        19 => (fftData.Skip(97).Take(30).Average() - 4) * amplitude * 6,
+
+        _ => (fftData[x] - 2) * amplitude// * 0.8
       };
     }
   }
