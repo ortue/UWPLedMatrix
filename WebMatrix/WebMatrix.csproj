@@ -12,9 +12,13 @@
 
   <ItemGroup>
     <Compile Remove="MeteoImg\**" />
+    <Compile Remove="wwwroot\js\demo\**" />
     <Content Remove="MeteoImg\**" />
+    <Content Remove="wwwroot\js\demo\**" />
     <EmbeddedResource Remove="MeteoImg\**" />
+    <EmbeddedResource Remove="wwwroot\js\demo\**" />
     <None Remove="MeteoImg\**" />
+    <None Remove="wwwroot\js\demo\**" />
   </ItemGroup>
 
   <ItemGroup>
