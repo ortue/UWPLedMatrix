@@ -13,12 +13,20 @@
   <ItemGroup>
     <Compile Remove="MeteoImg\**" />
     <Compile Remove="wwwroot\js\demo\**" />
+    <Compile Remove="wwwroot\vendor\chart.js\**" />
+    <Compile Remove="wwwroot\vendor\datatables\**" />
     <Content Remove="MeteoImg\**" />
     <Content Remove="wwwroot\js\demo\**" />
+    <Content Remove="wwwroot\vendor\chart.js\**" />
+    <Content Remove="wwwroot\vendor\datatables\**" />
     <EmbeddedResource Remove="MeteoImg\**" />
     <EmbeddedResource Remove="wwwroot\js\demo\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\chart.js\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\datatables\**" />
     <None Remove="MeteoImg\**" />
     <None Remove="wwwroot\js\demo\**" />
+    <None Remove="wwwroot\vendor\chart.js\**" />
+    <None Remove="wwwroot\vendor\datatables\**" />
   </ItemGroup>
 
   <ItemGroup>
