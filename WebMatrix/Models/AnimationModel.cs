@@ -96,9 +96,13 @@ namespace WebMatrix.Models
       Util.SetLeds();
       Util.Context.Pixels.Reset();
 
-      if (slide == 0)
+      if (slide == 0 && imageClass.FrameCount < 8)
         using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-          waitHandle.Wait(TimeSpan.FromMilliseconds(60));
+          waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+
+      if (slide == 0 && imageClass.FrameCount == 12)
+        using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
+          waitHandle.Wait(TimeSpan.FromMilliseconds(10));
     }
 
     /// <summary>
