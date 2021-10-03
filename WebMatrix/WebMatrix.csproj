@@ -159,9 +159,6 @@
     <None Update="Images\Animation\JumpBlock.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\Kain-Walk-Left.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Images\Animation\KobilR.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
