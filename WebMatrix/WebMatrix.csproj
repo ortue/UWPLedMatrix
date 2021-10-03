@@ -204,9 +204,6 @@
     <None Update="Images\Animation\NettlerL.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\Animation\pj.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Images\Animation\POWD.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

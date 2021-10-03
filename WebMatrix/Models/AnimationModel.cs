@@ -102,7 +102,7 @@ namespace WebMatrix.Models
 
       if (slide == 0 && imageClass.FrameCount == 12)
         using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-          waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+          waitHandle.Wait(TimeSpan.FromMilliseconds(20));
     }
 
     /// <summary>
