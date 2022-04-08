@@ -99,7 +99,7 @@ namespace WebMatrix.Context
     {
       try
       {
-        HttpClient Client = new HttpClient() { BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather?q=Sainte-Marthe-sur-le-Lac&mode=xml&units=metric&appid=52534a6f666e45fb30ace3343cea4a47") };
+        HttpClient Client = new() { BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather?q=Sainte-Marthe-sur-le-Lac&mode=xml&units=metric&appid=52534a6f666e45fb30ace3343cea4a47") };
         Task<HttpResponseMessage> response = Client.GetAsync(Client.BaseAddress);
 
         if (response.Result.IsSuccessStatusCode)
@@ -107,7 +107,7 @@ namespace WebMatrix.Context
           string xml = response.Result.Content.ReadAsStringAsync().Result;
 
           using TextReader reader = new StringReader(xml);
-          XmlSerializer serializer = new XmlSerializer(typeof(current));
+          XmlSerializer serializer = new(typeof(current));
           return (current)serializer.Deserialize(reader);
         }
         else
@@ -125,7 +125,7 @@ namespace WebMatrix.Context
     /// </summary>
     public static async void GetMeteoAsync()
     {
-      Task<current> task = new Task<current>(GetMeteo);
+      Task<current> task = new(GetMeteo);
       task.Start();
       Meteo = await task;
     }
@@ -136,7 +136,7 @@ namespace WebMatrix.Context
     /// <returns></returns>
     public static List<string> GetNouvelle()
     {
-      List<string> nouvelles = new List<string>();
+      List<string> nouvelles = new();
 
       try
       {
@@ -184,7 +184,7 @@ namespace WebMatrix.Context
     /// </summary>
     public static async void GetNouvelleAsync()
     {
-      using Task<List<string>> task = new Task<List<string>>(GetNouvelle);
+      using Task<List<string>> task = new(GetNouvelle);
       task.Start();
       Nouvelles = await task;
     }
@@ -192,7 +192,7 @@ namespace WebMatrix.Context
     public static string RemoveDiacritics(string text)
     {
       string normalizedString = text.Normalize(NormalizationForm.FormD);
-      StringBuilder stringBuilder = new StringBuilder();
+      StringBuilder stringBuilder = new();
 
       foreach (char c in normalizedString)
       {
@@ -210,7 +210,7 @@ namespace WebMatrix.Context
     /// </summary>
     public static async void GetMusiqueAsync()
     {
-      using Task<string> task = new Task<string>(GetMusique);
+      using Task<string> task = new(GetMusique);
       task.Start();
       Musique = await task;
     }
@@ -227,14 +227,14 @@ namespace WebMatrix.Context
         httpWebRequest.ContentType = "application/json";
         httpWebRequest.Method = "POST";
 
-        using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+        using (StreamWriter streamWriter = new(httpWebRequest.GetRequestStream()))
         {
           string json = "{\"jsonrpc\": \"2.0\",\"method\": \"Player.GetItem\",\"params\": { \"properties\": [\"title\",\"album\",\"artist\",\"duration\"],\"playerid\": 0},\"id\": \"AudioGetItem\"} ";
           streamWriter.Write(json);
         }
 
         HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-        using StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream());
+        using StreamReader streamReader = new(httpResponse.GetResponseStream());
         MusiqueJSONRoot root = JsonSerializer.Deserialize<MusiqueJSONRoot>(streamReader.ReadToEnd());
 
         string artist = string.Empty;

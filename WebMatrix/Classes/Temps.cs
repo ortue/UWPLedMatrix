@@ -2,7 +2,6 @@
 using LedLibrary.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WebMatrix.Context;
@@ -89,17 +88,17 @@ namespace WebMatrix.Classes
     {
       Util.Setup();
       decimal cycle = 0;
-      Random r = new Random();
+      Random r = new();
       int bg = r.Next(1, Util.Context.Pixels.NbrBackground);
 
-      //Aime pas beaucoup le 3 ici
-      if (bg == 3)
+      //Aime pas beaucoup le 3 et le 4 ici
+      if (bg == 3 || bg == 4)
         bg = 2;
 
       Task.Run(() =>
       {
         int task = Util.StartTask();
-        CaractereList caracteres = new CaractereList(20);
+        CaractereList caracteres = new(20);
 
         while (Util.TaskWork(task))
         {
@@ -117,7 +116,7 @@ namespace WebMatrix.Classes
     public static void Meteo()
     {
       Util.Setup();
-      ImageClassList meteoImgs = new ImageClassList("Images/Meteo");
+      ImageClassList meteoImgs = new("Images/Meteo");
 
       Task.Run(() =>
       {
@@ -156,7 +155,7 @@ namespace WebMatrix.Classes
         int debut = ResetNouvelle();
         int task = Util.StartTask();
         DateTime update = DateTime.Now.AddMinutes(-60);
-        CaractereList caracteres = new CaractereList(20);
+        CaractereList caracteres = new(20);
 
         while (Util.TaskWork(task))
         {
@@ -169,7 +168,7 @@ namespace WebMatrix.Classes
           Util.SetLeds();
           Util.Context.Pixels.Reset();
 
-          using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
+          using (ManualResetEventSlim waitHandle = new(false))
             waitHandle.Wait(TimeSpan.FromMilliseconds(50));
 
           //Mettre a jour les nouvelle aux heures
@@ -195,7 +194,7 @@ namespace WebMatrix.Classes
         int debut = -20;
         int task = Util.StartTask();
         string loremBarnak = GetLoremBarnak(10);
-        CaractereList caracteres = new CaractereList(20);
+        CaractereList caracteres = new(20);
 
         while (Util.TaskWork(task))
         {
@@ -211,7 +210,7 @@ namespace WebMatrix.Classes
           Util.SetLeds();
           Util.Context.Pixels.Reset();
 
-          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+          using ManualResetEventSlim waitHandle = new(false);
           waitHandle.Wait(TimeSpan.FromMilliseconds(50));
         }
       });
@@ -229,10 +228,10 @@ namespace WebMatrix.Classes
         int largeur = 0;
         int debut = -20;
         int task = Util.StartTask();
-        CaractereList caracteres = new CaractereList(Util.Context.Largeur);
+        CaractereList caracteres = new(Util.Context.Largeur);
         Util.GetMusiqueAsync();
         decimal cycle = 0;
-        Random r = new Random();
+        Random r = new();
         int bg = r.Next(1, Util.Context.Pixels.NbrBackground);
         bool reverse = r.Next(0, 2) == 1;
 
@@ -262,7 +261,7 @@ namespace WebMatrix.Classes
           Util.SetLeds();
           Util.Context.Pixels.Reset();
 
-          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+          using ManualResetEventSlim waitHandle = new(false);
           waitHandle.Wait(TimeSpan.FromMilliseconds(50));
         }
       });
@@ -276,9 +275,12 @@ namespace WebMatrix.Classes
       Util.Setup();
 
       decimal cycle = 0;
-      Random r = new Random();
+      Random r = new();
       int bg = r.Next(1, Util.Context.Pixels.NbrBackground);
       bool reverse = r.Next(0, 2) == 1;
+
+      if (bg == 4)
+        bg = 1;
 
       if (bg == 3 && reverse)
         reverse = false;
@@ -286,7 +288,7 @@ namespace WebMatrix.Classes
       Task.Run(() =>
       {
         int task = Util.StartTask();
-        CaractereList caracteres = new CaractereList(20);
+        CaractereList caracteres = new(20);
 
         while (Util.TaskWork(task))
         {
@@ -307,13 +309,17 @@ namespace WebMatrix.Classes
       Util.Setup();
 
       decimal cycle = 0;
-      Random r = new Random();
+      Random r = new();
       int bg = r.Next(1, Util.Context.Pixels.NbrBackground);
+
+      //Aime pas beaucoup le 3 et le 4 ici
+      if (bg == 3 || bg == 4)
+        bg = 2;
 
       Task.Run(() =>
       {
         int task = Util.StartTask();
-        CaractereList caracteres = new CaractereList(20);
+        CaractereList caracteres = new(20);
 
         while (Util.TaskWork(task))
         {
@@ -344,20 +350,20 @@ namespace WebMatrix.Classes
     {
       if (new ImageClassList("Images").Find(a => a.FileNameID == filename) is ImageClass imageClass)
       {
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        using ManualResetEventSlim waitHandle = new(false);
 
         //Fade In
         for (int slide = imageClass.Width; slide >= 0; slide--)
         {
           SetAnimation(imageClass, 0, slide);
-          waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+          waitHandle.Wait(TimeSpan.FromMilliseconds(20));
         }
 
         //Fade Out
         for (int slide = 0; slide < imageClass.Width; slide++)
         {
           SetAnimation(imageClass, 0, slide, true);
-          waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+          waitHandle.Wait(TimeSpan.FromMilliseconds(20));
         }
       }
     }
@@ -387,7 +393,7 @@ namespace WebMatrix.Classes
 
       List<string> lorembarnaks = Lorembarnaks;
 
-      Random random = new Random();
+      Random random = new();
 
       for (int i = 0; i < taille; i++)
       {
@@ -413,7 +419,7 @@ namespace WebMatrix.Classes
     /// <returns></returns>
     private static string Article(string loremBarnak)
     {
-      List<char> voyelle = new List<char> { 'A', 'E', 'I', 'O', 'U', 'H', 'Y' };
+      List<char> voyelle = new() { 'A', 'E', 'I', 'O', 'U', 'H', 'Y' };
 
       if (voyelle.Contains(char.ToUpper(loremBarnak[0])))
         return "D'" + loremBarnak;

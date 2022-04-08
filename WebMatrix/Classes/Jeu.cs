@@ -17,12 +17,12 @@ namespace WebMatrix.Classes
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
-      Pong pong = new Pong();
-      Couleur scoreColor = new Couleur { R = 127, G = 127, B = 127 };
+      Pong pong = new();
+      Couleur scoreColor = new() { R = 127, G = 127, B = 127 };
 
       while (Util.TaskWork(task))
       {
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        using ManualResetEventSlim waitHandle = new(false);
 
         //Effacer la balle apres
         Util.Context.Pixels.GetCoordonnee(pong.X, pong.Y).SetColor();
@@ -58,7 +58,7 @@ namespace WebMatrix.Classes
         //Dessiner les palettes
         for (int i = -3; i < 3; i++)
         {
-          Couleur paddle = new Couleur();
+          Couleur paddle = new();
 
           if (i >= -2 && i < 3)
             paddle = new Couleur { R = 64, G = 127, B = 64 };
@@ -101,8 +101,8 @@ namespace WebMatrix.Classes
       Util.Setup();
       int task = Util.StartTask();
       int cycle = 0;
-      Random r = new Random();
-      JeuSerpent jeuSerpent = new JeuSerpent(Util.Context.Pixels.Largeur, Util.Context.Pixels.Hauteur);
+      Random r = new();
+      JeuSerpent jeuSerpent = new(Util.Context.Pixels.Largeur, Util.Context.Pixels.Hauteur);
 
       while (Util.TaskWork(task))
       {
@@ -142,7 +142,7 @@ namespace WebMatrix.Classes
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        using ManualResetEventSlim waitHandle = new(false);
         waitHandle.Wait(TimeSpan.FromMilliseconds(jeuSerpent.Vitesse));
 
         if (manger || mort)
@@ -173,7 +173,7 @@ namespace WebMatrix.Classes
       int task = Util.StartTask();
       int cycle = 0;
       int topScore = 0;
-      Tetris tetris = new Tetris();
+      Tetris tetris = new();
 
       while (Util.TaskWork(task))
       {
@@ -242,7 +242,7 @@ namespace WebMatrix.Classes
             Util.Context.Pixels.Print(topScore.ToString(), 3, 12, Couleur.Get(127, 127, 127));
             Util.SetLeds();
 
-            using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+            using ManualResetEventSlim waitHandle = new(false);
             waitHandle.Wait(TimeSpan.FromMilliseconds(10000));
 
             tetris = new Tetris();
@@ -280,7 +280,7 @@ namespace WebMatrix.Classes
 
           Util.SetLeds();
 
-          using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+          using ManualResetEventSlim waitHandle = new(false);
           waitHandle.Wait(TimeSpan.FromMilliseconds(40));
         }
     }
@@ -295,7 +295,7 @@ namespace WebMatrix.Classes
       int task = Util.StartTask();
       LabyrintheList labyrinthes = SetLabyrinthe();
       decimal cycle = 0;
-      using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+      using ManualResetEventSlim waitHandle = new(false);
 
       while (Util.TaskWork(task))
       {
@@ -322,7 +322,7 @@ namespace WebMatrix.Classes
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        //waitHandle.Wait(TimeSpan.FromMilliseconds(25));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(10));
       }
     }
 
@@ -332,8 +332,8 @@ namespace WebMatrix.Classes
     /// <returns></returns>
     private static LabyrintheList SetLabyrinthe()
     {
-      Maze maze = new Maze(8, 8);
-      LabyrintheList labyrinthes = new LabyrintheList(1 + maze.Width * 2, 1 + maze.Height * 2);
+      Maze maze = new(8, 8);
+      LabyrintheList labyrinthes = new(1 + maze.Width * 2, 1 + maze.Height * 2);
 
       for (int y = 0; y < maze.Height; y++)
         for (int x = 0; x < maze.Width; x++)
@@ -406,7 +406,7 @@ namespace WebMatrix.Classes
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        using ManualResetEventSlim waitHandle = new(false);
         waitHandle.Wait(TimeSpan.FromMilliseconds(50));
       }
     }

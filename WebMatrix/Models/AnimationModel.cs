@@ -1,7 +1,6 @@
 ﻿using LedLibrary.Collection;
 using LedLibrary.Entities;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WebMatrix.Context;
@@ -34,7 +33,7 @@ namespace WebMatrix.Models
             FileNameID = Animations[i++].FileNameID;
             ShowAnimation();
 
-            using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
+            using (ManualResetEventSlim waitHandle = new(false))
               waitHandle.Wait(TimeSpan.FromSeconds(10));
 
             if (Animations.Count <= i)
@@ -90,19 +89,19 @@ namespace WebMatrix.Models
     /// <param name="frame"></param>
     /// <param name="slide"></param>
     /// <param name="fadeOut"></param>
-    private void SetAnimation(ImageClass imageClass, int frame, int slide, bool fadeOut = false)
+    private static void SetAnimation(ImageClass imageClass, int frame, int slide, bool fadeOut = false)
     {
       imageClass.SetÞixelFrame(frame++, Util.Context.Pixels, slide, fadeOut);
       Util.SetLeds();
       Util.Context.Pixels.Reset();
 
-      if (slide == 0 && imageClass.FrameCount < 8)
-        using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-          waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+      double temps = 100;
 
-      if (slide == 0 && imageClass.FrameCount == 12)
-        using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
-          waitHandle.Wait(TimeSpan.FromMilliseconds(20));
+      if (slide == 0 && imageClass.FrameCount >= 8)
+        temps = 70;
+
+      using ManualResetEventSlim waitHandle = new(false);
+      waitHandle.Wait(TimeSpan.FromMilliseconds(temps));
     }
 
     /// <summary>

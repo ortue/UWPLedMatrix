@@ -21,7 +21,7 @@ namespace WebMatrix.Classes
       Util.Setup();
       int task = Util.StartTask();
       byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
+      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
       audioCapture.Start();
       int cycle = 0;
       int debut = -20;
@@ -31,9 +31,12 @@ namespace WebMatrix.Classes
         double[] fft = Capture(audioCapture, audioBuffer);
         float[] fftData = SetFFT(audioBuffer, fft);
 
+        //double max = fft.Max(a => Math.Abs(a));
+        //double amplitude = 0.05 / (max / 200);
+
         Spectrum(fftData, 0.05);
         debut = AffTitre(cycle, debut);
-        AffHeure();
+        AffHeure(0);
 
         Util.SetLeds();
 
@@ -50,7 +53,7 @@ namespace WebMatrix.Classes
       Util.Setup();
       int task = Util.StartTask();
       byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
+      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
       audioCapture.Start();
       int cycle = 0;
       int debut = -20;
@@ -58,7 +61,7 @@ namespace WebMatrix.Classes
       while (Util.TaskWork(task))
       {
         Graph(audioCapture, audioBuffer);
-        AffHeure();
+        AffHeure(0);
         debut = AffTitre(cycle++, debut);
         Util.SetLeds();
         Util.Context.Pixels.Reset();
@@ -76,7 +79,7 @@ namespace WebMatrix.Classes
       int task = Util.StartTask();
 
       Couleur couleur = Couleur.Get(0, 0, 8);
-      Random ra = new Random();
+      Random ra = new();
       bool whiteBgColor = true;
 
       if (ra.Next(1, 3) == 1)
@@ -86,10 +89,10 @@ namespace WebMatrix.Classes
       }
 
       double max = 0;
-      CaractereList caracteres = new CaractereList(Util.Context.Largeur);
+      CaractereList caracteres = new(Util.Context.Largeur);
 
       byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
+      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
       audioCapture.Start();
 
       while (Util.TaskWork(task))
@@ -206,7 +209,7 @@ namespace WebMatrix.Classes
     /// <returns></returns>
     private static Coordonnee GetCercleCoord(double degree, int rayon)
     {
-      Coordonnee coord = new Coordonnee(Util.Context.Largeur, Util.Context.Hauteur);
+      Coordonnee coord = new(Util.Context.Largeur, Util.Context.Hauteur);
 
       if (degree % 360 >= 0 && degree % 360 <= 180)
         coord.X = 10 + (int)(rayon * Math.Sin(Math.PI * degree / 180));
@@ -223,7 +226,7 @@ namespace WebMatrix.Classes
     /// </summary>
     private static void Spectrum(int cycle)
     {
-      if (cycle % 4 == 0)
+      if (cycle % 8 == 0)
       {
         for (int x = 0; x < Util.Context.Largeur; x++)
           if (Util.Context.Pixels.Where(p => p.Coord.X == x && !p.Couleur.IsNoir && !p.Couleur.IsRouge).OrderBy(p => p.Coord.Y).FirstOrDefault() is Pixel pixel)
@@ -250,7 +253,7 @@ namespace WebMatrix.Classes
       Util.Setup();
       int task = Util.StartTask();
       byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new AudioCapture(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
+      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
       audioCapture.Start();
       int cycle = 0;
 
@@ -341,7 +344,7 @@ namespace WebMatrix.Classes
         foreach (Pixel pixel in Util.Context.Pixels.Where(p => p.Couleur.IsRouge && p.Coord.Y < 8))
           pixel.Couleur = Couleur.Noir;
 
-        CaractereList textes = new CaractereList(Util.Context.Largeur);
+        CaractereList textes = new(Util.Context.Largeur);
         int largeur = textes.SetText(Util.Musique);
 
         foreach (Police lettre in textes.GetCaracteres(debut).Where(c => c.Point))
@@ -368,14 +371,14 @@ namespace WebMatrix.Classes
     /// <summary>
     /// AffHeure
     /// </summary>
-    private static void AffHeure()
+    private static void AffHeure(double max)
     {
       if (Criteria.AffHeure)
       {
         foreach (Pixel pixel in Util.Context.Pixels.Where(p => p.Couleur.IsRouge && p.Coord.Y > 12))
           pixel.Couleur = Couleur.Noir;
 
-        CaractereList textes = new CaractereList(Util.Context.Largeur);
+        CaractereList textes = new(Util.Context.Largeur);
         textes.SetText(Temps.Heure);
 
         foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
@@ -385,6 +388,39 @@ namespace WebMatrix.Classes
             else
               pixel.SetColor(Couleur.Rouge);
       }
+
+      if (max != 0)
+      {
+        foreach (Pixel pixel in Util.Context.Pixels.Where(p => p.Couleur.IsRouge && p.Coord.Y > 12))
+          pixel.Couleur = Couleur.Noir;
+
+        CaractereList textes = new(Util.Context.Largeur);
+        textes.SetText(Math.Round(max, 0).ToString());
+
+        foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
+          if (Util.Context.Pixels.GetCoordonnee(lettre.X + 1, lettre.Y + 13) is Pixel pixel)
+            if (pixel.Couleur.IsNoir)// || pixel.Couleur.R == 127)
+              pixel.SetColor(Couleur.RougePale);
+            else
+              pixel.SetColor(Couleur.Rouge);
+
+
+        double amplitude = 0.05 / (max / 200);
+
+        textes = new(Util.Context.Largeur);
+        textes.SetText(Math.Round(amplitude, 2).ToString());
+
+
+        foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
+          if (Util.Context.Pixels.GetCoordonnee(lettre.X + 1, lettre.Y + 1) is Pixel pixel)
+            if (pixel.Couleur.IsNoir)// || pixel.Couleur.R == 127)
+              pixel.SetColor(Couleur.RougePale);
+            else
+              pixel.SetColor(Couleur.Rouge);
+
+
+      }
+
     }
 
     /// <summary>
@@ -423,7 +459,7 @@ namespace WebMatrix.Classes
     /// <returns></returns>
     private static float[] SetFFT(byte[] audioBuffer, double[] fft)
     {
-      LomFFT LomFFT = new LomFFT();
+      LomFFT LomFFT = new();
       LomFFT.RealFFT(fft, true);
 
       float[] fftData = new float[audioBuffer.Length / 2];
@@ -505,7 +541,7 @@ namespace WebMatrix.Classes
         2 => (fftData[x] - 2) * amplitude,// * 0.7,
         3 => (fftData[x] - 2) * amplitude,// * 0.8,
 
-        11 => (fftData.Skip(10).Take(3).Average() -2) * amplitude,
+        11 => (fftData.Skip(10).Take(3).Average() - 2) * amplitude,
         12 => (fftData.Skip(13).Take(5).Average() - 2) * amplitude,
         13 => (fftData.Skip(18).Take(7).Average() - 4) * amplitude * 2,
         14 => (fftData.Skip(25).Take(9).Average() - 4) * amplitude * 2,

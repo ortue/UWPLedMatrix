@@ -2,7 +2,6 @@
 using LedLibrary.Collection;
 using LedLibrary.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using WebMatrix.Context;
@@ -34,8 +33,12 @@ namespace WebMatrix.Classes
           Demo4();
           break;
 
+        //case 5:
+        //  Demo5(criteria);
+        //  break;
+
         case 5:
-          Demo5(criteria);
+          Demo5();
           break;
 
         case 6:
@@ -44,10 +47,6 @@ namespace WebMatrix.Classes
 
         case 7:
           Demo7();
-          break;
-
-        case 8:
-          Demo8();
           break;
       }
     }
@@ -71,7 +70,7 @@ namespace WebMatrix.Classes
           bot = new int[20] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         }
 
-        Random random = new Random();
+        Random random = new();
         int x = random.Next(0, Util.Context.Pixels.Largeur);
         int y = 0;
 
@@ -94,7 +93,7 @@ namespace WebMatrix.Classes
           if (y > 6)
             temp = 1;
 
-          using (ManualResetEventSlim waitHandle = new ManualResetEventSlim(false))
+          using (ManualResetEventSlim waitHandle = new(false))
             waitHandle.Wait(TimeSpan.FromMilliseconds(temp));
 
           y++;
@@ -107,7 +106,7 @@ namespace WebMatrix.Classes
             if (x < Util.Context.Pixels.Largeur - 1 && y < Util.Context.Pixels.Hauteur - bot[x + 1])
               EffacerDernier(x++, y);
 
-            using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+            using ManualResetEventSlim waitHandle = new(false);
             waitHandle.Wait(TimeSpan.FromMilliseconds(100));
           }
         }
@@ -132,9 +131,9 @@ namespace WebMatrix.Classes
     {
       Util.Setup();
       int task = Util.StartTask();
-      Random random = new Random();
+      Random random = new();
       DateTime temp = DateTime.Now;
-      CercleList cercles = new CercleList(4, 1, 90);
+      CercleList cercles = new(4, 1, 90);
 
       while (Util.TaskWork(task))
       {
@@ -156,7 +155,7 @@ namespace WebMatrix.Classes
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        using ManualResetEventSlim waitHandle = new(false);
         waitHandle.Wait(TimeSpan.FromMilliseconds(2));
       }
     }
@@ -169,7 +168,7 @@ namespace WebMatrix.Classes
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
-      EGCList egcs = new EGCList(60, Util.Context.Largeur, Util.Context.Hauteur);
+      EGCList egcs = new(60, Util.Context.Largeur, Util.Context.Hauteur);
 
       while (Util.TaskWork(task))
       {
@@ -181,7 +180,7 @@ namespace WebMatrix.Classes
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        using ManualResetEventSlim waitHandle = new(false);
         waitHandle.Wait(TimeSpan.FromMilliseconds(50));
       }
     }
@@ -195,8 +194,8 @@ namespace WebMatrix.Classes
       int i = 1;
       Util.Setup();
       int task = Util.StartTask();
-      Random random = new Random();
-      CercleList cercles = new CercleList(3, 5, 120);
+      Random random = new();
+      CercleList cercles = new(3, 5, 120);
 
       while (Util.TaskWork(task))
       {
@@ -214,7 +213,7 @@ namespace WebMatrix.Classes
         cercles.SetDegree(9);
         Util.SetLeds();
 
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+        using ManualResetEventSlim waitHandle = new(false);
         waitHandle.Wait(TimeSpan.FromMilliseconds(8));
       }
     }
@@ -222,38 +221,38 @@ namespace WebMatrix.Classes
     /// <summary>
     /// stroboscope
     /// </summary>
-    public static void Demo5(Criteria criteria)
-    {
-      int i = 0;
-      Util.Setup();
-      int task = Util.StartTask();
+    //public static void stroboscope(Criteria criteria)
+    //{
+    //  int i = 0;
+    //  Util.Setup();
+    //  int task = Util.StartTask();
 
-      while (Util.TaskWork(task))
-      {
-        foreach (Pixel pixel in Util.Context.Pixels)
-          if (i % 2 == 1)
-            pixel.SetColor();
-          else
-            pixel.SetColor(Couleur.Get(100, 100, 127));
+    //  while (Util.TaskWork(task))
+    //  {
+    //    foreach (Pixel pixel in Util.Context.Pixels)
+    //      if (i % 2 == 1)
+    //        pixel.SetColor();
+    //      else
+    //        pixel.SetColor(Couleur.Get(100, 100, 127));
 
-        i++;
-        Util.SetLeds();
+    //    i++;
+    //    Util.SetLeds();
 
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-        waitHandle.Wait(TimeSpan.FromMilliseconds(criteria.CmbStroboscope));
-      }
-    }
+    //    using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+    //    waitHandle.Wait(TimeSpan.FromMilliseconds(criteria.CmbStroboscope));
+    //  }
+    //}
 
     /// <summary>
     /// Tunnel
     /// </summary>
-    public static void Demo6()
+    public static void Demo5()
     {
       // Initialize the led strip
       int i = 1;
       Util.Setup();
       int task = Util.StartTask();
-      CercleList cercles = new CercleList(3, 5);
+      CercleList cercles = new(3, 5);
 
       while (Util.TaskWork(task))
       {
@@ -265,21 +264,24 @@ namespace WebMatrix.Classes
         cercles.SetRayon(0.3, i++ % 2000 > 1000);
 
         Util.SetLeds();
+
+        using ManualResetEventSlim waitHandle = new(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(2));
       }
     }
 
     /// <summary>
     /// Oscilloscope
     /// </summary>
-    public static void Demo7()
+    public static void Demo6()
     {
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
 
       int x = 0;
-      Random random = new Random();
-      SinusList sinus = new SinusList(random.Next(1, 4));
+      Random random = new();
+      SinusList sinus = new(random.Next(1, 4));
 
       while (Util.TaskWork(task))
       {
@@ -353,7 +355,7 @@ namespace WebMatrix.Classes
     /// <returns></returns>
     public static Coordonnee Cercle(int degree, double rayon, int x = 10, int y = 10)
     {
-      Coordonnee coord = new Coordonnee(Util.Context.Largeur, Util.Context.Hauteur);
+      Coordonnee coord = new(Util.Context.Largeur, Util.Context.Hauteur);
 
       if (degree >= 0 && degree <= 180)
         coord.X = x + (int)(rayon * Math.Sin(Math.PI * degree / 180));
@@ -380,7 +382,7 @@ namespace WebMatrix.Classes
     /// <summary>
     /// Plasma
     /// </summary>
-    public static void Demo8()
+    public static void Demo7()
     {
       // Initialize the led strip
       Util.Setup();
@@ -393,15 +395,15 @@ namespace WebMatrix.Classes
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
-        waitHandle.Wait(TimeSpan.FromMilliseconds(2));
+        using ManualResetEventSlim waitHandle = new(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(10));
       }
     }
 
     /// <summary>
     /// Plasma
     /// </summary>
-    public static void Demo8b()
+    public static void PlasmaBeta()
     {
       // Initialize the led strip
       Util.Setup();

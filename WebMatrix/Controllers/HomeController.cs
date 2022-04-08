@@ -24,7 +24,7 @@ namespace WebMatrix.Controllers
     {
       if (id == null && Util.TaskNbr == 0)
       {
-        Random random = new Random();
+        Random random = new();
         id = random.Next(1, 9);
       }
 
@@ -52,7 +52,7 @@ namespace WebMatrix.Controllers
         });
       }
 
-      ViewBag.CmbStroboscope = criteria.CmbStroboscope;
+      //ViewBag.CmbStroboscope = criteria.CmbStroboscope;
 
       return View();
     }
@@ -176,7 +176,7 @@ namespace WebMatrix.Controllers
 
     public IActionResult Animation(string id)
     {
-      AnimationModel model = new AnimationModel(id);
+      AnimationModel model = new(id);
 
       return View(model);
     }

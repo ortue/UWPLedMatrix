@@ -2,8 +2,8 @@
   ViewBag.Title = "Démo";
 }
 
-@using (Html.BeginForm("Index", "Home"))
-{
+@*@using (Html.BeginForm("Index", "Home"))
+{*@
   <div class="container-fluid" style="background-color:black;">
     <a href="@Url.Action("Index", "Home", new { id = 1 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
       <span class="icon text-white-50" style="width:60px;">
@@ -33,14 +33,14 @@
       <span class="text" style="width:170px;">Spiral</span>
     </a>
 
-    <button type="submit" name="id" value="5" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
+@*    <button type="submit" name="id" value="5" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
       <span class="icon text-white-50" style="width:60px;">
         <i class="fas fa-infinity"></i>
       </span>
       <span class="text" style="width:170px;">Stroboscope</span>
-    </button>
+    </button>*@
 
-    <select name="CmbStroboscope" class="btn btn-primary btn-lg" style="background-color:#4e73df;color:white;border-color:#4e73df;margin:10px;width:232px;">
+@*    <select name="CmbStroboscope" class="btn btn-primary btn-lg" style="background-color:#4e73df;color:white;border-color:#4e73df;margin:10px;width:232px;">
 
       @for (int i = 25; i <= 150; i += 25)
       {
@@ -53,23 +53,23 @@
           <option value="@i">@i ms</option>
         }
       }
-    </select>
+    </select>*@
 
-    <a href="@Url.Action("Index", "Home", new { id = 6 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
+    <a href="@Url.Action("Index", "Home", new { id = 5 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
       <span class="icon text-white-50" style="width:60px;">
         <i class="fas fa-bullseye"></i>
       </span>
       <span class="text" style="width:170px;">Tunnel</span>
     </a>
 
-    <a href="@Url.Action("Index", "Home", new { id = 7 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
+    <a href="@Url.Action("Index", "Home", new { id = 6 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
       <span class="icon text-white-50" style="width:60px;">
         <i class="fas fa-infinity"></i>
       </span>
       <span class="text" style="width:170px;">Oscilloscope</span>
     </a>
 
-    <a href="@Url.Action("Index", "Home", new { id = 8 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
+    <a href="@Url.Action("Index", "Home", new { id = 7 })" class="btn btn-primary btn-icon-split btn-lg" style="margin:10px;">
       <span class="icon text-white-50" style="width:60px;">
         <i class="fas fa-infinity"></i>
       </span>
@@ -77,4 +77,4 @@
     </a>
 
   </div>
-}
+@*}*@
