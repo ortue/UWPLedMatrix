@@ -31,12 +31,12 @@ namespace WebMatrix.Classes
         double[] fft = Capture(audioCapture, audioBuffer);
         float[] fftData = SetFFT(audioBuffer, fft);
 
-        //double max = fft.Max(a => Math.Abs(a));
-        //double amplitude = 0.05 / (max / 200);
+        double max = fft.Max(a => Math.Abs(a));
+        double amplitude = 0.03 / (max / 60);
 
-        Spectrum(fftData, 0.05);
-        debut = AffTitre(cycle, debut);
         AffHeure(0);
+        Spectrum(fftData, amplitude);
+        debut = AffTitre(cycle, debut);
 
         Util.SetLeds();
 
@@ -232,9 +232,9 @@ namespace WebMatrix.Classes
           if (Util.Context.Pixels.Where(p => p.Coord.X == x && !p.Couleur.IsNoir && !p.Couleur.IsRouge).OrderBy(p => p.Coord.Y).FirstOrDefault() is Pixel pixel)
             pixel.Couleur = Couleur.Noir;
 
-        for (int x = 0; x < Util.Context.Largeur; x++)
-          if (Util.Context.Pixels.Where(p => p.Coord.X == x && p.Couleur.R == 127).OrderBy(p => p.Coord.Y).FirstOrDefault() is Pixel pixel)
-            pixel.Couleur = Couleur.RougePale;
+        //for (int x = 0; x < Util.Context.Largeur; x++)
+        //  if (Util.Context.Pixels.Where(p => p.Coord.X == x && p.Couleur.IsRouge).OrderBy(p => p.Coord.Y).FirstOrDefault() is Pixel pixel)
+        //    pixel.Couleur = Couleur.RougePale;
 
 
 
@@ -375,51 +375,53 @@ namespace WebMatrix.Classes
     {
       if (Criteria.AffHeure)
       {
+
+        //for (int x = 0; x < Util.Context.Largeur; x++)
+        //  if (Util.Context.Pixels.Where(p => p.Coord.X == x && p.Couleur.IsRouge && p.Coord.Y > 12).OrderBy(p => p.Coord.Y).FirstOrDefault() is Pixel pixel)
+        //    pixel.Couleur = Couleur.Noir;
+
         foreach (Pixel pixel in Util.Context.Pixels.Where(p => p.Couleur.IsRouge && p.Coord.Y > 12))
           pixel.Couleur = Couleur.Noir;
+
 
         CaractereList textes = new(Util.Context.Largeur);
         textes.SetText(Temps.Heure);
 
         foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
           if (Util.Context.Pixels.GetCoordonnee(lettre.X + 1, lettre.Y + 13) is Pixel pixel)
-            if (pixel.Couleur.IsNoir)// || pixel.Couleur.R == 127)
-              pixel.SetColor(Couleur.RougePale);
-            else
-              pixel.SetColor(Couleur.Rouge);
+            //if (pixel.Couleur.IsNoir)// || pixel.Couleur.R == 127)
+            pixel.SetColor(Couleur.RougePale);
+        //else
+        //pixel.SetColor(Couleur.Rouge);
       }
 
-      if (max != 0)
-      {
-        foreach (Pixel pixel in Util.Context.Pixels.Where(p => p.Couleur.IsRouge && p.Coord.Y > 12))
-          pixel.Couleur = Couleur.Noir;
+      //if (max != 0)
+      //{
+      //  foreach (Pixel pixel in Util.Context.Pixels.Where(p => p.Couleur.IsRouge && p.Coord.Y > 12))
+      //    pixel.Couleur = Couleur.Noir;
 
-        CaractereList textes = new(Util.Context.Largeur);
-        textes.SetText(Math.Round(max, 0).ToString());
+      //  CaractereList textes = new(Util.Context.Largeur);
+      //  textes.SetText(Math.Round(max, 0).ToString());
 
-        foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
-          if (Util.Context.Pixels.GetCoordonnee(lettre.X + 1, lettre.Y + 13) is Pixel pixel)
-            if (pixel.Couleur.IsNoir)// || pixel.Couleur.R == 127)
-              pixel.SetColor(Couleur.RougePale);
-            else
-              pixel.SetColor(Couleur.Rouge);
+      //  foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
+      //    if (Util.Context.Pixels.GetCoordonnee(lettre.X + 1, lettre.Y + 13) is Pixel pixel)
+      //      if (pixel.Couleur.IsNoir)// || pixel.Couleur.R == 127)
+      //        pixel.SetColor(Couleur.RougePale);
+      //      else
+      //        pixel.SetColor(Couleur.Rouge);
 
+      //  double amplitude = 0.03 / (max / 60);
 
-        double amplitude = 0.05 / (max / 200);
+      //  textes = new(Util.Context.Largeur);
+      //  textes.SetText(Math.Round(amplitude, 2).ToString());
 
-        textes = new(Util.Context.Largeur);
-        textes.SetText(Math.Round(amplitude, 2).ToString());
-
-
-        foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
-          if (Util.Context.Pixels.GetCoordonnee(lettre.X + 1, lettre.Y + 1) is Pixel pixel)
-            if (pixel.Couleur.IsNoir)// || pixel.Couleur.R == 127)
-              pixel.SetColor(Couleur.RougePale);
-            else
-              pixel.SetColor(Couleur.Rouge);
-
-
-      }
+      //  foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
+      //    if (Util.Context.Pixels.GetCoordonnee(lettre.X + 1, lettre.Y + 1) is Pixel pixel)
+      //      if (pixel.Couleur.IsNoir)// || pixel.Couleur.R == 127)
+      //        pixel.SetColor(Couleur.RougePale);
+      //      else
+      //        pixel.SetColor(Couleur.Rouge);
+      //}
 
     }
 
@@ -489,7 +491,10 @@ namespace WebMatrix.Classes
         for (int y = 0; y < Util.Context.Hauteur; y++)
           if (y < Math.Ceiling(yMax))
             if (Util.Context.Pixels.GetCoordonnee(x, 19 - y) is Pixel pixel)
-              pixel.Set(y * 5, 0, (20 - y) * 5);
+              if (pixel.Couleur.IsRouge)
+                pixel.SetColor(Couleur.Rouge);
+              else
+                pixel.Set(y * 5, 0, (20 - y) * 5);
       }
     }
 
@@ -506,8 +511,8 @@ namespace WebMatrix.Classes
       {
         0 => (fftData[x] - 140) * amplitude,
 
-        1 => (fftData[x] - 8) * amplitude * 0.6,
-        2 => (fftData[x] - 16) * amplitude * 0.7,
+        1 => (fftData[x] - 20) * amplitude * 0.6,
+        2 => (fftData[x] - 25) * amplitude * 0.7,
         3 => (fftData[x] - 26) * amplitude * 0.8,
 
         11 => (fftData.Skip(10).Take(3).Average() - 11) * amplitude,
