@@ -4,18 +4,18 @@ namespace LedLibrary.Classes
 {
   public class Criteria
   {
-    private int _cmbStroboscope;
-    public int CmbStroboscope
-    {
-      get
-      {
-        if (_cmbStroboscope == 0)
-          return 50;
+    //private int _cmbStroboscope;
+    //public int CmbStroboscope
+    //{
+    //  get
+    //  {
+    //    if (_cmbStroboscope == 0)
+    //      return 50;
 
-        return _cmbStroboscope;
-      }
-      set { _cmbStroboscope = value; }
-    }
+    //    return _cmbStroboscope;
+    //  }
+    //  set { _cmbStroboscope = value; }
+    //}
 
     public static bool Spectrum { get; set; }
     public static bool AffHeure { get; set; }
@@ -27,7 +27,7 @@ namespace LedLibrary.Classes
     {
       get
       {
-        int cycleMod = 12;
+        int cycleMod = 8;
 
         if (AffHeure)
           cycleMod -= 2;

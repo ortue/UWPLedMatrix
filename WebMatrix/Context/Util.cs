@@ -223,7 +223,7 @@ namespace WebMatrix.Context
     {
       try
       {
-        HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://pc-musique:8080/jsonrpc");
+        HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://192.168.2.11:8080/jsonrpc");
         httpWebRequest.ContentType = "application/json";
         httpWebRequest.Method = "POST";
 
