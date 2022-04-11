@@ -23,21 +23,21 @@ namespace LedLibrary.Classes
     public string BtnHeure { get; set; }
     public string BtnTitre { get; set; }
 
-    public static int CycleMod
-    {
-      get
-      {
-        int cycleMod = 8;
+    //public static int CycleMod
+    //{
+    //  get
+    //  {
+    //    int cycleMod = 8;
 
-        if (AffHeure)
-          cycleMod -= 2;
+    //    if (AffHeure)
+    //      cycleMod -= 2;
 
-        if (Spectrum)
-          cycleMod -= 3;
+    //    if (Spectrum)
+    //      cycleMod -= 3;
 
-        return cycleMod;
-      }
-    }
+    //    return cycleMod;
+    //  }
+    //}
 
     public void SetBtn()
     {

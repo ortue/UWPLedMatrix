@@ -27,6 +27,11 @@ namespace LedLibrary.Entities
       get { return R > 0 && G == 0 && B == 0; }
     }
 
+    public bool IsRougePale
+    {
+      get { return this.Equals(RougePale); }
+    }
+
     public static Couleur Rouge
     {
       get { return new Couleur { R = 127 }; }
