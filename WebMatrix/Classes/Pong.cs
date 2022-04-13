@@ -131,7 +131,7 @@ namespace WebMatrix.Classes
     /// </summary>
     public Pong()
     {
-      Random random = new Random();
+      Random random = new();
       XX = random.Next(3, 12) / (decimal)10;
       YY = random.Next(3, 12) / (decimal)10;
 
@@ -167,7 +167,7 @@ namespace WebMatrix.Classes
         //Pour éviter que la balle soit en loop
         if (Math.Round(YY, 1) == 0)
         {
-          Random random = new Random();
+          Random random = new();
           YY = (random.Next(0, 5) - 3) * (decimal)0.1;
         }
       }
@@ -190,7 +190,6 @@ namespace WebMatrix.Classes
     /// <summary>
     /// Quand on pogne le boute de la palette augmenter le yy
     /// </summary>
-    /// <param name="pad"></param>
     /// <returns></returns>
     public decimal Deviation()
     {
@@ -261,7 +260,7 @@ namespace WebMatrix.Classes
 
       if (IsBut)
       {
-        Random random = new Random();
+        Random random = new();
 
         if (Droite)
         {

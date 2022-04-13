@@ -372,8 +372,48 @@ namespace WebMatrix.Classes
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
+
+      Arkanoid arkanoid = new();
+
       while (Util.TaskWork(task))
       {
+        using ManualResetEventSlim waitHandle = new(false);
+
+        //Effacer la balle apres
+        Util.Context.Pixels.GetCoordonnee(arkanoid.X, arkanoid.Y).SetColor();
+
+        //Mure du bas, pause 1.5 secondes
+        if (arkanoid.Palette(Util.Context.Pixels.Hauteur))
+          waitHandle.Wait(TimeSpan.FromMilliseconds(1500));
+
+        //Mure du haut et des coté
+        arkanoid.Mure(Util.Context.Pixels.Hauteur, Util.Context.Pixels.Largeur);
+
+        //Position de la balle
+        arkanoid.X += arkanoid.XX;
+        arkanoid.Y += arkanoid.YY;
+
+        //La balle
+        Util.Context.Pixels.GetCoordonnee(arkanoid.X, arkanoid.Y).Set(16, 16, 127);
+
+        //Position palette
+        arkanoid.PositionPalette();
+
+        //Dessiner la palette
+        for (int i = -2; i < 2; i++)
+        {
+          Couleur paddle = new();
+
+          if (i >= -1 && i < 2)
+            paddle = new Couleur { R = 64, G = 127, B = 64 };
+
+          int p1Int = (int)Math.Round(arkanoid.Pad, 0);
+
+          //Pour effacer la palette quand on la bouge, sans effacer le score
+          //if (!(Util.Context.Pixels.GetCoordonnee(1, p1Int + i).Couleur.Egal(scoreColor) && paddle.IsNoir))
+            Util.Context.Pixels.GetCoordonnee(p1Int + i,18).SetColor(paddle);
+        }
+
         //Bordure
         for (int x = 0; x < Util.Context.Pixels.Largeur; x++)
           Util.Context.Pixels.GetCoordonnee(x, 0).Set(31, 31, 127);
@@ -384,30 +424,29 @@ namespace WebMatrix.Classes
           Util.Context.Pixels.GetCoordonnee(19, y).Set(31, 31, 127);
         }
 
-        for (int y = 0; y < 2; y++)
-          for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
-            Util.Context.Pixels.GetCoordonnee(x, 5 + y).Set(63, 63, 127);
+        //for (int y = 0; y < 2; y++)
+        //  for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
+        //    Util.Context.Pixels.GetCoordonnee(x, 5 + y).Set(63, 63, 127);
 
-        for (int y = 0; y < 2; y++)
-          for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
-            Util.Context.Pixels.GetCoordonnee(x, 7 + y).Set(63, 127, 63);
+        //for (int y = 0; y < 2; y++)
+        //  for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
+        //    Util.Context.Pixels.GetCoordonnee(x, 7 + y).Set(63, 127, 63);
 
-        for (int y = 0; y < 2; y++)
-          for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
-            Util.Context.Pixels.GetCoordonnee(x, 9 + y).Set(127, 63, 127);
+        //for (int y = 0; y < 2; y++)
+        //  for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
+        //    Util.Context.Pixels.GetCoordonnee(x, 9 + y).Set(127, 63, 127);
 
 
-        Util.Context.Pixels.GetCoordonnee(9, 18).Set(127, 127, 127);
-        Util.Context.Pixels.GetCoordonnee(10, 18).Set(127, 127, 127);
-        Util.Context.Pixels.GetCoordonnee(11, 18).Set(127, 127, 127);
+        //Util.Context.Pixels.GetCoordonnee(9, 18).Set(127, 127, 127);
+        //Util.Context.Pixels.GetCoordonnee(10, 18).Set(127, 127, 127);
+        //Util.Context.Pixels.GetCoordonnee(11, 18).Set(127, 127, 127);
 
 
         Util.Context.Pixels.BackGround();
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        using ManualResetEventSlim waitHandle = new(false);
-        waitHandle.Wait(TimeSpan.FromMilliseconds(50));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(arkanoid.Vitesse));
       }
     }
   }
