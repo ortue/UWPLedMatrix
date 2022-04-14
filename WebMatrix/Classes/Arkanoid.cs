@@ -1,9 +1,14 @@
-﻿using System;
+﻿using LedLibrary.Collection;
+using LedLibrary.Entities;
+using System;
+using WebMatrix.Context;
 
 namespace WebMatrix.Classes
 {
   public class Arkanoid
   {
+    public int Hauteur { get; set; }
+    public int Largeur { get; set; }
     public decimal X { get; set; }
     public decimal Y { get; set; }
     public int Vitesse { get; set; }
@@ -66,14 +71,19 @@ namespace WebMatrix.Classes
       get { return X > Pad + 2 || X < Pad - 2; }
     }
 
+    public BriqueList Briques { get; set; }
+
     /// <summary>
     /// Constructeur
     /// </summary>
-    public Arkanoid()
+    public Arkanoid(int hauteur, int largeur)
     {
+      Hauteur = hauteur;
+      Largeur = largeur;
+
       Random random = new();
-      XX = random.Next(3, 12) / (decimal)10;
-      YY = random.Next(-12, -3) / (decimal)10;
+      XX = random.Next(3, 10) / (decimal)10;
+      YY = random.Next(-10, -3) / (decimal)10;
 
       X = 10;
       Y = 17;
@@ -81,6 +91,25 @@ namespace WebMatrix.Classes
       Vitesse = 50;
 
       Pad = 10;
+
+      Briques = new BriqueList();
+    }
+
+    /// <summary>
+    /// SetBriques
+    /// </summary>
+    public void SetBriques()
+    {
+      for (int y = 0; y < 2; y++)
+      {
+        for (int x = 1; x < Largeur - 1; x++)
+        {
+          Util.Context.Pixels.GetCoordonnee(x, 5 + y).Set(63, 63, 127);
+          Util.Context.Pixels.GetCoordonnee(x, 7 + y).Set(63, 127, 63);
+
+          Util.Context.Pixels.GetCoordonnee(x, 9 + y).Set(127, 63, 127);
+        }
+      }
     }
 
     /// <summary>
@@ -114,13 +143,12 @@ namespace WebMatrix.Classes
     /// <summary>
     /// Palette
     /// </summary>
-    /// <param name="hauteur"></param>
     /// <returns></returns>
-    public bool Palette(int hauteur)
+    public bool Palette()
     {
       bool mort = false;
 
-      if (Frontiere(hauteur))
+      if (Frontiere(Hauteur))
       {
         mort = Mort();
         YY -= RebonPalette();
@@ -180,11 +208,9 @@ namespace WebMatrix.Classes
     /// <summary>
     /// Mure
     /// </summary>
-    /// <param name="hauteur"></param>
-    /// <param name="largeur"></param>
-    public void Mure(int hauteur, int largeur)
+    public void Mure()
     {
-      if (X + XX >= largeur - 2 || X + XX < 1)
+      if (X + XX >= Largeur - 2 || X + XX < 1)
         XX -= XX * 2;
 
       if (Y + YY < 1)
@@ -203,6 +229,21 @@ namespace WebMatrix.Classes
         else if (Math.Round(Pad, 0) > Math.Round(X, 0))
           Pad -= VitessePalette;
       }
+    }
+
+    /// <summary>
+    /// Briques
+    /// </summary>
+    public void CheckBrique()
+    {
+      if (Briques.Find(b => b.X == (int)Math.Round(X + XX, 0) && b.XX == (int)Math.Round(XX + XX, 0) && b.Y == (int)Math.Round(Y + YY, 0)) is Brique brique)
+      {
+        brique.Visible = false;
+
+        if (Y + YY < 1)
+          YY -= YY * 2;
+      }
+
     }
   }
 }

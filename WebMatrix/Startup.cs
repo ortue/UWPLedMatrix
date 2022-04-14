@@ -58,8 +58,8 @@ namespace WebMatrix
       });
 
       app.UseRouting();
-
       app.UseAuthorization();
+      //app.UseMiddleware<ErrorHandlerMiddleware>();
 
       app.UseEndpoints(endpoints =>
       {

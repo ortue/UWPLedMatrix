@@ -373,7 +373,7 @@ namespace WebMatrix.Classes
       Util.Setup();
       int task = Util.StartTask();
 
-      Arkanoid arkanoid = new();
+      Arkanoid arkanoid = new(Util.Context.Pixels.Hauteur, Util.Context.Pixels.Largeur);
 
       while (Util.TaskWork(task))
       {
@@ -383,11 +383,15 @@ namespace WebMatrix.Classes
         Util.Context.Pixels.GetCoordonnee(arkanoid.X, arkanoid.Y).SetColor();
 
         //Mure du bas, pause 1.5 secondes
-        if (arkanoid.Palette(Util.Context.Pixels.Hauteur))
+        if (arkanoid.Palette())
           waitHandle.Wait(TimeSpan.FromMilliseconds(1500));
 
         //Mure du haut et des coté
-        arkanoid.Mure(Util.Context.Pixels.Hauteur, Util.Context.Pixels.Largeur);
+        arkanoid.Mure();
+
+
+        arkanoid.CheckBrique();
+
 
         //Position de la balle
         arkanoid.X += arkanoid.XX;
@@ -411,7 +415,7 @@ namespace WebMatrix.Classes
 
           //Pour effacer la palette quand on la bouge, sans effacer le score
           //if (!(Util.Context.Pixels.GetCoordonnee(1, p1Int + i).Couleur.Egal(scoreColor) && paddle.IsNoir))
-            Util.Context.Pixels.GetCoordonnee(p1Int + i,18).SetColor(paddle);
+          Util.Context.Pixels.GetCoordonnee(p1Int + i, 18).SetColor(paddle);
         }
 
         //Bordure
@@ -424,23 +428,11 @@ namespace WebMatrix.Classes
           Util.Context.Pixels.GetCoordonnee(19, y).Set(31, 31, 127);
         }
 
-        //for (int y = 0; y < 2; y++)
-        //  for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
-        //    Util.Context.Pixels.GetCoordonnee(x, 5 + y).Set(63, 63, 127);
-
-        //for (int y = 0; y < 2; y++)
-        //  for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
-        //    Util.Context.Pixels.GetCoordonnee(x, 7 + y).Set(63, 127, 63);
-
-        //for (int y = 0; y < 2; y++)
-        //  for (int x = 1; x < Util.Context.Pixels.Largeur - 1; x++)
-        //    Util.Context.Pixels.GetCoordonnee(x, 9 + y).Set(127, 63, 127);
-
-
-        //Util.Context.Pixels.GetCoordonnee(9, 18).Set(127, 127, 127);
-        //Util.Context.Pixels.GetCoordonnee(10, 18).Set(127, 127, 127);
-        //Util.Context.Pixels.GetCoordonnee(11, 18).Set(127, 127, 127);
-
+        foreach (Brique brique in arkanoid.Briques.Where(b => b.Visible))
+        {
+          Util.Context.Pixels.GetCoordonnee(brique.X, brique.Y).Couleur = brique.Couleur;
+          Util.Context.Pixels.GetCoordonnee(brique.XX, brique.Y).Couleur = brique.Couleur;
+        }
 
         Util.Context.Pixels.BackGround();
         Util.SetLeds();
