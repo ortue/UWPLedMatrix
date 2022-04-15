@@ -18,7 +18,7 @@
     {
       X = i + 1;
       XX = i + 2;
-      Y = ranger + 5;
+      Y = ranger + 3;
       Visible = true;
 
       Couleur = ranger switch

@@ -81,16 +81,7 @@ namespace WebMatrix.Classes
       Hauteur = hauteur;
       Largeur = largeur;
 
-      Random random = new();
-      XX = random.Next(3, 10) / (decimal)10;
-      YY = random.Next(-10, -3) / (decimal)10;
-
-      X = 10;
-      Y = 17;
-
-      Vitesse = 50;
-
-      Pad = 10;
+      Reset();
 
       Briques = new BriqueList();
     }
@@ -110,6 +101,23 @@ namespace WebMatrix.Classes
           Util.Context.Pixels.GetCoordonnee(x, 9 + y).Set(127, 63, 127);
         }
       }
+    }
+
+    /// <summary>
+    /// Reset
+    /// </summary>
+    public void Reset()
+    {
+      Random random = new();
+      XX = random.Next(2, 6) / (decimal)10;
+      YY = random.Next(-8, -2) / (decimal)10;
+
+      X = 10;
+      Y = 17;
+
+      Vitesse = 90;
+
+      Pad = 10;
     }
 
     /// <summary>
@@ -189,17 +197,8 @@ namespace WebMatrix.Classes
 
       if (IsMort)
       {
-        Random random = new();
-
         mort = true;
-
-        X = 10;
-        Y = 15;
-
-        XX = random.Next(3, 12) / (decimal)10;
-        YY = random.Next(-12, -3) / (decimal)10;
-
-        Vitesse = 40;
+        Reset();
       }
 
       return mort;
@@ -234,16 +233,31 @@ namespace WebMatrix.Classes
     /// <summary>
     /// Briques
     /// </summary>
-    public void CheckBrique()
+    public bool CheckBrique()
     {
-      if (Briques.Find(b => b.X == (int)Math.Round(X + XX, 0) && b.XX == (int)Math.Round(XX + XX, 0) && b.Y == (int)Math.Round(Y + YY, 0)) is Brique brique)
+      bool check = false;
+
+      if (Briques.Find(b => (b.X == (int)Math.Round(X + XX, 0) || b.XX == (int)Math.Round(X + XX, 0)) && b.Y == (int)Math.Round(Y + YY, 0) && b.Visible) is Brique brique)
       {
         brique.Visible = false;
 
-        if (Y + YY < 1)
-          YY -= YY * 2;
+        YY -= YY * 2;
+
+        if (Briques.Find(b => (b.X == (int)Math.Round(X + XX, 0) || b.XX == (int)Math.Round(X + XX, 0)) && b.Y == (int)Math.Round(Y, 0) && b.Visible) != null)
+          XX -= XX * 2;
+
+        check = true;
       }
 
+      if (check && Briques.Find(b => b.Visible) == null)
+      {
+        Reset();
+        Briques = new BriqueList();
+
+        return true;
+      }
+
+      return false;
     }
   }
 }

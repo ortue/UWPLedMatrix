@@ -389,9 +389,8 @@ namespace WebMatrix.Classes
         //Mure du haut et des coté
         arkanoid.Mure();
 
-
-        arkanoid.CheckBrique();
-
+        if (arkanoid.CheckBrique())
+          waitHandle.Wait(TimeSpan.FromMilliseconds(1500));
 
         //Position de la balle
         arkanoid.X += arkanoid.XX;
@@ -438,7 +437,7 @@ namespace WebMatrix.Classes
         Util.SetLeds();
         Util.Context.Pixels.Reset();
 
-        waitHandle.Wait(TimeSpan.FromMilliseconds(arkanoid.Vitesse));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(arkanoid.Vitesse / 2));
       }
     }
   }

@@ -11,7 +11,7 @@ namespace LedLibrary.Collection
     public BriqueList()
     {
       for (int ranger = 0; ranger < 6; ranger++)
-        for (int i = 0; i < 17; i++)
+        for (int i = 0; i < 17; i += 2)
           Add(new Brique(i, ranger));
     }
   }
