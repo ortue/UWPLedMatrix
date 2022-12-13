@@ -89,19 +89,18 @@ namespace WebMatrix.Classes
     /// <summary>
     /// SetBriques
     /// </summary>
-    public void SetBriques()
-    {
-      for (int y = 0; y < 2; y++)
-      {
-        for (int x = 1; x < Largeur - 1; x++)
-        {
-          Util.Context.Pixels.GetCoordonnee(x, 5 + y).Set(63, 63, 127);
-          Util.Context.Pixels.GetCoordonnee(x, 7 + y).Set(63, 127, 63);
-
-          Util.Context.Pixels.GetCoordonnee(x, 9 + y).Set(127, 63, 127);
-        }
-      }
-    }
+    //public void SetBriques()
+    //{
+    //  for (int y = 0; y < 2; y++)
+    //  {
+    //    for (int x = 1; x < Largeur - 1; x++)
+    //    {
+    //      Util.Context.Pixels.GetCoordonnee(x, 5 + y).Set(63, 63, 127);
+    //      Util.Context.Pixels.GetCoordonnee(x, 7 + y).Set(63, 127, 63);
+    //      Util.Context.Pixels.GetCoordonnee(x, 9 + y).Set(127, 63, 127);
+    //    }
+    //  }
+    //}
 
     /// <summary>
     /// Reset

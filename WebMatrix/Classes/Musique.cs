@@ -21,7 +21,7 @@ namespace WebMatrix.Classes
       Util.Setup();
       int task = Util.StartTask();
       byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
+      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[0], 22000, ALFormat.Mono8, audioBuffer.Length);
       audioCapture.Start();
       int cycle = 0;
       int debut = -20;
@@ -50,7 +50,7 @@ namespace WebMatrix.Classes
       Util.Setup();
       int task = Util.StartTask();
       byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
+      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[0], 22000, ALFormat.Mono8, audioBuffer.Length);
       audioCapture.Start();
       int cycle = 0;
       int debut = -20;
@@ -110,7 +110,7 @@ namespace WebMatrix.Classes
       CaractereList caracteres = new(Util.Context.Largeur);
 
       byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
+      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[0], 22000, ALFormat.Mono8, audioBuffer.Length);
       audioCapture.Start();
 
       while (Util.TaskWork(task))
@@ -259,7 +259,7 @@ namespace WebMatrix.Classes
       Util.Setup();
       int task = Util.StartTask();
       byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
+      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[0], 22000, ALFormat.Mono8, audioBuffer.Length);
       audioCapture.Start();
       int cycle = 0;
 
@@ -588,56 +588,5 @@ namespace WebMatrix.Classes
         _ => (fftData[x] - 2) * amplitude// * 0.8
       };
     }
-
-    /// <summary>
-    /// Graph
-    /// </summary>
-    //public static void Graph2()
-    //{
-    //  // Initialize the led strip
-    //  Util.Setup();
-    //  int task = Util.StartTask();
-    //  byte[] audioBuffer = new byte[256];
-    //  using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
-    //  audioCapture.Start();
-    //  int cycle = 0;
-    //  int debut = -20;
-
-    //  while (Util.TaskWork(task))
-    //  {
-    //    Graph(audioCapture, audioBuffer);
-    //    AffHeure(0);
-    //    debut = AffTitre(cycle++, debut);
-    //    Util.SetLeds();
-    //    Util.Context.Pixels.Reset();
-    //  }
-    //}
-
-
-    /// <summary>
-    /// Graph
-    /// </summary>
-    /// <param name="audioBuffer"></param>
-    /// <param name="fft"></param>
-    //private static void Graph2(AudioCapture audioCapture, byte[] audioBuffer)
-    //{
-    //  double[] fft = new double[audioBuffer.Length];
-    //  audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
-
-    //  double max = fft.Max(a => Math.Abs(a));
-    //  double amplitude = (101 - max) / 100 * 0.5;
-
-    //  for (int i = 0; i < audioBuffer.Length; i++)
-    //    fft[i] = (audioBuffer[i] - 128) * amplitude;
-
-    //  for (int x = 0; x < Util.Context.Largeur; x++)
-    //  {
-    //    int y = (int)(fft[x * 2]) + 10;
-    //    byte red = (byte)Math.Abs(fft[x * 2] * 11);
-
-    //    if (Util.Context.Pixels.GetCoordonnee(x, y) is Pixel pixel)
-    //      pixel.Set(red, 0, 127 - red);
-    //  }
-    //}
   }
 }
