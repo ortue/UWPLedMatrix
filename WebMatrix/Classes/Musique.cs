@@ -5,12 +5,28 @@ using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
 using System;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using WebMatrix.Context;
 
 namespace WebMatrix.Classes
 {
   public class Musique
   {
+    public static string DeviceName
+    {
+      get { return AudioCapture.AvailableDevices[1]; }
+    }
+
+    public static byte[] AudioBuffer
+    {
+      get { return new byte[256]; }
+    }
+
+    public static AudioCapture AudioCapture
+    {
+      get { return new(DeviceName, 22000, ALFormat.Mono8, AudioBuffer.Length); }
+    }
+
     /// <summary>
     /// Spectrum
     /// </summary>
@@ -20,17 +36,17 @@ namespace WebMatrix.Classes
       Criteria.Spectrum = true;
       Util.Setup();
       int task = Util.StartTask();
-      byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[0], 22000, ALFormat.Mono8, audioBuffer.Length);
+      //byte[] audioBuffer = new byte[256];
+      using AudioCapture audioCapture = AudioCapture;
       audioCapture.Start();
       int cycle = 0;
       int debut = -20;
 
       while (Util.TaskWork(task))
       {
-        double[] fft = Capture(audioCapture, audioBuffer);
+        double[] fft = Capture(audioCapture, AudioBuffer);
         double amplitude = GetAmplitudeSpectrum(fft);
-        float[] fftData = SetFFT(audioBuffer, fft);
+        float[] fftData = SetFFT(AudioBuffer, fft);
 
         AffHeure(cycle);
         debut = AffTitre(cycle, debut);
@@ -49,15 +65,15 @@ namespace WebMatrix.Classes
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
-      byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[0], 22000, ALFormat.Mono8, audioBuffer.Length);
+      //byte[] audioBuffer = new byte[256];
+      using AudioCapture audioCapture = AudioCapture;
       audioCapture.Start();
       int cycle = 0;
       int debut = -20;
 
       while (Util.TaskWork(task))
       {
-        double[] fft = Capture(audioCapture, audioBuffer);
+        double[] fft = Capture(audioCapture, AudioBuffer);
         double amplitude = GetAmplitudeGraph(fft);
 
         Graph(fft, amplitude);
@@ -109,15 +125,15 @@ namespace WebMatrix.Classes
       double max = 0;
       CaractereList caracteres = new(Util.Context.Largeur);
 
-      byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[0], 22000, ALFormat.Mono8, audioBuffer.Length);
+      //byte[] audioBuffer = new byte[256];
+      using AudioCapture audioCapture = AudioCapture;
       audioCapture.Start();
 
       while (Util.TaskWork(task))
       {
         max -= 0.3;
 
-        double[] fft = Capture(audioCapture, audioBuffer);
+        double[] fft = Capture(audioCapture, AudioBuffer);
 
         if (fft.Max(a => Math.Abs(a)) > max)
           max = fft.Max(a => Math.Abs(a));
@@ -258,16 +274,16 @@ namespace WebMatrix.Classes
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
-      byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[0], 22000, ALFormat.Mono8, audioBuffer.Length);
+      //byte[] audioBuffer = new byte[256];
+      using AudioCapture audioCapture = AudioCapture;
       audioCapture.Start();
       int cycle = 0;
 
       while (Util.TaskWork(task))
       {
-        double[] fft = Capture(audioCapture, audioBuffer);
+        double[] fft = Capture(audioCapture, AudioBuffer);
         double amplitude = GetAmplitudeSpectroGraph(fft);
-        float[] fftData = SetFFT(audioBuffer, fft);
+        float[] fftData = SetFFT(AudioBuffer, fft);
 
         Spectrograph(fftData, amplitude);
         Spectrograph(cycle++);
