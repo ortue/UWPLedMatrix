@@ -1,5 +1,6 @@
 ﻿using LedLibrary.Collection;
 using LedLibrary.Entities;
+using Nfw.Linux.Joystick.Simple;
 using System;
 using System.Linq;
 using System.Threading;
@@ -438,6 +439,54 @@ namespace WebMatrix.Classes
         Util.Context.Pixels.Reset();
 
         waitHandle.Wait(TimeSpan.FromMilliseconds(arkanoid.Vitesse / 2));
+      }
+    }
+
+    public static void Manette()
+    {
+      // Initialize the led strip
+      Util.Setup();
+      int task = Util.StartTask();
+      using ManualResetEventSlim waitHandle = new(false);
+      using Joystick joystick = new("/dev/input/js0");
+
+      int x = 0;
+      int y = 0;
+      int xx = 0;
+      int yy = 0;
+
+      while (Util.TaskWork(task))
+      {
+        joystick.AxisCallback = (j, axis, value) =>
+        {
+          //Console.WriteLine($"{j.DeviceName} => Axis[{axis}] => {value}");
+
+          int valeur = (int)Math.Round((decimal)((value + 32767) / 3449), 0);
+
+          if (axis == 0)
+            x = valeur;
+
+          if (axis == 1)
+            y = valeur;
+
+          if (axis == 2)
+            xx = valeur;
+
+          if (axis == 3)
+            yy = valeur;
+
+          //65534
+
+          //if (axis == 0 || axis == 1)
+            Util.Context.Pixels.GetCoordonnee(x, y).SetColor(Couleur.Get(127, 0, 0));
+
+          //if (axis == 2 || axis == 3)
+            Util.Context.Pixels.GetCoordonnee(xx, yy).SetColor(Couleur.Get(0, 0, 127));
+
+          Util.SetLeds();
+          Util.Context.Pixels.Reset();
+          //waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+        };
       }
     }
   }

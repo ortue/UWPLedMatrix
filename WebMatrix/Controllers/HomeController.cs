@@ -65,23 +65,27 @@ namespace WebMatrix.Controllers
       switch (id)
       {
         case 0:
-          Task.Run(() => Classes.Jeu.Pong());
+          Task.Run(Classes.Jeu.Pong);
           break;
 
         case 1:
-          Task.Run(() => Classes.Jeu.Tetris());
+          Task.Run(Classes.Jeu.Tetris);
           break;
 
         case 2:
-          Task.Run(() => Classes.Jeu.Serpent());
+          Task.Run(Classes.Jeu.Serpent);
           break;
 
         case 3:
-          Task.Run(() => Classes.Jeu.Labyrinthe());
+          Task.Run(Classes.Jeu.Labyrinthe);
           break;
 
         case 4:
-          Task.Run(() => Classes.Jeu.Arkanoid());
+          Task.Run(Classes.Jeu.Arkanoid);
+          break;
+
+        case 6:
+          Task.Run(Classes.Jeu.Manette);
           break;
       }
 
