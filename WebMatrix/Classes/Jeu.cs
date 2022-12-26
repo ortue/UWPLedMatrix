@@ -447,7 +447,7 @@ namespace WebMatrix.Classes
       // Initialize the led strip
       Util.Setup();
       int task = Util.StartTask();
-      using ManualResetEventSlim waitHandle = new(false);
+      //using ManualResetEventSlim waitHandle = new(false);
       using Joystick joystick = new("/dev/input/js0");
 
       int x = 0;
@@ -477,16 +477,69 @@ namespace WebMatrix.Classes
 
           //65534
 
-          //if (axis == 0 || axis == 1)
-            Util.Context.Pixels.GetCoordonnee(x, y).SetColor(Couleur.Get(127, 0, 0));
+          Util.Context.Pixels.GetCoordonnee(x, y).SetColor(Couleur.Get(127, 0, 0));
 
-          //if (axis == 2 || axis == 3)
-            Util.Context.Pixels.GetCoordonnee(xx, yy).SetColor(Couleur.Get(0, 0, 127));
+          Util.Context.Pixels.GetCoordonnee(xx, yy).SetColor(Couleur.Get(0, 0, 127));
 
           Util.SetLeds();
           Util.Context.Pixels.Reset();
-          //waitHandle.Wait(TimeSpan.FromMilliseconds(10));
         };
+      }
+    }
+
+    /// <summary>
+    /// ManetteDeux
+    /// </summary>
+    public static void ManetteDeux()
+    {
+      Util.Setup();
+
+      int task = Util.StartTask();
+
+      using Joystick joystick = new("/dev/input/js0");
+      using ManualResetEventSlim waitHandle = new(false);
+
+      decimal x = 9;
+      decimal y = 9;
+
+      decimal xx = 0;
+      decimal yy = 0;
+
+      while (Util.TaskWork(task))
+      {
+        joystick.AxisCallback = (j, axis, value) =>
+        {
+          if (axis == 0)
+            xx = value / (decimal)32767;
+
+          if (axis == 1)
+            yy = value / (decimal)32767;
+        };
+
+        x += xx;
+        y += yy;
+
+        if (x > 19)
+          x = 19;
+
+        if (y > 19)
+          y = 19;
+
+        if (x < 0)
+          x = 0;
+
+        if (y < 0)
+          y = 0;
+
+        Util.Context.Pixels.GetCoordonnee(x, y).SetColor(Couleur.Get(127, 0, 0));
+
+        //Util.Context.Pixels.Print(Math.Round(xx, 2).ToString(), 1, 1, Couleur.Get(127, 127, 127));
+        //Util.Context.Pixels.Print(Math.Round(yy, 2).ToString(), 1, 10, Couleur.Get(127, 127, 127));
+
+        Util.SetLeds();
+        Util.Context.Pixels.Reset();
+
+        waitHandle.Wait(TimeSpan.FromMilliseconds(20));
       }
     }
   }

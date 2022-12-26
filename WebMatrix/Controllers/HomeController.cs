@@ -87,6 +87,10 @@ namespace WebMatrix.Controllers
         case 6:
           Task.Run(Classes.Jeu.Manette);
           break;
+
+        case 7:
+          Task.Run(Classes.Jeu.ManetteDeux);
+          break;
       }
 
       return View();
