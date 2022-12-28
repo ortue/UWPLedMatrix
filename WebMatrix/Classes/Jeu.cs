@@ -2,6 +2,7 @@
 using LedLibrary.Entities;
 using Nfw.Linux.Joystick.Simple;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using WebMatrix.Context;
@@ -505,6 +506,12 @@ namespace WebMatrix.Classes
       decimal xx = 0;
       decimal yy = 0;
 
+      List<Pixel> pixels = new();
+
+      List<decimal> xs = new List<decimal>();
+      List<decimal> ys = new List<decimal>();
+      List<Couleur> cs = new List<Couleur>();
+
       while (Util.TaskWork(task))
       {
         joystick.AxisCallback = (j, axis, value) =>
@@ -533,8 +540,25 @@ namespace WebMatrix.Classes
 
         Util.Context.Pixels.GetCoordonnee(x, y).SetColor(Couleur.Get(127, 0, 0));
 
-        //Util.Context.Pixels.Print(Math.Round(xx, 2).ToString(), 1, 1, Couleur.Get(127, 127, 127));
-        //Util.Context.Pixels.Print(Math.Round(yy, 2).ToString(), 1, 10, Couleur.Get(127, 127, 127));
+        //xs[0] = x;
+        //ys[0] = y;
+        //cs[0] = Couleur.Get(127, 0, 0);
+
+        //for (int i = 0; i < 25; i++)
+        //{
+        ////Util.Context.Pixels.GetCoordonnee(xs[i], ys[i]).SetColor(cs[i]);
+        //}
+
+        //int c = 127;
+
+        //for (int i = 1; i < 25; i++)
+        //{
+        //  c = (int)(c / 1.2);
+
+        //  xs[i] = xs[i - 1];
+        //  ys[i] = ys[i - 1];
+        //  cs[i] = Couleur.Get(c, 0, 0);
+        //}
 
         Util.SetLeds();
         Util.Context.Pixels.Reset();
