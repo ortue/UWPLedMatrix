@@ -5,7 +5,7 @@ namespace BLedMatrix.Shared
 {
   public partial class Chute
   {
-    private void SetChute()
+    private void Set()
     {
       int task = TaskGo.StartTask();
       int[] bot = new int[20] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -62,7 +62,6 @@ namespace BLedMatrix.Shared
         bot[x]++;
       }
     }
-
 
     /// <summary>
     /// EffacerDernier
