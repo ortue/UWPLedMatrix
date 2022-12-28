@@ -21,7 +21,7 @@ namespace Library.Util
     /// Constructor
     /// </summary>
     /// <param name="numLeds">Number of LEDs in the strip</param>
-    public DotStarStrip(int numLeds)
+    public DotStarStrip(int numLeds, bool work)
     {
       PixelCount = numLeds;
 
@@ -31,7 +31,8 @@ namespace Library.Util
       // By initializing an int array of that specific length, it gets initialized with ints of default value (0).  :)
       EndFrame = new byte[endFrameSize];
 
-      Begin(10000000);
+      if (work)
+        Begin(10000000);
     }
 
     /// <summary>

@@ -1,11 +1,15 @@
 using Library.Collection;
+using Library.Util;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
 builder.Services.AddSingleton<PixelList>();
+builder.Services.AddSingleton<TaskGoList>();
+//builder.Services.AddSingleton(new DotStarStrip(PixelList.Hauteur * PixelList.Largeur, Environment.MachineName != "PC-BENOIT"));
 
 WebApplication app = builder.Build();
 

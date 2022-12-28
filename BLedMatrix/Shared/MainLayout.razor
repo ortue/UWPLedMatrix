@@ -8,19 +8,12 @@
   </div>
 
   <main class="bg-black">
-@*    <div class="top-row px-4">
-      <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-    </div>*@
-
     <article class="content px-4">
 
-@*      <div id="content-wrapper" class="d-flex flex-column">
-*@
-
-  
+      <ErrorBoundaryOverride @ref="errorBoundary">
         @Body
+      </ErrorBoundaryOverride>
 
-@*        </div>*@
-</article>
+    </article>
   </main>
 </div>

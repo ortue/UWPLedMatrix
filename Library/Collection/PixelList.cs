@@ -1,4 +1,5 @@
 ﻿using Library.Entity;
+using Library.Util;
 
 namespace Library.Collection
 {
@@ -12,11 +13,15 @@ namespace Library.Collection
       get { return this.OrderBy(p => p.Numero); }
     }
 
+    public DotStarStrip DotStarStrip { get; set; }
+
     /// <summary>
     /// Contructeur
     /// </summary>
     public PixelList()
     {
+      DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
+
       List<int> emplacement = Emplacement();
 
       for (int position = 0; position < Largeur * Hauteur; position++)
@@ -27,7 +32,7 @@ namespace Library.Collection
     /// Emplacement
     /// </summary>
     /// <returns></returns>
-    public List<int> Emplacement()
+    public static List<int> Emplacement()
     {
       List<int> emplacement = new();
 
@@ -41,6 +46,34 @@ namespace Library.Collection
         }
 
       return emplacement;
+    }
+
+    /// <summary>
+    /// Reset
+    /// </summary>
+    public void Reset()
+    {
+      foreach (Pixel pixel in this)
+        pixel.Couleur = new Couleur();
+    }
+
+    /// <summary>
+    /// GetCoordonnee
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    public Pixel Get(int x, int y)
+    {
+      return Find(p => p.X == x && p.Y == y)!;
+    }
+
+    /// <summary>
+    /// SendPixels
+    /// </summary>
+    public void SendPixels()
+    {
+      DotStarStrip.SendPixels(this);
     }
   }
 }

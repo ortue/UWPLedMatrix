@@ -6,11 +6,22 @@ namespace Library.Entity
   {
     public int X { get; set; }
     public int Y { get; set; }
-    public int R { get; set; }
-    public int G { get; set; }
-    public int B { get; set; }
+    public byte R { get; set; }
+    public byte G { get; set; }
+    public byte B { get; set; }
     public int Numero { get; set; }
     public int Position { get; set; }
+
+    public Couleur Couleur
+    {
+      get { return Couleur.FromArgb(R, G, B); }
+      set
+      {
+        R = value.R;
+        G = value.G;
+        B = value.B;
+      }
+    }
 
     /// <summary>
     /// Constructeur
@@ -25,6 +36,15 @@ namespace Library.Entity
 
       X = position % PixelList.Largeur;
       Y = Convert.ToInt32(Math.Floor((decimal)(position / PixelList.Hauteur)));
+    }
+
+    /// <summary>
+    /// SetColor
+    /// </summary>
+    /// <param name="couleur"></param>
+    public void SetColor(Couleur couleur)
+    {
+      Couleur = couleur;
     }
   }
 }

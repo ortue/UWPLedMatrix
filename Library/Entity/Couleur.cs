@@ -1,7 +1,4 @@
-﻿
-using System;
-
-namespace LedLibrary.Entities
+﻿namespace Library.Entity
 {
   public class Couleur
   {
@@ -29,7 +26,7 @@ namespace LedLibrary.Entities
 
     public bool IsRougePale
     {
-      get { return this.Equals(RougePale); }
+      get { return Equals(RougePale); }
     }
 
     public static Couleur Rouge
@@ -50,7 +47,7 @@ namespace LedLibrary.Entities
     {
       get
       {
-        Random random = new Random();
+        Random random = new();
         int r = random.Next(0, 127);
         int g = random.Next(0, 127);
         int b = random.Next(0, 127);
