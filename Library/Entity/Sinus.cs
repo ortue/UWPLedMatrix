@@ -1,7 +1,11 @@
-﻿namespace Library.Entity
+﻿using Library.Util;
+using Nfw.Linux.Joystick.Xpad;
+
+namespace Library.Entity
 {
   public class Sinus
   {
+    public bool Manette { get; set; }
     public Couleur Couleur { get; set; }
     public double X { get; set; }
     public double Y { get; set; }
@@ -31,6 +35,16 @@
       Couleur = Couleur.Rnd;
       X = 0;
       Y = 10;
+    }
+
+    /// <summary>
+    /// SinusManette
+    /// </summary>
+    /// <param name="manette"></param>
+    public void SinusManette(Manette manette)
+    {
+      XX = manette.X;
+      Hauteur = manette.Y;
     }
 
     /// <summary>

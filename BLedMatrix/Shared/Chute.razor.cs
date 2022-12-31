@@ -25,72 +25,83 @@ namespace BLedMatrix.Shared
       using ManualResetEventSlim waitHandle = new(false);
 
       using Joystick joystick = new("/dev/input/js0");
-      var manette = new Library.Util.Manette();
-      joystick.AxisCallback = (j, axis, value) => manette.Set(axis, value / (decimal)100000);
+      var manette = new Library.Util.Manette(0, 0);
+      joystick.AxisCallback = (j, axis, value) => manette.Set(axis, value / 100000d);
 
-      while (TaskGo.TaskWork(task))
+      try
       {
-        if (bot.All(bo => bo > 20))
+
+
+        while (TaskGo.TaskWork(task))
         {
-          Pixels.Reset();
-          bot = new int[20] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        }
-
-        Random random = new();
-        decimal x = random.Next(0, PixelList.Largeur);
-        decimal y = 0;
-
-        Couleur couleur = Couleur.Rnd;
-
-        while (y < PixelList.Hauteur - bot[(int)Math.Round(x, 0)])
-        {
-          x += manette.AxisAX;
-
-          if (x > 19)
-            x = 19;
-
-          if (x < 0)
-            x = 0;
-
-          EffacerDernier(x, y);
-          Pixels.Get(x, y).SetColor(couleur);
-          Pixels.SendPixels();
-
-          int temp = 100;
-
-          if (y > 2)
-            temp = 50;
-
-          if (y > 4)
-            temp = 25;
-
-          if (y > 6)
-            temp = 1;
-
-          waitHandle.Wait(TimeSpan.FromMilliseconds(temp));
-
-          y++;
-
-          if (y >= PixelList.Hauteur - bot[(int)Math.Round(x, 0)])
+          if (bot.All(bo => bo > 20))
           {
-            if (x > 0 && y < PixelList.Hauteur - bot[(int)Math.Round(x, 0) - 1])
-              EffacerDernier(x--, y);
-
-            if (x < PixelList.Largeur - 1 && y < PixelList.Hauteur - bot[(int)Math.Round(x, 0) + 1])
-              EffacerDernier(x++, y);
-
-            waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+            Pixels.Reset();
+            bot = new int[20] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
           }
-        }
 
-        bot[(int)Math.Round(x, 0)]++;
+          Random random = new();
+          double x = random.Next(0, PixelList.Largeur);
+          double y = 0;
+
+          Couleur couleur = Couleur.Rnd;
+
+          while (y < PixelList.Hauteur - bot[(int)Math.Round(x, 0)])
+          {
+            x += manette.AxisAX;
+
+            if (x > 19)
+              x = 19;
+
+            if (x < 0)
+              x = 0;
+
+            EffacerDernier(x, y);
+            Pixels.Get(x, y).SetColor(couleur);
+            Pixels.SendPixels();
+
+            int temp = 100;
+
+            if (y > 2)
+              temp = 50;
+
+            if (y > 4)
+              temp = 25;
+
+            if (y > 6)
+              temp = 1;
+
+            waitHandle.Wait(TimeSpan.FromMilliseconds(temp));
+
+            y++;
+
+            if (y >= PixelList.Hauteur - bot[(int)Math.Round(x, 0)])
+            {
+              if (x > 0 && y < PixelList.Hauteur - bot[(int)Math.Round(x, 0) - 1])
+                EffacerDernier(x--, y);
+
+              if (x < PixelList.Largeur - 1 && y < PixelList.Hauteur - bot[(int)Math.Round(x, 0) + 1])
+                EffacerDernier(x++, y);
+
+              waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+            }
+          }
+
+          bot[(int)Math.Round(x, 0)]++;
+
+        }
       }
+      catch (Exception ex)
+      {
+        throw new Exception(ex.ToString());
+      }
+
     }
 
     /// <summary>
     /// EffacerDernier
     /// </summary>
-    private void EffacerDernier(decimal x, decimal y)
+    private void EffacerDernier(double x, double y)
     {
       if (y > 0)
         Pixels.Get(x, y - 1).SetColor(new Couleur());

@@ -1,5 +1,6 @@
 ﻿using Library.Collection;
 using Library.Entity;
+using Nfw.Linux.Joystick.Simple;
 
 namespace BLedMatrix.Shared
 {
@@ -25,6 +26,15 @@ namespace BLedMatrix.Shared
       CercleList cercles = new(3, 5, 120);
       using ManualResetEventSlim waitHandle = new(false);
 
+      //using Joystick joystick = new("/dev/input/js0");
+      //var manette = new Library.Util.Manette();
+      //joystick.AxisCallback = (j, axis, value) => manette.Set(axis, value / (decimal)150000);
+      //joystick.ButtonCallback = (j, button, pressed) => manette.Set(button, pressed);
+
+      //decimal x = 9;
+      //decimal y = 9;
+
+
       while (TaskGo.TaskWork(task))
       {
         if (i++ % 250 == 249)
@@ -32,6 +42,26 @@ namespace BLedMatrix.Shared
           int r = random.Next(2, 9);
           cercles = new CercleList(r, 5, 360 / r);
         }
+
+        //if (manette.BtnA)
+        //{
+        //  x += manette.AxisAX;
+        //  y += manette.AxisAY;
+
+        //  if (x > 19)
+        //    x = 19;
+
+        //  if (y > 19)
+        //    y = 19;
+
+        //  if (x < 0)
+        //    x = 0;
+
+        //  if (y < 0)
+        //    y = 0;
+
+        //  cercles = new CercleList(r, 5, 360 / r);
+        //}
 
         for (double rayon = 1; rayon < 15; rayon += 0.4)
           foreach (var cercle in cercles)

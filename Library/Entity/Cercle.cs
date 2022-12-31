@@ -155,5 +155,24 @@
         }
       }
     }
+
+    /// <summary>
+    /// SetRayon
+    /// </summary>
+    /// <param name="rayon"></param>
+    /// <param name="pixel"></param>
+    public void SetRayon(double rayon, Pixel pixel)
+    {
+      Rayon += rayon;
+
+      if (Rayon > 28)
+      {
+        Rayon = 1;
+        Couleur = Couleur.Rnd;
+
+        X = pixel.X;
+        Y = pixel.Y;
+      }
+    }
   }
 }

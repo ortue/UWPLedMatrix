@@ -23,32 +23,18 @@ namespace BLedMatrix.Shared
       using ManualResetEventSlim waitHandle = new(false);
 
       using Joystick joystick = new("/dev/input/js0");
-      var manette = new Library.Util.Manette();
-      joystick.AxisCallback = (j, axis, value) => manette.Set(axis, value / (decimal)64000);
+      var manette = new Library.Util.Manette(10,10);
+      joystick.AxisCallback = (j, axis, value) => manette.Set(axis, value / 64000d);
       joystick.ButtonCallback = (j, button, pressed) => manette.Set(button, pressed);
 
       //32767
-      decimal x = 0;
-      decimal y = 0;
+
 
       while (TaskGo.TaskWork(task))
       {
-        x += manette.AxisAX;
-        y += manette.AxisAY;
+        manette.NextAxisA();
 
-        if (x > 19)
-          x = 19;
-
-        if (y > 19)
-          y = 19;
-
-        if (x < 0)
-          x = 0;
-
-        if (y < 0)
-          y = 0;
-
-        Pixels.Get(x, y).SetColor(Couleur.Rouge);
+        Pixels.Get(manette.Pixel).SetColor(Couleur.Rouge);
         
         if(manette.BtnA)
         Pixels.Get(0, 19).SetColor(Couleur.Rouge);

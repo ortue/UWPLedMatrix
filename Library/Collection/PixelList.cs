@@ -83,7 +83,7 @@ namespace Library.Collection
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
-    public Pixel Get(decimal x, decimal y)
+    public Pixel Get(double x, double y)
     {
       int xx = (int)Math.Round(x, 0);
 

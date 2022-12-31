@@ -4,6 +4,8 @@ namespace Library.Collection
 {
   public class SinusList : List<Sinus>
   {
+    public bool Manette { get; set; }
+
     /// <summary>
     /// Constructeur
     /// </summary>

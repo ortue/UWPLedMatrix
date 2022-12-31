@@ -49,11 +49,21 @@ namespace Library.Collection
     /// <summary>
     /// SetRayon
     /// </summary>
-    /// <param name="v"></param>
+    /// <param name="rayon"></param>
     public void SetRayon(double rayon, bool random)
     {
       foreach (Cercle cercle in this)
         cercle.SetRayon(rayon, random);
+    }
+
+    /// <summary>
+    /// SetRayon
+    /// </summary>
+    /// <param name="rayon"></param>
+    public void SetRayon(double rayon, Pixel pixel)
+    {
+      foreach (Cercle cercle in this)
+        cercle.SetRayon(rayon, pixel);
     }
   }
 }

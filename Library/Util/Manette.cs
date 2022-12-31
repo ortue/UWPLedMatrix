@@ -1,15 +1,21 @@
-﻿namespace Library.Util
+﻿using Library.Collection;
+using Library.Entity;
+
+namespace Library.Util
 {
   public class Manette
   {
-    public decimal AxisAX { get; set; }
-    public decimal AxisAY { get; set; }
+    public double X { get; set; }
+    public double Y { get; set; }
 
-    public decimal AxisBX { get; set; }
-    public decimal AxisBY { get; set; }
+    public double AxisAX { get; set; }
+    public double AxisAY { get; set; }
 
-    public decimal AxisCX { get; set; }
-    public decimal AxisCY { get; set; }
+    public double AxisBX { get; set; }
+    public double AxisBY { get; set; }
+
+    public double AxisCX { get; set; }
+    public double AxisCY { get; set; }
 
     public bool BtnA { get; set; }
     public bool BtnB { get; set; }
@@ -30,22 +36,28 @@
     public bool BtnH { get; set; }
     public bool BtnO { get; set; }
 
-    //public decimal AxisX
-    //{
-    //  get { return new decimal[] { AxisAX, AxisBX, AxisCX }.Max(); }
-    //}
-
-    //public decimal AxisY
-    //{
-    //  get { return new decimal[] { AxisAY, AxisBY, AxisCY }.Max(); }
-    //}
+    public Pixel Pixel
+    {
+      get { return new Pixel { X = (int)Math.Round(X, 0), Y = (int)Math.Round(Y, 0) }; }
+    }
 
     /// <summary>
-    /// Set
+    /// Constructeur
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    public Manette(int x, int y)
+    {
+      X = x;
+      Y = y;
+    }
+
+    /// <summary>
+    /// Set 
     /// </summary>
     /// <param name="axis"></param>
-    /// <param name="value"></param>
-    public void Set(byte axis, decimal value)
+    /// <param name="value">[0..32767]</param>
+    public void Set(byte axis, double value)
     {
       _ = axis switch
       {
@@ -94,6 +106,50 @@
 
         _ => BtnA = false
       };
+    }
+
+    /// <summary>
+    /// NextAxisA
+    /// </summary>
+    public void NextAxisA()
+    {
+      X += AxisAX;
+      Y += AxisAY;
+
+      if (X > PixelList.Largeur - 1)
+        X = PixelList.Largeur - 1;
+
+      if (Y > PixelList.Hauteur - 1)
+        Y = PixelList.Hauteur - 1;
+
+      if (X < 0)
+        X = 0;
+
+      if (Y < 0)
+        Y = 0;
+    }
+
+    /// <summary>
+    /// NextAxisA
+    /// </summary>
+    /// <param name="largeur"></param>
+    /// <param name="hauteur"></param>
+    public void NextAxisA(int largeur, int hauteur)
+    {
+      X += AxisAX;
+      Y += AxisAY;
+
+      if (X > largeur)
+        X = largeur;
+
+      if (Y > hauteur)
+        Y = hauteur;
+
+      if (X < 1)
+        X = 1;
+
+      if (Y < 1)
+        Y = 1;
     }
   }
 }

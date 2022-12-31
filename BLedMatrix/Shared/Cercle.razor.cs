@@ -1,4 +1,5 @@
 ﻿using Library.Collection;
+using Nfw.Linux.Joystick.Simple;
 
 namespace BLedMatrix.Shared
 {
@@ -21,6 +22,13 @@ namespace BLedMatrix.Shared
 
       using ManualResetEventSlim waitHandle = new(false);
 
+      using Joystick joystick = new("/dev/input/js0");
+      var manette = new Library.Util.Manette(9, 9);
+      joystick.AxisCallback = (j, axis, value) => manette.Set(axis, value / 150000d);
+      joystick.ButtonCallback = (j, button, pressed) => manette.Set(button, pressed);
+
+      double ra = 4;
+
       Random random = new();
       DateTime temp = DateTime.Now;
       CercleList cercles = new(4, 1, 90);
@@ -36,15 +44,33 @@ namespace BLedMatrix.Shared
 
         cercles.Variation();
 
-        foreach (var cercle in cercles)
-          Pixels.Get(PixelList.GetCercleCoord(cercle.Centre, cercle.DegreeInter, cercle.Rayon)).SetColor(cercle.Couleur);
+        if (manette.BtnA)
+        {
+          ra += manette.AxisBX;
+
+          if (ra > 10)
+            ra = 10;
+
+          if (ra < 0)
+            ra = 0;
+
+          manette.NextAxisA();
+
+          foreach (var cercle in cercles)
+            Pixels.Get(PixelList.GetCercleCoord(manette.Pixel, cercle.DegreeInter, Math.Abs((int)Math.Round(ra, 0)))).SetColor(cercle.Couleur);
+        }
+        else
+        {
+          foreach (var cercle in cercles)
+            Pixels.Get(PixelList.GetCercleCoord(cercle.Centre, cercle.DegreeInter, cercle.Rayon)).SetColor(cercle.Couleur);
+        }
 
         cercles.SetDegree(5);
 
         Pixels.SendPixels();
         Pixels.Reset();
 
-        waitHandle.Wait(TimeSpan.FromMilliseconds(4));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(5));
       }
     }
   }
