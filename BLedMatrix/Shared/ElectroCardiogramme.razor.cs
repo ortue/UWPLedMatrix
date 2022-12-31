@@ -1,42 +1,86 @@
-﻿using Library.Entity;
+﻿using Library.Collection;
+using Library.Entity;
 
 namespace BLedMatrix.Shared
 {
   public partial class ElectroCardiogramme
   {
+    /// <summary>
+    /// Set
+    /// </summary>
     private void Set()
     {
-      int task = TaskGo.StartTask();
+      Task.Run(ExecECG);
+    }
 
-      Random random = new();
-      DateTime temp = DateTime.Now;
-      //CercleList cercles = new(4, 1, 90);
+    /// <summary>
+    /// ElectroCardiogramme
+    /// </summary>
+    private void ExecECG()
+    {
+      int task = TaskGo.StartTask();
+      ECGList egcs = new(60, PixelList.Largeur, PixelList.Hauteur);
+      using ManualResetEventSlim waitHandle = new(false);
 
       while (TaskGo.TaskWork(task))
       {
-        //if (temp.AddMinutes(1) < DateTime.Now)
-        //{
-        //  temp = DateTime.Now;
-        //  int r = random.Next(2, 12);
-        //  cercles = new CercleList(r, 1, 360 / r);
-        //}
+        Coeur(egcs.Next(9));
 
-        //cercles.Variation();
-
-        //foreach (Cercle cercle in cercles)
-        //  Pixels.Get(Util.Context.Pixels.GetCercleCoord(cercle.Centre, cercle.DegreeInter, cercle.Rayon)).SetColor(cercle.Couleur);
-
-        //cercles.SetDegree(5);
-
-
-        Pixels.Get(1, 1).SetColor(Couleur.Rouge);
+        foreach (ECG egc in egcs)
+          Pixels.Get(egc.X, egc.Y).SetColor(egc.Couleur);
 
         Pixels.SendPixels();
         Pixels.Reset();
 
-        using ManualResetEventSlim waitHandle = new(false);
-        waitHandle.Wait(TimeSpan.FromMilliseconds(2));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(80));
       }
+    }
+
+    /// <summary>
+    /// Coeur
+    /// </summary>
+    public void Coeur(bool battement)
+    {
+      if (!battement)
+      {
+        Pixels.Get(13, 1).SetColor(Couleur.Get(15, 0, 0));
+        Pixels.Get(17, 1).SetColor(Couleur.Get(15, 0, 0));
+
+        Pixels.Get(12, 2).SetColor(Couleur.Get(15, 0, 0));
+        Pixels.Get(18, 2).SetColor(Couleur.Get(15, 0, 0));
+
+        Pixels.Get(12, 3).SetColor(Couleur.Get(15, 0, 0));
+        Pixels.Get(18, 3).SetColor(Couleur.Get(15, 0, 0));
+
+        Pixels.Get(13, 4).SetColor(Couleur.Get(15, 0, 0));
+        Pixels.Get(17, 4).SetColor(Couleur.Get(15, 0, 0));
+
+        Pixels.Get(14, 5).SetColor(Couleur.Get(15, 0, 0));
+        Pixels.Get(16, 5).SetColor(Couleur.Get(15, 0, 0));
+
+        Pixels.Get(15, 6).SetColor(Couleur.Get(15, 0, 0));
+      }
+
+      Pixels.Get(14, 1).SetColor(Couleur.Get(25, 0, 0));
+      Pixels.Get(16, 1).SetColor(Couleur.Get(25, 0, 0));
+
+      Pixels.Get(13, 2).SetColor(Couleur.Get(25, 0, 0));
+      Pixels.Get(14, 2).SetColor(Couleur.Get(35, 0, 0));
+      Pixels.Get(15, 2).SetColor(Couleur.Get(25, 0, 0));
+      Pixels.Get(16, 2).SetColor(Couleur.Get(35, 0, 0));
+      Pixels.Get(17, 2).SetColor(Couleur.Get(25, 0, 0));
+
+      Pixels.Get(13, 3).SetColor(Couleur.Get(25, 0, 0));
+      Pixels.Get(14, 3).SetColor(Couleur.Get(35, 0, 0));
+      Pixels.Get(15, 3).SetColor(Couleur.Get(25, 0, 0));
+      Pixels.Get(16, 3).SetColor(Couleur.Get(35, 0, 0));
+      Pixels.Get(17, 3).SetColor(Couleur.Get(25, 0, 0));
+
+      Pixels.Get(14, 4).SetColor(Couleur.Get(25, 0, 0));
+      Pixels.Get(15, 4).SetColor(Couleur.Get(35, 0, 0));
+      Pixels.Get(16, 4).SetColor(Couleur.Get(25, 0, 0));
+
+      Pixels.Get(15, 5).SetColor(Couleur.Get(25, 0, 0));
     }
   }
 }

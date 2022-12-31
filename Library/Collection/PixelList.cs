@@ -7,13 +7,12 @@ namespace Library.Collection
   {
     public const int Largeur = 20;
     public const int Hauteur = 20;
+    public DotStarStrip DotStarStrip { get; set; }
 
     public IEnumerable<Pixel> PixelColors
     {
       get { return this.OrderBy(p => p.Numero); }
     }
-
-    public DotStarStrip DotStarStrip { get; set; }
 
     /// <summary>
     /// Contructeur
@@ -49,7 +48,7 @@ namespace Library.Collection
     }
 
     /// <summary>
-    /// Reset
+    /// Remet la couleur noir a tous les pixels de la liste
     /// </summary>
     public void Reset()
     {
@@ -58,7 +57,7 @@ namespace Library.Collection
     }
 
     /// <summary>
-    /// GetCoordonnee
+    /// Get pixel using Coordonnee
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>
@@ -69,11 +68,68 @@ namespace Library.Collection
     }
 
     /// <summary>
-    /// SendPixels
+    /// Get pixel using Coordonnee
+    /// </summary>
+    /// <param name="coordonnee"></param>
+    /// <returns></returns>
+    public Pixel Get(Pixel coordonnee)
+    {
+      return Find(p => p.X == coordonnee.X && p.Y == coordonnee.Y)!;
+    }
+
+    /// <summary>
+    /// Get pixel using Coordonnee
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    public Pixel Get(decimal x, decimal y)
+    {
+      int xx = (int)Math.Round(x, 0);
+
+      if (xx >= Largeur - 1)
+        xx = Largeur - 1;
+
+      if (xx < 0)
+        xx = 0;
+
+      int yy = (int)Math.Round(y, 0);
+
+      if (yy >= Hauteur - 1)
+        yy = Hauteur - 1;
+
+      if (yy < 0)
+        yy = 0;
+
+      return Find(p => p.X == xx && p.Y == yy)!;
+    }
+
+    /// <summary>
+    /// Envois la liste des pixels aux leds
     /// </summary>
     public void SendPixels()
     {
-      DotStarStrip.SendPixels(this);
+      DotStarStrip.SendPixels(PixelColors);
+    }
+
+    /// <summary>
+    /// GetCerlcleCoord
+    /// </summary>
+    /// <param name="degree"></param>
+    /// <param name="rayon"></param>
+    /// <returns></returns>
+    public static Pixel GetCercleCoord(Pixel centre, int degree, double rayon)
+    {
+      Pixel p = new();
+
+      if (degree >= 0 && degree <= 180)
+        p.X = centre.X + (int)(rayon * Math.Sin(Math.PI * degree / 180));
+      else
+        p.X = centre.X - (int)(rayon * -Math.Sin(Math.PI * degree / 180)) - 1;
+
+      p.Y = centre.Y - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
+
+      return p.CheckCoord();
     }
   }
 }

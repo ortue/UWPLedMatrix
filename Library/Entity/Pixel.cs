@@ -26,9 +26,16 @@ namespace Library.Entity
     /// <summary>
     /// Constructeur
     /// </summary>
+    public Pixel()
+    {
+
+    }
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
     /// <param name="position">Position qu'on affiche une image a partir du coin haut droit vers le coin bas gauche</param>
     /// <param name="numero">Ordre qu'on envoit les pixels au rubans, du coin bas gauche en serpent vers le haut</param>
-    /// <param name="i"></param>
     public Pixel(int position, int numero)
     {
       Position = position + 1;
@@ -45,6 +52,62 @@ namespace Library.Entity
     public void SetColor(Couleur couleur)
     {
       Couleur = couleur;
+    }
+
+    /// <summary>
+    /// CheckCoord
+    /// </summary>
+    /// <param name="coord"></param>
+    /// <returns></returns>
+    public Pixel CheckCoord()
+    {
+      if (X < 0)
+        X = 0;
+
+      if (Y < 0)
+        Y = 0;
+
+      if (X > PixelList.Largeur - 1)
+        X = PixelList.Largeur - 1;
+
+      if (Y > PixelList.Hauteur - 1)
+        Y = PixelList.Hauteur - 1;
+
+      return this;
+    }
+
+    /// <summary>
+    /// Cercle
+    /// </summary>
+    /// <param name="degree"></param>
+    /// <param name="rayon"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    public static Pixel? Cercle(int degree, double rayon, int x = 10, int y = 10)
+    {
+      Pixel coord = new();
+
+      if (degree >= 0 && degree <= 180)
+        coord.X = x + (int)(rayon * Math.Sin(Math.PI * degree / 180));
+      else
+        coord.X = x - (int)(rayon * -Math.Sin(Math.PI * degree / 180)) - 1;
+
+      coord.Y = y - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
+
+      if (coord.X < 0)
+        return null;
+
+      if (coord.Y < 0)
+        return null;
+
+      if (coord.X > PixelList.Largeur - 1)
+        return null;
+
+      if (coord.Y > PixelList.Hauteur - 1)
+        return null;
+
+      return coord;
     }
   }
 }

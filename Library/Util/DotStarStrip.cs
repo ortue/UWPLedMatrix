@@ -1,4 +1,4 @@
-﻿using Library.Collection;
+﻿using Library.Entity;
 using Unosquare.RaspberryIO;
 using Unosquare.RaspberryIO.Abstractions;
 using Unosquare.WiringPi;
@@ -59,7 +59,7 @@ namespace Library.Util
     /// Sends a bunch of colors out to the LED strip
     /// </summary>
     /// <param name="pixels">List of <see cref="Color"/>s to send to the strip.</param>
-    public void SendPixels(PixelList pixels)
+    public void SendPixels(IEnumerable<Pixel> pixels)
     {
       List<byte> spiDataBytes = new();
       spiDataBytes.AddRange(StartFrame);

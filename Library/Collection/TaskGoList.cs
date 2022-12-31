@@ -4,7 +4,7 @@ namespace Library.Collection
 {
   public class TaskGoList : List<TaskGo>
   {
-    public static int TaskNbr { get; set; }
+    public int TaskNbr { get; set; }
 
     /// <summary>
     /// Constructeur
