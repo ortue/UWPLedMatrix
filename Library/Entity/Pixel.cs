@@ -48,10 +48,29 @@ namespace Library.Entity
     /// <summary>
     /// SetColor
     /// </summary>
+    public void SetColor()
+    {
+      Couleur = Couleur.Noir;
+    }
+
+    /// <summary>
+    /// SetColor
+    /// </summary>
     /// <param name="couleur"></param>
     public void SetColor(Couleur couleur)
     {
       Couleur = couleur;
+    }
+
+    /// <summary>
+    /// SetColor
+    /// </summary>
+    /// <param name="r"></param>
+    /// <param name="g"></param>
+    /// <param name="b"></param>
+    public void SetColor(int r, int g, int b)
+    {
+      Couleur = Couleur.Get(r, g, b);
     }
 
     /// <summary>

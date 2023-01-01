@@ -1,35 +1,11 @@
 ﻿@page "/Jeux"
 
-@inject PixelList Pixels
-
-<PageTitle>Démo</PageTitle>
+<PageTitle>Jeux</PageTitle>
 
 <div class="container">
   <div class="row g-3">
-    @*<Chute />*@
+    <Pong/>
 
-    <table>
 
-      @for (int i = 0; i < 20; i++)
-      {
-        <tr>
-
-          @for (int j = 0; j < 20; j++)
-          {
-            var x = j;
-            var y = i;
-
-            <td style="height:10px;">
-              <button class="btn btn-primary btn-sm" @onmouseover="()=>Set(x,y)" style="height:20px;">
-               &nbsp;
-              </button>
-
-            </td>
-          }
-
-        </tr>
-      }
-
-    </table>
   </div>
 </div>
