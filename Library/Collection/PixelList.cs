@@ -28,6 +28,15 @@ namespace Library.Collection
     }
 
     /// <summary>
+    /// Contructeur
+    /// </summary>
+    /// <param name="v"></param>
+    public PixelList(bool v)
+    {
+      DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
+    }
+
+    /// <summary>
     /// Emplacement
     /// </summary>
     /// <returns></returns>
@@ -130,6 +139,16 @@ namespace Library.Collection
       p.Y = centre.Y - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
 
       return p.CheckCoord();
+    }
+
+    /// <summary>
+    /// Set
+    /// </summary>
+    /// <param name="pixelList"></param>
+    public void Set(PixelList pixels)
+    {
+      foreach (Pixel pixel in pixels)
+        Get(pixel).SetColor(pixel.Couleur);
     }
   }
 }

@@ -47,8 +47,8 @@ namespace BLedMatrix.Shared
         pong.Y += pong.YY;
 
         //Pointage
-        //Util.Context.Pixels.Print(pong.ScoreP1.ToString("00"), 1, 2, scoreColor);
-        //Util.Context.Pixels.Print(pong.ScoreP2.ToString("00"), 12, 2, scoreColor);
+        Pixels.Set(CaractereList.Print(pong.ScoreP1.ToString("00"), 1, 2, scoreColor));
+        Pixels.Set(CaractereList.Print(pong.ScoreP2.ToString("00"), 12, 2, scoreColor));
 
         //La balle
         Pixels.Get(pong.X, pong.Y).SetColor(16, 16, 127);
