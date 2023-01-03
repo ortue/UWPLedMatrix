@@ -56,6 +56,11 @@
       }
     }
 
+    public string Hexa
+    {
+      get { return "#"+R.ToString("X2")+G.ToString("X2")+B.ToString("X2"); }
+    }
+
     /// <summary>
     /// Constructeur
     /// </summary>

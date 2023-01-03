@@ -5,6 +5,8 @@ namespace Library.Util
 {
   public class Manette
   {
+    public bool Start { get; set; }
+
     public double X { get; set; }
     public double Y { get; set; }
 
@@ -59,6 +61,9 @@ namespace Library.Util
     /// <param name="value">[0..32767]</param>
     public void Set(byte axis, double value)
     {
+      if (value != 0)
+        Start = true;
+
       _ = axis switch
       {
         0 => AxisAX = value,
@@ -81,6 +86,9 @@ namespace Library.Util
     /// <param name="pressed"></param>
     public void Set(byte button, bool pressed)
     {
+      if (pressed)
+        Start = true;
+
       _ = button switch
       {
         0 => BtnA = pressed,

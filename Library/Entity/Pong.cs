@@ -1,4 +1,6 @@
-﻿namespace Library.Entity
+﻿using Library.Util;
+
+namespace Library.Entity
 {
   public class Pong
   {
@@ -208,21 +210,33 @@
     /// <summary>
     /// PositionPalette
     /// </summary>
-    public void PositionPalette()
+    public void PositionPalette(Manette manette)
     {
-      if (X > 10d && XX > 0d)
+      if (manette.Start)
       {
+        Pad1 += manette.AxisAY;
+
         if (Math.Round(Pad2, 0) < Math.Round(Y, 0))
           Pad2 += VitessePalette;
         else if (Math.Round(Pad2, 0) > Math.Round(Y, 0))
           Pad2 -= VitessePalette;
       }
-      else if (X < 10d && XX < 0d)
+      else
       {
-        if (Math.Round(Pad1, 0) < Math.Round(Y, 0))
-          Pad1 += VitessePalette;
-        else if (Math.Round(Pad1, 0) > Math.Round(Y, 0))
-          Pad1 -= VitessePalette;
+        if (X > 10d && XX > 0d)
+        {
+          if (Math.Round(Pad2, 0) < Math.Round(Y, 0))
+            Pad2 += VitessePalette;
+          else if (Math.Round(Pad2, 0) > Math.Round(Y, 0))
+            Pad2 -= VitessePalette;
+        }
+        else if (X < 10d && XX < 0d)
+        {
+          if (Math.Round(Pad1, 0) < Math.Round(Y, 0))
+            Pad1 += VitessePalette;
+          else if (Math.Round(Pad1, 0) > Math.Round(Y, 0))
+            Pad1 -= VitessePalette;
+        }
       }
     }
 

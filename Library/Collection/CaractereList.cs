@@ -1,5 +1,4 @@
 ﻿using Library.Entity;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Library.Collection
 {
@@ -8,6 +7,30 @@ namespace Library.Collection
     public int Largeur { get; set; }
     public int LargeurTotal { get; set; }
     public string? TextTmp { get; set; }
+
+    public static string Heure
+    {
+      get
+      {
+        string leading = "";
+        string deuxPoint = " ";
+        int hh = DateTime.Now.Hour;
+
+        if (hh == 0)
+          hh = 12;
+
+        if (hh > 12)
+          hh -= 12;
+
+        if (DateTime.Now.Millisecond < 500)
+          deuxPoint = ":";
+
+        if (hh < 10)
+          leading = "  ";
+
+        return leading + hh + deuxPoint + DateTime.Now.ToString("mm");
+      }
+    }
 
     /// <summary>
     /// Constructeur
@@ -33,8 +56,7 @@ namespace Library.Collection
       caracteres.SetText(texte);
 
       foreach (Police lettre in caracteres.GetCaracteres().Where(c => c.Point))
-        if (pixels.Get(lettre.X + x, lettre.Y + y) is Pixel pixel)
-          pixel.SetColor(couleur);
+        pixels.Add(new Pixel(lettre.X + x, lettre.Y + y, couleur));
 
       return pixels;
     }

@@ -1,6 +1,7 @@
 ﻿using Library.Collection;
 using Library.Entity;
 using Library.Util;
+using Nfw.Linux.Joystick.Simple;
 
 namespace BLedMatrix.Shared
 {
@@ -23,6 +24,11 @@ namespace BLedMatrix.Shared
       var pong = new Library.Entity.Pong();
       Couleur scoreColor = new() { R = 127, G = 127, B = 127 };
       using ManualResetEventSlim waitHandle = new(false);
+
+      using Joystick joystick = new("/dev/input/js0");
+      var manette = new Library.Util.Manette(10, 10);
+      joystick.AxisCallback = (j, axis, value) => manette.Set(axis, value / 32767d);
+      joystick.ButtonCallback = (j, button, pressed) => manette.Set(button, pressed);
 
       while (TaskGo.TaskWork(task))
       {
@@ -55,7 +61,7 @@ namespace BLedMatrix.Shared
         Pixels.Get(pong.X, pong.Y).SetColor(16, 16, 127);
 
         //Position des palettes
-        pong.PositionPalette();
+        pong.PositionPalette(manette);
 
         //Dessiner les palettes
         for (int i = -3; i < 3; i++)

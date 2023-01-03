@@ -1,6 +1,7 @@
 ﻿using Library.Collection;
 using Library.Entity;
 using Library.Util;
+using Nfw.Linux.Joystick.Simple;
 
 namespace BLedMatrix.Shared
 {
@@ -23,14 +24,18 @@ namespace BLedMatrix.Shared
       int cycle = 0;
       int topScore = 0;
       var tetris = new Library.Entity.Tetris();
+      
       using ManualResetEventSlim waitHandle = new(false);
+      
+      using Joystick joystick = new("/dev/input/js0");
+      var manette = new Library.Util.Manette(10, 10);
+      joystick.AxisCallback = (j, axis, value) => manette.Set(axis, value / 32767d);
+      joystick.ButtonCallback = (j, button, pressed) => manette.Set(button, pressed);
 
       while (TaskGo.TaskWork(task))
       {
         //Pointage
-        //Pixels.Print(tetris.ScoreUn, 15, 8, Couleur.Get(127, 127, 127));
         Pixels.Set(CaractereList.Print(tetris.ScoreUn, 15, 8, Couleur.Get(127, 127, 127)));
-        //Pixels.Print(tetris.ScoreDeux, 15, 14, Couleur.Get(127, 127, 127));
         Pixels.Set(CaractereList.Print(tetris.ScoreDeux, 15, 14, Couleur.Get(127, 127, 127)));
 
         foreach (TetrisPiece centaine in tetris.Centaines)
@@ -62,7 +67,7 @@ namespace BLedMatrix.Shared
             pixel.SetColor(pieceTombe.Couleur);
 
         //Mouvement
-        tetris.Mouvement(cycle++);
+        tetris.Mouvement(cycle++, manette);
 
         //Piece
         foreach (TetrisPiece piece in tetris.Pieces)
@@ -83,16 +88,15 @@ namespace BLedMatrix.Shared
         {
           if (tetris.Mort)
           {
+            manette.Start = false;
+
             if (tetris.Score > topScore)
               topScore = tetris.Score;
 
             foreach (Pixel pixel in Pixels)
               pixel.Fade(4);
 
-            //Util.Context.Pixels.Print("TOP", 4, 2, Couleur.Get(127, 127, 127));
             Pixels.Set(CaractereList.Print("TOP", 4, 2, Couleur.Get(127, 127, 127)));
-
-            //Util.Context.Pixels.Print(topScore.ToString(), 3, 12, Couleur.Get(127, 127, 127));
             Pixels.Set(CaractereList.Print(topScore.ToString(), 3, 12, Couleur.Get(127, 127, 127)));
 
             Pixels.SendPixels();

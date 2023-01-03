@@ -8,6 +8,7 @@ namespace Library.Collection
     public const int Largeur = 20;
     public const int Hauteur = 20;
     public DotStarStrip DotStarStrip { get; set; }
+    public IEnumerable<Pixel>? PixelDebug { get; set; }
 
     public IEnumerable<Pixel> PixelColors
     {
@@ -30,11 +31,23 @@ namespace Library.Collection
     /// <summary>
     /// Contructeur
     /// </summary>
-    /// <param name="v"></param>
-    public PixelList(bool v)
+    /// <param name="inter"></param>
+    public PixelList(bool inter)
     {
       DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
     }
+
+    /// <summary>
+    /// Contructeur
+    /// </summary>
+    /// <param name="pixels"></param>
+    //public PixelList(PixelList pixels)
+    //{
+      //DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
+
+      //foreach (Pixel pixel in pixels)
+      //  Add(new Pixel(pixel));
+    //}
 
     /// <summary>
     /// Emplacement
@@ -119,6 +132,24 @@ namespace Library.Collection
     public void SendPixels()
     {
       DotStarStrip.SendPixels(PixelColors);
+      SendPixelsDebug(Environment.MachineName == "PC-BENOIT");
+    }
+
+    /// <summary>
+    /// SendPixelsDebug
+    /// </summary>
+    /// <param name="debug"></param>
+    private void SendPixelsDebug(bool debug)
+    {
+      if (!debug)
+        return;
+
+      List<Pixel> pixels = new List<Pixel>();
+
+      foreach (Pixel pixel in this)
+        pixels.Add(new Pixel(pixel));
+
+      PixelDebug = pixels;
     }
 
     /// <summary>

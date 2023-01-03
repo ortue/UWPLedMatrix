@@ -1,7 +1,6 @@
 ﻿using Library.Collection;
 using Library.Entity;
 using Nfw.Linux.Joystick.Simple;
-using System.Drawing;
 
 namespace BLedMatrix.Shared
 {
@@ -41,7 +40,7 @@ namespace BLedMatrix.Shared
         {
           manette.NextAxisA();
           cercles.SetRayon(0.2, manette.Pixel);        
-          Pixels.Get(manette.Pixel).SetColor(Couleur.Rnd);
+          //Pixels.Get(manette.Pixel).SetColor(Couleur.Rnd);
         }
         else
           cercles.SetRayon(0.2, i++ % 2000 > 1000);

@@ -23,6 +23,17 @@ namespace Library.Entity
       }
     }
 
+    //public Couleur CouleurDouble
+    //{
+    //  get { return Couleur.FromArgb((byte)(R * 2), (byte)(G * 2), (byte)(B * 2)); }
+    //  set
+    //  {
+    //    R = value.R;
+    //    G = value.G;
+    //    B = value.B;
+    //  }
+    //}
+
     /// <summary>
     /// Constructeur
     /// </summary>
@@ -43,6 +54,41 @@ namespace Library.Entity
 
       X = position % PixelList.Largeur;
       Y = Convert.ToInt32(Math.Floor((decimal)(position / PixelList.Hauteur)));
+    }
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    /// <param name="pixel"></param>
+    public Pixel(Pixel pixel)
+    {
+      Mapping(pixel);
+    }
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="numero"></param>
+    /// <param name="couleur"></param>
+    public Pixel(int x, int y, Couleur couleur)
+    {
+      Couleur = couleur;
+      X = x;
+      Y = y;
+    }
+
+    /// <summary>
+    /// Mapping
+    /// </summary>
+    /// <param name="pixel"></param>
+    private void Mapping(Pixel pixel)
+    {
+      Couleur = pixel.Couleur;
+      X = pixel.X;
+      Y = pixel.Y;
+      Numero = pixel.Numero;
+      Position = pixel.Position;
     }
 
     /// <summary>

@@ -30,6 +30,16 @@ namespace Library.Collection
     /// Task Work
     /// </summary>
     /// <returns></returns>
+    public bool TaskWork()
+    {
+      return Find(t => t.ID == TaskNbr)?.Work ?? false;
+    }
+
+    /// <summary>
+    /// Task Work
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public bool TaskWork(int id)
     {
       return Find(t => t.ID == id)?.Work ?? false;

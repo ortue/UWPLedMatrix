@@ -1,4 +1,5 @@
 ﻿using Library.Collection;
+using Library.Util;
 
 namespace Library.Entity
 {
@@ -156,21 +157,36 @@ namespace Library.Entity
     /// Mouvement
     /// </summary>
     /// <param name="cycle"></param>
-    public void Mouvement(int cycle)
+    public void Mouvement(int cycle, Manette manette)
     {
-      if (cycle++ % Vitesse == 0)// && LigneAnimation == 0)
+      if (cycle++ % Vitesse == 0)
       {
-        //Y est la position de la piece
-        if (Y++ >= -1 || PieceTombes.Top < 10)
+        if (manette.Start)
         {
-          if (XOptimal > X && X + Pieces.Largeur < 11)
-            X += 1;
+          Y++;
 
-          if (XOptimal < X)
-            X -= 1;
+          X += (int)manette.AxisCX;
 
-          if (Pieces.Rotation < RotationOptimal)
+          if (manette.BtnA)
             Pieces = Rotate(Pieces.Rotation + 1);
+
+          if (manette.BtnB)
+            Pieces = Rotate(Pieces.Rotation + 3);
+        }
+        else
+        {
+          //Y est la position de la piece
+          if (Y++ >= -1 || PieceTombes.Top < 10)
+          {
+            if (XOptimal > X && X + Pieces.Largeur < 11)
+              X += 1;
+
+            if (XOptimal < X)
+              X -= 1;
+
+            if (Pieces.Rotation < RotationOptimal)
+              Pieces = Rotate(Pieces.Rotation + 1);
+          }
         }
       }
     }
