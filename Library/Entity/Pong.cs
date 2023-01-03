@@ -13,11 +13,11 @@
     {
       get
       {
-        if (_xX > 1.9)
-          _xX = 1.9;
+        if (_xX > 1.9d)
+          _xX = 1.9d;
 
-        if (_xX < -1.9)
-          _xX = -1.9;
+        if (_xX < -1.9d)
+          _xX = -1.9d;
 
         return _xX;
       }
@@ -29,11 +29,11 @@
     {
       get
       {
-        if (_yY > 1.9)
-          _yY = 1.9;
+        if (_yY > 1.9d)
+          _yY = 1.9d;
 
-        if (_yY < -1.9)
-          _yY = -1.9;
+        if (_yY < -1.9d)
+          _yY = -1.9d;
 
         return _yY;
       }
@@ -45,11 +45,11 @@
     {
       get
       {
-        if (_pad1 < 3)
-          _pad1 = 3;
+        if (_pad1 < 3d)
+          _pad1 = 3d;
 
-        if (_pad1 > 16)
-          _pad1 = 16;
+        if (_pad1 > 16d)
+          _pad1 = 16d;
 
         return _pad1;
       }
@@ -61,11 +61,11 @@
     {
       get
       {
-        if (_pad2 < 3)
-          _pad2 = 3;
+        if (_pad2 < 3d)
+          _pad2 = 3d;
 
-        if (_pad2 > 16)
-          _pad2 = 16;
+        if (_pad2 > 16d)
+          _pad2 = 16d;
 
         return _pad2;
       }
@@ -74,14 +74,14 @@
 
     public double VitessePalette
     {
-      get { return 0.6 - (40 - Vitesse) / 100; }
+      get { return 0.6d - (40d - Vitesse) / 100d; }
     }
 
     public bool Gauche
     {
       get
       {
-        if (X < 10)
+        if (X < 10d)
           return true;
 
         return false;
@@ -92,7 +92,7 @@
     {
       get
       {
-        if (X > 10)
+        if (X > 10d)
           return true;
 
         return false;
@@ -115,10 +115,10 @@
       get
       {
         if (Droite)
-          return Y > Pad2 + 3 || Y < Pad2 - 3;
+          return Y > Pad2 + 3d || Y < Pad2 - 3d;
 
         if (Gauche)
-          return Y > Pad1 + 3 || Y < Pad1 - 3;
+          return Y > Pad1 + 3d || Y < Pad1 - 3d;
 
         return false;
       }
@@ -130,19 +130,19 @@
     public Pong()
     {
       Random random = new();
-      XX = random.Next(3, 12) / 10;
-      YY = random.Next(3, 12) / 10;
+      XX = random.Next(3, 12) / 10d;
+      YY = random.Next(3, 12) / 10d;
 
-      X = 10;
-      Y = 10;
+      X = 10d;
+      Y = 10d;
 
       Vitesse = 50;
 
       ScoreP1 = 0;
       ScoreP2 = 0;
 
-      Pad1 = 9;
-      Pad2 = 9;
+      Pad1 = 9d;
+      Pad2 = 9d;
     }
 
     /// <summary>
@@ -166,7 +166,7 @@
         if (Math.Round(YY, 1) == 0)
         {
           Random random = new();
-          YY = (random.Next(0, 5) - 3) * 0.1;
+          YY = (random.Next(0, 5) - 3) * 0.1d;
         }
       }
 
@@ -179,10 +179,10 @@
     /// <returns></returns>
     public double RebonPalette()
     {
-      if (XX > 0 && X > 10 || XX < 0 && X < 10)
-        return XX * 2;
+      if (XX > 0d && X > 10d || XX < 0d && X < 10d)
+        return XX * 2d;
 
-      return 0;
+      return 0d;
     }
 
     /// <summary>
@@ -210,14 +210,14 @@
     /// </summary>
     public void PositionPalette()
     {
-      if (X > 10 && XX > 0)
+      if (X > 10d && XX > 0d)
       {
         if (Math.Round(Pad2, 0) < Math.Round(Y, 0))
           Pad2 += VitessePalette;
         else if (Math.Round(Pad2, 0) > Math.Round(Y, 0))
           Pad2 -= VitessePalette;
       }
-      else if (X < 10 && XX < 0)
+      else if (X < 10d && XX < 0d)
       {
         if (Math.Round(Pad1, 0) < Math.Round(Y, 0))
           Pad1 += VitessePalette;
@@ -234,9 +234,9 @@
     public bool Vertical(int largeur)
     {
       if (!IsBut)
-        return X + XX > largeur - 3 || X + XX < 2;
+        return X + XX > largeur - 3 || X + XX < 2d;
 
-      return X + XX > largeur - 2 || X + XX < 1;
+      return X + XX > largeur - 2 || X + XX < 1d;
     }
 
     /// <summary>

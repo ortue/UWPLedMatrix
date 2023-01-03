@@ -128,5 +128,14 @@ namespace Library.Entity
 
       return coord;
     }
+
+    /// <summary>
+    /// Fade
+    /// </summary>
+    /// <param name="fade"></param>
+    public void Fade(int fade)
+    {
+      Couleur = Couleur.Get((byte)(Couleur.R / (byte)fade), (byte)(Couleur.G / (byte)fade), (byte)(Couleur.B / (byte)fade));
+    }
   }
 }

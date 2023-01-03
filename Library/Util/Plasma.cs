@@ -1,5 +1,6 @@
 ﻿using Library.Collection;
 using Library.Entity;
+
 namespace Library.Util
 {
   public class Plasma
@@ -15,7 +16,7 @@ namespace Library.Util
     /// <param name="pixels"></param>
     public Plasma(PixelList pixels)
     {
-      Pixels=pixels;
+      Pixels = pixels;
     }
 
     /// <summary>
@@ -25,7 +26,7 @@ namespace Library.Util
     /// <param name="cycle"></param>
     /// <param name="reverse"></param>
     /// <returns></returns>
-    public decimal SetPlasma( int alpha, decimal cycle = 0, bool reverse = false)
+    public double SetPlasma(int alpha, double cycle = 0, bool reverse = false)
     {
       HueShift = (HueShift + 0.02) % 1;
 
@@ -47,7 +48,7 @@ namespace Library.Util
           }
       }
 
-      cycle += (decimal)0.5;
+      cycle += 0.5;
       //cycle += 1;
 
       int offset = (int)(cycle % (PixelList.Largeur * Multi));
@@ -75,7 +76,7 @@ namespace Library.Util
     /// <param name="s"></param>
     /// <param name="v"></param>
     /// <returns></returns>
-    private Couleur HSVtoRGB(double h, int s, int v, int alpha)
+    private static Couleur HSVtoRGB(double h, int s, int v, int alpha)
     {
       int i = (int)Math.Floor(h * 6);
       double f = h * 6 - i;

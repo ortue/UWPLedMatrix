@@ -16,7 +16,7 @@
     private void ExecPlasma()
     {
       int task = TaskGo.StartTask();
-      decimal cycle = 0;
+      double cycle = 0;
       using ManualResetEventSlim waitHandle = new(false);
 
       var plasma = new Library.Util.Plasma(Pixels);

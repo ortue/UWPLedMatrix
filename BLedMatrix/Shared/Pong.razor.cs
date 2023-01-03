@@ -1,5 +1,6 @@
 ﻿using Library.Collection;
 using Library.Entity;
+using Library.Util;
 
 namespace BLedMatrix.Shared
 {
@@ -84,7 +85,7 @@ namespace BLedMatrix.Shared
         }
 
         //Background
-        //Pixels.BackGround();
+        Background.Bleu(Pixels);
         Pixels.SendPixels();
         Pixels.Reset();
 
