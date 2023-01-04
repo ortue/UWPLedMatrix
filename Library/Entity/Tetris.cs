@@ -10,8 +10,8 @@ namespace Library.Entity
     public int Score { get; set; }
     public int XOptimal { get; set; }
     public int RotationOptimal { get; set; }
-    public List<int> Poche { get; set; }
-    public TetrisPieceList Nexts { get; set; }
+    public List<int>? Poche { get; set; }
+    public TetrisPieceList? Nexts { get; set; }
     public TetrisPieceList Pieces { get; set; }
     public TetrisPieceList PieceTombes { get; set; }
 
@@ -56,7 +56,7 @@ namespace Library.Entity
     {
       get
       {
-        TetrisPieceList centaines = new TetrisPieceList();
+        TetrisPieceList centaines = new();
 
         for (int y = 0; y < (Score % 1000) / 100; y++)
           centaines.Add(new TetrisPiece { X = 13, Y = 7 + y });
@@ -69,7 +69,7 @@ namespace Library.Entity
     {
       get
       {
-        TetrisPieceList milliers = new TetrisPieceList();
+        TetrisPieceList milliers = new();
 
         for (int y = 0; y < Score / 1000; y++)
           milliers.Add(new TetrisPiece { X = 13, Y = 7 + y });
@@ -83,6 +83,7 @@ namespace Library.Entity
     /// </summary>
     public Tetris()
     {
+      Pieces = new TetrisPieceList();
       PieceTombes = new TetrisPieceList();
 
       NouvellePiece();
@@ -106,7 +107,7 @@ namespace Library.Entity
 
       Nexts = new TetrisPieceList(TetrisPieceList.GetPiece(GetNext()));
 
-      TetrisHorizontalList tetrisHorizontals = new TetrisHorizontalList();
+      TetrisHorizontalList tetrisHorizontals = new();
 
       for (int rotation = 0; rotation < 4; rotation++)
         for (int x = 2; x < 12; x++)
@@ -125,7 +126,7 @@ namespace Library.Entity
     /// </summary>
     private void SetPoche()
     {
-      Random r = new Random();
+      Random r = new();
 
       if (Poche == null || !Poche.Any())
       {
@@ -147,10 +148,14 @@ namespace Library.Entity
     /// <returns></returns>
     private int GetNext()
     {
-      int id = Poche.FirstOrDefault();
-      Poche.Remove(id);
+      if (Poche?.FirstOrDefault() is int id)
+      {
+        Poche.Remove(id);
 
-      return id;
+        return id;
+      }
+
+      return 0;
     }
 
     /// <summary>
@@ -198,7 +203,7 @@ namespace Library.Entity
     public TetrisPieceList EffacerLigne()
     {
       int bonus = 1;
-      TetrisPieceList tetrisPieces = new TetrisPieceList();
+      TetrisPieceList tetrisPieces = new();
 
       for (int y = -3; y < 19; y++)
         if (PieceTombes.Count(p => p.Y == y) == 10)
@@ -236,7 +241,7 @@ namespace Library.Entity
     /// <param name="rotation"></param>
     /// <param name="x"></param>
     /// <returns></returns>
-    private TetrisPieceList RotateX(int rotation, int x)
+    private TetrisPieceList? RotateX(int rotation, int x)
     {
       if (new TetrisPieceList(TetrisPieceList.GetPiece(Pieces.PieceID, rotation), x) is TetrisPieceList tetrisPieces)
         if (tetrisPieces.Largeur < 12)

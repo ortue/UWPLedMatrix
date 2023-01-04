@@ -508,7 +508,7 @@ namespace WebMatrix.Classes
 
       List<Pixel> pixels = new();
 
-      List<decimal> xs = new List<decimal>();
+      List<decimal> xs = new  List<decimal>();
       List<decimal> ys = new List<decimal>();
       List<Couleur> cs = new List<Couleur>();
 

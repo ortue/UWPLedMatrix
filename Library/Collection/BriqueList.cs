@@ -1,0 +1,17 @@
+﻿using Library.Entity;
+
+namespace Library.Collection
+{
+  public class BriqueList : List<Brique>
+  {
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public BriqueList()
+    {
+      for (int ranger = 0; ranger < 6; ranger++)
+        for (int i = 0; i < 17; i += 2)
+          Add(new Brique(i, ranger));
+    }
+  }
+}
