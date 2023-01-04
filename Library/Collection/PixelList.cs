@@ -38,18 +38,6 @@ namespace Library.Collection
     }
 
     /// <summary>
-    /// Contructeur
-    /// </summary>
-    /// <param name="pixels"></param>
-    //public PixelList(PixelList pixels)
-    //{
-      //DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
-
-      //foreach (Pixel pixel in pixels)
-      //  Add(new Pixel(pixel));
-    //}
-
-    /// <summary>
     /// Emplacement
     /// </summary>
     /// <returns></returns>
@@ -168,6 +156,53 @@ namespace Library.Collection
         p.X = centre.X - (int)(rayon * -Math.Sin(Math.PI * degree / 180)) - 1;
 
       p.Y = centre.Y - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
+
+      return p.CheckCoord();
+    }
+
+    /// <summary>
+    /// GetTempCoord
+    /// </summary>
+    /// <param name="temp"></param>
+    /// <param name="rayon"></param>
+    /// <returns></returns>
+    public static Pixel GetTempsCoord(double temp, int rayon)
+    {
+      Pixel p = new();
+
+      temp *= 6;   //each minute and second make 6 degree
+
+      if (temp >= 0 && temp <= 180)
+        p.X = (Largeur / 2) + (int)(rayon * Math.Sin(Math.PI * temp / 180));
+      else
+        p.X = (Largeur / 2) - (int)(rayon * -Math.Sin(Math.PI * temp / 180)) - 1;
+
+      p.Y = (Hauteur / 2) - (int)(rayon * Math.Cos(Math.PI * temp / 180) + 0.5);
+
+      return p.CheckCoord();
+    }
+
+    /// <summary>
+    /// GetHeureCoord
+    /// </summary>
+    /// <param name="heure"></param>
+    /// <param name="minute"></param>
+    /// <param name="rayon"></param>
+    /// <returns></returns>
+    public static Pixel GetHeureCoord(int heure, int minute, int rayon)
+    {
+      Pixel p = new();
+
+      //each hour makes 30 degree
+      //each min makes 0.5 degree
+      double val = (heure * 30) + (minute * 0.5);
+
+      if (val >= 0 && val <= 180)
+        p.X = (Largeur / 2) + (int)(rayon * Math.Sin(Math.PI * val / 180));
+      else
+        p.X = (Largeur / 2) - (int)(rayon * -Math.Sin(Math.PI * val / 180)) - 1;
+
+      p.Y = (Hauteur / 2) - (int)(rayon * Math.Cos(Math.PI * val / 180) + 0.5);
 
       return p.CheckCoord();
     }
