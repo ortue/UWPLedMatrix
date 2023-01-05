@@ -13,11 +13,11 @@ namespace Library.Entity
     {
       get
       {
-        if (_xX > 1.9)
-          _xX = 1.9;
+        if (_xX > 1.9d)
+          _xX = 1.9d;
 
-        if (_xX < -1.9)
-          _xX = -1.9;
+        if (_xX < -1.9d)
+          _xX = -1.9d;
 
         return _xX;
       }
@@ -29,11 +29,11 @@ namespace Library.Entity
     {
       get
       {
-        if (_yY > 1.9)
-          _yY = 1.9;
+        if (_yY > 1.9d)
+          _yY = 1.9d;
 
-        if (_yY < -1.9)
-          _yY = -1.99;
+        if (_yY < -1.9d)
+          _yY = -1.99d;
 
         return _yY;
       }
@@ -45,11 +45,11 @@ namespace Library.Entity
     {
       get
       {
-        if (_pad < 2)
-          _pad = 2;
+        if (_pad < 2d)
+          _pad = 2d;
 
-        if (_pad > 17)
-          _pad = 17;
+        if (_pad > 17d)
+          _pad = 17d;
 
         return _pad;
       }
@@ -58,7 +58,7 @@ namespace Library.Entity
 
     public double VitessePalette
     {
-      get { return 0.6 - (40 - Vitesse) / 100; }
+      get { return 0.6d - (40d - Vitesse) / 100d; }
     }
 
     public bool IsMort
@@ -84,15 +84,15 @@ namespace Library.Entity
     public void Reset()
     {
       Random random = new();
-      XX = random.Next(2, 6) / 10;
-      YY = random.Next(-8, -2) / 10;
+      XX = random.Next(2, 6) / 10d;
+      YY = random.Next(-8, -2) / 10d;
 
-      X = 10;
-      Y = 17;
+      X = 10d;
+      Y = 17d;
 
       Vitesse = 90;
 
-      Pad = 10;
+      Pad = 10d;
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ namespace Library.Entity
 
       for (int i = -1; i < 2; i++)
         if ((int)Math.Round(X + i, 0) == (int)Math.Round(Pad, 0))
-          return facteur + 0.1 * -i;
+          return facteur + 0.1d * -i;
 
       return 0;
     }
@@ -144,7 +144,7 @@ namespace Library.Entity
         if (Math.Round(XX, 1) == 0)
         {
           Random random = new();
-          XX = (random.Next(0, 5) - 3) * 0.1;
+          XX = (random.Next(0, 5) - 3) * 0.1d;
         }
       }
 
@@ -182,11 +182,11 @@ namespace Library.Entity
     /// </summary>
     public void Mure()
     {
-      if (X + XX >= PixelList.Largeur - 2 || X + XX < 1)
-        XX -= XX * 2;
+      if (X + XX >= PixelList.Largeur - 2 || X + XX < 1d)
+        XX -= XX * 2d;
 
-      if (Y + YY < 1)
-        YY -= YY * 2;
+      if (Y + YY < 1d)
+        YY -= YY * 2d;
     }
 
     /// <summary>
@@ -214,10 +214,10 @@ namespace Library.Entity
       {
         brique.Visible = false;
 
-        YY -= YY * 2;
+        YY -= YY * 2d;
 
         if (Briques.Find(b => (b.X == (int)Math.Round(X + XX, 0) || b.XX == (int)Math.Round(X + XX, 0)) && b.Y == (int)Math.Round(Y, 0) && b.Visible) != null)
-          XX -= XX * 2;
+          XX -= XX * 2d;
 
         check = true;
       }

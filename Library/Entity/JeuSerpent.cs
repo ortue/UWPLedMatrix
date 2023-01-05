@@ -1,4 +1,5 @@
 ﻿using Library.Collection;
+using Library.Util;
 
 namespace Library.Entity
 {
@@ -10,9 +11,17 @@ namespace Library.Entity
     public int Score { get; set; }
     public SerpentList Serpents { get; set; }
 
+    public bool Manette { get; set; }
+
     public double Vitesse
     {
-      get { return 10 - Score / 6; }
+      get
+      {
+        if (Manette)
+          return 14 - Score / 10;
+
+        return 10 - Score / 6;
+      }
     }
 
     public int DistanceX
@@ -28,7 +37,7 @@ namespace Library.Entity
 
     public int DistanceY
     {
-      get 
+      get
       {
         if (Serpents.Tete != null)
           return Math.Abs(Serpents.Tete.Y - Y);
@@ -62,9 +71,6 @@ namespace Library.Entity
         X = r.Next(1, PixelList.Largeur - 1);
         Y = r.Next(1, PixelList.Hauteur - 1);
       }
-
-      Serpents.DX = 0;
-      Serpents.DY = 0;
     }
 
     /// <summary>
@@ -101,6 +107,43 @@ namespace Library.Entity
     }
 
     /// <summary>
+    /// MouvementManette
+    /// </summary>
+    /// <param name="manette"></param>
+    /// <returns></returns>
+    private bool MouvementManette(int cycle, Manette manette)
+    {
+      Manette = true;
+      Direction(manette);
+
+      if (cycle++ % Vitesse == 0)
+      {
+        //Eviter obstacle
+        if (Serpents.DX != 0 || Serpents.DY != 0)
+          if (Serpents.Obstacle())
+            return Mort();
+
+        Serpents.Mouvement();
+      }
+
+      return false;
+    }
+
+    /// <summary>
+    /// Mouvement
+    /// </summary>
+    /// <param name="cycle"></param>
+    /// <param name="manette"></param>
+    /// <returns></returns>
+    public bool Mouvement(int cycle, Manette manette)
+    {
+      if (manette.Start)
+        return MouvementManette(cycle, manette);
+
+      return Mouvement(cycle);
+    }
+
+    /// <summary>
     /// Direction
     /// </summary>
     private void Direction()
@@ -129,6 +172,27 @@ namespace Library.Entity
     /// <summary>
     /// Direction
     /// </summary>
+    /// <param name="manette"></param>
+    private void Direction(Manette manette)
+    {
+      if ((int)manette.AxisCX != 0)
+        if (-Serpents.DX != (int)manette.AxisCX)
+        {
+          Serpents.DY = 0;
+          Serpents.DX = (int)manette.AxisCX;
+        }
+
+      if ((int)manette.AxisCY != 0)
+        if (-Serpents.DY != (int)manette.AxisCY)
+        {
+          Serpents.DX = 0;
+          Serpents.DY = (int)manette.AxisCY;
+        }
+    }
+
+    /// <summary>
+    /// Direction
+    /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>
     private void Direction(int x, int y)
@@ -140,12 +204,18 @@ namespace Library.Entity
     /// <summary>
     /// Manger
     /// </summary>
-    public bool Manger()
+    public bool Manger(Manette manette)
     {
       if (Serpents.Tete?.X == X && Serpents.Tete?.Y == Y)
       {
         Score++;
         SetBalle();
+
+        if (!manette.Start)
+        {
+          Serpents.DX = 0;
+          Serpents.DY = 0;
+        }
 
         return Serpents.Mange();
       }
@@ -161,6 +231,10 @@ namespace Library.Entity
     {
       Score = 0;
       SetBalle();
+
+      Serpents.DX = 0;
+      Serpents.DY = 0;
+
       Serpents = new SerpentList();
 
       return true;

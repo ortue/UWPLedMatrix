@@ -1,6 +1,7 @@
 ﻿using Library.Collection;
 using Library.Entity;
 using Library.Util;
+using Nfw.Linux.Joystick.Simple;
 
 namespace BLedMatrix.Shared
 {
@@ -26,6 +27,10 @@ namespace BLedMatrix.Shared
 
       using ManualResetEventSlim waitHandle = new(false);
 
+      using Joystick joystick = new("/dev/input/js0");
+      var manette = new Library.Util.Manette(10, 10);
+      joystick.AxisCallback = (j, axis, value) => manette.Set(axis, value / 32767d);
+      joystick.ButtonCallback = (j, button, pressed) => manette.Set(button, pressed);
 
       while (TaskGo.TaskWork(task))
       {
@@ -49,7 +54,8 @@ namespace BLedMatrix.Shared
         }
 
         //Mouvement
-        bool mort = jeuSerpent.Mouvement(cycle++);
+        bool mort = jeuSerpent.Mouvement(cycle++, manette);
+
         int degrade = 1;
 
         //Serpent
@@ -58,7 +64,7 @@ namespace BLedMatrix.Shared
             Pixels.Get(serpent.X, serpent.Y).SetColor(couleurSerpent);
 
         //Le serpent mange une balle
-        bool manger = jeuSerpent.Manger();
+        bool manger = jeuSerpent.Manger(manette);
 
         //Background
         Background.Bleu(Pixels);
@@ -67,7 +73,7 @@ namespace BLedMatrix.Shared
 
         waitHandle.Wait(TimeSpan.FromMilliseconds(jeuSerpent.Vitesse));
 
-        if (manger || mort)
+        if (mort)
           waitHandle.Wait(TimeSpan.FromMilliseconds(1000));
       }
     }

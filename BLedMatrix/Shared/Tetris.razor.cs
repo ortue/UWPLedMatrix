@@ -24,9 +24,9 @@ namespace BLedMatrix.Shared
       int cycle = 0;
       int topScore = 0;
       var tetris = new Library.Entity.Tetris();
-      
+
       using ManualResetEventSlim waitHandle = new(false);
-      
+
       using Joystick joystick = new("/dev/input/js0");
       var manette = new Library.Util.Manette(10, 10);
       joystick.AxisCallback = (j, axis, value) => manette.Set(axis, value / 32767d);
@@ -58,8 +58,9 @@ namespace BLedMatrix.Shared
           Pixels.Get(i, 6).SetColor(64, 64, 127);
 
         //Next
-        foreach (TetrisPiece next in tetris.Nexts)
-          Pixels.Get(next.X + 16, next.Y + 1).SetColor(next.Couleur);
+        if (tetris.Nexts != null)
+          foreach (TetrisPiece next in tetris.Nexts)
+            Pixels.Get(next.X + 16, next.Y + 1).SetColor(next.Couleur);
 
         //Piece tombé
         foreach (TetrisPiece pieceTombe in tetris.PieceTombes)
