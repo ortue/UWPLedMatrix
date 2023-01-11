@@ -44,26 +44,6 @@ namespace Library.Collection
     }
 
     /// <summary>
-    /// Constructeur
-    /// </summary>
-    /// <param name="texte"></param>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <param name="couleur"></param>
-    public static PixelList Print(string texte, int x, int y, Couleur couleur)
-    {
-      PixelList pixels = new(true);
-      CaractereList caracteres = new(PixelList.Largeur);
-
-      caracteres.SetText(texte);
-
-      foreach (Police lettre in caracteres.GetCaracteres().Where(c => c.Point))
-        pixels.Add(new Pixel(lettre.X + x, lettre.Y + y, couleur));
-
-      return pixels;
-    }
-
-    /// <summary>
     /// RemoveDiacritics
     /// </summary>
     /// <param name="text"></param>
@@ -146,6 +126,44 @@ namespace Library.Collection
         polices.AddRange(derniereLettre);
 
       return polices;
+    }
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    /// <param name="texte"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="couleur"></param>
+    public static PixelList Print(string texte, int x, int y, Couleur couleur)
+    {
+      PixelList pixels = new(true);
+      CaractereList caracteres = new(PixelList.Largeur);
+
+      caracteres.SetText(texte);
+
+      foreach (Police lettre in caracteres.GetCaracteres().Where(c => c.Point))
+        pixels.Add(new Pixel(lettre.X + x, lettre.Y + y, couleur));
+
+      return pixels;
+    }
+
+    /// <summary>
+    /// Print
+    /// </summary>
+    /// <param name="caracteres"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="couleur"></param>
+    public static PixelList Print(PoliceList caracteres, int x, int y, Couleur couleur)
+    {
+      PixelList pixels = new(true);
+
+      foreach (Police lettre in caracteres.Where(c => c.Point))
+        if (Pixel.Check(lettre.X + x, lettre.Y + y))
+          pixels.Add(new Pixel(lettre.X + x, lettre.Y + y, couleur));
+
+      return pixels;
     }
   }
 }

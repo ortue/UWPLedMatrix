@@ -23,17 +23,6 @@ namespace Library.Entity
       }
     }
 
-    //public Couleur CouleurDouble
-    //{
-    //  get { return Couleur.FromArgb((byte)(R * 2), (byte)(G * 2), (byte)(B * 2)); }
-    //  set
-    //  {
-    //    R = value.R;
-    //    G = value.G;
-    //    B = value.B;
-    //  }
-    //}
-
     /// <summary>
     /// Constructeur
     /// </summary>
@@ -182,6 +171,29 @@ namespace Library.Entity
     public void Fade(int fade)
     {
       Couleur = Couleur.Get((byte)(Couleur.R / (byte)fade), (byte)(Couleur.G / (byte)fade), (byte)(Couleur.B / (byte)fade));
+    }
+
+    /// <summary>
+    /// Check
+    /// </summary>
+    /// <param name="v1"></param>
+    /// <param name="v2"></param>
+    /// <returns></returns>
+    public static bool Check(int x, int y)
+    {
+      if (x < 0)
+        return false;
+
+      if (x > PixelList.Largeur - 1)
+        return false;
+
+      if (y < 0)
+        return false;
+
+      if (y > PixelList.Hauteur - 1)
+        return false;
+
+      return true;
     }
   }
 }

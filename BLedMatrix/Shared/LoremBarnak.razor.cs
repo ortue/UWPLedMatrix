@@ -85,8 +85,7 @@ namespace BLedMatrix.Shared
       int debut = -20;
       int task = TaskGo.StartTask();
       string loremBarnak = GetLoremBarnak(10);
-      Couleur couleur = Couleur.Get(64, 0, 0);
-      //CaractereList caracteres = new(20);
+      CaractereList caracteres = new(20);
 
       using ManualResetEventSlim waitHandle = new(false);
 
@@ -99,17 +98,11 @@ namespace BLedMatrix.Shared
           loremBarnak = GetLoremBarnak(10);
         }
 
-        //largeur = caracteres.SetText(loremBarnak);
-        //Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut), Heure);
+        largeur = caracteres.SetText(loremBarnak);
 
-
-        //Print(caracteres, 0, 1, Couleur.Get(32, 32, 127));
-
-
-
+        Pixels.Set(CaractereList.Print(caracteres.GetCaracteres(debut), 0, 1, Couleur.Get(64, 0, 0)));
         Pixels.Set(CaractereList.Print(DateTime.Now.ToString("MM-dd"), 1, 7, Couleur.Get(0, 0, 127)));
         Pixels.Set(CaractereList.Print(CaractereList.Heure, 2, 13, Couleur.Get(0, 0, 127)));
-
 
         Background.Grichage(Pixels);
         Pixels.SendPixels();
