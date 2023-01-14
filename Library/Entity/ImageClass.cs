@@ -7,6 +7,7 @@ namespace Library.Entity
   public class ImageClass
   {
     public string FileName { get; set; }
+    public string PathWeb { get; set; }
     public int Height { get; set; }
     public int Width { get; set; }
     public CouleurList? Couleurs { get; set; }
@@ -43,9 +44,10 @@ namespace Library.Entity
     /// Constructeur
     /// </summary>
     /// <param name="path"></param>
-    public ImageClass(string fileNameOfImage)
+    public ImageClass(string fileNameOfImage, string pathWeb)
     {
       FileName = fileNameOfImage;
+      PathWeb = pathWeb + "/" + Path.GetFileName(FileName);
 
       using Image image = Image.FromFile(FileName);
       Height = image.Height;

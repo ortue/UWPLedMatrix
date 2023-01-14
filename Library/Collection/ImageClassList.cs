@@ -8,11 +8,21 @@ namespace Library.Collection
     /// Constructeur
     /// </summary>
     /// <param name="path"></param>
-    public ImageClassList(string path)
+    public ImageClassList(string path, string pathWeb)
     {
       foreach (string file in Directory.GetFiles(path))
         if (file.ToUpper().Contains("GIF"))
-          Add(new ImageClass(file));
+          Add(new ImageClass(file, pathWeb));
+    }
+
+    /// <summary>
+    /// GetAsync
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static Task<ImageClassList> GetAsync(string path, string pathWeb)
+    {
+      return Task.Run(() => new ImageClassList(path, pathWeb));
     }
 
     /// <summary>
