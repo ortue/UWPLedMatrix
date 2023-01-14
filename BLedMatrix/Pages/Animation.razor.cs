@@ -1,4 +1,5 @@
-﻿using Library.Collection;
+﻿using BLedMatrix.Shared;
+using Library.Collection;
 using Library.Entity;
 
 namespace BLedMatrix.Pages
@@ -6,15 +7,40 @@ namespace BLedMatrix.Pages
   public partial class Animation
   {
     public string? FileNameID { get; set; }
-    public ImageClassList? Animations { get; set; }
-    public string? LastAutoRun { get; set; }
-
-
-    //Animations = new ImageClassList("Images/Animation");
+    private ImageClassList? Animations { get; set; }
+    private string? LastAutoRun { get; set; }
+    public bool Transition { get; set; }
+    public bool Autorun { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
       Animations = await ImageClassList.GetAsync($"{System.IO.Directory.GetCurrentDirectory()}/wwwroot/Images/Animation", "Images/Animation");
+
+      Demo();
+    }
+
+    /// <summary>
+    /// Demo
+    /// </summary>
+    private void Demo()
+    {
+      Autorun = true;
+
+      if (Animations != null)
+        Task.Run(() =>
+        {
+          int i = 0;
+
+          while (Autorun)
+          {
+            ExecAnimation(Animations[i++].FileNameID);
+            using ManualResetEventSlim waitHandle = new(false);
+            waitHandle.Wait(TimeSpan.FromSeconds(10));
+
+            if (Animations.Count <= i)
+              i = 0;
+          }
+        });
     }
 
     /// <summary>
@@ -24,7 +50,7 @@ namespace BLedMatrix.Pages
     /// <returns></returns>
     private string IsSelected(string fileNameID)
     {
-      if(FileNameID==fileNameID )
+      if (FileNameID == fileNameID)
         return "btn btn-primary m-1 rounded-circle";
 
       return "btn btn-secondary m-1 rounded-circle";
@@ -36,57 +62,27 @@ namespace BLedMatrix.Pages
     /// <param name="id"></param>
     private void Set(string fileNameID)
     {
-      FileNameID = fileNameID;
-
-      Task.Run(ExecAnimation);
-    }
-
-    /// <summary>
-    /// ExecAnimation
-    /// </summary>
-    /// <param name="id"></param>
-    private void ExecAnimation()
-    {
-      //if (string.IsNullOrWhiteSpace(id)) //&& !Util.Autorun
-      //{
-      //  Task.Run(() =>
-      //  {
-      //    //Util.Autorun = true;
-
-      //    int i = 0;
-
-      //    while (Util.Autorun)
-      //    {
-      //      FileNameID = Animations[i++].FileNameID;
-      //      ShowAnimation();
-
-      //      using (ManualResetEventSlim waitHandle = new(false))
-      //        waitHandle.Wait(TimeSpan.FromSeconds(10));
-
-      //      if (Animations.Count <= i)
-      //        i = 0;
-      //    }
-      //  });
-      //}
-      //else 
-
-      if (!string.IsNullOrWhiteSpace(FileNameID))
+      if (!Transition)
       {
-        //Util.Autorun = false;
+        Autorun = false;
 
-        ShowAnimation();
+        Task.Run(() => ExecAnimation(fileNameID));
+        StateHasChanged();
       }
     }
 
     /// <summary>
     /// ShowAnimation
     /// </summary>
-    private void ShowAnimation()
+    private void ExecAnimation(string fileNameID)
     {
+      FileNameID = fileNameID;
+
       if (Animations?.Find(a => a.FileNameID == FileNameID) is ImageClass imageClass)
       {
         int task = TaskGo.StartTask();
         int frame = 0;
+        Transition = true;
 
         //Fade Out
         if (Animations.Find(a => a.FileNameID == LastAutoRun) is ImageClass lastAutoRun)
@@ -98,6 +94,7 @@ namespace BLedMatrix.Pages
           SetAnimation(imageClass, frame++, slide);
 
         LastAutoRun = imageClass.FileNameID;
+        Transition = false;
 
         //Animation
         while (imageClass.Animation && TaskGo.TaskWork(task))
