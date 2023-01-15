@@ -1,4 +1,5 @@
 using Library.Collection;
+using Library.Util;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddSingleton<PixelList>();
 builder.Services.AddSingleton<TaskGoList>();
+builder.Services.AddSingleton<RadioCanada>();
 
 WebApplication app = builder.Build();
 

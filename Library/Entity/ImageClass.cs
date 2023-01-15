@@ -118,7 +118,7 @@ namespace Library.Entity
     /// </summary>
     /// <param name="frame"></param>
     /// <param name="pixels"></param>
-    public void SetÞixelFrame(int frame, PixelList pixels, int slide, bool fadeOut)
+    public void SetPixelFrame(int frame, PixelList pixels, int slide, bool fadeOut)
     {
       using (Image image = Image.FromFile(FileName))
       {

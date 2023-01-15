@@ -1,5 +1,4 @@
-﻿using BLedMatrix.Shared;
-using Library.Collection;
+﻿using Library.Collection;
 using Library.Entity;
 
 namespace BLedMatrix.Pages
@@ -14,7 +13,7 @@ namespace BLedMatrix.Pages
 
     protected override async Task OnInitializedAsync()
     {
-      Animations = await ImageClassList.GetAsync($"{System.IO.Directory.GetCurrentDirectory()}/wwwroot/Images/Animation", "Images/Animation");
+      Animations = await ImageClassList.GetAsync($"{Directory.GetCurrentDirectory()}/wwwroot/Images/Animation", "Images/Animation");
 
       Demo();
     }
@@ -46,7 +45,7 @@ namespace BLedMatrix.Pages
     /// <summary>
     /// IsSelected
     /// </summary>
-    /// <param name=""></param>
+    /// <param name="fileNameID"></param>
     /// <returns></returns>
     private string IsSelected(string fileNameID)
     {
@@ -74,6 +73,7 @@ namespace BLedMatrix.Pages
     /// <summary>
     /// ShowAnimation
     /// </summary>
+    /// <param name="fileNameID"></param>
     private void ExecAnimation(string fileNameID)
     {
       FileNameID = fileNameID;
@@ -111,7 +111,7 @@ namespace BLedMatrix.Pages
     /// <param name="fadeOut"></param>
     private void SetAnimation(ImageClass imageClass, int frame, int slide, bool fadeOut = false)
     {
-      imageClass.SetÞixelFrame(frame++, Pixels, slide, fadeOut);
+      imageClass.SetPixelFrame(frame++, Pixels, slide, fadeOut);
       Pixels.SendPixels();
       Pixels.Reset();
 

@@ -33,7 +33,7 @@ namespace Library.Collection
     public void SetPixel(string icon, PixelList pixels)
     {
       if (Find(a => a.FileName.Contains(icon)) is ImageClass imageClass)
-        imageClass.SetÞixelFrame(0, pixels, 0, false);
+        imageClass.SetPixelFrame(0, pixels, 0, false);
     }
   }
 }

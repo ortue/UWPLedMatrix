@@ -22,7 +22,7 @@ namespace BLedMatrix.Shared
     /// <summary>
     /// Éteindre le raspberry linux
     /// </summary>
-    private void Eteindre()
+    private static void Eteindre()
     {
       Process.Start(new ProcessStartInfo()
       {
@@ -30,7 +30,7 @@ namespace BLedMatrix.Shared
         Arguments = "--oldest chromium"
       });
 
-      using ManualResetEventSlim waitHandle = new ManualResetEventSlim(false);
+      using ManualResetEventSlim waitHandle = new(false);
       waitHandle.Wait(TimeSpan.FromSeconds(2));
 
       Process.Start(new ProcessStartInfo()
