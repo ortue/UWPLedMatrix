@@ -4,11 +4,13 @@ namespace BLedMatrix.Pages
 {
   public partial class Temps
   {
-    private ImageClassList? Animations { get; set; }
+    private ImageClassList? RadioCanadaIcon { get; set; }
+    private ImageClassList? MeteoIcon { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-      Animations = await ImageClassList.GetAsync($"{Directory.GetCurrentDirectory()}/wwwroot/Images", "Images");
+      RadioCanadaIcon = await ImageClassList.GetAsync($"{Directory.GetCurrentDirectory()}/wwwroot/Images", "Images");
+      MeteoIcon = await ImageClassList.GetAsync($"{Directory.GetCurrentDirectory()}/wwwroot/Images/Meteo", "Images/Meteo");
     }
   }
 }

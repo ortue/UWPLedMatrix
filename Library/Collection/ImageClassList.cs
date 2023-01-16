@@ -30,9 +30,9 @@ namespace Library.Collection
     /// </summary>
     /// <param name="icon"></param>
     /// <param name="pixels"></param>
-    public void SetPixel(string icon, PixelList pixels)
+    public void SetPixel(string? icon, PixelList pixels)
     {
-      if (Find(a => a.FileName.Contains(icon)) is ImageClass imageClass)
+      if (icon != null && Find(a => a.FileName.Contains(icon)) is ImageClass imageClass)
         imageClass.SetPixelFrame(0, pixels, 0, false);
     }
   }

@@ -10,6 +10,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<PixelList>();
 builder.Services.AddSingleton<TaskGoList>();
 builder.Services.AddSingleton<RadioCanada>();
+builder.Services.AddSingleton<OpenWeather>();
 
 WebApplication app = builder.Build();
 

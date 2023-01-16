@@ -1,9 +1,15 @@
-﻿using Library.Entity;
+﻿using Library.Collection;
+using Library.Entity;
+using Library.Util;
+using Microsoft.AspNetCore.Components;
 
 namespace BLedMatrix.Shared
 {
   public partial class Meteo
   {
+    [Parameter]
+    public ImageClassList? Animations { get; set; }
+
     /// <summary>
     /// Set
     /// </summary>
@@ -17,17 +23,27 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void ExecMeteo()
     {
-      //ImageClassList meteoImgs = new("Images/Meteo");
-
+      Couleur couleur = new() { R = 64, G = 0, B = 0 };
       DateTime update = DateTime.Now.AddMinutes(-10);
       int task = TaskGo.StartTask();
 
       while (TaskGo.TaskWork(task))
       {
-        //if (Util.Meteo is current meteo)
-        //meteoImgs.SetPixel(meteo.weather.icon, Util.Context.Pixels);
+        if (OpenWeather.Meteo is current meteo)
+        {
+          Animations?.SetPixel(meteo.weather?.icon, Pixels);
 
-        //Util.Context.Pixels.SetMeteo(Util.Meteo, Heure);
+          string leading = "";
+
+          if (meteo.temperature?.value.ToString("0").Length < 2)
+            leading = "  ";
+
+          Pixels.Set(CaractereList.Print(leading + meteo.temperature?.value.ToString("0") + "°C", 1, 1, couleur));
+          Pixels.Set(CaractereList.Print("H " + meteo.humidity?.value.ToString() + "%", 2, 7, couleur));
+        }
+
+        Pixels.Set(CaractereList.Print(CaractereList.Heure, 2, 13, couleur));
+        Background.Bleu(Pixels);
 
         Pixels.SendPixels();
         Pixels.Reset();
@@ -35,32 +51,9 @@ namespace BLedMatrix.Shared
         if (update.AddMinutes(5) < DateTime.Now)
         {
           update = DateTime.Now;
-          //Util.GetMeteoAsync();
+          OpenWeather.Refresh();
         }
       }
-    }
-
-    /// <summary>
-    /// SetMeteo
-    /// </summary>
-    /// <param name="temp"></param>
-    public void SetMeteo()
-    {
-      Couleur couleur = new() { R = 64, G = 0, B = 0 };
-
-      //if (meteo != null)
-      //{
-      //  string leading = "";
-
-      //  if (meteo.temperature.value.ToString("0").Length < 2)
-      //    leading = "  ";
-
-      //  Print(leading + meteo.temperature.value.ToString("0") + "°C", 1, 1, couleur);
-      //  Print("H " + meteo.humidity.value.ToString() + "%", 2, 7, couleur);
-      //}
-
-      //Print(heure, 2, 13, couleur);
-      //BackGround();
     }
   }
 }

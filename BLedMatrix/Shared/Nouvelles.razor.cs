@@ -38,7 +38,6 @@ namespace BLedMatrix.Shared
           debut = ResetNouvelle();
 
         largeur = caracteres.SetText(RadioCanada.NouvelleStr);
-        //Util.Context.Pixels.SetNouvelle(caracteres.GetCaracteres(debut), Heure);
 
         Pixels.Set(CaractereList.Print(caracteres.GetCaracteres(debut), 0, 1, Couleur.Get(64, 0, 0)));
         Pixels.Set(CaractereList.Print(DateTime.Now.ToString("MM-dd"), 1, 7, Couleur.Get(0, 0, 127)));
@@ -52,8 +51,8 @@ namespace BLedMatrix.Shared
         //Mettre a jour les nouvelle aux heures
         if (update.AddMinutes(60) < DateTime.Now)
         {
+          RadioCanada.Refresh();
           update = DateTime.Now;
-          //Util.GetNouvelleAsync();
         }
       }
     }
