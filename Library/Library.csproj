@@ -14,4 +14,10 @@
     <PackageReference Include="Unosquare.WiringPi" Version="0.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>..\BLedMatrix\OpenTK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
