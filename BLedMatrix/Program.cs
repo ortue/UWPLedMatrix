@@ -11,6 +11,7 @@ builder.Services.AddSingleton<PixelList>();
 builder.Services.AddSingleton<TaskGoList>();
 builder.Services.AddSingleton<RadioCanada>();
 builder.Services.AddSingleton<OpenWeather>();
+builder.Services.AddSingleton<TitreKodiWS>();
 
 WebApplication app = builder.Build();
 

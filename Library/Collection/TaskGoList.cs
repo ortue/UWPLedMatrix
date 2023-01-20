@@ -5,6 +5,8 @@ namespace Library.Collection
   public class TaskGoList : List<TaskGo>
   {
     public int TaskNbr { get; set; }
+    public bool HeureMusique { get; set; }
+    public bool TitreKodi { get; set; }
 
     /// <summary>
     /// Constructeur
