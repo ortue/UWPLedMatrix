@@ -19,7 +19,9 @@
     private void Set()
     {
       TaskGo.TitreKodi = !TaskGo.TitreKodi;
-      StateHasChanged();
+
+      if(!TaskGo.TitreKodi)
+        Pixels.Reset();
     }
   }
 }

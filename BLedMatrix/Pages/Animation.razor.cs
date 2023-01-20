@@ -19,6 +19,14 @@ namespace BLedMatrix.Pages
     }
 
     /// <summary>
+    /// Dispose
+    /// </summary>
+    public void Dispose()
+    {
+      Autorun = false;
+    }
+
+    /// <summary>
     /// Demo
     /// </summary>
     private void Demo()

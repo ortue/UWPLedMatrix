@@ -21,7 +21,9 @@ namespace BLedMatrix.Shared
     private void Set()
     {
       TaskGo.HeureMusique = !TaskGo.HeureMusique;
-      StateHasChanged();
+
+      if (!TaskGo.HeureMusique)
+        Pixels.Reset();
     }
   }
 }
