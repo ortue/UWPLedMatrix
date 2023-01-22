@@ -13,7 +13,17 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void Set()
     {
-      Task.Run(ExecSpectrum);
+      Task.Run(() =>
+      {
+        if (TaskGo.AudioCaptureConcurence)
+        {
+          TaskGo.StopTask();
+          using ManualResetEventSlim waitHandle = new(false);
+          waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+        }
+
+        ExecSpectrum();
+      });
     }
 
     /// <summary>
@@ -21,6 +31,7 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void ExecSpectrum()
     {
+      TaskGo.AudioCaptureConcurence = true;
       int task = TaskGo.StartTask();
 
       byte[] audioBuffer = new byte[256];
@@ -42,6 +53,8 @@ namespace BLedMatrix.Shared
         Pixels.SendPixels();
         SetSpectrum(cycle++);
       }
+
+      TaskGo.AudioCaptureConcurence = false;
     }
 
     /// <summary>
@@ -216,7 +229,7 @@ namespace BLedMatrix.Shared
             else
               pixel.SetColor(Couleur.RougePale);
 
-          debut++;
+        debut++;
 
         //Reset après avoir défiler tout le texte
         if (cycle % 100000 == 0 || largeur < debut)

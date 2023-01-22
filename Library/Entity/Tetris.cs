@@ -29,10 +29,10 @@ namespace Library.Entity
     {
       get
       {
-        if (40 - Score / 10 > 2)
-          return 50 - Score / 10;
+        if (100 - Score / 25 > 10)
+          return 100 - Score / 25;
 
-        return 2;
+        return 10;
       }
     }
 

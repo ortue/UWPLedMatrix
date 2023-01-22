@@ -14,8 +14,6 @@ namespace Library.Util
       {
         if (Nouvelles != null)
           return Diacritic.Remove(MyRegex().Replace(string.Join(string.Empty, Nouvelles), ""));
-        
-        //return Diacritic.Remove(Regex.Replace(string.Join(string.Empty, Nouvelles), @"http[^\s]+", ""));
 
         return string.Empty;
       }
@@ -26,7 +24,7 @@ namespace Library.Util
     /// </summary>
     public RadioCanada()
     {
-      Nouvelles = GetNouvelle();
+      Refresh();
     }
 
     /// <summary>

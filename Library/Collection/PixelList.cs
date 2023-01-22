@@ -132,7 +132,7 @@ namespace Library.Collection
       if (!debug)
         return;
 
-      List<Pixel> pixels = new List<Pixel>();
+      List<Pixel> pixels = new();
 
       foreach (Pixel pixel in this)
         pixels.Add(new Pixel(pixel));

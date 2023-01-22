@@ -12,7 +12,7 @@ namespace Library.Util
     /// </summary>
     public OpenWeather()
     {
-      Meteo = GetMeteo();
+      Refresh();
     }
 
     /// <summary>

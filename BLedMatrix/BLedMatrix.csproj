@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Library\Library.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
@@ -112,6 +108,10 @@
     <None Include="wwwroot\Images\Meteo\50d.gif" />
     <None Include="wwwroot\Images\Meteo\50n.gif" />
     <None Include="wwwroot\Images\RadioCanada.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Library\Library.csproj" />
   </ItemGroup>
 
   <ItemGroup>

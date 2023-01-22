@@ -7,6 +7,8 @@ namespace Library.Collection
     public int TaskNbr { get; set; }
     public bool HeureMusique { get; set; }
     public bool TitreKodi { get; set; }
+    public bool AudioCaptureConcurence { get; set; }
+    public bool Autorun { get; set; }
 
     /// <summary>
     /// Constructeur

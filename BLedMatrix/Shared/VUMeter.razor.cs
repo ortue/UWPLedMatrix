@@ -1,7 +1,7 @@
-﻿using OpenTK.Audio.OpenAL;
-using OpenTK.Audio;
+﻿using Library.Collection;
 using Library.Entity;
-using Library.Collection;
+using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
 
 namespace BLedMatrix.Shared
 {
@@ -12,7 +12,17 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void Set()
     {
-      Task.Run(ExecVUMeter);
+      Task.Run(() =>
+      {
+        if (TaskGo.AudioCaptureConcurence)
+        {
+          TaskGo.StopTask();
+          using ManualResetEventSlim waitHandle = new(false);
+          waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+        }
+
+        ExecVUMeter();
+      });
     }
 
     /// <summary>
@@ -20,6 +30,7 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void ExecVUMeter()
     {
+      TaskGo.AudioCaptureConcurence = true;
       int task = TaskGo.StartTask();
 
       Couleur couleur = Couleur.Get(0, 0, 8);
@@ -33,7 +44,7 @@ namespace BLedMatrix.Shared
       }
 
       double max = 0;
-      //CaractereList caracteres = new(Util.Context.Largeur);
+      CaractereList caracteres = new(PixelList.Largeur);
 
       byte[] audioBuffer = new byte[256];
       using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
@@ -43,18 +54,17 @@ namespace BLedMatrix.Shared
       {
         max -= 0.3;
 
-        //double[] fft = Capture(audioCapture, audioBuffer);
+        double[] fft = Capture(audioCapture, audioBuffer);
 
-        //if (fft.Max(a => Math.Abs(a)) > max)
-        //  max = fft.Max(a => Math.Abs(a));
+        if (fft.Max(Math.Abs) > max)
+          max = fft.Max(Math.Abs);
 
-        //if (whiteBgColor)
-        //  foreach (Pixel pixel in Util.Context.Pixels)
-        //    pixel.Set(127, 127, 127);
+        if (whiteBgColor)
+          foreach (Pixel pixel in Pixels)
+            pixel.SetColor(127, 127, 127);
 
-        //caracteres.SetText("VU");
-        //Pixels.Print(caracteres.GetCaracteres(), 5, 12, couleur);
-
+        caracteres.SetText("VU");
+        Pixels.Set(CaractereList.Print("VU", 5, 12, couleur));
         Couleur couleurMax = couleur;
 
         //lumiere max
@@ -137,12 +147,51 @@ namespace BLedMatrix.Shared
         Pixels.Get(12, 19).SetColor(couleur);
 
         //aiguille
-        //for (int r = 2; r < 18; r++)
-        //  Pixels.Get(GetCercleCoord(max + 315, r)).SetColor(couleur);
+        for (int r = 2; r < 18; r++)
+          Pixels.Get(GetCercleCoord(max + 315, r)).SetColor(couleur);
 
         Pixels.SendPixels();
         Pixels.Reset();
       }
+
+      TaskGo.AudioCaptureConcurence = true;
+    }
+
+    /// <summary>
+    ///GetCercleCoord
+    /// </summary>
+    /// <param name="degree"></param>
+    /// <param name="rayon"></param>
+    /// <returns></returns>
+    private static Pixel GetCercleCoord(double degree, int rayon)
+    {
+      Pixel coord = new(PixelList.Largeur, PixelList.Hauteur);
+
+      if (degree % 360 >= 0 && degree % 360 <= 180)
+        coord.X = 10 + (int)(rayon * Math.Sin(Math.PI * degree / 180));
+      else
+        coord.X = 10 - (int)(rayon * -Math.Sin(Math.PI * degree / 180)) - 1;
+
+      coord.Y = 19 - (int)(rayon * Math.Cos(Math.PI * degree / 180) + 0.5);
+
+      return coord.CheckCoord();
+    }
+
+    /// <summary>
+    /// Capture
+    /// </summary>
+    /// <param name="audioCapture"></param>
+    /// <param name="audioBuffer"></param>
+    /// <returns></returns>
+    private static double[] Capture(AudioCapture audioCapture, byte[] audioBuffer)
+    {
+      audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
+      double[] fft = new double[audioBuffer.Length];
+
+      for (int i = 0; i < audioBuffer.Length; i++)
+        fft[i] = audioBuffer[i] - 128;
+
+      return fft;
     }
   }
 }

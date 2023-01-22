@@ -12,7 +12,17 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void Set()
     {
-      Task.Run(ExecGraph);
+      Task.Run(() =>
+      {
+        if (TaskGo.AudioCaptureConcurence)
+        {
+          TaskGo.StopTask();
+          using ManualResetEventSlim waitHandle = new(false);
+          waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+        }
+
+        ExecGraph();
+      });
     }
 
     /// <summary>
@@ -20,6 +30,8 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void ExecGraph()
     {
+      TaskGo.AudioCaptureConcurence = true;
+
       int task = TaskGo.StartTask();
       byte[] audioBuffer = new byte[256];
       using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
@@ -39,6 +51,8 @@ namespace BLedMatrix.Shared
         Pixels.SendPixels();
         Pixels.Reset();
       }
+
+      TaskGo.AudioCaptureConcurence = false;
     }
 
     /// <summary>

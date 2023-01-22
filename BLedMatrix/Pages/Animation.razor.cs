@@ -9,7 +9,6 @@ namespace BLedMatrix.Pages
     private ImageClassList? Animations { get; set; }
     private string? LastAutoRun { get; set; }
     public bool Transition { get; set; }
-    public bool Autorun { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -21,9 +20,9 @@ namespace BLedMatrix.Pages
     /// <summary>
     /// Dispose
     /// </summary>
-    public void Dispose()
+    void IDisposable.Dispose()
     {
-      Autorun = false;
+      TaskGo.Autorun = false;
     }
 
     /// <summary>
@@ -31,23 +30,23 @@ namespace BLedMatrix.Pages
     /// </summary>
     private void Demo()
     {
-      Autorun = true;
+      TaskGo.Autorun = true;
+      using ManualResetEventSlim waitHandle = new(false);
 
-      if (Animations != null)
-        Task.Run(() =>
-        {
-          int i = 0;
+      Task.Run(() =>
+      {
+        int i = 0;
 
-          while (Autorun)
+        if (Animations != null)
+          while (TaskGo.Autorun)
           {
             ExecAnimation(Animations[i++].FileNameID);
-            using ManualResetEventSlim waitHandle = new(false);
             waitHandle.Wait(TimeSpan.FromSeconds(10));
 
             if (Animations.Count <= i)
               i = 0;
           }
-        });
+      });
     }
 
     /// <summary>
@@ -71,7 +70,7 @@ namespace BLedMatrix.Pages
     {
       if (!Transition)
       {
-        Autorun = false;
+        TaskGo.Autorun = false;
 
         Task.Run(() => ExecAnimation(fileNameID));
         StateHasChanged();
