@@ -13,6 +13,7 @@ builder.Services.AddSingleton<TaskGoList>();
 builder.Services.AddSingleton<RadioCanada>();
 builder.Services.AddSingleton<OpenWeather>();
 builder.Services.AddSingleton<KodiWebService>();
+builder.Services.AddSingleton<CouleurList>();
 
 WebApplication app = builder.Build();
 

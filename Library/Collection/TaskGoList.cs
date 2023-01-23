@@ -22,9 +22,9 @@ namespace Library.Collection
     /// Start Task
     /// </summary>
     /// <returns></returns>
-    public int StartTask()
+    public int StartTask(string module = "")
     {
-      Add(new TaskGo(TaskNbr));
+      Add(new TaskGo(TaskNbr, module));
       this.Where(t => t.ID < TaskNbr).ToList().ForEach(t => t.Work = false);
 
       return TaskNbr++;

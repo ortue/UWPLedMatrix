@@ -2,9 +2,10 @@
 {
   public class Couleur
   {
+    public string? Module { get; set; }
+    public string? Titre { get; set; }
     public int FrameCompteur { get; set; }
     public int Position { get; set; }
-    public byte A { get; set; }
     public byte B { get; set; }
     public byte G { get; set; }
     public byte R { get; set; }
@@ -72,21 +73,6 @@
     /// <summary>
     /// Constructeur
     /// </summary>
-    /// <param name="position"></param>
-    /// <param name="color"></param>
-    public Couleur(int position, Couleur couleur)
-    {
-      Position = position;
-
-      A = couleur.A;
-      R = couleur.R;
-      G = couleur.G;
-      B = couleur.B;
-    }
-
-    /// <summary>
-    /// Constructeur
-    /// </summary>
     /// <param name="frameCompteur"></param>
     /// <param name="color"></param>
     public Couleur(int frameCompteur, int position, Couleur couleur)
@@ -94,7 +80,6 @@
       FrameCompteur = frameCompteur;
       Position = position;
 
-      A = couleur.A;
       R = couleur.R;
       G = couleur.G;
       B = couleur.B;
@@ -113,7 +98,6 @@
       FrameCompteur = frameCompteur;
       Position = position;
 
-      //A = A;
       R = (byte)r;
       G = (byte)g;
       B = (byte)b;

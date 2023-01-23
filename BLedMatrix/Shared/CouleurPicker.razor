@@ -1,5 +1,5 @@
 ﻿<div class="col-6 gap-2 d-grid">
-  <button class="@Actif" @onclick="Set">
+  <button class="btn btn-primary btn-lg" @onclick="Set">
 
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-palette" viewBox="0 0 16 16">
       <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
@@ -10,49 +10,41 @@
   </button>
 </div>
 
+@if (BoutonActif)
+{
+  <div class="modal fade show" id="myModal" aria-modal="true" role="dialog" style="display:block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            Choisir les couleurs
+          </h4>
 
+          <div class="p-2 rounded-3" style="@BGColor">
+            &nbsp;&nbsp; @R, @G, @B &nbsp;&nbsp;
+          </div>
 
-
-
-
-
-@*style="display:block; background-color: rgba(10,10,10,.8);"
-*@
-
-<div class="modal fade show" id="myModal" aria-modal="true" role="dialog" style="display:block;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">
-          Titre
-          @*          @Title
-          *@
-        </h4>
-@*                <button type="button" class="close" ><span aria-hidden="true">&times;</span></button>
-*@
-@*        @onclick="@ModalCancel"
-*@        
-      </div>
-      <div class="modal-body">
-        <p>
-          @*          @Text
-          @Item*@
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" >OK</button>
-
-@*        @onclick=@ModalOk
-*@
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-4">
+              <label for="Rouge" class="form-label m-0">Rouge @R</label>
+              <input type="range" class="form-range" min="0" max="127" id="Rouge" @bind="@R" @bind:event="oninput">
+            </div>
+            <div class="col-4">
+              <label for="Vert" class="form-label m-0">Vert @G</label>
+              <input type="range" class="form-range" min="0" max="127" id="Vert" @bind="@G" @bind:event="oninput">
+            </div>
+            <div class="col-4">
+              <label for="Bleu" class="form-label m-0">Bleu @B</label>
+              <input type="range" class="form-range" min="0" max="127" id="Bleu" @bind="@B" @bind:event="oninput">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @onclick="ModalOk">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-
-
-
-
-
-
-
+}

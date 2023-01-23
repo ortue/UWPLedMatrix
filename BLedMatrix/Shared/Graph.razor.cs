@@ -7,6 +7,22 @@ namespace BLedMatrix.Shared
 {
   public partial class Graph
   {
+    public Couleur CentreCouleur { get; set; }
+    public Couleur ExtremiteCouleur { get; set; }
+    public Couleur HeureCouleur { get; set; }
+    public Couleur TitreCouleur { get; set; }
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public Graph()
+    {
+      CentreCouleur = Couleurs.Get("Graph", "CentreCouleur", Couleur.Rouge );
+      ExtremiteCouleur = Couleurs.Get("Graph", "CentreCouleur", Couleur.Rouge);
+      HeureCouleur = Couleurs.Get("Graph", "CentreCouleur", Couleur.Rouge);
+      TitreCouleur = Couleurs.Get("Graph", "CentreCouleur", Couleur.Rouge);
+    }
+
     /// <summary>
     /// Set
     /// </summary>
@@ -32,7 +48,7 @@ namespace BLedMatrix.Shared
     {
       TaskGo.AudioCaptureConcurence = true;
 
-      int task = TaskGo.StartTask();
+      int task = TaskGo.StartTask("Graph");
       byte[] audioBuffer = new byte[256];
       using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
       audioCapture.Start();
