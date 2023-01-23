@@ -6,6 +6,25 @@ namespace BLedMatrix.Shared
 {
   public partial class Horloge
   {
+    public Couleur DixiemeSecondeCouleur { get; set; } = Couleur.Rouge;
+    public Couleur SecondeCouleur { get; set; } = Couleur.Get(40, 40, 60);
+    public Couleur MinuteCouleur { get; set; } = Couleur.Get(20, 74, 74);
+    public Couleur HeureCouleur { get; set; } = Couleur.Get(74, 100, 40);
+    public Couleur CadranCouleur { get; set; } = Couleur.Get(40, 40, 60);
+    public Couleur PointCouleur { get; set; } = Couleur.Get(30, 40, 20);
+
+    protected override async Task OnInitializedAsync()
+    {
+      DixiemeSecondeCouleur = Couleurs.Get("Horloge", "DixiemeSecondeCouleur", Couleur.Rouge);
+      SecondeCouleur = Couleurs.Get("Horloge", "SecondeCouleur", Couleur.Get(40, 40, 60));
+      PointCouleur = Couleurs.Get("Horloge", "PointCouleur", Couleur.Get(30, 40, 20));
+      MinuteCouleur = Couleurs.Get("Horloge", "MinuteCouleur", Couleur.Get(20, 74, 74));
+      HeureCouleur = Couleurs.Get("Horloge", "HeureCouleur", Couleur.Get(74, 100, 40));
+      CadranCouleur = Couleurs.Get("Horloge", "CadranCouleur", Couleur.Noir);
+
+      await Task.CompletedTask;
+    }
+
     /// <summary>
     /// Set
     /// </summary>
@@ -27,7 +46,7 @@ namespace BLedMatrix.Shared
       //if (bg == 3 || bg == 4)
       //  bg = 2;
 
-      int task = TaskGo.StartTask();
+      int task = TaskGo.StartTask("Horloge");
       //CaractereList caracteres = new(20);
 
       while (TaskGo.TaskWork(task))
@@ -45,36 +64,31 @@ namespace BLedMatrix.Shared
     /// <returns></returns>
     public double SetHorloge(double cycle)
     {
-      Couleur minuteCouleur = new() { R = 39 / 2, G = 144 / 2, B = 176 / 2 };//39,144,176
-      Couleur heureCouleur = new() { R = 148 / 2, G = 200 / 2, B = 80 / 2 };//148,186,101
-      Couleur pointCouleur = new() { R = 148 / 5, G = 200 / 5, B = 80 / 5 };//148,186,101
-
       //5 minutes
       for (int i = 0; i < 60; i += 5)
-        Pixels.Get(PixelList.GetTempsCoord(i, 10)).SetColor(pointCouleur);
+        Pixels.Get(PixelList.GetTempsCoord(i, 10)).SetColor(PointCouleur);
 
-      Pixels.Get(9, 0).SetColor(pointCouleur);
-      Pixels.Get(9, 19).SetColor(pointCouleur);
+      Pixels.Get(9, 0).SetColor(PointCouleur);
+      Pixels.Get(9, 19).SetColor(PointCouleur);
 
       //cycle = 
       //Background.Grichage(Pixels);
-      Background.Bleu(Pixels,false);
+      Background.Bleu(Pixels, false);
 
-      Pixels.Set(CaractereList.Print(CaractereList.Heure, 1, 13, Couleur.Noir));
-      //Print(caracteres, 1, 13, Couleur.Noir);
+      Pixels.Set(CaractereList.Print(CaractereList.Heure, 1, 13, CadranCouleur));
 
       //Aiguille
       int minute = DateTime.Now.Minute;
       int heure = DateTime.Now.Hour;
 
       for (int i = 0; i < 9; i++)
-        Pixels.Get(PixelList.GetTempsCoord(DateTime.Now.Second + DateTime.Now.Millisecond / (double)1000, i)).SetColor(new Couleur { R = 80 / 2, G = 78 / 2, B = 114 / 2 });//43,78,114
+        Pixels.Get(PixelList.GetTempsCoord(DateTime.Now.Second + DateTime.Now.Millisecond / (double)1000, i)).SetColor(SecondeCouleur);
 
       for (int i = 0; i < 8; i++)
-        Pixels.Get(PixelList.GetTempsCoord(minute + DateTime.Now.Second * 1.6 / 100, i)).SetColor(minuteCouleur);
+        Pixels.Get(PixelList.GetTempsCoord(minute + DateTime.Now.Second * 1.6 / 100, i)).SetColor(MinuteCouleur);
 
       for (int i = 0; i < 6; i++)
-        Pixels.Get(PixelList.GetHeureCoord(heure, minute, i)).SetColor(heureCouleur);
+        Pixels.Get(PixelList.GetHeureCoord(heure, minute, i)).SetColor(HeureCouleur);
 
       for (int i = 0; i < 9; i++)
         Pixels.Get(PixelList.GetTempsCoord((DateTime.Now.Millisecond / (double)100 * 6) - i, 9)).SetColor(new Couleur { R = new List<byte> { 128, 64, 32, 16, 8, 8, 8, 4, 4 }[i], B = 5 });

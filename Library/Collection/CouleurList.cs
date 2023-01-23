@@ -15,7 +15,9 @@ namespace Library.Collection
     /// </summary>
     public CouleurList()
     {
-
+      //if (Load() is CouleurList couleurs)
+      //  foreach (Couleur couleur in couleurs)
+      //    Add(couleur);
     }
 
     /// <summary>
@@ -34,27 +36,62 @@ namespace Library.Collection
     /// <param name="module"></param>
     /// <param name="titre"></param>
     /// <returns></returns>
+    public Couleur? Get(string module, string titre)
+    {
+      if (Find(c => c.Module == module && c.Titre == titre) is Couleur couleur)
+        return couleur;
+
+      return null;
+    }
+
+    /// <summary>
+    /// Get
+    /// </summary>
+    /// <param name="module"></param>
+    /// <param name="titre"></param>
+    /// <returns></returns>
     public Couleur Get(string module, string titre, Couleur defaut)
     {
       if (Find(c => c.Module == module && c.Titre == titre) is Couleur couleur)
         return couleur;
 
+      defaut.Module = module;
+      defaut.Titre = titre;
+
       Add(defaut);
 
       return defaut;
+    }
 
+    /// <summary>
+    /// Get
+    /// </summary>
+    /// <param name="module"></param>
+    /// <returns></returns>
+    public IEnumerable<Couleur>? Get(string module)
+    {
+      if (this.Where(c => c.Module == module) is IEnumerable<Couleur> couleurs)
+        return couleurs;
+
+      return null;
     }
 
     /// <summary>
     /// Load
     /// </summary>
     /// <returns></returns>
-    public static CouleurList? Load()
+    public static CouleurList Load()
     {
-      XmlSerializer serializer = new(typeof(CouleurList));
-      FileStream fs = new(Filename, FileMode.Open);
+      if (File.Exists(Filename))
+      {
+        XmlSerializer serializer = new(typeof(CouleurList));
+        using StreamReader reader = new(Filename);
 
-      return (CouleurList?)serializer.Deserialize(fs);
+        if ((CouleurList?)serializer.Deserialize(reader) is CouleurList couleurs)
+          return couleurs;
+      }
+
+      return new CouleurList();
     }
 
     /// <summary>

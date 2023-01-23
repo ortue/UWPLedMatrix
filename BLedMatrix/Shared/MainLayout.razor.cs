@@ -1,4 +1,6 @@
-﻿namespace BLedMatrix.Shared
+﻿using Library.Collection;
+
+namespace BLedMatrix.Shared
 {
   public partial class MainLayout
   {

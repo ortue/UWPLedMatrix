@@ -10,6 +10,17 @@ namespace Library.Collection
     public bool AudioCaptureConcurence { get; set; }
     public bool Autorun { get; set; }
 
+    public string SelectedTaskModule
+    {
+      get
+      {
+        if (this.OrderByDescending(t => t.ID).FirstOrDefault() is TaskGo taskGo)
+          return taskGo.Module;
+
+        return string.Empty;
+      }
+    }
+
     /// <summary>
     /// Constructeur
     /// </summary>

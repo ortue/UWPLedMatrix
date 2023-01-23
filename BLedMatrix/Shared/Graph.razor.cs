@@ -7,20 +7,23 @@ namespace BLedMatrix.Shared
 {
   public partial class Graph
   {
-    public Couleur CentreCouleur { get; set; }
-    public Couleur ExtremiteCouleur { get; set; }
-    public Couleur HeureCouleur { get; set; }
-    public Couleur TitreCouleur { get; set; }
+    public Couleur CentreCouleur { get; set; } = new Couleur();
+    public Couleur ExtremiteCouleur { get; set; } = new Couleur();
+    public Couleur HeureCouleur { get; set; } = new Couleur();
+    public Couleur HeureAltCouleur { get; set; } = new Couleur();
+    public Couleur TitreCouleur { get; set; } = new Couleur();
+    public Couleur TitreAltCouleur { get; set; } = new Couleur();
 
-    /// <summary>
-    /// Constructeur
-    /// </summary>
-    public Graph()
+    protected override async Task OnInitializedAsync()
     {
-      CentreCouleur = Couleurs.Get("Graph", "CentreCouleur", Couleur.Rouge );
-      ExtremiteCouleur = Couleurs.Get("Graph", "CentreCouleur", Couleur.Rouge);
-      HeureCouleur = Couleurs.Get("Graph", "CentreCouleur", Couleur.Rouge);
-      TitreCouleur = Couleurs.Get("Graph", "CentreCouleur", Couleur.Rouge);
+      CentreCouleur = Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu);
+      ExtremiteCouleur = Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge);
+      HeureCouleur = Couleurs.Get("Graph", "HeureCouleur", Couleur.RougePale);
+      HeureAltCouleur = Couleurs.Get("Graph", "HeureAltCouleur", Couleur.Rouge);
+      TitreCouleur = Couleurs.Get("Graph", "TitreCouleur", Couleur.Rouge);
+      TitreAltCouleur = Couleurs.Get("Graph", "TitreAltCouleur", Couleur.RougePale);
+
+      await Task.CompletedTask;
     }
 
     /// <summary>

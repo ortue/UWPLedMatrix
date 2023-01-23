@@ -35,6 +35,36 @@
       get { return new Couleur { R = 127 }; }
     }
 
+    public static Couleur Cyan
+    {
+      get { return new Couleur { G = 127, B = 127 }; }
+    }
+
+    public static Couleur Orange
+    {
+      get { return new Couleur { R = 127, G = 63 }; }
+    }
+
+    public static Couleur Jaune
+    {
+      get { return new Couleur { R = 127, G = 127 }; }
+    }
+
+    public static Couleur Mauve
+    {
+      get { return new Couleur { R = 127, B = 127 }; }
+    }
+
+    public static Couleur Bleu
+    {
+      get { return new Couleur { B = 127 }; }
+    }
+
+    public static Couleur Vert
+    {
+      get { return new Couleur { G = 127 }; }
+    }
+
     public static Couleur RougePale
     {
       get { return new Couleur { R = 15 }; }
@@ -59,7 +89,7 @@
 
     public string Hexa
     {
-      get { return "#"+R.ToString("X2")+G.ToString("X2")+B.ToString("X2"); }
+      get { return "#" + R.ToString("X2") + G.ToString("X2") + B.ToString("X2"); }
     }
 
     /// <summary>

@@ -1,4 +1,7 @@
-﻿<div class="col-6 gap-2 d-grid">
+﻿@inject TaskGoList TaskGo
+@inject CouleurList Couleurs
+
+<div class="col-6 gap-2 d-grid">
   <button class="btn btn-primary btn-lg" @onclick="Set">
 
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-palette" viewBox="0 0 16 16">
@@ -17,29 +20,43 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">
-            Choisir les couleurs
+            Choisir les couleurs: @Module
           </h4>
 
           <div class="p-2 rounded-3" style="@BGColor">
-            &nbsp;&nbsp; @R, @G, @B &nbsp;&nbsp;
+            &nbsp;&nbsp;@SelectedCouleur.R.ToString(), @SelectedCouleur.G.ToString(), @SelectedCouleur.B.ToString()&nbsp;&nbsp;
           </div>
 
         </div>
         <div class="modal-body">
+
+          <div class="mb-5">
+
+            <InputSelect class="form-select" @bind-Value="SelectedCouleurStr">
+              @if (ModuleCouleurs != null)
+                @foreach (Couleur couleur in ModuleCouleurs)
+                {
+                  <option value="@couleur.Titre">@couleur.Titre</option>
+                }
+
+            </InputSelect>
+          </div>
+
           <div class="row">
             <div class="col-4">
-              <label for="Rouge" class="form-label m-0">Rouge @R</label>
-              <input type="range" class="form-range" min="0" max="127" id="Rouge" @bind="@R" @bind:event="oninput">
+              <label for="Rouge" class="form-label m-0">Rouge @SelectedCouleur.R</label>
+              <input type="range" class="form-range" min="0" max="127" id="Rouge" @bind="@SelectedCouleur.R" @bind:event="oninput">
             </div>
             <div class="col-4">
-              <label for="Vert" class="form-label m-0">Vert @G</label>
-              <input type="range" class="form-range" min="0" max="127" id="Vert" @bind="@G" @bind:event="oninput">
+              <label for="Vert" class="form-label m-0">Vert @SelectedCouleur.G</label>
+              <input type="range" class="form-range" min="0" max="127" id="Vert" @bind="@SelectedCouleur.G" @bind:event="oninput">
             </div>
             <div class="col-4">
-              <label for="Bleu" class="form-label m-0">Bleu @B</label>
-              <input type="range" class="form-range" min="0" max="127" id="Bleu" @bind="@B" @bind:event="oninput">
+              <label for="Bleu" class="form-label m-0">Bleu @SelectedCouleur.B</label>
+              <input type="range" class="form-range" min="0" max="127" id="Bleu" @bind="@SelectedCouleur.B" @bind:event="oninput">
             </div>
           </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" @onclick="ModalOk">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
