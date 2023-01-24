@@ -1,5 +1,6 @@
 ﻿using Library.Collection;
 using Library.Entity;
+using Microsoft.JSInterop;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
 
@@ -7,12 +8,12 @@ namespace BLedMatrix.Shared
 {
   public partial class Graph
   {
-    public Couleur CentreCouleur { get; set; } = new Couleur();
-    public Couleur ExtremiteCouleur { get; set; } = new Couleur();
-    public Couleur HeureCouleur { get; set; } = new Couleur();
-    public Couleur HeureAltCouleur { get; set; } = new Couleur();
-    public Couleur TitreCouleur { get; set; } = new Couleur();
-    public Couleur TitreAltCouleur { get; set; } = new Couleur();
+    public Couleur CentreCouleur { get; set; } = Couleur.Bleu;
+    public Couleur ExtremiteCouleur { get; set; } = Couleur.Rouge;
+    public Couleur HeureCouleur { get; set; } = Couleur.RougePale;
+    public Couleur HeureAltCouleur { get; set; } = Couleur.Rouge;
+    public Couleur TitreCouleur { get; set; } = Couleur.Rouge;
+    public Couleur TitreAltCouleur { get; set; } = Couleur.RougePale;
 
     protected override async Task OnInitializedAsync()
     {
@@ -125,11 +126,27 @@ namespace BLedMatrix.Shared
       for (int x = 0; x < PixelList.Largeur; x++)
       {
         int y = (int)(fft[x * 2] * amplitude) + 10;
-        byte red = (byte)Math.Abs(fft[x * 2] * amplitude * 11);
+        double distance = Math.Abs(fft[x * 2] * amplitude);
 
         if (Pixels.Get(x, y) is Pixel pixel)
-          pixel.SetColor(red, 0, 127 - red);
+          pixel.SetColor(ProportionCouleur(Math.Floor(distance)));
       }
+    }
+
+    /// <summary>
+    /// ProportionCouleur
+    /// </summary>
+    /// <returns></returns>
+    private Couleur ProportionCouleur(double distance)
+    {
+      double facteurCentre = (10d - distance) / 10d;
+      double facteurExtremite = distance / 10d;
+
+      int r = (int)Math.Floor((CentreCouleur.R * facteurCentre) + (ExtremiteCouleur.R * facteurExtremite));
+      int g = (int)Math.Floor((CentreCouleur.G * facteurCentre) + (ExtremiteCouleur.G * facteurExtremite));
+      int b = (int)Math.Floor((CentreCouleur.B * facteurCentre) + (ExtremiteCouleur.B * facteurExtremite));
+
+      return Couleur.Get(r, g, b);
     }
 
     /// <summary>
@@ -148,9 +165,9 @@ namespace BLedMatrix.Shared
         foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
           if (Pixels.Get(lettre.X + 1, lettre.Y + 13) is Pixel pixel)
             if (pixel.Couleur.IsNoir)// || pixel.Couleur.R == 127)
-              pixel.SetColor(Couleur.RougePale);
+              pixel.SetColor(HeureCouleur);
             else
-              pixel.SetColor(Couleur.Rouge);
+              pixel.SetColor(HeureAltCouleur);
       }
     }
 
@@ -170,9 +187,9 @@ namespace BLedMatrix.Shared
         foreach (Police lettre in textes.GetCaracteres(debut).Where(c => c.Point))
           if (Pixels.Get(lettre.X, lettre.Y + 1) is Pixel pixel)
             if (pixel.Couleur.IsNoir)//|| pixel.Couleur.IsRouge
-              pixel.SetColor(Couleur.Rouge);
+              pixel.SetColor(TitreCouleur);
             else
-              pixel.SetColor(Couleur.RougePale);
+              pixel.SetColor(TitreAltCouleur);
 
         if (cycle % 16 == 0)
           debut++;

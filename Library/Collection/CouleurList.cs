@@ -5,6 +5,8 @@ namespace Library.Collection
 {
   public class CouleurList : List<Couleur>
   {
+    public int SelectedPosition { get; set; }
+
     public static string Filename
     {
       get { return "Couleur.xml"; }
@@ -15,9 +17,7 @@ namespace Library.Collection
     /// </summary>
     public CouleurList()
     {
-      //if (Load() is CouleurList couleurs)
-      //  foreach (Couleur couleur in couleurs)
-      //    Add(couleur);
+
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ namespace Library.Collection
     /// <returns></returns>
     public Couleur? Get(string module, string titre)
     {
-      if (Find(c => c.Module == module && c.Titre == titre) is Couleur couleur)
+      if (Find(c => c.Module == module && c.Titre == titre && c.Position == SelectedPosition) is Couleur couleur)
         return couleur;
 
       return null;
@@ -52,11 +52,12 @@ namespace Library.Collection
     /// <returns></returns>
     public Couleur Get(string module, string titre, Couleur defaut)
     {
-      if (Find(c => c.Module == module && c.Titre == titre) is Couleur couleur)
+      if (Find(c => c.Module == module && c.Titre == titre && c.Position == SelectedPosition) is Couleur couleur)
         return couleur;
 
       defaut.Module = module;
       defaut.Titre = titre;
+      defaut.Position = SelectedPosition;
 
       Add(defaut);
 
@@ -70,7 +71,7 @@ namespace Library.Collection
     /// <returns></returns>
     public IEnumerable<Couleur>? Get(string module)
     {
-      if (this.Where(c => c.Module == module) is IEnumerable<Couleur> couleurs)
+      if (this.Where(c => c.Module == module && c.Position == SelectedPosition) is IEnumerable<Couleur> couleurs)
         return couleurs;
 
       return null;
@@ -104,16 +105,6 @@ namespace Library.Collection
       XmlSerializer serializer = new(typeof(CouleurList));
       using TextWriter writer = new StreamWriter(Filename);
       serializer.Serialize(writer, couleurs);
-
-
-
-
-
-
-
-      //using StreamWriter file = new("Couleur.Sav");
-      //await file.WriteLineAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine + log + Environment.NewLine + Environment.NewLine);
-
     }
 
     /// <summary>
