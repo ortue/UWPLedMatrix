@@ -9,6 +9,7 @@
     public byte B { get; set; }
     public byte G { get; set; }
     public byte R { get; set; }
+    public bool Option { get; set; }
 
     public bool IsNoir
     {
@@ -113,24 +114,6 @@
       R = couleur.R;
       G = couleur.G;
       B = couleur.B;
-    }
-
-    /// <summary>
-    /// Constructeur
-    /// </summary>
-    /// <param name="frameCompteur"></param>
-    /// <param name="position"></param>
-    /// <param name="r"></param>
-    /// <param name="g"></param>
-    /// <param name="b"></param>
-    public Couleur(int frameCompteur, int position, int r, int g, int b)
-    {
-      FrameCompteur = frameCompteur;
-      Position = position;
-
-      R = (byte)r;
-      G = (byte)g;
-      B = (byte)b;
     }
 
     /// <summary>

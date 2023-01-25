@@ -50,14 +50,19 @@ namespace Library.Collection
     /// <param name="module"></param>
     /// <param name="titre"></param>
     /// <returns></returns>
-    public Couleur Get(string module, string titre, Couleur defaut)
+    public Couleur Get(string module, string titre, Couleur defaut, bool option = false)
     {
       if (Find(c => c.Module == module && c.Titre == titre && c.Position == SelectedPosition) is Couleur couleur)
+      {
+        couleur.Option = option;
+
         return couleur;
+      }
 
       defaut.Module = module;
       defaut.Titre = titre;
       defaut.Position = SelectedPosition;
+      defaut.Option = option;
 
       Add(defaut);
 

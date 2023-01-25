@@ -6,22 +6,10 @@ namespace Library.Entity
   {
     public int X { get; set; }
     public int Y { get; set; }
-    public byte R { get; set; }
-    public byte G { get; set; }
-    public byte B { get; set; }
     public int Numero { get; set; }
     public int Position { get; set; }
-
-    public Couleur Couleur
-    {
-      get { return Couleur.FromArgb(R, G, B); }
-      set
-      {
-        R = value.R;
-        G = value.G;
-        B = value.B;
-      }
-    }
+    //public bool Option { get; set; }
+    public Couleur Couleur { get; set; } = new Couleur();
 
     /// <summary>
     /// Constructeur

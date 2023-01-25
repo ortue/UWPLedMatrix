@@ -77,9 +77,9 @@ namespace Library.Util
         // to take a 0-255 value for R/G/B.  However, on the ones I have they only seem to take 0-126.  Specifying 127-255 doesn't
         // break anything, but seems to show the same exact value 0-126 would have (i.e. 127 is 0 brightness, 255 is full brightness).
         // Discarding the lowest bit from each to make the value fit in 0-126.
-        spiDataBytes.Add((byte)(pixel.B >> 1));
-        spiDataBytes.Add((byte)(pixel.G >> 1));
-        spiDataBytes.Add((byte)(pixel.R >> 1));
+        spiDataBytes.Add((byte)(pixel.Couleur.B >> 1));
+        spiDataBytes.Add((byte)(pixel.Couleur.G >> 1));
+        spiDataBytes.Add((byte)(pixel.Couleur.R >> 1));
       }
 
       spiDataBytes.AddRange(EndFrame);

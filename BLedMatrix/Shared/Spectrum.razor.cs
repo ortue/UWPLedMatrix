@@ -3,6 +3,7 @@ using Library.Entity;
 using Library.Util;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
+using Swan;
 
 namespace BLedMatrix.Shared
 {
@@ -135,18 +136,16 @@ namespace BLedMatrix.Shared
       {
         double yMax = Magnitude(fftData, x, amplitude);
 
-        Couleur heureCouleur = Couleurs.Get("Spectrum", "HeureCouleur", Couleur.Rouge);
-        Couleur heureAltCouleur = Couleurs.Get("Spectrum", "HeureAltCouleur", Couleur.RougePale);
-        Couleur titreCouleur = Couleurs.Get("Spectrum", "TitreCouleur", Couleur.Rouge);
-        Couleur titreAltCouleur = Couleurs.Get("Spectrum", "TitreAltCouleur", Couleur.RougePale);
-
         for (int y = 0; y < PixelList.Hauteur; y++)
           if (y < Math.Ceiling(yMax))
             if (Pixels.Get(x, 19 - y) is Pixel pixel)
-              if (pixel.Couleur == heureAltCouleur)
-                pixel.SetColor(heureCouleur);
-              else if (pixel.Couleur == titreAltCouleur)
-                pixel.SetColor(titreCouleur);
+              if (pixel.Couleur.Option)
+              {
+                if (pixel.Y > 10)
+                  pixel.SetColor(Couleurs.Get("Spectrum", "HeureAltCouleur", Couleur.Rouge, true));
+                else
+                  pixel.SetColor(Couleurs.Get("Spectrum", "TitreAltCouleur", Couleur.Rouge, true));
+              }
               else
                 pixel.SetColor(ProportionCouleur(y));
       }
@@ -173,18 +172,18 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void SetSpectrum(int cycle)
     {
-      List<Couleur> couleurs = new()
-      {
-        Couleurs.Get("Spectrum", "HeureCouleur", Couleur.Rouge),
-        Couleurs.Get("Spectrum", "HeureAltCouleur", Couleur.RougePale),
-        Couleurs.Get("Spectrum", "TitreCouleur", Couleur.Rouge),
-        Couleurs.Get("Spectrum", "TitreAltCouleur", Couleur.RougePale)
-      };
-
       if (cycle % 8 == 0)
         for (int x = 0; x < PixelList.Largeur; x++)
-          if (Pixels.Where(p => p.X == x && !p.Couleur.IsNoir && !couleurs.Contains(p.Couleur)).OrderBy(p => p.Y).FirstOrDefault() is Pixel pixel)
-            pixel.Couleur = Couleur.Noir;
+          if (Pixels.Where(p => p.X == x && !p.Couleur.IsNoir).OrderBy(p => p.Y).FirstOrDefault() is Pixel pixel)
+            if (pixel.Couleur.Option)
+            {
+              if (pixel.Y > 10)
+                pixel.Couleur = Couleurs.Get("Spectrum", "HeureCouleur", Couleur.RougePale, true);
+              else
+                pixel.Couleur = Couleurs.Get("Spectrum", "TitreCouleur", Couleur.RougePale, true);
+            }
+            else
+              pixel.Couleur = Couleur.Noir;
     }
 
     /// <summary>
@@ -225,10 +224,7 @@ namespace BLedMatrix.Shared
     {
       if (TaskGo.HeureMusique && cycle % 16 == 0)
       {
-        Couleur heureCouleur = Couleurs.Get("Spectrum", "HeureCouleur", Couleur.Rouge);
-        Couleur heureAltCouleur = Couleurs.Get("Spectrum", "HeureAltCouleur", Couleur.RougePale);
-
-        foreach (Pixel pixel in Pixels.Where(p => (p.Couleur == heureCouleur || p.Couleur == heureAltCouleur) && p.Y > 12))
+        foreach (Pixel pixel in Pixels.Where(p => p.Couleur.Option && p.Y > 12))
           pixel.Couleur = Couleur.Noir;
 
         CaractereList textes = new(PixelList.Largeur);
@@ -236,10 +232,24 @@ namespace BLedMatrix.Shared
 
         foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
           if (Pixels.Get(lettre.X + 1, lettre.Y + 13) is Pixel pixel)
-            if (Pixels.Any(p => !p.Couleur.IsNoir && (p.Couleur != heureCouleur || p.Couleur != heureAltCouleur) && p.X == pixel.X && p.Y < pixel.Y))
-              pixel.SetColor(Couleurs.Get("Spectrum", "HeureCouleur", Couleur.Rouge));
-            else
-              pixel.SetColor(Couleurs.Get("Spectrum", "HeureAltCouleur", Couleur.RougePale));
+            if (Pixels.Any(p => p.X == pixel.X && p.Y < pixel.Y))
+              if (pixel.Couleur.IsNoir)
+                pixel.SetColor(Couleurs.Get("Spectrum", "HeureCouleur", Couleur.RougePale, true));
+              else
+                pixel.SetColor(Couleurs.Get("Spectrum", "HeureAltCouleur", Couleur.RougePale, true));
+
+
+
+
+
+        //else
+        //pixel.SetColor(Couleurs.Get("Spectrum", "HeureAltCouleur", Couleur.Rouge, true));
+
+        //!p.Couleur.IsNoir && !p.Couleur.Option && 
+
+        //pixel.SetColor(Couleurs.Get("Spectrum", "HeureAltCouleur", Couleur.Rouge, true));
+        //    else
+        //  pixel.SetColor(Couleurs.Get("Spectrum", "HeureCouleur", Couleur.RougePale, true));
       }
     }
 
@@ -250,7 +260,7 @@ namespace BLedMatrix.Shared
     {
       if (TaskGo.TitreKodi && (cycle % 16 == 0))
       {
-        foreach (Pixel pixel in Pixels.Where(p => (p.Couleur == Couleurs.Get("Spectrum", "TitreCouleur", Couleur.Rouge) || p.Couleur == Couleurs.Get("Spectrum", "TitreAltCouleur", Couleur.RougePale)) && p.Y < 8))
+        foreach (Pixel pixel in Pixels.Where(p => p.Couleur.Option && p.Y < 8))
           pixel.Couleur = Couleur.Noir;
 
         CaractereList textes = new(PixelList.Largeur);
@@ -259,9 +269,9 @@ namespace BLedMatrix.Shared
         foreach (Police lettre in textes.GetCaracteres(debut).Where(c => c.Point))
           if (Pixels.Get(lettre.X, lettre.Y + 1) is Pixel pixel)
             if (pixel.Couleur.IsNoir)//|| pixel.Couleur.IsRouge
-              pixel.SetColor(Couleurs.Get("Spectrum", "TitreCouleur", Couleur.Rouge));
+              pixel.SetColor(Couleurs.Get("Spectrum", "TitreCouleur", Couleur.Rouge, true));
             else
-              pixel.SetColor(Couleurs.Get("Spectrum", "TitreAltCouleur", Couleur.RougePale));
+              pixel.SetColor(Couleurs.Get("Spectrum", "TitreAltCouleur", Couleur.RougePale, true));
 
         debut++;
 

@@ -50,7 +50,7 @@ namespace LedLibrary.Entities
     {
       get
       {
-        Random random = new ();
+        Random random = new Random();
         int r = random.Next(0, 127);
         int g = random.Next(0, 127);
         int b = random.Next(0, 127);
