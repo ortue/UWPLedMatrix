@@ -23,9 +23,9 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void ExecMeteo()
     {
-      Couleur couleur = new() { R = 64, G = 0, B = 0 };
+      //Couleur couleur = new() { R = 64, G = 0, B = 0 };
       DateTime update = DateTime.Now.AddMinutes(-10);
-      int task = TaskGo.StartTask();
+      int task = TaskGo.StartTask("Meteo");
 
       while (TaskGo.TaskWork(task))
       {
@@ -38,11 +38,11 @@ namespace BLedMatrix.Shared
           if (meteo.temperature?.value.ToString("0").Length < 2)
             leading = "  ";
 
-          Pixels.Set(CaractereList.Print(leading + meteo.temperature?.value.ToString("0") + "°C", 1, 1, couleur));
-          Pixels.Set(CaractereList.Print("H " + meteo.humidity?.value.ToString() + "%", 2, 7, couleur));
+          Pixels.Set(CaractereList.Print(leading + meteo.temperature?.value.ToString("0") + "°C", 1, 1, Couleurs.Get("Meteo", "Temperature", Couleur.Rouge)));
+          Pixels.Set(CaractereList.Print("H " + meteo.humidity?.value.ToString() + "%", 2, 7, Couleurs.Get("Meteo", "Humidite", Couleur.Rouge)));
         }
 
-        Pixels.Set(CaractereList.Print(CaractereList.Heure, 2, 13, couleur));
+        Pixels.Set(CaractereList.Print(CaractereList.Heure, 2, 13, Couleurs.Get("Meteo", "Heure", Couleur.Rouge)));
         Background.Bleu(Pixels);
 
         Pixels.SendPixels();

@@ -124,6 +124,9 @@ namespace BLedMatrix.Pages
 
       double temps = 100;
 
+      if (slide != 0)
+        temps = 50;
+
       if (slide == 0 && imageClass.FrameCount >= 8)
         temps = 70;
 

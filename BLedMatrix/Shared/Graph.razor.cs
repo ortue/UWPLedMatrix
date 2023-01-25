@@ -1,6 +1,5 @@
 ﻿using Library.Collection;
 using Library.Entity;
-using Microsoft.JSInterop;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
 
@@ -8,22 +7,8 @@ namespace BLedMatrix.Shared
 {
   public partial class Graph
   {
-    public Couleur CentreCouleur { get; set; } = Couleur.Bleu;
-    public Couleur ExtremiteCouleur { get; set; } = Couleur.Rouge;
-    public Couleur HeureCouleur { get; set; } = Couleur.RougePale;
-    public Couleur HeureAltCouleur { get; set; } = Couleur.Rouge;
-    public Couleur TitreCouleur { get; set; } = Couleur.Rouge;
-    public Couleur TitreAltCouleur { get; set; } = Couleur.RougePale;
-
     protected override async Task OnInitializedAsync()
     {
-      CentreCouleur = Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu);
-      ExtremiteCouleur = Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge);
-      HeureCouleur = Couleurs.Get("Graph", "HeureCouleur", Couleur.RougePale);
-      HeureAltCouleur = Couleurs.Get("Graph", "HeureAltCouleur", Couleur.Rouge);
-      TitreCouleur = Couleurs.Get("Graph", "TitreCouleur", Couleur.Rouge);
-      TitreAltCouleur = Couleurs.Get("Graph", "TitreAltCouleur", Couleur.RougePale);
-
       await Task.CompletedTask;
     }
 
@@ -142,9 +127,9 @@ namespace BLedMatrix.Shared
       double facteurCentre = (10d - distance) / 10d;
       double facteurExtremite = distance / 10d;
 
-      int r = (int)Math.Floor((CentreCouleur.R * facteurCentre) + (ExtremiteCouleur.R * facteurExtremite));
-      int g = (int)Math.Floor((CentreCouleur.G * facteurCentre) + (ExtremiteCouleur.G * facteurExtremite));
-      int b = (int)Math.Floor((CentreCouleur.B * facteurCentre) + (ExtremiteCouleur.B * facteurExtremite));
+      int r = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).R * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).R * facteurExtremite));
+      int g = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).G * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).G * facteurExtremite));
+      int b = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).B * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).B * facteurExtremite));
 
       return Couleur.Get(r, g, b);
     }
@@ -165,9 +150,9 @@ namespace BLedMatrix.Shared
         foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
           if (Pixels.Get(lettre.X + 1, lettre.Y + 13) is Pixel pixel)
             if (pixel.Couleur.IsNoir)// || pixel.Couleur.R == 127)
-              pixel.SetColor(HeureCouleur);
+              pixel.SetColor(Couleurs.Get("Graph", "HeureCouleur", Couleur.RougePale));
             else
-              pixel.SetColor(HeureAltCouleur);
+              pixel.SetColor(Couleurs.Get("Graph", "HeureAltCouleur", Couleur.Rouge));
       }
     }
 
@@ -187,9 +172,9 @@ namespace BLedMatrix.Shared
         foreach (Police lettre in textes.GetCaracteres(debut).Where(c => c.Point))
           if (Pixels.Get(lettre.X, lettre.Y + 1) is Pixel pixel)
             if (pixel.Couleur.IsNoir)//|| pixel.Couleur.IsRouge
-              pixel.SetColor(TitreCouleur);
+              pixel.SetColor(Couleurs.Get("Graph", "TitreCouleur", Couleur.Rouge));
             else
-              pixel.SetColor(TitreAltCouleur);
+              pixel.SetColor(Couleurs.Get("Graph", "TitreAltCouleur", Couleur.RougePale));
 
         if (cycle % 16 == 0)
           debut++;
