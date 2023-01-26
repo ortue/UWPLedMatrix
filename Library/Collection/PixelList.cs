@@ -35,6 +35,11 @@ namespace Library.Collection
     public PixelList(bool inter)
     {
       DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
+
+      if (!inter)
+        for (int y = 0; y < Largeur; y++)
+          for (int x = 0; x < Hauteur; x++)
+            Add(new Pixel() { X = x, Y = y });
     }
 
     /// <summary>

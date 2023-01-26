@@ -9,7 +9,6 @@
     public byte B { get; set; }
     public byte G { get; set; }
     public byte R { get; set; }
-    public bool Option { get; set; }
 
     public bool IsNoir
     {

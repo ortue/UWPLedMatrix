@@ -92,7 +92,6 @@ namespace Library.Entity
     {
       int i = 0;
       byte[] octets = new byte[NbrByte];
-      //Bitmap bitmap = new Bitmap((Image)image.Clone());
 
       for (int y = 0; y < Height; y++)
         for (int x = 0; x < Width; x++)
@@ -101,9 +100,6 @@ namespace Library.Entity
 
           if (octets.Length > i)
           {
-            //int argb = 0;
-
-            //frame[i++] = color.A;
             octets[i++] = color.R;
             octets[i++] = color.G;
             octets[i++] = color.B;
@@ -120,20 +116,19 @@ namespace Library.Entity
     /// <param name="pixels"></param>
     public void SetPixelFrame(int frame, PixelList pixels, int slide, bool fadeOut)
     {
-      using (Image image = Image.FromFile(FileName))
+      using Image image = Image.FromFile(FileName);
+      List<byte[]> frames = new();
+
+      if (FrameCount > 1)
       {
-        List<byte[]> frames = new();
-
-        if (FrameCount > 1)
-        {
-          foreach (Bitmap bitmap in ParseFrames((Bitmap)image))
-            frames.Add(BitmapToByte(bitmap));
-        }
-        else
-          frames.Add(BitmapToByte((Bitmap)image));
-
-        Couleurs = new CouleurList(frames);
+        foreach (Bitmap bitmap in ParseFrames((Bitmap)image))
+          frames.Add(BitmapToByte(bitmap));
       }
+      else
+        frames.Add(BitmapToByte((Bitmap)image));
+
+      Couleurs = new CouleurList(frames);
+
 
       int heightOffset = (PixelList.Hauteur - Height) / 2;
       int widthOffset = (PixelList.Largeur - Width) / 2;

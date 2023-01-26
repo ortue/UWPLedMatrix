@@ -31,17 +31,7 @@ namespace BLedMatrix.Shared
     private void ExecVUMeter()
     {
       TaskGo.AudioCaptureConcurence = true;
-      int task = TaskGo.StartTask();
-
-      Couleur couleur = Couleur.Get(0, 0, 8);
-      Random ra = new();
-      bool whiteBgColor = true;
-
-      if (ra.Next(1, 3) == 1)
-      {
-        couleur = Couleur.Get(63, 63, 127);
-        whiteBgColor = false;
-      }
+      int task = TaskGo.StartTask("VUMeter");
 
       double max = 0;
       CaractereList caracteres = new(PixelList.Largeur);
@@ -59,17 +49,16 @@ namespace BLedMatrix.Shared
         if (fft.Max(Math.Abs) > max)
           max = fft.Max(Math.Abs);
 
-        if (whiteBgColor)
           foreach (Pixel pixel in Pixels)
-            pixel.SetColor(127, 127, 127);
+            pixel.SetColor(Couleurs.Get("VUMeter", "BGCouleur", Couleur.Get(127, 127, 127)));
 
         caracteres.SetText("VU");
-        Pixels.Set(CaractereList.Print("VU", 5, 12, couleur));
-        Couleur couleurMax = couleur;
+        Pixels.Set(CaractereList.Print("VU", 5, 12, Couleurs.Get("VUMeter", "TexteCouleur", Couleur.Noir)));
+        Couleur couleurMax = Couleurs.Get("VUMeter", "MaxAltCouleur", Couleur.Noir);
 
         //lumiere max
         if (max > 75)
-          couleurMax = Couleur.Get(127, 0, 0);
+          couleurMax = Couleurs.Get("VUMeter", "MaxCouleur", Couleur.Get(127, 127, 127));
 
         Pixels.Get(17, 13).SetColor(couleurMax);
         Pixels.Get(18, 13).SetColor(couleurMax);
@@ -77,78 +66,78 @@ namespace BLedMatrix.Shared
         Pixels.Get(18, 14).SetColor(couleurMax);
 
         //dessin
-        Pixels.Get(1, 10).SetColor(couleur);
-        Pixels.Get(2, 10).SetColor(couleur);
-        Pixels.Get(3, 10).SetColor(couleur);
+        Pixels.Get(1, 10).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(2, 10).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(3, 10).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
 
-        Pixels.Get(4, 9).SetColor(couleur);
-        Pixels.Get(5, 9).SetColor(couleur);
-        Pixels.Get(6, 9).SetColor(couleur);
-        Pixels.Get(7, 9).SetColor(couleur);
+        Pixels.Get(4, 9).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(5, 9).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(6, 9).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(7, 9).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
 
-        Pixels.Get(8, 8).SetColor(couleur);
-        Pixels.Get(9, 8).SetColor(couleur);
-        Pixels.Get(10, 8).SetColor(couleur);
-        Pixels.Get(11, 8).SetColor(couleur);
+        Pixels.Get(8, 8).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(9, 8).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(10, 8).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(11, 8).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
 
-        Pixels.Get(12, 9).SetColor(couleur);
-        Pixels.Get(13, 9).SetColor(couleur);
-        Pixels.Get(14, 9).SetColor(Couleur.Get(127, 0, 0));
-        Pixels.Get(15, 9).SetColor(Couleur.Get(127, 0, 0));
+        Pixels.Get(12, 9).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(13, 9).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(14, 9).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
+        Pixels.Get(15, 9).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
 
-        Pixels.Get(16, 10).SetColor(Couleur.Get(127, 0, 0));
-        Pixels.Get(17, 10).SetColor(Couleur.Get(127, 0, 0));
-        Pixels.Get(18, 10).SetColor(Couleur.Get(127, 0, 0));
+        Pixels.Get(16, 10).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
+        Pixels.Get(17, 10).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
+        Pixels.Get(18, 10).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
 
         //Moins
-        Pixels.Get(1, 4).SetColor(couleur);
-        Pixels.Get(2, 4).SetColor(couleur);
-        Pixels.Get(3, 4).SetColor(couleur);
+        Pixels.Get(1, 4).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(2, 4).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(3, 4).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
 
-        Pixels.Get(2, 8).SetColor(couleur);
-        Pixels.Get(2, 9).SetColor(couleur);
+        Pixels.Get(2, 8).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(2, 9).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
 
-        Pixels.Get(6, 7).SetColor(couleur);
-        Pixels.Get(6, 8).SetColor(couleur);
+        Pixels.Get(6, 7).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(6, 8).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
 
-        Pixels.Get(9, 6).SetColor(couleur);
-        Pixels.Get(9, 7).SetColor(couleur);
+        Pixels.Get(9, 6).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(9, 7).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
 
-        Pixels.Get(11, 6).SetColor(couleur);
-        Pixels.Get(11, 7).SetColor(couleur);
+        Pixels.Get(11, 6).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(11, 7).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
 
-        Pixels.Get(13, 7).SetColor(couleur);
-        Pixels.Get(13, 8).SetColor(couleur);
+        Pixels.Get(13, 7).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(13, 8).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
 
-        Pixels.Get(15, 7).SetColor(Couleur.Get(127, 0, 0));
-        Pixels.Get(15, 8).SetColor(Couleur.Get(127, 0, 0));
+        Pixels.Get(15, 7).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
+        Pixels.Get(15, 8).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
 
-        Pixels.Get(17, 8).SetColor(Couleur.Get(127, 0, 0));
-        Pixels.Get(17, 9).SetColor(Couleur.Get(127, 0, 0));
+        Pixels.Get(17, 8).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
+        Pixels.Get(17, 9).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
 
         //Plus
-        Pixels.Get(17, 3).SetColor(Couleur.Get(127, 0, 0));
-        Pixels.Get(16, 4).SetColor(Couleur.Get(127, 0, 0));
-        Pixels.Get(17, 4).SetColor(Couleur.Get(127, 0, 0));
-        Pixels.Get(18, 4).SetColor(Couleur.Get(127, 0, 0));
-        Pixels.Get(17, 5).SetColor(Couleur.Get(127, 0, 0));
+        Pixels.Get(17, 3).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
+        Pixels.Get(16, 4).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
+        Pixels.Get(17, 4).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
+        Pixels.Get(18, 4).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
+        Pixels.Get(17, 5).SetColor(Couleurs.Get("VUMeter", "DessinRougeCouleur", Couleur.Rouge));
 
         //base
-        Pixels.Get(8, 18).SetColor(couleur);
-        Pixels.Get(9, 18).SetColor(couleur);
-        Pixels.Get(10, 18).SetColor(couleur);
-        Pixels.Get(11, 18).SetColor(couleur);
+        Pixels.Get(8, 18).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(9, 18).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(10, 18).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(11, 18).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
 
-        Pixels.Get(7, 19).SetColor(couleur);
-        Pixels.Get(8, 19).SetColor(couleur);
-        Pixels.Get(9, 19).SetColor(couleur);
-        Pixels.Get(10, 19).SetColor(couleur);
-        Pixels.Get(11, 19).SetColor(couleur);
-        Pixels.Get(12, 19).SetColor(couleur);
+        Pixels.Get(7, 19).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(8, 19).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(9, 19).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(10, 19).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(11, 19).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
+        Pixels.Get(12, 19).SetColor(Couleurs.Get("VUMeter", "DessinCouleur", Couleur.Noir));
 
         //aiguille
         for (int r = 2; r < 18; r++)
-          Pixels.Get(GetCercleCoord(max + 315, r)).SetColor(couleur);
+          Pixels.Get(GetCercleCoord(max + 315, r)).SetColor(Couleurs.Get("VUMeter", "AiguilleCouleur", Couleur.Noir));
 
         Pixels.SendPixels();
         Pixels.Reset();

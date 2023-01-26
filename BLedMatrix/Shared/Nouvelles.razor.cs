@@ -15,7 +15,14 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void Set()
     {
-      Task.Run(ExecNouvelles);
+      Task.Run(()=> 
+      {
+        TaskGo.StopTask();
+        using ManualResetEventSlim waitHandle = new(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+
+        ExecNouvelles(); 
+      });
     }
 
     /// <summary>
@@ -25,7 +32,7 @@ namespace BLedMatrix.Shared
     {
       int largeur = 0;
       int debut = ResetNouvelle();
-      int task = TaskGo.StartTask();
+      int task = TaskGo.StartTask("Nouvelles");
       DateTime update = DateTime.Now.AddMinutes(-60);
       CaractereList caracteres = new(20);
 
@@ -39,9 +46,9 @@ namespace BLedMatrix.Shared
 
         largeur = caracteres.SetText(RadioCanada.NouvelleStr);
 
-        Pixels.Set(CaractereList.Print(caracteres.GetCaracteres(debut), 0, 1, Couleur.Get(64, 0, 0)));
-        Pixels.Set(CaractereList.Print(DateTime.Now.ToString("MM-dd"), 1, 7, Couleur.Get(0, 0, 127)));
-        Pixels.Set(CaractereList.Print(CaractereList.Heure, 2, 13, Couleur.Get(0, 0, 127)));
+        Pixels.Set(CaractereList.Print(caracteres.GetCaracteres(debut), 0, 1, Couleurs.Get("Nouvelles", "TexteCouleur", Couleur.Get(64, 0, 0))));
+        Pixels.Set(CaractereList.Print(DateTime.Now.ToString("MM-dd"), 1, 7, Couleurs.Get("Nouvelles", "DateCouleur", Couleur.Bleu)));
+        Pixels.Set(CaractereList.Print(CaractereList.Heure, 2, 13, Couleurs.Get("Nouvelles", "HeureCouleur", Couleur.Bleu)));
 
         Pixels.SendPixels();
         Pixels.Reset();

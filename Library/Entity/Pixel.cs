@@ -8,7 +8,6 @@ namespace Library.Entity
     public int Y { get; set; }
     public int Numero { get; set; }
     public int Position { get; set; }
-    //public bool Option { get; set; }
     public Couleur Couleur { get; set; } = new Couleur();
 
     /// <summary>

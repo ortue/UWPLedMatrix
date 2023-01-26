@@ -83,7 +83,7 @@ namespace BLedMatrix.Shared
     {
       int largeur = 0;
       int debut = -20;
-      int task = TaskGo.StartTask();
+      int task = TaskGo.StartTask("LoremBarnak");
       string loremBarnak = GetLoremBarnak(10);
       CaractereList caracteres = new(20);
 
@@ -100,9 +100,9 @@ namespace BLedMatrix.Shared
 
         largeur = caracteres.SetText(loremBarnak);
 
-        Pixels.Set(CaractereList.Print(caracteres.GetCaracteres(debut), 0, 1, Couleur.Get(64, 0, 0)));
-        Pixels.Set(CaractereList.Print(DateTime.Now.ToString("MM-dd"), 1, 7, Couleur.Get(0, 0, 127)));
-        Pixels.Set(CaractereList.Print(CaractereList.Heure, 2, 13, Couleur.Get(0, 0, 127)));
+        Pixels.Set(CaractereList.Print(caracteres.GetCaracteres(debut), 0, 1, Couleurs.Get("LoremBarnak", "TexteCouleur", Couleur.Get(64, 0, 0))));
+        Pixels.Set(CaractereList.Print(DateTime.Now.ToString("MM-dd"), 1, 7, Couleurs.Get("LoremBarnak", "DateCouleur", Couleur.Bleu)));
+        Pixels.Set(CaractereList.Print(CaractereList.Heure, 2, 13, Couleurs.Get("LoremBarnak", "HeureCouleur", Couleur.Bleu)));
 
         Background.Grichage(Pixels);
         Pixels.SendPixels();
