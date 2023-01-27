@@ -2,6 +2,7 @@
 using Library.Entity;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
+using System.Data;
 
 namespace BLedMatrix.Shared
 {
@@ -15,7 +16,7 @@ namespace BLedMatrix.Shared
     /// <summary>
     /// Set
     /// </summary>
-    private void Set()
+    private void Set(int option)
     {
       Task.Run(() =>
       {
@@ -26,14 +27,14 @@ namespace BLedMatrix.Shared
           waitHandle.Wait(TimeSpan.FromMilliseconds(100));
         }
 
-        ExecGraph();
+        ExecGraph(option);
       });
     }
 
     /// <summary>
     /// Graph
     /// </summary>
-    private void ExecGraph()
+    private void ExecGraph(int option)
     {
       TaskGo.AudioCaptureConcurence = true;
 
@@ -49,7 +50,7 @@ namespace BLedMatrix.Shared
         double[] fft = Capture(audioCapture, audioBuffer);
         double amplitude = GetAmplitudeGraph(fft);
 
-        GetGraph(fft, amplitude);
+        GetGraph(fft, amplitude, option);
         AffHeure();
         debut = AffTitre(cycle++, debut);
 
@@ -106,13 +107,24 @@ namespace BLedMatrix.Shared
     /// </summary>
     /// <param name="audioBuffer"></param>
     /// <param name="fft"></param>
-    private void GetGraph(double[] fft, double amplitude)
+    private void GetGraph(double[] fft, double amplitude, int option)
     {
       for (int x = 0; x < PixelList.Largeur; x++)
       {
         int y = (int)(fft[x * 2] * amplitude) + 10;
         double distance = Math.Abs(fft[x * 2] * amplitude);
 
+        if (option == 1)
+        {
+          int yy = (int)(-fft[x * 2] * amplitude) + 10;
+          int minY = Math.Min(y, yy);
+          int maxY = Math.Max(y, yy);
+
+          for (int yyy = minY; yyy <= maxY; yyy++)
+            if (Pixels.Get(x, yyy) is Pixel pixel)
+              pixel.SetColor(ProportionCouleur(Math.Abs(yyy - 10)));
+        }
+        else
         if (Pixels.Get(x, y) is Pixel pixel)
           pixel.SetColor(ProportionCouleur(Math.Floor(distance)));
       }
@@ -121,6 +133,24 @@ namespace BLedMatrix.Shared
     /// <summary>
     /// ProportionCouleur
     /// </summary>
+    /// <param name="distance"></param>
+    /// <returns></returns>
+    private Couleur ProportionCouleur(int distance)
+    {
+      double facteurCentre = (10d - distance) / 10d;
+      double facteurExtremite = distance / 10d;
+
+      int r = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).R * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).R * facteurExtremite));
+      int g = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).G * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).G * facteurExtremite));
+      int b = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).B * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).B * facteurExtremite));
+
+      return Couleur.Get(r, g, b);
+    }
+
+    /// <summary>
+    /// ProportionCouleur
+    /// </summary>
+    /// <param name="distance"></param>
     /// <returns></returns>
     private Couleur ProportionCouleur(double distance)
     {

@@ -221,21 +221,24 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void AffHeure(int cycle)
     {
-      if (TaskGo.HeureMusique && cycle % 8 == 0)
+      if (cycle % 8 == 0)
       {
         foreach (Pixel pixel in TabSpec.Where(p => (p.Position == 1 || p.Position == 2) && p.Y > 12))
           pixel.Position = 0;
 
-        CaractereList textes = new(PixelList.Largeur);
-        textes.SetText(CaractereList.Heure);
+        if (TaskGo.HeureMusique)
+        {
+          CaractereList textes = new(PixelList.Largeur);
+          textes.SetText(CaractereList.Heure);
 
-        foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
-          if (TabSpec.Get(lettre.X + 1, lettre.Y + 13) is Pixel pixel)
-            if (TabSpec.Any(p => p.X == pixel.X && p.Y < pixel.Y))
-              if (pixel.Couleur.IsNoir)
-                pixel.Position = 1;
-              else
-                pixel.Position = 2;
+          foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
+            if (TabSpec.Get(lettre.X + 1, lettre.Y + 13) is Pixel pixel)
+              if (TabSpec.Any(p => p.X == pixel.X && p.Y < pixel.Y))
+                if (pixel.Couleur.IsNoir)
+                  pixel.Position = 1;
+                else
+                  pixel.Position = 2;
+        }
       }
     }
 
@@ -244,28 +247,31 @@ namespace BLedMatrix.Shared
     /// </summary>
     private int AffTitre(int cycle, int debut)
     {
-      if (TaskGo.TitreKodi && (cycle % 16 == 0))
+      if (cycle % 16 == 0)
       {
         foreach (Pixel pixel in TabSpec.Where(p => (p.Position == 3 || p.Position == 4) && p.Y < 8))
           pixel.Position = 0;
 
-        CaractereList textes = new(PixelList.Largeur);
-        int largeur = textes.SetText(Titre.Musique);
-
-        foreach (Police lettre in textes.GetCaracteres(debut).Where(c => c.Point))
-          if (TabSpec.Get(lettre.X, lettre.Y + 1) is Pixel pixel)
-            if (pixel.Couleur.IsNoir)//|| pixel.Couleur.IsRouge
-              pixel.Position = 3;
-            else
-              pixel.Position = 4;
-
-        debut++;
-
-        //Reset après avoir défiler tout le texte
-        if (cycle % 100000 == 0 || largeur < debut)
+        if (TaskGo.TitreKodi)
         {
-          debut = -20;
-          Titre.Refresh();
+          CaractereList textes = new(PixelList.Largeur);
+          int largeur = textes.SetText(Titre.Musique);
+
+          foreach (Police lettre in textes.GetCaracteres(debut).Where(c => c.Point))
+            if (TabSpec.Get(lettre.X, lettre.Y + 1) is Pixel pixel)
+              if (pixel.Couleur.IsNoir)//|| pixel.Couleur.IsRouge
+                pixel.Position = 3;
+              else
+                pixel.Position = 4;
+
+          debut++;
+
+          //Reset après avoir défiler tout le texte
+          if (cycle % 100000 == 0 || largeur < debut)
+          {
+            debut = -20;
+            Titre.Refresh();
+          }
         }
       }
 
