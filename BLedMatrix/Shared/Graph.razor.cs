@@ -8,6 +8,8 @@ namespace BLedMatrix.Shared
 {
   public partial class Graph
   {
+    private PixelList TabSpec { get; set; } = new PixelList(false);
+
     protected override async Task OnInitializedAsync()
     {
       await Task.CompletedTask;
@@ -54,11 +56,54 @@ namespace BLedMatrix.Shared
         AffHeure();
         debut = AffTitre(cycle++, debut);
 
+        foreach (Pixel spec in TabSpec)
+        {
+          Couleur couleur = spec.Position switch
+          {
+            1 => Couleurs.Get("Graph", "HeureCouleur", Couleur.RougePale),
+            2 => Couleurs.Get("Graph", "HeureAltCouleur", Couleur.Rouge),
+            3 => Couleurs.Get("Graph", "TitreCouleur", Couleur.RougePale),
+            4 => Couleurs.Get("Graph", "TitreAltCouleur", Couleur.Rouge),
+            10 => Couleur.Noir,
+            _ => spec.Couleur,
+          };
+
+          Pixels.Get(spec).SetColor(couleur);
+        }
+
         Pixels.SendPixels();
-        Pixels.Reset();
+
+        if (option == 0)
+          TabSpec.Reset();
+        else
+          Fade();
       }
 
       TaskGo.AudioCaptureConcurence = false;
+    }
+
+    /// <summary>
+    /// Fade
+    /// </summary>
+    private void Fade()
+    {
+      foreach (Pixel pixel in TabSpec.Where(p => !p.Couleur.IsNoir))
+      {
+        int r = pixel.Couleur.R - 1;
+        int g = pixel.Couleur.G - 1;
+        int b = pixel.Couleur.B - 1;
+
+        if (r < 0)
+          r = 0;
+
+        if (g < 0)
+          g = 0;
+
+        if (b < 0)
+          b = 0;
+
+        pixel.SetColor(Couleur.Get(r, g, b));
+      }
     }
 
     /// <summary>
@@ -121,11 +166,11 @@ namespace BLedMatrix.Shared
           int maxY = Math.Max(y, yy);
 
           for (int yyy = minY; yyy <= maxY; yyy++)
-            if (Pixels.Get(x, yyy) is Pixel pixel)
+            if (TabSpec.Get(x, yyy) is Pixel pixel)
               pixel.SetColor(ProportionCouleur(Math.Abs(yyy - 10)));
         }
         else
-        if (Pixels.Get(x, y) is Pixel pixel)
+        if (TabSpec.Get(x, y) is Pixel pixel)
           pixel.SetColor(ProportionCouleur(Math.Floor(distance)));
       }
     }
@@ -169,20 +214,20 @@ namespace BLedMatrix.Shared
     /// </summary>
     private void AffHeure()
     {
+      foreach (Pixel pixel in TabSpec.Where(p => (p.Position == 1 || p.Position == 2) && p.Y > 12))
+        pixel.Position = 0;
+
       if (TaskGo.HeureMusique)
       {
-        foreach (Pixel pixel in Pixels.Where(p => p.Couleur.IsRouge && p.Y > 12))
-          pixel.Couleur = Couleur.Noir;
-
         CaractereList textes = new(PixelList.Largeur);
         textes.SetText(CaractereList.Heure);
 
         foreach (Police lettre in textes.GetCaracteres().Where(c => c.Point))
-          if (Pixels.Get(lettre.X + 1, lettre.Y + 13) is Pixel pixel)
+          if (TabSpec.Get(lettre.X + 1, lettre.Y + 13) is Pixel pixel)
             if (pixel.Couleur.IsNoir)// || pixel.Couleur.R == 127)
-              pixel.SetColor(Couleurs.Get("Graph", "HeureCouleur", Couleur.RougePale));
+              pixel.Position = 1;
             else
-              pixel.SetColor(Couleurs.Get("Graph", "HeureAltCouleur", Couleur.Rouge));
+              pixel.Position = 2;
       }
     }
 
@@ -191,20 +236,20 @@ namespace BLedMatrix.Shared
     /// </summary>
     private int AffTitre(int cycle, int debut)
     {
+      foreach (Pixel pixel in TabSpec.Where(p => (p.Position == 3 || p.Position == 4) && p.Y < 8))
+        pixel.Position = 0;
+
       if (TaskGo.TitreKodi)
       {
-        foreach (Pixel pixel in Pixels.Where(p => p.Couleur.IsRouge && p.Y < 8))
-          pixel.Couleur = Couleur.Noir;
-
         CaractereList textes = new(PixelList.Largeur);
         int largeur = textes.SetText(Titre.Musique);
 
         foreach (Police lettre in textes.GetCaracteres(debut).Where(c => c.Point))
-          if (Pixels.Get(lettre.X, lettre.Y + 1) is Pixel pixel)
+          if (TabSpec.Get(lettre.X, lettre.Y + 1) is Pixel pixel)
             if (pixel.Couleur.IsNoir)//|| pixel.Couleur.IsRouge
-              pixel.SetColor(Couleurs.Get("Graph", "TitreCouleur", Couleur.Rouge));
+              pixel.Position = 3;
             else
-              pixel.SetColor(Couleurs.Get("Graph", "TitreAltCouleur", Couleur.RougePale));
+              pixel.Position = 4;
 
         if (cycle % 16 == 0)
           debut++;

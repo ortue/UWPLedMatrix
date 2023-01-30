@@ -68,6 +68,26 @@ namespace Library.Collection
     /// Get
     /// </summary>
     /// <param name="module"></param>
+    /// <param name="titre"></param>
+    /// <returns></returns>
+    public Couleur Get(string module, string titre, Couleur defaut, int position)
+    {
+      if (Find(c => c.Module == module && c.Titre == titre && c.Position == SelectedPosition) is Couleur couleur)
+        return couleur;
+
+      defaut.Module = module;
+      defaut.Titre = titre;
+      defaut.Position = SelectedPosition;
+
+      Add(defaut);
+
+      return defaut;
+    }
+
+    /// <summary>
+    /// Get
+    /// </summary>
+    /// <param name="module"></param>
     /// <returns></returns>
     public IEnumerable<Couleur>? Get(string module)
     {
