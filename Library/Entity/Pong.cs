@@ -278,19 +278,19 @@ namespace Library.Entity
         {
           but = true;
           X = 4;
-          XX = -random.Next(3, 12) / 10;
+          XX = -random.Next(3, 12) / 10d;
           ScoreP1++;
         }
         else if (Gauche)
         {
           but = true;
           X = 14;
-          XX = random.Next(3, 12) / 10;
+          XX = random.Next(3, 12) / 10d;
           ScoreP2++;
         }
 
         Y = 10;
-        YY = random.Next(3, 12) / 10;
+        YY = random.Next(3, 12) / 10d;
         Vitesse = 40;
 
         if (ScoreP1 > 99 || ScoreP2 > 99)
