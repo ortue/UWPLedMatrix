@@ -168,9 +168,11 @@ namespace BLedMatrix.Shared
           for (int yyy = minY; yyy <= maxY; yyy++)
             if (TabSpec.Get(x, yyy) is Pixel pixel)
               pixel.SetColor(ProportionCouleur(Math.Abs(yyy - 10)));
+
+          if (TabSpec.Get(x, y) is Pixel p)
+            p.SetColor(ProportionCouleur(Math.Floor(distance)));
         }
-        else
-        if (TabSpec.Get(x, y) is Pixel pixel)
+        else if (TabSpec.Get(x, y) is Pixel pixel)
           pixel.SetColor(ProportionCouleur(Math.Floor(distance)));
       }
     }
@@ -185,9 +187,9 @@ namespace BLedMatrix.Shared
       double facteurCentre = (10d - distance) / 10d;
       double facteurExtremite = distance / 10d;
 
-      int r = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).R * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).R * facteurExtremite));
-      int g = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).G * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).G * facteurExtremite));
-      int b = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).B * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).B * facteurExtremite));
+      int r = (int)Math.Floor(((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).R * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).R * facteurExtremite)) * 0.5d);
+      int g = (int)Math.Floor(((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).G * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).G * facteurExtremite)) * 0.5d);
+      int b = (int)Math.Floor(((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).B * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).B * facteurExtremite)) * 0.5d);
 
       return Couleur.Get(r, g, b);
     }
@@ -197,14 +199,27 @@ namespace BLedMatrix.Shared
     /// </summary>
     /// <param name="distance"></param>
     /// <returns></returns>
-    private Couleur ProportionCouleur(double distance)
+    private Couleur ProportionCouleur(double distance) //, int facteur = 0
     {
       double facteurCentre = (10d - distance) / 10d;
       double facteurExtremite = distance / 10d;
 
-      int r = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).R * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).R * facteurExtremite));
-      int g = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).G * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).G * facteurExtremite));
-      int b = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).B * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).B * facteurExtremite));
+      //int rC = Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).R - (int)Math.Floor(facteur * facteurCentre);
+      //int gC = Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).G - (int)Math.Floor(facteur * facteurCentre);
+      //int bC = Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).B - (int)Math.Floor(facteur * facteurCentre);
+
+      //int rE = Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Bleu).R - (int)Math.Floor(facteur * facteurExtremite);
+      //int gE = Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Bleu).G - (int)Math.Floor(facteur * facteurExtremite);
+      //int bE = Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Bleu).B - (int)Math.Floor(facteur * facteurExtremite);
+
+      //int r = (int)Math.Floor((rC * facteurCentre) + (rE * facteurExtremite)) + facteur;
+      //int g = (int)Math.Floor((gC * facteurCentre) + (gE * facteurExtremite)) + facteur;
+      //int b = (int)Math.Floor((bC * facteurCentre) + (bE * facteurExtremite)) + facteur;
+
+
+      int r = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).R * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).R * facteurExtremite));// + facteur;
+      int g = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).G * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).G * facteurExtremite));// + facteur;
+      int b = (int)Math.Floor((Couleurs.Get("Graph", "CentreCouleur", Couleur.Bleu).B * facteurCentre) + (Couleurs.Get("Graph", "ExtremiteCouleur", Couleur.Rouge).B * facteurExtremite));// + facteur;
 
       return Couleur.Get(r, g, b);
     }
