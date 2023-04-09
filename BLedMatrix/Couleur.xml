@@ -8,7 +8,6 @@
     <B>0</B>
     <G>127</G>
     <R>0</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -18,7 +17,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -28,7 +26,6 @@
     <B>20</B>
     <G>40</G>
     <R>30</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -38,7 +35,6 @@
     <B>74</B>
     <G>74</G>
     <R>20</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -48,7 +44,6 @@
     <B>40</B>
     <G>100</G>
     <R>74</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -58,7 +53,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -68,7 +62,6 @@
     <B>127</B>
     <G>0</G>
     <R>0</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -78,7 +71,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -88,7 +80,6 @@
     <B>0</B>
     <G>0</G>
     <R>15</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -98,7 +89,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -108,7 +98,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -118,7 +107,6 @@
     <B>0</B>
     <G>0</G>
     <R>15</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -128,7 +116,6 @@
     <B>127</B>
     <G>0</G>
     <R>0</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -138,7 +125,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -148,7 +134,6 @@
     <B>0</B>
     <G>0</G>
     <R>15</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -158,7 +143,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -168,7 +152,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Graph</Module>
@@ -178,7 +161,6 @@
     <B>0</B>
     <G>0</G>
     <R>15</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -188,7 +170,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -198,7 +179,6 @@
     <B>60</B>
     <G>40</G>
     <R>40</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -208,7 +188,6 @@
     <B>20</B>
     <G>40</G>
     <R>30</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -218,7 +197,6 @@
     <B>74</B>
     <G>74</G>
     <R>20</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -228,7 +206,6 @@
     <B>40</B>
     <G>100</G>
     <R>74</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -238,7 +215,6 @@
     <B>0</B>
     <G>0</G>
     <R>0</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -248,7 +224,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -258,7 +233,6 @@
     <B>60</B>
     <G>40</G>
     <R>40</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -268,7 +242,6 @@
     <B>20</B>
     <G>40</G>
     <R>30</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -278,7 +251,6 @@
     <B>74</B>
     <G>74</G>
     <R>20</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -288,7 +260,6 @@
     <B>40</B>
     <G>100</G>
     <R>74</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -298,7 +269,6 @@
     <B>0</B>
     <G>0</G>
     <R>0</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -308,7 +278,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -318,7 +287,6 @@
     <B>60</B>
     <G>40</G>
     <R>40</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -328,7 +296,6 @@
     <B>20</B>
     <G>40</G>
     <R>30</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -338,7 +305,6 @@
     <B>74</B>
     <G>74</G>
     <R>20</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -348,7 +314,6 @@
     <B>40</B>
     <G>100</G>
     <R>74</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -358,7 +323,6 @@
     <B>0</B>
     <G>0</G>
     <R>0</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -368,7 +332,6 @@
     <B>0</B>
     <G>127</G>
     <R>0</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -378,7 +341,6 @@
     <B>60</B>
     <G>40</G>
     <R>40</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -388,7 +350,6 @@
     <B>20</B>
     <G>40</G>
     <R>30</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -398,7 +359,6 @@
     <B>74</B>
     <G>74</G>
     <R>20</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -408,7 +368,6 @@
     <B>40</B>
     <G>100</G>
     <R>74</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -418,7 +377,6 @@
     <B>0</B>
     <G>19</G>
     <R>0</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -428,7 +386,6 @@
     <B>20</B>
     <G>40</G>
     <R>30</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -438,7 +395,6 @@
     <B>33</B>
     <G>0</G>
     <R>0</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -448,7 +404,6 @@
     <B>60</B>
     <G>40</G>
     <R>40</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -458,7 +413,6 @@
     <B>74</B>
     <G>74</G>
     <R>20</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -468,7 +422,6 @@
     <B>40</B>
     <G>100</G>
     <R>74</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -478,7 +431,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -488,7 +440,6 @@
     <B>60</B>
     <G>40</G>
     <R>40</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -498,7 +449,6 @@
     <B>74</B>
     <G>74</G>
     <R>20</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -508,7 +458,6 @@
     <B>40</B>
     <G>100</G>
     <R>74</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -518,7 +467,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -528,7 +476,6 @@
     <B>20</B>
     <G>40</G>
     <R>30</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Horloge</Module>
@@ -538,7 +485,6 @@
     <B>0</B>
     <G>0</G>
     <R>32</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Meteo</Module>
@@ -548,7 +494,6 @@
     <B>0</B>
     <G>127</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Meteo</Module>
@@ -558,7 +503,6 @@
     <B>0</B>
     <G>127</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Meteo</Module>
@@ -568,7 +512,6 @@
     <B>0</B>
     <G>127</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Meteo</Module>
@@ -578,7 +521,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Meteo</Module>
@@ -588,7 +530,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Meteo</Module>
@@ -598,7 +539,6 @@
     <B>0</B>
     <G>0</G>
     <R>127</R>
-    <Option>false</Option>
   </Couleur>
   <Couleur>
     <Module>Spectrum</Module>
@@ -608,7 +548,6 @@
     <B>0</B>
     <G>0</G>
     <R>15</R>
-    <Option>true</Option>
   </Couleur>
   <Couleur>
     <Module>Spectrum</Module>
@@ -618,7 +557,6 @@
     <B>0</B>
     <G>0</G>
     <R>15</R>
-    <Option>true</Option>
   </Couleur>
   <Couleur>
     <Module>Spectrum</Module>
@@ -628,7 +566,6 @@
     <B>0</B>
     <G>0</G>
     <R>15</R>
-    <Option>true</Option>
   </Couleur>
   <Couleur>
     <Module>Spectrum</Module>
@@ -638,6 +575,59 @@
     <B>0</B>
     <G>0</G>
     <R>67</R>
-    <Option>true</Option>
+  </Couleur>
+  <Couleur>
+    <Module>Meteo</Module>
+    <Titre>Temperature</Titre>
+    <FrameCompteur>0</FrameCompteur>
+    <Position>2</Position>
+    <B>0</B>
+    <G>0</G>
+    <R>127</R>
+  </Couleur>
+  <Couleur>
+    <Module>Meteo</Module>
+    <Titre>Humidite</Titre>
+    <FrameCompteur>0</FrameCompteur>
+    <Position>2</Position>
+    <B>0</B>
+    <G>0</G>
+    <R>127</R>
+  </Couleur>
+  <Couleur>
+    <Module>Meteo</Module>
+    <Titre>Heure</Titre>
+    <FrameCompteur>0</FrameCompteur>
+    <Position>2</Position>
+    <B>0</B>
+    <G>0</G>
+    <R>127</R>
+  </Couleur>
+  <Couleur>
+    <Module>Meteo</Module>
+    <Titre>Humidite</Titre>
+    <FrameCompteur>0</FrameCompteur>
+    <Position>3</Position>
+    <B>0</B>
+    <G>0</G>
+    <R>127</R>
+  </Couleur>
+  <Couleur>
+    <Module>Meteo</Module>
+    <Titre>Heure</Titre>
+    <FrameCompteur>0</FrameCompteur>
+    <Position>3</Position>
+    <B>0</B>
+    <G>0</G>
+    <R>127</R>
+  </Couleur>
+  <Couleur>
+    <Module>Meteo</Module>
+    <Titre>Temperature</Titre>
+    <FrameCompteur>0</FrameCompteur>
+    <Position>3</Position>
+    <B>0</B>
+    <G>0</G>
+    <R>127</R>
   </Couleur>
 </ArrayOfCouleur>
