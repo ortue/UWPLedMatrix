@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLedMatrix", "BLedMatrix\BL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "Library\Library.csproj", "{0CAB62C7-5B4B-494A-BC88-0E900FA17A83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAppMatrix", "BlazorAppMatrix\BlazorAppMatrix.csproj", "{CC57CB97-2102-4157-A894-13B62C3240CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -110,6 +112,26 @@ Global
 		{0CAB62C7-5B4B-494A-BC88-0E900FA17A83}.Release|x64.Build.0 = Release|Any CPU
 		{0CAB62C7-5B4B-494A-BC88-0E900FA17A83}.Release|x86.ActiveCfg = Release|Any CPU
 		{0CAB62C7-5B4B-494A-BC88-0E900FA17A83}.Release|x86.Build.0 = Release|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Debug|ARM.Build.0 = Debug|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Debug|x64.Build.0 = Debug|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Debug|x86.Build.0 = Debug|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Release|ARM.ActiveCfg = Release|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Release|ARM.Build.0 = Release|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Release|ARM64.Build.0 = Release|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Release|x64.ActiveCfg = Release|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Release|x64.Build.0 = Release|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Release|x86.ActiveCfg = Release|Any CPU
+		{CC57CB97-2102-4157-A894-13B62C3240CD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
