@@ -119,8 +119,8 @@
 
         for (var m = 0; m < istep; m += 2)
         {
-          var wr = cosTable[tptr];
-          var wi = sign * sinTable[tptr++];
+          var wr = cosTable![tptr];
+          var wi = sign * sinTable![tptr++];
 
           for (var k = m; k < 2 * n; k += 2 * istep)
           {
@@ -395,8 +395,8 @@
     /// <summary>
     /// Pre-computed sine/cosine tables for speed
     /// </summary>
-    double[] cosTable;
-    double[] sinTable;
+    double[]? cosTable;
+    double[]? sinTable;
     #endregion
   }
 }

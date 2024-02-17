@@ -1,6 +1,4 @@
-﻿using System.Net.Mail;
-
-namespace BLedMatrix.Shared
+﻿namespace BLedMatrix.Shared
 {
   public partial class ErrorBoundaryOverride
   {

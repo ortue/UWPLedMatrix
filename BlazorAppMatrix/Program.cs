@@ -1,10 +1,19 @@
+using BlazorAppMatrix.Class;
 using BlazorAppMatrix.Components;
+using Library.Collection;
+using Library.Util;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+
+builder.Services.AddSingleton<PixelList>();
+builder.Services.AddSingleton<TaskGoList>();
+builder.Services.AddSingleton<RadioCanada>();
+builder.Services.AddSingleton<OpenWeather>();
+builder.Services.AddSingleton<KodiWebService>();
+builder.Services.AddSingleton(CouleurList.Load());
 
 var app = builder.Build();
 
@@ -21,7 +30,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.Run();

@@ -1,0 +1,29 @@
+﻿@implements IDisposable
+
+@page "/Animation"
+
+<PageTitle>Animation</PageTitle>
+
+<div class="container">
+  <div class="row g-3 mt-1">
+
+    @if (Animations == null)
+    {
+      <div class="spinner-border text-dark" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    }
+    else
+    {
+      @foreach (var animation in Animations)
+      {
+        <button class="@IsSelected(animation.FileNameID)" style="width:48px;height:48px;" @onclick="() => Set(animation.FileNameID)">
+          <img src="@animation.PathWeb" />
+        </button>
+      }
+    }
+
+  </div>
+</div>
+
+<LedDebug />

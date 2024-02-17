@@ -6,4 +6,210 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\Images\Animation\1up.gif" />
+    <Content Remove="wwwroot\Images\Animation\1up.png" />
+    <Content Remove="wwwroot\Images\Animation\bioniccommando.gif" />
+    <Content Remove="wwwroot\Images\Animation\bioniccommando.png" />
+    <Content Remove="wwwroot\Images\Animation\BlackMageLeft.gif" />
+    <Content Remove="wwwroot\Images\Animation\Bloober.gif" />
+    <Content Remove="wwwroot\Images\Animation\Breakdance.gif" />
+    <Content Remove="wwwroot\Images\Animation\BuzzyBeetleDark.gif" />
+    <Content Remove="wwwroot\Images\Animation\Cecil.gif" />
+    <Content Remove="wwwroot\Images\Animation\CheepCheepRed.gif" />
+    <Content Remove="wwwroot\Images\Animation\ChefPeterPepperF.gif" />
+    <Content Remove="wwwroot\Images\Animation\Commyloose.gif" />
+    <Content Remove="wwwroot\Images\Animation\Enemy01.gif" />
+    <Content Remove="wwwroot\Images\Animation\EnergyTank.gif" />
+    <Content Remove="wwwroot\Images\Animation\Enterprise.gif" />
+    <Content Remove="wwwroot\Images\Animation\GametRedL.gif" />
+    <Content Remove="wwwroot\Images\Animation\GeegaOrangeR.gif" />
+    <Content Remove="wwwroot\Images\Animation\GodOfPoverty.gif" />
+    <Content Remove="wwwroot\Images\Animation\GodOfPoverty.png" />
+    <Content Remove="wwwroot\Images\Animation\HighJump.gif" />
+    <Content Remove="wwwroot\Images\Animation\JumpBlock.gif" />
+    <Content Remove="wwwroot\Images\Animation\KobilR.gif" />
+    <Content Remove="wwwroot\Images\Animation\KoopaTroopaShellGreen.gif" />
+    <Content Remove="wwwroot\Images\Animation\KoopaTroopaShellGreen.png" />
+    <Content Remove="wwwroot\Images\Animation\LittleGoomba.gif" />
+    <Content Remove="wwwroot\Images\Animation\LuigiStanding.gif" />
+    <Content Remove="wwwroot\Images\Animation\LuigiStanding.png" />
+    <Content Remove="wwwroot\Images\Animation\MagicMushroom.gif" />
+    <Content Remove="wwwroot\Images\Animation\MagicMushroom.png" />
+    <Content Remove="wwwroot\Images\Animation\MagicWing.gif" />
+    <Content Remove="wwwroot\Images\Animation\MainCharacterF.gif" />
+    <Content Remove="wwwroot\Images\Animation\Mario.gif" />
+    <Content Remove="wwwroot\Images\Animation\MarioSmallR.gif" />
+    <Content Remove="wwwroot\Images\Animation\MarioStanding.png" />
+    <Content Remove="wwwroot\Images\Animation\MarioWalkingR.gif" />
+    <Content Remove="wwwroot\Images\Animation\megaman.gif" />
+    <Content Remove="wwwroot\Images\Animation\megaman.png" />
+    <Content Remove="wwwroot\Images\Animation\MrEggL.gif" />
+    <Content Remove="wwwroot\Images\Animation\MrHotDogL.gif" />
+    <Content Remove="wwwroot\Images\Animation\NettlerL.gif" />
+    <Content Remove="wwwroot\Images\Animation\POWD.gif" />
+    <Content Remove="wwwroot\Images\Animation\QuestionBlock.gif" />
+    <Content Remove="wwwroot\Images\Animation\QuestionBlock2.gif" />
+    <Content Remove="wwwroot\Images\Animation\Runningright.gif" />
+    <Content Remove="wwwroot\Images\Animation\Rydia1-Walk-Left.gif" />
+    <Content Remove="wwwroot\Images\Animation\Savepoint.gif" />
+    <Content Remove="wwwroot\Images\Animation\ScrewAttack.gif" />
+    <Content Remove="wwwroot\Images\Animation\ShipLeft.gif" />
+    <Content Remove="wwwroot\Images\Animation\ShyguyRedRight.gif" />
+    <Content Remove="wwwroot\Images\Animation\spinywalk.gif" />
+    <Content Remove="wwwroot\Images\Animation\Tinychimp.gif" />
+    <Content Remove="wwwroot\Images\Animation\ToadSmallR.gif" />
+    <Content Remove="wwwroot\Images\Animation\WeaponEnergyBall.gif" />
+    <Content Remove="wwwroot\Images\Animation\WhiteMage-Walk-Front.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeelaOrange.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteArmos.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteEnemyCloud.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteFairy.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteFire.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteFood.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteFood.png" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteHeart.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.png" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteKeeseBlue.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteLinkFront.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteLinkLeft.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteOctorokRedDown.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteRopeLeft.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteStalfos.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteTektiteRed.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteTriforce.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteWallMasterUL.gif" />
+    <Content Remove="wwwroot\Images\Animation\ZoomerRed.gif" />
+    <Content Remove="wwwroot\Images\Meteo\01d.gif" />
+    <Content Remove="wwwroot\Images\Meteo\01n.gif" />
+    <Content Remove="wwwroot\Images\Meteo\02d.gif" />
+    <Content Remove="wwwroot\Images\Meteo\02n.gif" />
+    <Content Remove="wwwroot\Images\Meteo\03d.gif" />
+    <Content Remove="wwwroot\Images\Meteo\03n.gif" />
+    <Content Remove="wwwroot\Images\Meteo\04d.gif" />
+    <Content Remove="wwwroot\Images\Meteo\04n.gif" />
+    <Content Remove="wwwroot\Images\Meteo\09d.gif" />
+    <Content Remove="wwwroot\Images\Meteo\09n.gif" />
+    <Content Remove="wwwroot\Images\Meteo\10d.gif" />
+    <Content Remove="wwwroot\Images\Meteo\10n.gif" />
+    <Content Remove="wwwroot\Images\Meteo\11d.gif" />
+    <Content Remove="wwwroot\Images\Meteo\11n.gif" />
+    <Content Remove="wwwroot\Images\Meteo\13d.gif" />
+    <Content Remove="wwwroot\Images\Meteo\13n.gif" />
+    <Content Remove="wwwroot\Images\Meteo\50d.gif" />
+    <Content Remove="wwwroot\Images\Meteo\50n.gif" />
+    <Content Remove="wwwroot\Images\RadioCanada.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\Animation\1up.gif" />
+    <None Include="wwwroot\Images\Animation\1up.png" />
+    <None Include="wwwroot\Images\Animation\bioniccommando.gif" />
+    <None Include="wwwroot\Images\Animation\bioniccommando.png" />
+    <None Include="wwwroot\Images\Animation\BlackMageLeft.gif" />
+    <None Include="wwwroot\Images\Animation\Bloober.gif" />
+    <None Include="wwwroot\Images\Animation\Breakdance.gif" />
+    <None Include="wwwroot\Images\Animation\BuzzyBeetleDark.gif" />
+    <None Include="wwwroot\Images\Animation\Cecil.gif" />
+    <None Include="wwwroot\Images\Animation\CheepCheepRed.gif" />
+    <None Include="wwwroot\Images\Animation\ChefPeterPepperF.gif" />
+    <None Include="wwwroot\Images\Animation\Commyloose.gif" />
+    <None Include="wwwroot\Images\Animation\Enemy01.gif" />
+    <None Include="wwwroot\Images\Animation\EnergyTank.gif" />
+    <None Include="wwwroot\Images\Animation\Enterprise.gif" />
+    <None Include="wwwroot\Images\Animation\GametRedL.gif" />
+    <None Include="wwwroot\Images\Animation\GeegaOrangeR.gif" />
+    <None Include="wwwroot\Images\Animation\GodOfPoverty.gif" />
+    <None Include="wwwroot\Images\Animation\GodOfPoverty.png" />
+    <None Include="wwwroot\Images\Animation\HighJump.gif" />
+    <None Include="wwwroot\Images\Animation\JumpBlock.gif" />
+    <None Include="wwwroot\Images\Animation\KobilR.gif" />
+    <None Include="wwwroot\Images\Animation\KoopaTroopaShellGreen.gif" />
+    <None Include="wwwroot\Images\Animation\KoopaTroopaShellGreen.png" />
+    <None Include="wwwroot\Images\Animation\LittleGoomba.gif" />
+    <None Include="wwwroot\Images\Animation\LuigiStanding.gif" />
+    <None Include="wwwroot\Images\Animation\LuigiStanding.png" />
+    <None Include="wwwroot\Images\Animation\MagicMushroom.gif" />
+    <None Include="wwwroot\Images\Animation\MagicMushroom.png" />
+    <None Include="wwwroot\Images\Animation\MagicWing.gif" />
+    <None Include="wwwroot\Images\Animation\MainCharacterF.gif" />
+    <None Include="wwwroot\Images\Animation\Mario.gif" />
+    <None Include="wwwroot\Images\Animation\MarioSmallR.gif" />
+    <None Include="wwwroot\Images\Animation\MarioStanding.png" />
+    <None Include="wwwroot\Images\Animation\MarioWalkingR.gif" />
+    <None Include="wwwroot\Images\Animation\megaman.gif" />
+    <None Include="wwwroot\Images\Animation\megaman.png" />
+    <None Include="wwwroot\Images\Animation\MrEggL.gif" />
+    <None Include="wwwroot\Images\Animation\MrHotDogL.gif" />
+    <None Include="wwwroot\Images\Animation\NettlerL.gif" />
+    <None Include="wwwroot\Images\Animation\POWD.gif" />
+    <None Include="wwwroot\Images\Animation\QuestionBlock.gif" />
+    <None Include="wwwroot\Images\Animation\QuestionBlock2.gif" />
+    <None Include="wwwroot\Images\Animation\Runningright.gif" />
+    <None Include="wwwroot\Images\Animation\Rydia1-Walk-Left.gif" />
+    <None Include="wwwroot\Images\Animation\Savepoint.gif" />
+    <None Include="wwwroot\Images\Animation\ScrewAttack.gif" />
+    <None Include="wwwroot\Images\Animation\ShipLeft.gif" />
+    <None Include="wwwroot\Images\Animation\ShyguyRedRight.gif" />
+    <None Include="wwwroot\Images\Animation\spinywalk.gif" />
+    <None Include="wwwroot\Images\Animation\Tinychimp.gif" />
+    <None Include="wwwroot\Images\Animation\ToadSmallR.gif" />
+    <None Include="wwwroot\Images\Animation\WeaponEnergyBall.gif" />
+    <None Include="wwwroot\Images\Animation\WhiteMage-Walk-Front.gif" />
+    <None Include="wwwroot\Images\Animation\ZeelaOrange.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteArmos.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteEnemyCloud.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteFairy.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteFire.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteFood.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteFood.png" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeart.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.png" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteKeeseBlue.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteLinkFront.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteLinkLeft.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteOctorokRedDown.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteRopeLeft.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteStalfos.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteTektiteRed.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteTriforce.gif" />
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteWallMasterUL.gif" />
+    <None Include="wwwroot\Images\Animation\ZoomerRed.gif" />
+    <None Include="wwwroot\Images\Meteo\01d.gif" />
+    <None Include="wwwroot\Images\Meteo\01n.gif" />
+    <None Include="wwwroot\Images\Meteo\02d.gif" />
+    <None Include="wwwroot\Images\Meteo\02n.gif" />
+    <None Include="wwwroot\Images\Meteo\03d.gif" />
+    <None Include="wwwroot\Images\Meteo\03n.gif" />
+    <None Include="wwwroot\Images\Meteo\04d.gif" />
+    <None Include="wwwroot\Images\Meteo\04n.gif" />
+    <None Include="wwwroot\Images\Meteo\09d.gif" />
+    <None Include="wwwroot\Images\Meteo\09n.gif" />
+    <None Include="wwwroot\Images\Meteo\10d.gif" />
+    <None Include="wwwroot\Images\Meteo\10n.gif" />
+    <None Include="wwwroot\Images\Meteo\11d.gif" />
+    <None Include="wwwroot\Images\Meteo\11n.gif" />
+    <None Include="wwwroot\Images\Meteo\13d.gif" />
+    <None Include="wwwroot\Images\Meteo\13n.gif" />
+    <None Include="wwwroot\Images\Meteo\50d.gif" />
+    <None Include="wwwroot\Images\Meteo\50n.gif" />
+    <None Include="wwwroot\Images\RadioCanada.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nfw.Linux.Joystick" Version="1.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Library\Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>OpenTK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

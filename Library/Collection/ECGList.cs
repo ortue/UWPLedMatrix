@@ -56,13 +56,13 @@ namespace Library.Collection
 
         for (int i = 0; i <= Math.Abs(saut); i++)
         {
-          ECG tmpEgc = new ECG(premier);
+          ECG tmpEgc = new(premier);
 
           premier.NextX(saut, i < Math.Abs(saut));
 
           foreach (ECG egc in this.Where(e => !e.Premier))
           {
-            ECG dernierEgc = new ECG(egc);
+            ECG dernierEgc = new(egc);
 
             if (egc.X == premier.X - 1)
               egc.Couleur = Couleur.Get(32, 127, 32);
