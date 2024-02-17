@@ -46,6 +46,9 @@ namespace BlazorAppMatrix.Components.Layout
       audioCapture.Start();
       int cycle = 0;
 
+
+      //TODO:Faire la moyen pour le max du son dans les 12 step pour ramasser une meilleur image que seulement la 12ieme
+
       while (TaskGo.TaskWork(task))
       {
         double[] fft = Capture(audioCapture, audioBuffer);

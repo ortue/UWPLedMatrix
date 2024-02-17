@@ -6,10 +6,14 @@ namespace BlazorAppMatrix.Components.Layout
 {
   public partial class Tunnel
   {
+    private bool Boot { get; set; } = true;
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-      if (firstRender)
+      if (Boot)
         await Task.Run(ExecTunnel);
+
+      Boot = false;
     }
 
     /// <summary>
