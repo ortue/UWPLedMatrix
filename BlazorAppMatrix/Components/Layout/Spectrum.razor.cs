@@ -186,7 +186,8 @@ namespace BlazorAppMatrix.Components.Layout
     /// </summary>
     private void SetSpectrum(int cycle)
     {
-      if (cycle % 8 == 0)
+      //Plus le chffre du mod est grand, plus la trainer sera ralenti
+      if (cycle % 10 == 0)
         for (int x = 0; x < PixelList.Largeur; x++)
           if (TabSpec.Where(p => p.X == x && !p.Couleur.IsNoir).OrderBy(p => p.Y).FirstOrDefault() is Pixel pixel)
             pixel.Couleur = Couleur.Noir;

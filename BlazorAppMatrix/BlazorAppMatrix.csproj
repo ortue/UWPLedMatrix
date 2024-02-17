@@ -51,7 +51,6 @@
     <Content Remove="wwwroot\Images\Animation\QuestionBlock.gif" />
     <Content Remove="wwwroot\Images\Animation\QuestionBlock2.gif" />
     <Content Remove="wwwroot\Images\Animation\Runningright.gif" />
-    <Content Remove="wwwroot\Images\Animation\Rydia1-Walk-Left.gif" />
     <Content Remove="wwwroot\Images\Animation\Savepoint.gif" />
     <Content Remove="wwwroot\Images\Animation\ScrewAttack.gif" />
     <Content Remove="wwwroot\Images\Animation\ShipLeft.gif" />
@@ -103,99 +102,282 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Images\Animation\1up.gif" />
-    <None Include="wwwroot\Images\Animation\1up.png" />
-    <None Include="wwwroot\Images\Animation\bioniccommando.gif" />
-    <None Include="wwwroot\Images\Animation\bioniccommando.png" />
-    <None Include="wwwroot\Images\Animation\BlackMageLeft.gif" />
-    <None Include="wwwroot\Images\Animation\Bloober.gif" />
-    <None Include="wwwroot\Images\Animation\Breakdance.gif" />
-    <None Include="wwwroot\Images\Animation\BuzzyBeetleDark.gif" />
-    <None Include="wwwroot\Images\Animation\Cecil.gif" />
-    <None Include="wwwroot\Images\Animation\CheepCheepRed.gif" />
-    <None Include="wwwroot\Images\Animation\ChefPeterPepperF.gif" />
-    <None Include="wwwroot\Images\Animation\Commyloose.gif" />
-    <None Include="wwwroot\Images\Animation\Enemy01.gif" />
-    <None Include="wwwroot\Images\Animation\EnergyTank.gif" />
-    <None Include="wwwroot\Images\Animation\Enterprise.gif" />
-    <None Include="wwwroot\Images\Animation\GametRedL.gif" />
-    <None Include="wwwroot\Images\Animation\GeegaOrangeR.gif" />
-    <None Include="wwwroot\Images\Animation\GodOfPoverty.gif" />
-    <None Include="wwwroot\Images\Animation\GodOfPoverty.png" />
-    <None Include="wwwroot\Images\Animation\HighJump.gif" />
-    <None Include="wwwroot\Images\Animation\JumpBlock.gif" />
-    <None Include="wwwroot\Images\Animation\KobilR.gif" />
-    <None Include="wwwroot\Images\Animation\KoopaTroopaShellGreen.gif" />
-    <None Include="wwwroot\Images\Animation\KoopaTroopaShellGreen.png" />
-    <None Include="wwwroot\Images\Animation\LittleGoomba.gif" />
-    <None Include="wwwroot\Images\Animation\LuigiStanding.gif" />
-    <None Include="wwwroot\Images\Animation\LuigiStanding.png" />
-    <None Include="wwwroot\Images\Animation\MagicMushroom.gif" />
-    <None Include="wwwroot\Images\Animation\MagicMushroom.png" />
-    <None Include="wwwroot\Images\Animation\MagicWing.gif" />
-    <None Include="wwwroot\Images\Animation\MainCharacterF.gif" />
-    <None Include="wwwroot\Images\Animation\Mario.gif" />
-    <None Include="wwwroot\Images\Animation\MarioSmallR.gif" />
-    <None Include="wwwroot\Images\Animation\MarioStanding.png" />
-    <None Include="wwwroot\Images\Animation\MarioWalkingR.gif" />
-    <None Include="wwwroot\Images\Animation\megaman.gif" />
-    <None Include="wwwroot\Images\Animation\megaman.png" />
-    <None Include="wwwroot\Images\Animation\MrEggL.gif" />
-    <None Include="wwwroot\Images\Animation\MrHotDogL.gif" />
-    <None Include="wwwroot\Images\Animation\NettlerL.gif" />
-    <None Include="wwwroot\Images\Animation\POWD.gif" />
-    <None Include="wwwroot\Images\Animation\QuestionBlock.gif" />
-    <None Include="wwwroot\Images\Animation\QuestionBlock2.gif" />
-    <None Include="wwwroot\Images\Animation\Runningright.gif" />
-    <None Include="wwwroot\Images\Animation\Rydia1-Walk-Left.gif" />
-    <None Include="wwwroot\Images\Animation\Savepoint.gif" />
-    <None Include="wwwroot\Images\Animation\ScrewAttack.gif" />
-    <None Include="wwwroot\Images\Animation\ShipLeft.gif" />
-    <None Include="wwwroot\Images\Animation\ShyguyRedRight.gif" />
-    <None Include="wwwroot\Images\Animation\spinywalk.gif" />
-    <None Include="wwwroot\Images\Animation\Tinychimp.gif" />
-    <None Include="wwwroot\Images\Animation\ToadSmallR.gif" />
-    <None Include="wwwroot\Images\Animation\WeaponEnergyBall.gif" />
-    <None Include="wwwroot\Images\Animation\WhiteMage-Walk-Front.gif" />
-    <None Include="wwwroot\Images\Animation\ZeelaOrange.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteArmos.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteEnemyCloud.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteFairy.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteFire.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteFood.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteFood.png" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeart.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.png" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteKeeseBlue.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteLinkFront.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteLinkLeft.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteOctorokRedDown.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteRopeLeft.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteStalfos.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteTektiteRed.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteTriforce.gif" />
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteWallMasterUL.gif" />
-    <None Include="wwwroot\Images\Animation\ZoomerRed.gif" />
-    <None Include="wwwroot\Images\Meteo\01d.gif" />
-    <None Include="wwwroot\Images\Meteo\01n.gif" />
-    <None Include="wwwroot\Images\Meteo\02d.gif" />
-    <None Include="wwwroot\Images\Meteo\02n.gif" />
-    <None Include="wwwroot\Images\Meteo\03d.gif" />
-    <None Include="wwwroot\Images\Meteo\03n.gif" />
-    <None Include="wwwroot\Images\Meteo\04d.gif" />
-    <None Include="wwwroot\Images\Meteo\04n.gif" />
-    <None Include="wwwroot\Images\Meteo\09d.gif" />
-    <None Include="wwwroot\Images\Meteo\09n.gif" />
-    <None Include="wwwroot\Images\Meteo\10d.gif" />
-    <None Include="wwwroot\Images\Meteo\10n.gif" />
-    <None Include="wwwroot\Images\Meteo\11d.gif" />
-    <None Include="wwwroot\Images\Meteo\11n.gif" />
-    <None Include="wwwroot\Images\Meteo\13d.gif" />
-    <None Include="wwwroot\Images\Meteo\13n.gif" />
-    <None Include="wwwroot\Images\Meteo\50d.gif" />
-    <None Include="wwwroot\Images\Meteo\50n.gif" />
-    <None Include="wwwroot\Images\RadioCanada.gif" />
+    <None Include="wwwroot\Images\Animation\1up.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\1up.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\bioniccommando.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\bioniccommando.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\BlackMageLeft.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\Bloober.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\Breakdance.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\BuzzyBeetleDark.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\Cecil.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\CheepCheepRed.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ChefPeterPepperF.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\Commyloose.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\Enemy01.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\EnergyTank.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\Enterprise.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\GametRedL.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\GeegaOrangeR.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\GodOfPoverty.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\GodOfPoverty.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\HighJump.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\JumpBlock.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\KobilR.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\KoopaTroopaShellGreen.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\KoopaTroopaShellGreen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\LittleGoomba.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\LuigiStanding.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\LuigiStanding.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\MagicMushroom.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\MagicMushroom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\MagicWing.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\MainCharacterF.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\Mario.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\MarioSmallR.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\MarioStanding.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\MarioWalkingR.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\megaman.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\megaman.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\MrEggL.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\MrHotDogL.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\NettlerL.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\POWD.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\QuestionBlock.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\QuestionBlock2.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\Runningright.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\Savepoint.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ScrewAttack.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ShipLeft.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ShyguyRedRight.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\spinywalk.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\Tinychimp.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ToadSmallR.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\WeaponEnergyBall.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\WhiteMage-Walk-Front.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeelaOrange.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteArmos.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteEnemyCloud.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteFairy.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteFire.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteFood.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteFood.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeart.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteKeeseBlue.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteLinkFront.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteLinkLeft.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteOctorokRedDown.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteRopeLeft.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteStalfos.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteTektiteRed.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteTriforce.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZeldaSpriteWallMasterUL.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Animation\ZoomerRed.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\01d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\01n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\02d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\02n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\03d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\03n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\04d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\04n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\09d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\09n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\10d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\10n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\11d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\11n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\13d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\13n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\50d.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Meteo\50n.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\RadioCanada.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

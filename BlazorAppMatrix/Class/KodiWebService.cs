@@ -22,14 +22,16 @@ namespace BlazorAppMatrix.Class
     /// </summary>
     public void Refresh()
     {
-      Task.Run(() => Musique = GetMusique().Result);
+      string kodiWebServiceUrl = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("KodiWebServiceUrl").Value ?? string.Empty;
+
+      Task.Run(() => Musique = GetMusique(kodiWebServiceUrl).Result);
     }
 
     /// <summary>
     /// GetMusique
     /// </summary>
     /// <returns></returns>
-    public static async Task<string> GetMusique()
+    public static async Task<string> GetMusique(string kodiWebServiceUrl)
     {
       try
       {
@@ -37,7 +39,8 @@ namespace BlazorAppMatrix.Class
         StringContent data = new(json, Encoding.UTF8, "application/json");
 
         HttpClient client = new();
-        using HttpResponseMessage response = await client.PostAsync("http://192.168.2.11:8080/jsonrpc", data);
+        using HttpResponseMessage response = await client.PostAsync(kodiWebServiceUrl, data);
+
         response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -49,7 +52,6 @@ namespace BlazorAppMatrix.Class
           artist = root.result.item.artist[0] + " - ";
 
         return Diacritic.Remove(artist + root?.result?.item?.title).ToUpper();
-        //return "";
       }
       catch (Exception ex)
       {

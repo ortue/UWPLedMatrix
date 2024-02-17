@@ -55,6 +55,9 @@ namespace BlazorAppMatrix.Components.Layout
         SetSpectrograph(fftData, amplitude);
         SetSpectrograph(cycle++);
         Pixels.SendPixels();
+
+        using ManualResetEventSlim waitHandle = new(false);
+        waitHandle.Wait(TimeSpan.FromMilliseconds(1));
       }
 
       TaskGo.AudioCaptureConcurence = false;
@@ -167,7 +170,7 @@ namespace BlazorAppMatrix.Components.Layout
     /// <param name="cycle"></param>
     private void SetSpectrograph(int cycle)
     {
-      if (cycle % 8 == 0)
+      if (cycle % 12 == 0)
         for (int x = 0; x < PixelList.Largeur - 1; x++)
           for (int y = 0; y < PixelList.Hauteur; y++)
             if (Pixels.Get(x, y) is Pixel pixel)
