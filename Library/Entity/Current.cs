@@ -2,6 +2,7 @@
 {
   [System.Xml.Serialization.XmlType(AnonymousType = true)]
   [System.Xml.Serialization.XmlRoot(Namespace = "", IsNullable = false)]
+#pragma warning disable IDE1006 // Naming Styles
 #pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
   public partial class current
 #pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
@@ -163,4 +164,5 @@
     [System.Xml.Serialization.XmlAttribute()]
     public DateTime value { get; set; }
   }
+#pragma warning restore IDE1006 // Naming Styles
 }

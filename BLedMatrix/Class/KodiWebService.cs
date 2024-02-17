@@ -1,8 +1,8 @@
-﻿using Library.Util;
+﻿using Library.Entity;
+using Library.Util;
 using System.Net;
-using System.Text.Json;
 using System.Text;
-using Library.Entity;
+using System.Text.Json;
 
 namespace BLedMatrix.Class
 {
@@ -89,7 +89,7 @@ namespace BLedMatrix.Class
         if (root?.result.item.artist != null && root.result.item.artist[0] != null)
           artist = root.result.item.artist[0] + " - ";
 
-        return Diacritic.Remove(artist + root.result.item.title).ToUpper();
+        return Diacritic.Remove(artist + root?.result.item.title).ToUpper();
       }
       catch (Exception ex)
       {

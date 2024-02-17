@@ -5,7 +5,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "type", Target = "~T:Library.Entity.current")]
-[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "member", Target = "~P:Library.Entity.MusiqueJSON.album")]
-[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "member", Target = "~P:Library.Entity.MusiqueJSONResult.item")]
-[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "member", Target = "~P:Library.Entity.MusiqueJSON.artist")]
+[assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:Library.Util.Manette.#ctor(System.Int32,System.Int32)")]
+[assembly: SuppressMessage("Style", "IDE0180:Use tuple to swap values", Justification = "<Pending>", Scope = "member", Target = "~M:Library.Util.LomFFT.Reverse(System.Double[],System.Int32)")]

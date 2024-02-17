@@ -2,6 +2,7 @@
 
 namespace Library.Entity
 {
+#pragma warning disable IDE1006 // Naming Styles
   [DataContract(Name = "Item")]
   public class MusiqueJSON
   {
@@ -27,4 +28,5 @@ namespace Library.Entity
 
     public MusiqueJSONResult? result { get; set; }
   }
+#pragma warning restore IDE1006 // Naming Styles
 }

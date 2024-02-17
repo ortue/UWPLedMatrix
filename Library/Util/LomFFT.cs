@@ -354,7 +354,7 @@
       while (true)
       {
         // Knuth R2: swap - swap j+1 and k+2^(n-1), 2 entries each
-        var t = data[j + 2];
+        double t = data[j + 2];
         data[j + 2] = data[k + n];
         data[k + n] = t;
         t = data[j + 3];
