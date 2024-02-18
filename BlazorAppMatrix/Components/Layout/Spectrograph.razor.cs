@@ -46,9 +46,6 @@ namespace BlazorAppMatrix.Components.Layout
       audioCapture.Start();
       int cycle = 0;
 
-
-      //TODO:Faire la moyen pour le max du son dans les 12 step pour ramasser une meilleur image que seulement la 12ieme
-
       while (TaskGo.TaskWork(task))
       {
         double[] fft = Capture(audioCapture, audioBuffer);
@@ -162,6 +159,10 @@ namespace BlazorAppMatrix.Components.Layout
           vert = (byte)(volume - 255);
         }
 
+
+        //TODO:Faire la moyen pour le max du son dans les 10 step pour ramasser une meilleur image que seulement la 10 ieme
+
+
         if (Pixels.Get(19, 19 - y) is Pixel pixel)
           pixel.SetColor(Couleur.Get(rouge, vert, bleu));
       }
@@ -173,7 +174,7 @@ namespace BlazorAppMatrix.Components.Layout
     /// <param name="cycle"></param>
     private void SetSpectrograph(int cycle)
     {
-      if (cycle % 12 == 0)
+      if (cycle % 10 == 0)
         for (int x = 0; x < PixelList.Largeur - 1; x++)
           for (int y = 0; y < PixelList.Hauteur; y++)
             if (Pixels.Get(x, y) is Pixel pixel)
