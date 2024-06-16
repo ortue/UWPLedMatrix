@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Layout\PingCheck.razor" />
     <Content Remove="wwwroot\Images\Animation\1up.gif" />
     <Content Remove="wwwroot\Images\Animation\1up.png" />
     <Content Remove="wwwroot\Images\Animation\bioniccommando.gif" />
@@ -102,6 +103,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Components\Layout\PingCheck.razor" />
     <None Include="wwwroot\Images\Animation\1up.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

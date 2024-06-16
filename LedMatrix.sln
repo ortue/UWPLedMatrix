@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLedMatrix", "BLedMatrix\BL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "Library\Library.csproj", "{0CAB62C7-5B4B-494A-BC88-0E900FA17A83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAppMatrix", "BlazorAppMatrix\BlazorAppMatrix.csproj", "{CC57CB97-2102-4157-A894-13B62C3240CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAppMatrix", "BlazorAppMatrix\BlazorAppMatrix.csproj", "{CC57CB97-2102-4157-A894-13B62C3240CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
