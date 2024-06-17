@@ -12,11 +12,11 @@ namespace Library.Util
     /// <param name="reverse"></param>
     public static void Bleu(PixelList pixels, bool reverse = false)
     {
-      List<int> b = new()
-      {
+      List<int> b =
+      [
         2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2,
         2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2
-      };
+      ];
 
       int sec = DateTime.Now.Millisecond / 50;
       int multi = 1;
