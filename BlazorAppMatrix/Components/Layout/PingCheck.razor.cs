@@ -71,7 +71,7 @@ namespace BlazorAppMatrix.Components.Layout
         Pixels.Set(CaractereList.Print("PING", 1, 1, Couleurs.Get("AffDate", "AnneeCouleur", Couleur.Bleu)));
 
         if (ShowTimeOut)
-          Pixels.Set(CaractereList.Print((TimeOut * 100 / (double)Moyenne.Count).ToString("0%"), 1, 7, Couleurs.Get("AffDate", "AnneeCouleur", Couleur.Bleu)));
+          Pixels.Set(CaractereList.Print(Math.Round(TimeOut * 100 / (double)Moyenne.Count, 0).ToString("0%"), 1, 7, Couleurs.Get("AffDate", "AnneeCouleur", Couleur.Bleu)));
         else
           Pixels.Set(CaractereList.Print(Moyenne.Average().ToString("0"), 20 - Moyenne.Average().ToString("0").Length * 4, 7, Couleurs.Get("AffDate", "AnneeCouleur", Couleur.Bleu)));
 
