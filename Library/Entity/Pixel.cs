@@ -44,8 +44,8 @@ namespace Library.Entity
     /// <summary>
     /// Constructeur
     /// </summary>
-    /// <param name="position"></param>
-    /// <param name="numero"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
     /// <param name="couleur"></param>
     public Pixel(int x, int y, Couleur couleur)
     {

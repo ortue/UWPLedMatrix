@@ -1,5 +1,6 @@
 ﻿using Library.Entity;
 using Library.Util;
+using System.Device.Spi;
 
 namespace Library.Collection
 {
@@ -7,7 +8,10 @@ namespace Library.Collection
   {
     public const int Largeur = 20;
     public const int Hauteur = 20;
-    public DotStarStrip DotStarStrip { get; set; }
+    //public DotStarStrip DotStarStrip { get; set; }
+
+    //public Apa102 Apa102 { get; set; }
+
     public IEnumerable<Pixel>? PixelDebug { get; set; }
 
     public IEnumerable<Pixel> PixelColors
@@ -20,7 +24,7 @@ namespace Library.Collection
     /// </summary>
     public PixelList()
     {
-      DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
+      //DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
 
       List<int> emplacement = Emplacement();
 
@@ -34,7 +38,7 @@ namespace Library.Collection
     /// <param name="inter"></param>
     public PixelList(bool inter)
     {
-      DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
+      //DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
 
       if (!inter)
         for (int y = 0; y < Largeur; y++)
@@ -124,8 +128,22 @@ namespace Library.Collection
     /// </summary>
     public void SendPixels()
     {
-      DotStarStrip.SendPixels(PixelColors);
-      SendPixelsDebug(Environment.MachineName == "PC-BENOIT");
+      //DotStarStrip.SendPixels(PixelColors);
+
+      if (Environment.MachineName == "PC-BENOIT")
+        SendPixelsDebug(Environment.MachineName == "PC-BENOIT");
+      else
+      {
+        using SpiDevice spiDevice = SpiDevice.Create(new SpiConnectionSettings(0, 0)
+        {
+          ClockFrequency = 20_000_000,
+          DataFlow = DataFlow.MsbFirst,
+          Mode = SpiMode.Mode0 // ensure data is ready at clock rising edge
+        });
+
+        using Apa102 apa102 = new(spiDevice, Largeur * Hauteur);
+        apa102.SendPixels(PixelColors);
+      }
     }
 
     /// <summary>
