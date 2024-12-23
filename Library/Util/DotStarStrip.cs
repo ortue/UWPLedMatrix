@@ -5,7 +5,7 @@ using Unosquare.WiringPi;
 
 namespace Library.Util
 {
-  public class DotStarStrip1
+  public class DotStarStrip
   {
     private readonly byte[] StartFrame = { 0, 0, 0, 0 };
     private readonly byte[] EndFrame;
@@ -21,7 +21,7 @@ namespace Library.Util
     /// Constructor
     /// </summary>
     /// <param name="numLeds">Number of LEDs in the strip</param>
-    public DotStarStrip1(int numLeds, bool work)
+    public DotStarStrip(int numLeds, bool work)
     {
       PixelCount = numLeds;
 

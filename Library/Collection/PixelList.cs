@@ -52,7 +52,7 @@ namespace Library.Collection
     /// <returns></returns>
     public static List<int> Emplacement()
     {
-      List<int> emplacement = new();
+      List<int> emplacement = [];
 
       for (int j = 0; j < Hauteur; j++)
         for (int i = 1; i <= Largeur; i++)
@@ -134,6 +134,8 @@ namespace Library.Collection
         SendPixelsDebug(Environment.MachineName == "PC-BENOIT");
       else
       {
+        //  DotStarStrip.SendPixels(PixelColors);
+
         using SpiDevice spiDevice = SpiDevice.Create(new SpiConnectionSettings(0, 0)
         {
           ClockFrequency = 20_000_000,

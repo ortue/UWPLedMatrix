@@ -6,7 +6,7 @@ namespace Library.Util
 {
   public class Apa102 : IDisposable
   {
-    public Span<Color> Pixels => _pixels;
+    //public Span<Color> Pixels => _pixels;
     private SpiDevice _spiDevice;
     private Color[] _pixels;
     private byte[] _buffer;
@@ -32,8 +32,10 @@ namespace Library.Util
     /// <param name="pixels"></param>
     public void SendPixels(IEnumerable<Pixel> pixels)
     {
+      int i = 0;
+
       foreach (Pixel pixel in pixels)
-        _pixels[pixel.Position] = Color.FromArgb(pixel.Couleur.R, pixel.Couleur.G, pixel.Couleur.B);
+        _pixels[i++] = Color.FromArgb(pixel.Couleur.R, pixel.Couleur.G, pixel.Couleur.B);
 
       Flush();
     }
