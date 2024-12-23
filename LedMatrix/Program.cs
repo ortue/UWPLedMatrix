@@ -1,3 +1,4 @@
+using LedMatrix.Class;
 using LedMatrix.Components;
 using Library.Collection;
 using Library.Util;
@@ -16,7 +17,7 @@ builder.Services.AddSingleton<PixelList>();
 builder.Services.AddSingleton<TaskGoList>();
 builder.Services.AddSingleton<RadioCanada>();
 builder.Services.AddSingleton<OpenWeather>();
-//builder.Services.AddSingleton<KodiWebService>();
+builder.Services.AddSingleton<KodiWebService>();
 builder.Services.AddSingleton(CouleurList.Load());
 
 WebApplication app = builder.Build();
