@@ -1,0 +1,91 @@
+﻿@inject CouleurList Couleurs
+
+<div class="col-6 gap-2 d-grid">
+  <button class="btn btn-primary btn-lg" @onclick="Set">
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-palette" viewBox="0 0 16 16">
+      <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+      <path d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8zm-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7z" />
+    </svg>
+
+    Couleur
+  </button>
+</div>
+
+<div class="btn-group col-6" role="group">
+  <button class="@BtnProfile1" @onclick="(()=>SetProfile(0))">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-1-circle" viewBox="0 0 16 16">
+      <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8Zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM9.283 4.002V12H7.971V5.338h-.065L6.072 6.656V5.385l1.899-1.383h1.312Z" />
+    </svg>
+  </button>
+  <button class="@BtnProfile2" @onclick="(()=>SetProfile(1))">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-2-circle" viewBox="0 0 16 16">
+      <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8Zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM6.646 6.24v.07H5.375v-.064c0-1.213.879-2.402 2.637-2.402 1.582 0 2.613.949 2.613 2.215 0 1.002-.6 1.667-1.287 2.43l-.096.107-1.974 2.22v.077h3.498V12H5.422v-.832l2.97-3.293c.434-.475.903-1.008.903-1.705 0-.744-.557-1.236-1.313-1.236-.843 0-1.336.615-1.336 1.306Z" />
+    </svg>
+  </button>
+  <button class="@BtnProfile3" @onclick="(()=>SetProfile(2))">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-3-circle" viewBox="0 0 16 16">
+      <path d="M7.918 8.414h-.879V7.342h.838c.78 0 1.348-.522 1.342-1.237 0-.709-.563-1.195-1.348-1.195-.79 0-1.312.498-1.348 1.055H5.275c.036-1.137.95-2.115 2.625-2.121 1.594-.012 2.608.885 2.637 2.062.023 1.137-.885 1.776-1.482 1.875v.07c.703.07 1.71.64 1.734 1.917.024 1.459-1.277 2.396-2.93 2.396-1.705 0-2.707-.967-2.754-2.144H6.33c.059.597.68 1.06 1.541 1.066.973.006 1.6-.563 1.588-1.354-.006-.779-.621-1.318-1.541-1.318Z" />
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8Z" />
+    </svg>
+  </button>
+  <button class="@BtnProfile4" @onclick="(()=>SetProfile(3))">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-4-circle" viewBox="0 0 16 16">
+      <path d="M7.519 5.057c.22-.352.439-.703.657-1.055h1.933v5.332h1.008v1.107H10.11V12H8.85v-1.559H4.978V9.322c.77-1.427 1.656-2.847 2.542-4.265ZM6.225 9.281v.053H8.85V5.063h-.065c-.867 1.33-1.787 2.806-2.56 4.218Z" />
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8Z" />
+    </svg>
+  </button>
+</div>
+
+@if (BoutonActif)
+{
+  <div class="modal fade show" id="myModal" aria-modal="true" role="dialog" style="display:block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            Choisir les couleurs: @Module
+          </h4>
+
+          <div class="p-2 rounded-3" style="@BGColor">
+            &nbsp;&nbsp;@SelectedCouleur.R.ToString(), @SelectedCouleur.G.ToString(), @SelectedCouleur.B.ToString()&nbsp;&nbsp;
+          </div>
+
+        </div>
+        <div class="modal-body">
+
+          <div class="mb-5">
+
+            <InputSelect class="form-select" @bind-Value="SelectedCouleurStr">
+              @if (ModuleCouleurs != null)
+                @foreach (Couleur couleur in ModuleCouleurs)
+                {
+                  <option value="@couleur.Titre">@couleur.Titre</option>
+                }
+
+            </InputSelect>
+          </div>
+
+          <div class="row">
+            <div class="col-4">
+              <label for="Rouge" class="form-label m-0">Rouge @SelectedCouleur.R</label>
+              <input type="range" class="form-range" min="0" max="127" id="Rouge" @bind="@SelectedCouleur.R" @bind:event="oninput">
+            </div>
+            <div class="col-4">
+              <label for="Vert" class="form-label m-0">Vert @SelectedCouleur.G</label>
+              <input type="range" class="form-range" min="0" max="127" id="Vert" @bind="@SelectedCouleur.G" @bind:event="oninput">
+            </div>
+            <div class="col-4">
+              <label for="Bleu" class="form-label m-0">Bleu @SelectedCouleur.B</label>
+              <input type="range" class="form-range" min="0" max="127" id="Bleu" @bind="@SelectedCouleur.B" @bind:event="oninput">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @onclick="ModalOk">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
