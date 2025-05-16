@@ -1,18 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Nfw.Linux.Joystick" Version="1.0.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.8" />
     <PackageReference Include="System.Device.Gpio" Version="3.2.0" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.3" />
     <PackageReference Include="System.ServiceModel.Syndication" Version="7.0.0" />
-    <PackageReference Include="Unosquare.Raspberry.IO" Version="0.27.0" />
-    <PackageReference Include="Unosquare.WiringPi" Version="0.5.0" />
   </ItemGroup>
 
   <ItemGroup>

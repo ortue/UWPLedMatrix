@@ -1,6 +1,5 @@
 ﻿using Library.Entity;
 using Library.Util;
-using System.Device.Spi;
 
 namespace Library.Collection
 {
@@ -134,17 +133,20 @@ namespace Library.Collection
         SendPixelsDebug(Environment.MachineName == "PC-BENOIT");
       else
       {
+        PixelStrip pixelStrip = new(Largeur * Hauteur);
+        pixelStrip.Send(PixelColors);
+
         //  DotStarStrip.SendPixels(PixelColors);
 
-        using SpiDevice spiDevice = SpiDevice.Create(new SpiConnectionSettings(0, 0)
-        {
-          ClockFrequency = 20_000_000,
-          DataFlow = DataFlow.MsbFirst,
-          Mode = SpiMode.Mode0 // ensure data is ready at clock rising edge
-        });
+        //using SpiDevice spiDevice = SpiDevice.Create(new SpiConnectionSettings(0, 0)
+        //{
+        //  ClockFrequency = 20_000_000,
+        //  DataFlow = DataFlow.MsbFirst,
+        //  Mode = SpiMode.Mode0 // ensure data is ready at clock rising edge
+        //});
 
-        using Apa102 apa102 = new(spiDevice, Largeur * Hauteur);
-        apa102.SendPixels(PixelColors);
+        //using Apa102 apa102 = new(spiDevice, Largeur * Hauteur);
+        //apa102.SendPixels(PixelColors);
       }
     }
 

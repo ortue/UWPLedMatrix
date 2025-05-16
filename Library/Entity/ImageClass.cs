@@ -1,6 +1,6 @@
 ﻿using Library.Collection;
-using System.Drawing;
-using System.Drawing.Imaging;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Library.Entity
 {
@@ -49,46 +49,63 @@ namespace Library.Entity
       FileName = fileNameOfImage;
       PathWeb = pathWeb + "/" + Path.GetFileName(FileName);
 
-      using Image image = Image.FromFile(FileName);
+      using Image<Rgba32> image = Image.Load<Rgba32>(FileName);
       Height = image.Height;
       Width = image.Width;
 
-      FrameDimension dimension = new(image.FrameDimensionsList[0]);
-      FrameCount = image.GetFrameCount(dimension);
+      //FrameDimension dimension = new(image.FrameDimensionsList[0]);
+      FrameCount = image.Frames.Count;
     }
 
-    /// <summary>
-    /// Parses individual Bitmap frames from a multi-frame Bitmap into an array of Bitmaps
-    /// </summary>
-    /// <param name="Animation"></param>
-    /// <returns></returns>
-    private Bitmap[] ParseFrames(Bitmap Animation)
-    {
-      // Allocate a Bitmap array to hold individual frames from the animation
-      Bitmap[] Frames = new Bitmap[FrameCount];
+    //private Bitmap[] ParseFrames(Bitmap Animation)
+    //{
+    //  // Allocate a Bitmap array to hold individual frames from the animation
+    //  Bitmap[] Frames = new Bitmap[FrameCount];
 
-      // Copy the animation Bitmap frames into the Bitmap array
-      for (int Index = 0; Index < FrameCount; Index++)
-      {
-        // Set the current frame within the animation to be copied into the Bitmap array element
-        Animation.SelectActiveFrame(FrameDimension.Time, Index);
+    //  // Copy the animation Bitmap frames into the Bitmap array
+    //  for (int Index = 0; Index < FrameCount; Index++)
+    //  {
+    //    // Set the current frame within the animation to be copied into the Bitmap array element
+    //    Animation.SelectActiveFrame(FrameDimension.Time, Index);
 
-        // Create a new Bitmap element within the Bitmap array in which to copy the next frame
-        Frames[Index] = new Bitmap(Animation.Size.Width, Animation.Size.Height);
+    //    // Create a new Bitmap element within the Bitmap array in which to copy the next frame
+    //    Frames[Index] = new Bitmap(Animation.Size.Width, Animation.Size.Height);
 
-        // Copy the current animation frame into the new Bitmap array element
-        Graphics.FromImage(Frames[Index]).DrawImage(Animation, new Point(0, 0));
-      }
+    //    // Copy the current animation frame into the new Bitmap array element
+    //    Graphics.FromImage(Frames[Index]).DrawImage(Animation, new Point(0, 0));
+    //  }
 
-      return Frames;
-    }
+    //  return Frames;
+    //}
+
+
+    //public byte[] BitmapToByte(ImageFrame bitmap)
+    //{
+    //  int i = 0;
+    //  byte[] octets = new byte[NbrByte];
+
+    //  for (int y = 0; y < Height; y++)
+    //    for (int x = 0; x < Width; x++)
+    //    {
+    //      SixLabors.ImageSharp.Color color = bitmap[x, y];
+
+    //      if (octets.Length > i)
+    //      {
+    //        octets[i++] = color.R;
+    //        octets[i++] = color.G;
+    //        octets[i++] = color.B;
+    //      }
+    //    }
+
+    //  return octets;
+    //}
 
     /// <summary>
     /// BitmapToByte
     /// </summary>
-    /// <param name="image"></param>
+    /// <param name="imageFrame"></param>
     /// <returns></returns>
-    public byte[] BitmapToByte(Bitmap bitmap)
+    private byte[] BitmapToByte(Image<Rgba32> imageFrame)
     {
       int i = 0;
       byte[] octets = new byte[NbrByte];
@@ -96,13 +113,13 @@ namespace Library.Entity
       for (int y = 0; y < Height; y++)
         for (int x = 0; x < Width; x++)
         {
-          Color color = bitmap.GetPixel(x, y);
-
           if (octets.Length > i)
           {
-            octets[i++] = color.R;
-            octets[i++] = color.G;
-            octets[i++] = color.B;
+            Rgba32 pixel = imageFrame[x, y];
+
+            octets[i++] = pixel.R;
+            octets[i++] = pixel.G;
+            octets[i++] = pixel.B;
           }
         }
 
@@ -116,16 +133,29 @@ namespace Library.Entity
     /// <param name="pixels"></param>
     public void SetPixelFrame(int frame, PixelList pixels, int slide, bool fadeOut)
     {
-      using Image image = Image.FromFile(FileName);
-      List<byte[]> frames = new();
+      using Image<Rgba32> image = Image.Load<Rgba32>(FileName);
+      List<byte[]> frames = [];
 
-      if (FrameCount > 1)
+      //if (FrameCount > 1)
+      //{
+      for (int i = 0; i < image.Frames.Count; i++)
       {
-        foreach (Bitmap bitmap in ParseFrames((Bitmap)image))
-          frames.Add(BitmapToByte(bitmap));
+        Image<Rgba32> imageFrame = image.Frames.CloneFrame(i);
+
+        frames.Add(BitmapToByte(imageFrame));
       }
-      else
-        frames.Add(BitmapToByte((Bitmap)image));
+
+
+      //foreach (Bitmap bitmap in ParseFrames((Bitmap)image))
+      //foreach (ImageFrame imageFrame in image.Frames)
+      //frames.Add(BitmapToByte(imageFrame));
+      //}
+      //else
+      //{
+      //  Image<Rgba32> imageFrame = image.Frames.CloneFrame(0);
+
+      //  frames.Add(BitmapToByte(imageFrame));
+      //}
 
       Couleurs = new CouleurList(frames);
 
