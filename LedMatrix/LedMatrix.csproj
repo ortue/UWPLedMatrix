@@ -7,26 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\Images\Animation\1up.gif" />
-    <Content Remove="wwwroot\Images\Animation\1up.png" />
-    <Content Remove="wwwroot\Images\Animation\bioniccommando.gif" />
-    <Content Remove="wwwroot\Images\Animation\bioniccommando.png" />
-    <Content Remove="wwwroot\Images\Animation\BlackMageLeft.gif" />
-    <Content Remove="wwwroot\Images\Animation\Bloober.gif" />
-    <Content Remove="wwwroot\Images\Animation\Breakdance.gif" />
-    <Content Remove="wwwroot\Images\Animation\BuzzyBeetleDark.gif" />
-    <Content Remove="wwwroot\Images\Animation\Cecil.gif" />
-    <Content Remove="wwwroot\Images\Animation\CheepCheepRed.gif" />
-    <Content Remove="wwwroot\Images\Animation\ChefPeterPepperF.gif" />
-    <Content Remove="wwwroot\Images\Animation\Commyloose.gif" />
-    <Content Remove="wwwroot\Images\Animation\Enemy01.gif" />
-    <Content Remove="wwwroot\Images\Animation\EnergyTank.gif" />
-    <Content Remove="wwwroot\Images\Animation\Enterprise.gif" />
-    <Content Remove="wwwroot\Images\Animation\GametRedL.gif" />
-    <Content Remove="wwwroot\Images\Animation\GeegaOrangeR.gif" />
-    <Content Remove="wwwroot\Images\Animation\GodOfPoverty.gif" />
-    <Content Remove="wwwroot\Images\Animation\GodOfPoverty.png" />
-    <Content Remove="wwwroot\Images\Animation\HighJump.gif" />
     <Content Remove="wwwroot\Images\Animation\JumpBlock.gif" />
     <Content Remove="wwwroot\Images\Animation\KobilR.gif" />
     <Content Remove="wwwroot\Images\Animation\KoopaTroopaShellGreen.gif" />
@@ -102,66 +82,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Images\Animation\1up.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\1up.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\bioniccommando.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\bioniccommando.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\BlackMageLeft.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\Bloober.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\Breakdance.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\BuzzyBeetleDark.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\Cecil.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\CheepCheepRed.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ChefPeterPepperF.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\Commyloose.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\Enemy01.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\EnergyTank.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\Enterprise.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\GametRedL.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\GeegaOrangeR.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\GodOfPoverty.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\GodOfPoverty.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\HighJump.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="wwwroot\Images\Animation\JumpBlock.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -312,9 +232,6 @@
     <None Include="wwwroot\Images\Animation\ZeldaSpriteTektiteRed.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteTriforce.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="wwwroot\Images\Animation\ZeldaSpriteWallMasterUL.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -399,6 +316,69 @@
     </Content>
     <Content Update="Components\Pages\Temps.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\1up.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\1up.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\bioniccommando.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\bioniccommando.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\BlackMageLeft.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\Bloober.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\Breakdance.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\BuzzyBeetleDark.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\Cecil.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\CheepCheepRed.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ChefPeterPepperF.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\Commyloose.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\Enemy01.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\EnergyTank.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\Enterprise.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\GametRedL.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\GeegaOrangeR.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\GodOfPoverty.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\GodOfPoverty.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\HighJump.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\Pacman.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

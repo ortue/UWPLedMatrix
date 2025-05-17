@@ -1,8 +1,10 @@
 ﻿using Library.Collection;
 using Library.Entity;
-using Library.Util;
-using OpenTK.Audio;
-using OpenTK.Audio.OpenAL;
+using MathNet.Numerics.IntegralTransforms;
+using System.Diagnostics;
+using System.Numerics;
+//using OpenTK.Audio;
+//using OpenTK.Audio.OpenAL;
 
 namespace LedMatrix.Components.Layout
 {
@@ -35,30 +37,85 @@ namespace LedMatrix.Components.Layout
       });
     }
 
-    /// <summary>
-    /// Spectrum
-    /// </summary>
-    private void ExecSpectrum()
+    private async void ExecSpectrum()
     {
       TaskGo.AudioCaptureConcurence = true;
       int task = TaskGo.StartTask("Spectrum");
 
-      byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
-      audioCapture.Start();
+
+      Process process = new()
+      {
+        StartInfo = new ProcessStartInfo
+        {
+          FileName = "arecord",
+          Arguments = "-D plughw:1,0 -f U8 -c 1 -r 22050 -t raw",
+          RedirectStandardOutput = true,
+          UseShellExecute = false,
+          RedirectStandardError = true, // pour debug si problème
+          CreateNoWindow = true
+        }
+      };
+
+      process.ErrorDataReceived += (sender, e) =>
+      {
+        if (!string.IsNullOrEmpty(e.Data))
+          Console.WriteLine("Erreur arecord: " + e.Data);
+      };
+
+      process.Start();
+      process.BeginErrorReadLine();
+
+      Stream stream = process.StandardOutput.BaseStream;
+
+      //using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
+      //audioCapture.Start();
       int cycle = 0;
       int debut = -20;
+      int bufferSize = 256; // 1024 échantillons ≈ 46ms
+      byte[] buffer = new byte[bufferSize];
 
       while (TaskGo.TaskWork(task))
       {
-        double[] fft = Capture(audioCapture, audioBuffer);
+
+        //int bytesRead = stream.Read(buffer, 0, bufferSize);
+        int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+
+
+
+
+
+
+        if (bytesRead == 0)
+          continue;
+
+        double[] samples = new double[bytesRead];
+
+        for (int i = 0; i < bytesRead; i++)
+          samples[i] = buffer[i] - 128;
+
+        // FFT
+        //Complex[] complexSamples = new Complex[samples.Length];
+        // FFT
+        Complex[] fft = new Complex[samples.Length];
+
+        for (int i = 0; i < samples.Length; i++)
+          fft[i] = new Complex(samples[i], 0);
+
+        Fourier.Forward(fft, FourierOptions.Matlab);
+
         double amplitude = GetAmplitudeSpectrum(fft);
-        float[] fftData = SetFFT(audioBuffer, fft);
+
+
+        //float[] fftData = SetFFT(buffer, complexSamples);
+
+
+
+
 
         AffHeure(cycle);
         debut = AffTitre(cycle, debut);
 
-        SetSpectrum(fftData, amplitude);
+        SetSpectrum(fft, amplitude);
 
         foreach (Pixel spec in TabSpec)
         {
@@ -82,30 +139,76 @@ namespace LedMatrix.Components.Layout
     }
 
     /// <summary>
+    /// Spectrum
+    /// </summary>
+    //private void ExecSpectrum(bool inter)
+    //{
+    //  TaskGo.AudioCaptureConcurence = true;
+    //  int task = TaskGo.StartTask("Spectrum");
+
+    //  byte[] audioBuffer = new byte[256];
+    //  using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
+    //  audioCapture.Start();
+    //  int cycle = 0;
+    //  int debut = -20;
+
+    //  while (TaskGo.TaskWork(task))
+    //  {
+    //    double[] fft = Capture(audioCapture, audioBuffer);
+    //    double amplitude = GetAmplitudeSpectrum(fft);
+    //    float[] fftData = SetFFT(audioBuffer, fft);
+
+    //    AffHeure(cycle);
+    //    debut = AffTitre(cycle, debut);
+
+    //    SetSpectrum(fftData, amplitude);
+
+    //    foreach (Pixel spec in TabSpec)
+    //    {
+    //      Couleur couleur = spec.Position switch
+    //      {
+    //        1 => Couleurs.Get("Spectrum", "HeureCouleur", Couleur.RougePale),
+    //        2 => Couleurs.Get("Spectrum", "HeureAltCouleur", Couleur.Rouge),
+    //        3 => Couleurs.Get("Spectrum", "TitreCouleur", Couleur.RougePale),
+    //        4 => Couleurs.Get("Spectrum", "TitreAltCouleur", Couleur.Rouge),
+    //        _ => spec.Couleur,
+    //      };
+
+    //      Pixels.Get(spec).SetColor(couleur);
+    //    }
+
+    //    Pixels.SendPixels();
+    //    SetSpectrum(cycle++);
+    //  }
+
+    //  TaskGo.AudioCaptureConcurence = false;
+    //}
+
+    /// <summary>
     /// Capture
     /// </summary>
     /// <param name="audioCapture"></param>
     /// <param name="audioBuffer"></param>
     /// <returns></returns>
-    private static double[] Capture(AudioCapture audioCapture, byte[] audioBuffer)
-    {
-      audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
-      double[] fft = new double[audioBuffer.Length];
+    //private static double[] Capture(AudioCapture audioCapture, byte[] audioBuffer)
+    //{
+    //  audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
+    //  double[] fft = new double[audioBuffer.Length];
 
-      for (int i = 0; i < audioBuffer.Length; i++)
-        fft[i] = audioBuffer[i] - 128;
+    //  for (int i = 0; i < audioBuffer.Length; i++)
+    //    fft[i] = audioBuffer[i] - 128;
 
-      return fft;
-    }
+    //  return fft;
+    //}
 
     /// <summary>
     /// GetAmplitude
     /// </summary>
     /// <param name="fft"></param>
     /// <returns></returns>
-    public static double GetAmplitudeSpectrum(double[] fft)
+    public static double GetAmplitudeSpectrum(Complex[] fft)
     {
-      double max = fft.Max(Math.Abs);
+      double max = fft.Max(a => a.Magnitude);
 
       return max switch
       {
@@ -130,30 +233,30 @@ namespace LedMatrix.Components.Layout
     /// <param name="audioBuffer"></param>
     /// <param name="fft"></param>
     /// <returns></returns>
-    private static float[] SetFFT(byte[] audioBuffer, double[] fft)
-    {
-      LomFFT LomFFT = new();
-      LomFFT.RealFFT(fft, true);
+    //private static float[] SetFFT(byte[] audioBuffer, double[] fft)
+    //{
+    //  LomFFT LomFFT = new();
+    //  LomFFT.RealFFT(fft, true);
 
-      float[] fftData = new float[audioBuffer.Length / 2];
-      double lengthSqrt = Math.Sqrt(audioBuffer.Length);
+    //  float[] fftData = new float[audioBuffer.Length / 2];
+    //  double lengthSqrt = Math.Sqrt(audioBuffer.Length);
 
-      for (int j = 0; j < audioBuffer.Length / 2; j++)
-      {
-        double re = fft[2 * j] * lengthSqrt;
-        double img = fft[2 * j + 1] * lengthSqrt;
-        fftData[j] = (float)Math.Sqrt(re * re + img * img);
-      }
+    //  for (int j = 0; j < audioBuffer.Length / 2; j++)
+    //  {
+    //    double re = fft[2 * j] * lengthSqrt;
+    //    double img = fft[2 * j + 1] * lengthSqrt;
+    //    fftData[j] = (float)Math.Sqrt(re * re + img * img);
+    //  }
 
-      return fftData;
-    }
+    //  return fftData;
+    //}
 
     /// <summary>
     /// Spectrum
     /// </summary>
     /// <param name="audioBuffer"></param>
     /// <param name="fft"></param>
-    private void SetSpectrum(float[] fftData, double amplitude)
+    private void SetSpectrum(Complex[] fftData, double amplitude)
     {
       for (int x = 0; x < PixelList.Largeur; x++)
       {
@@ -200,8 +303,13 @@ namespace LedMatrix.Components.Layout
     /// <param name="x"></param>
     /// <param name="amplitude"></param>
     /// <returns></returns>
-    private static double Magnitude(float[] fftData, int x, double amplitude)
+    private static double Magnitude(Complex[] fft, int x, double amplitude)
     {
+      double[] fftData = new double[fft.Length];
+
+      for (int i = 0; i < fft.Length; i++)
+        fftData[i] = fft[i].Real;
+
       return x switch
       {
         0 => (fftData[x] - 140) * amplitude,

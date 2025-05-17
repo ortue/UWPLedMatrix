@@ -7,10 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nfw.Linux.Joystick" Version="1.0.0" />
+    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+    <PackageReference Include="Nfw.Linux.Joystick" Version="1.0.4" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.8" />
     <PackageReference Include="System.Device.Gpio" Version="3.2.0" />
-    <PackageReference Include="System.ServiceModel.Syndication" Version="7.0.0" />
+    <PackageReference Include="System.ServiceModel.Syndication" Version="9.0.5" />
   </ItemGroup>
 
   <ItemGroup>
