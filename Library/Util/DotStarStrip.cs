@@ -1,7 +1,4 @@
 ﻿//using Library.Entity;
-//using Unosquare.RaspberryIO;
-//using Unosquare.RaspberryIO.Abstractions;
-//using Unosquare.WiringPi;
 
 //namespace Library.Util
 //{
@@ -10,9 +7,6 @@
 //    private readonly byte[] StartFrame = { 0, 0, 0, 0 };
 //    private readonly byte[] EndFrame;
 
-//    /// <summary>
-//    /// Gets a value representing the count of pixels in the LED strip.
-//    /// </summary>
 //    public int PixelCount { get; private set; }
 
 //    public ISpiChannel? Channel { get; set; }

@@ -27,7 +27,7 @@
         Pixels.SendPixels();
         Pixels.Reset();
 
-        waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(1));
       }
     }
   }

@@ -133,8 +133,25 @@ namespace Library.Collection
         SendPixelsDebug(Environment.MachineName == "PC-BENOIT");
       else
       {
-        PixelStrip pixelStrip = new(Largeur * Hauteur);
-        pixelStrip.Send(PixelColors);
+        // using var writer = new Apa102NativeWriter("/dev/spidev0.0", Largeur * Hauteur, 8000000);
+
+        //Apa102NativeWriter writer = new(Largeur * Hauteur);
+
+
+        //Color[] colors = new Color[Largeur * Hauteur];
+
+        //for (int i = 0; i < Largeur * Hauteur; i++)
+        //  colors[i] = Color.FromArgb(PixelColors.ToArray()[i].Couleur.R, PixelColors.ToArray()[i].Couleur.G, PixelColors.ToArray()[i].Couleur.B);
+
+        //writer.Send(PixelColors);
+
+
+        Apa102Writer apa102Writer = new(Largeur * Hauteur);
+        apa102Writer.SendPixels(PixelColors);
+
+
+        //PixelStrip pixelStrip = new(Largeur * Hauteur);
+        //pixelStrip.Send(PixelColors);
 
         //  DotStarStrip.SendPixels(PixelColors);
 

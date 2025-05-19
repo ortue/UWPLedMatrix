@@ -1,8 +1,7 @@
 ﻿using Library.Collection;
 using Library.Entity;
-using OpenTK.Audio;
-using OpenTK.Audio.OpenAL;
 using System.Data;
+using System.Diagnostics;
 
 namespace LedMatrix.Components.Layout
 {
@@ -43,20 +42,65 @@ namespace LedMatrix.Components.Layout
     /// <summary>
     /// Graph
     /// </summary>
-    private void ExecGraph(int option)
+    private async void ExecGraph(int option)
     {
       TaskGo.AudioCaptureConcurence = true;
-
       int task = TaskGo.StartTask("Graph");
-      byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
-      audioCapture.Start();
+
+      using Process process = new()
+      {
+        StartInfo = new ProcessStartInfo
+        {
+          FileName = "arecord",
+          Arguments = "-D plughw:1,0 -f U8 -c 1 -r 22050 -t raw",
+          RedirectStandardOutput = true,
+          UseShellExecute = false,
+          //RedirectStandardError = true, // pour debug si problème
+          CreateNoWindow = true
+        }
+      };
+
+      //process.ErrorDataReceived += (sender, e) =>
+      //{
+      //  if (!string.IsNullOrEmpty(e.Data))
+      //    Console.WriteLine("Erreur arecord: " + e.Data);
+      //};
+
+      process.Start();
+      //process.BeginErrorReadLine();
+
+      using Stream stream = process.StandardOutput.BaseStream;
+
+
+      int bufferSize = 256; // 1024 échantillons ≈ 46ms
+      byte[] buffer = new byte[bufferSize];
+
+
+
       int cycle = 0;
       int debut = -20;
 
       while (TaskGo.TaskWork(task))
       {
-        double[] fft = Capture(audioCapture, audioBuffer);
+        //int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+
+        int bytesRead = stream.Read(buffer, 0, buffer.Length);
+
+
+        if (bytesRead == 0)
+          continue;
+
+        double[] samples = new double[bytesRead];
+
+        for (int i = 0; i < bytesRead; i++)
+          samples[i] = buffer[i] - 128;
+
+        double[] fft = new double[samples.Length];
+
+        for (int i = 0; i < samples.Length; i++)
+          fft[i] = samples[i];
+
+        //double[] fft = Capture(audioCapture, audioBuffer);
         double amplitude = GetAmplitudeGraph(fft);
 
         GetGraph(fft, amplitude, option);
@@ -119,16 +163,16 @@ namespace LedMatrix.Components.Layout
     /// <param name="audioCapture"></param>
     /// <param name="audioBuffer"></param>
     /// <returns></returns>
-    private static double[] Capture(AudioCapture audioCapture, byte[] audioBuffer)
-    {
-      audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
-      double[] fft = new double[audioBuffer.Length];
+    //private static double[] Capture(AudioCapture audioCapture, byte[] audioBuffer)
+    //{
+    //  audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
+    //  double[] fft = new double[audioBuffer.Length];
 
-      for (int i = 0; i < audioBuffer.Length; i++)
-        fft[i] = audioBuffer[i] - 128;
+    //  for (int i = 0; i < audioBuffer.Length; i++)
+    //    fft[i] = audioBuffer[i] - 128;
 
-      return fft;
-    }
+    //  return fft;
+    //}
 
     /// <summary>
     /// GetAmplitudeGraph

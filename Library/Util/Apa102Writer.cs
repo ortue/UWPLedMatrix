@@ -1,124 +1,67 @@
-﻿using System.Device.Spi;
-using System.Drawing;
+﻿using Library.Entity;
+using System.Device.Spi;
 
 namespace Library.Util
 {
   public class Apa102Writer
   {
-
     private readonly SpiDevice _spi;
-    private readonly int _numLeds;
+    private readonly byte[] StartFrame = { 0, 0, 0, 0 };
+    private readonly byte[] EndFrame;
 
-    public Apa102Writer(SpiDevice spi, int numLeds)
+    public Apa102Writer(int numLeds)
     {
-      _spi = spi;
-      _numLeds = numLeds;
+      //_numLeds = numLeds;
+
+      int endFrameSize = (numLeds + 14) / 16;
+      EndFrame = new byte[endFrameSize];
+
+      SpiConnectionSettings spiSettings = new(0, 0)
+      {
+        //ClockFrequency = 10000000,
+        //ClockFrequency = 8_000_000,
+        ClockFrequency = 4000000,
+        //ClockFrequency = 2000000,
+        //ClockFrequency = 1000000,
+        //ClockFrequency = 500000,
+        Mode = SpiMode.Mode0,
+        DataBitLength = 8
+      };
+
+      _spi = SpiDevice.Create(spiSettings);
     }
 
-    public void Write(Color[] colors)
+    public void SendPixels(IEnumerable<Pixel> pixels)
     {
-      if (colors.Length != _numLeds)
-        throw new ArgumentException("Length mismatch with LED count");
+      List<byte> spiDataBytes = new();
+      spiDataBytes.AddRange(StartFrame);
 
-      byte[] startFrame = new byte[4];
-
-      //Span<byte> startFrame = stackalloc byte[4];
-
-
-      byte[] ledFrames = new byte[_numLeds * 4];
-
-      for (int i = 0; i < _numLeds; i++)
+      foreach (Pixel pixel in pixels)
       {
-        Color color = colors[i];
+        // Global brightness.  Not implemented currently.  0xE0 (binary 11100000) specifies the beginning of the pixel's
+        // color data.  0x1F (binary 00011111) specifies the global brightness.  If you want to actually use this functionality
+        // comment out this line and uncomment the next one.  Then the pixel's RGB value will get scaled based on the alpha
+        // channel value from the Color.
+        spiDataBytes.Add(0xE0 | 0x1F);
+        //spiDataBytes.Add((byte)(0xE0 | (byte)(pixel.A >> 3)));
 
-        //ledFrames[i * 4 + 0] = 0xE0 | 0x10; // demi-luminosité
-        ledFrames[i * 4 + 0] = 0xE0 | 0x1F;           // Brightness: 0xE0 | (0x00–0x1F)
+        // APA102/DotStar leds take the color data in Blue, Green, Red order.  Weirdly, according to the spec these are supposed
+        // to take a 0-255 value for R/G/B.  However, on the ones I have they only seem to take 0-126.  Specifying 127-255 doesn't
+        // break anything, but seems to show the same exact value 0-126 would have (i.e. 127 is 0 brightness, 255 is full brightness).
+        // Discarding the lowest bit from each to make the value fit in 0-126.
+        //spiDataBytes.Add((byte)(pixel.Couleur.B >> 1));
+        //spiDataBytes.Add((byte)(pixel.Couleur.G >> 1));
+        //spiDataBytes.Add((byte)(pixel.Couleur.R >> 1));
 
-        ledFrames[i * 4 + 1] = color.B;
-        ledFrames[i * 4 + 2] = color.G;
-        ledFrames[i * 4 + 3] = color.R;
+        spiDataBytes.Add(pixel.Couleur.B);
+        spiDataBytes.Add(pixel.Couleur.G);
+        spiDataBytes.Add(pixel.Couleur.R);
 
       }
 
+      spiDataBytes.AddRange(EndFrame);
 
-      //int endFrameLength = (_numLeds + 15) / 16 + 4; // ici = (400 + 15) / 16 = 25
-      //byte[] endFrame = Enumerable.Repeat((byte)0xFF, endFrameLength).ToArray();
-      //Span<byte> endFrame = stackalloc byte[endFrameLength];
-      //endFrame.Fill(0xFF);
-      //_spi.Write(startFrame);
-      //_spi.Write(ledFrames);
-
-
-
-      int endFrameLength = 64; // plus généreux
-      byte[] endFrame = Enumerable.Repeat((byte)0xFF, endFrameLength).ToArray();
-
-      //_spi.Write(endFrame);
-
-
-
-
-      byte[] full = new byte[startFrame.Length + ledFrames.Length + endFrame.Length];
-      Buffer.BlockCopy(startFrame, 0, full, 0, startFrame.Length);
-      Buffer.BlockCopy(ledFrames, 0, full, startFrame.Length, ledFrames.Length);
-      Buffer.BlockCopy(endFrame, 0, full, startFrame.Length + ledFrames.Length, endFrame.Length);
-
-      //_spi.Write(full);
-
-
-
-      _spi.TransferFullDuplex(full, new byte[full.Length]);
-
-
-      //Thread.Sleep(2);
-
-      //_spi.Dispose();
-    }
-
-    public static void Test()
-    {
-      int numLeds = 400;
-
-      int[] frequencies = new int[]
-      {
-            1_000_000, 2_000_000, 4_000_000, 6_000_000, 8_000_000
-      };
-
-      Color[] testColors = new Color[]
-      {
-            Color.Red,
-            Color.Green,
-            Color.Blue,
-            Color.White,
-            Color.Yellow
-      };
-
-      for (int i = 0; i < frequencies.Length; i++)
-      {
-        int freq = frequencies[i];
-        Color color = testColors[i % testColors.Length];
-
-        Console.WriteLine($"[TEST] SPI à {freq / 1_000_000} MHz — couleur : {color.Name}");
-
-        var spiSettings = new SpiConnectionSettings(0, 0)
-        {
-          ClockFrequency = freq,
-          Mode = SpiMode.Mode0,
-          DataBitLength = 8
-        };
-
-        using var spi = SpiDevice.Create(spiSettings);
-        var strip = new Apa102Writer(spi, numLeds);
-
-        var colors = new Color[numLeds];
-        for (int j = 0; j < numLeds; j++)
-          colors[j] = color;
-
-        strip.Write(colors);
-
-        Console.WriteLine("→ Observe les LEDs pendant 5 secondes...\n");
-        Thread.Sleep(5000);
-      }
+      _spi.Write(spiDataBytes.ToArray());
     }
   }
 }

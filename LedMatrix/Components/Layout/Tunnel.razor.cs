@@ -10,7 +10,12 @@ namespace LedMatrix.Components.Layout
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
       if (Boot)
+      {
         await Task.Run(ExecTunnel);
+
+        //await Task.Run(Apa102MinimalTest.Main);
+
+      }
 
       Boot = false;
     }
@@ -44,7 +49,7 @@ namespace LedMatrix.Components.Layout
 
         Pixels.SendPixels();
 
-        waitHandle.Wait(TimeSpan.FromMilliseconds(2));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(1));
       }
     }
   }

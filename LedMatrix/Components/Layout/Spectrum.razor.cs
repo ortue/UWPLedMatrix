@@ -43,7 +43,7 @@ namespace LedMatrix.Components.Layout
       int task = TaskGo.StartTask("Spectrum");
 
 
-      Process process = new()
+      using Process process = new()
       {
         StartInfo = new ProcessStartInfo
         {
@@ -51,7 +51,7 @@ namespace LedMatrix.Components.Layout
           Arguments = "-D plughw:1,0 -f U8 -c 1 -r 22050 -t raw",
           RedirectStandardOutput = true,
           UseShellExecute = false,
-          RedirectStandardError = true, // pour debug si problème
+          //RedirectStandardError = true, // pour debug si problème
           CreateNoWindow = true
         }
       };
@@ -63,9 +63,9 @@ namespace LedMatrix.Components.Layout
       };
 
       process.Start();
-      process.BeginErrorReadLine();
+      //process.BeginErrorReadLine();
 
-      Stream stream = process.StandardOutput.BaseStream;
+      using Stream stream = process.StandardOutput.BaseStream;
 
       //using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
       //audioCapture.Start();
@@ -79,8 +79,6 @@ namespace LedMatrix.Components.Layout
 
         //int bytesRead = stream.Read(buffer, 0, bufferSize);
         int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-
-
 
 
 

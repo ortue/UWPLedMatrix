@@ -70,7 +70,7 @@ namespace LedMatrix.Components.Layout
         cercles.SetDegree(9);
         Pixels.SendPixels();
 
-        waitHandle.Wait(TimeSpan.FromMilliseconds(10));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(2));
       }
     }
   }
