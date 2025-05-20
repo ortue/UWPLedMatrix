@@ -7,8 +7,9 @@ namespace Library.Collection
   {
     public const int Largeur = 20;
     public const int Hauteur = 20;
-    //public DotStarStrip DotStarStrip { get; set; }
+    private Apa102Writer Apa102Writer { get; set; }
 
+    //public DotStarStrip DotStarStrip { get; set; }
     //public Apa102 Apa102 { get; set; }
 
     public IEnumerable<Pixel>? PixelDebug { get; set; }
@@ -25,6 +26,8 @@ namespace Library.Collection
     {
       //DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
 
+      Apa102Writer = new Apa102Writer(Largeur * Hauteur);
+
       List<int> emplacement = Emplacement();
 
       for (int position = 0; position < Largeur * Hauteur; position++)
@@ -38,6 +41,8 @@ namespace Library.Collection
     public PixelList(bool inter)
     {
       //DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
+
+      Apa102Writer = new Apa102Writer(Largeur * Hauteur);
 
       if (!inter)
         for (int y = 0; y < Largeur; y++)
@@ -132,39 +137,7 @@ namespace Library.Collection
       if (Environment.MachineName == "PC-BENOIT")
         SendPixelsDebug(Environment.MachineName == "PC-BENOIT");
       else
-      {
-        // using var writer = new Apa102NativeWriter("/dev/spidev0.0", Largeur * Hauteur, 8000000);
-
-        //Apa102NativeWriter writer = new(Largeur * Hauteur);
-
-
-        //Color[] colors = new Color[Largeur * Hauteur];
-
-        //for (int i = 0; i < Largeur * Hauteur; i++)
-        //  colors[i] = Color.FromArgb(PixelColors.ToArray()[i].Couleur.R, PixelColors.ToArray()[i].Couleur.G, PixelColors.ToArray()[i].Couleur.B);
-
-        //writer.Send(PixelColors);
-
-
-        Apa102Writer apa102Writer = new(Largeur * Hauteur);
-        apa102Writer.SendPixels(PixelColors);
-
-
-        //PixelStrip pixelStrip = new(Largeur * Hauteur);
-        //pixelStrip.Send(PixelColors);
-
-        //  DotStarStrip.SendPixels(PixelColors);
-
-        //using SpiDevice spiDevice = SpiDevice.Create(new SpiConnectionSettings(0, 0)
-        //{
-        //  ClockFrequency = 20_000_000,
-        //  DataFlow = DataFlow.MsbFirst,
-        //  Mode = SpiMode.Mode0 // ensure data is ready at clock rising edge
-        //});
-
-        //using Apa102 apa102 = new(spiDevice, Largeur * Hauteur);
-        //apa102.SendPixels(PixelColors);
-      }
+        Apa102Writer.SendPixels(PixelColors);
     }
 
     /// <summary>

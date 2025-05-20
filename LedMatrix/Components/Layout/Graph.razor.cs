@@ -1,7 +1,7 @@
 ﻿using Library.Collection;
 using Library.Entity;
+using Library.Util;
 using System.Data;
-using System.Diagnostics;
 
 namespace LedMatrix.Components.Layout
 {
@@ -42,68 +42,22 @@ namespace LedMatrix.Components.Layout
     /// <summary>
     /// Graph
     /// </summary>
-    private async void ExecGraph(int option)
+    private void ExecGraph(int option)
     {
       TaskGo.AudioCaptureConcurence = true;
       int task = TaskGo.StartTask("Graph");
 
-      using Process process = new()
-      {
-        StartInfo = new ProcessStartInfo
-        {
-          FileName = "arecord",
-          Arguments = "-D plughw:1,0 -f U8 -c 1 -r 22050 -t raw",
-          RedirectStandardOutput = true,
-          UseShellExecute = false,
-          //RedirectStandardError = true, // pour debug si problème
-          CreateNoWindow = true
-        }
-      };
-
-      //process.ErrorDataReceived += (sender, e) =>
-      //{
-      //  if (!string.IsNullOrEmpty(e.Data))
-      //    Console.WriteLine("Erreur arecord: " + e.Data);
-      //};
-
-      process.Start();
-      //process.BeginErrorReadLine();
-
-      using Stream stream = process.StandardOutput.BaseStream;
-
-
-      int bufferSize = 256; // 1024 échantillons ≈ 46ms
-      byte[] buffer = new byte[bufferSize];
-
-
-
       int cycle = 0;
       int debut = -20;
 
+      using ARecord aRecord = new();
+
       while (TaskGo.TaskWork(task))
       {
-        //int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+        double[] samples = aRecord.Read();
+        double amplitude = GetAmplitudeGraph(samples);
 
-        int bytesRead = stream.Read(buffer, 0, buffer.Length);
-
-
-        if (bytesRead == 0)
-          continue;
-
-        double[] samples = new double[bytesRead];
-
-        for (int i = 0; i < bytesRead; i++)
-          samples[i] = buffer[i] - 128;
-
-        double[] fft = new double[samples.Length];
-
-        for (int i = 0; i < samples.Length; i++)
-          fft[i] = samples[i];
-
-        //double[] fft = Capture(audioCapture, audioBuffer);
-        double amplitude = GetAmplitudeGraph(fft);
-
-        GetGraph(fft, amplitude, option);
+        GetGraph(samples, amplitude, option);
         AffHeure();
         debut = AffTitre(cycle++, debut);
 

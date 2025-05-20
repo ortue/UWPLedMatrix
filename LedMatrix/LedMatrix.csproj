@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\Images\Animation\JumpBlock.gif" />
-    <Content Remove="wwwroot\Images\Animation\KobilR.gif" />
-    <Content Remove="wwwroot\Images\Animation\KoopaTroopaShellGreen.gif" />
-    <Content Remove="wwwroot\Images\Animation\KoopaTroopaShellGreen.png" />
-    <Content Remove="wwwroot\Images\Animation\LittleGoomba.gif" />
     <Content Remove="wwwroot\Images\Animation\LuigiStanding.gif" />
     <Content Remove="wwwroot\Images\Animation\LuigiStanding.png" />
     <Content Remove="wwwroot\Images\Animation\MagicMushroom.gif" />
@@ -82,21 +77,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Images\Animation\JumpBlock.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\KobilR.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\KoopaTroopaShellGreen.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\KoopaTroopaShellGreen.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\LittleGoomba.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="wwwroot\Images\Animation\LuigiStanding.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -354,28 +334,43 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\Images\Animation\Enemy01.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\Images\Animation\EnergyTank.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\Images\Animation\Enterprise.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\Images\Animation\GametRedL.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\Images\Animation\GeegaOrangeR.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\Images\Animation\GodOfPoverty.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\Images\Animation\GodOfPoverty.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\Images\Animation\HighJump.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\JumpBlock.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\KobilR.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\KoopaTroopaShellGreen.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\KoopaTroopaShellGreen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\LittleGoomba.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\Images\Animation\Pacman.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

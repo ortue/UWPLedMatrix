@@ -1,7 +1,7 @@
 ﻿using Library.Collection;
 using Library.Entity;
+using Library.Util;
 using MathNet.Numerics.IntegralTransforms;
-using System.Diagnostics;
 using System.Numerics;
 //using OpenTK.Audio;
 //using OpenTK.Audio.OpenAL;
@@ -11,6 +11,11 @@ namespace LedMatrix.Components.Layout
   public partial class Spectrum
   {
     private PixelList TabSpec { get; set; } = new PixelList(false);
+
+    private const int ScalingWindowSize = 100;
+    private readonly double[] _scalingHistory = new double[ScalingWindowSize];
+    private int _scalingIndex = 0;
+    public float ScalingFactor { get; private set; } = 1.0f;
 
     /// <summary>
     /// Set
@@ -37,74 +42,50 @@ namespace LedMatrix.Components.Layout
       });
     }
 
-    private async void ExecSpectrum()
+    private void ExecSpectrum()
     {
       TaskGo.AudioCaptureConcurence = true;
       int task = TaskGo.StartTask("Spectrum");
 
-
-      using Process process = new()
-      {
-        StartInfo = new ProcessStartInfo
-        {
-          FileName = "arecord",
-          Arguments = "-D plughw:1,0 -f U8 -c 1 -r 22050 -t raw",
-          RedirectStandardOutput = true,
-          UseShellExecute = false,
-          //RedirectStandardError = true, // pour debug si problème
-          CreateNoWindow = true
-        }
-      };
-
-      process.ErrorDataReceived += (sender, e) =>
-      {
-        if (!string.IsNullOrEmpty(e.Data))
-          Console.WriteLine("Erreur arecord: " + e.Data);
-      };
-
-      process.Start();
-      //process.BeginErrorReadLine();
-
-      using Stream stream = process.StandardOutput.BaseStream;
-
-      //using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
-      //audioCapture.Start();
       int cycle = 0;
       int debut = -20;
-      int bufferSize = 256; // 1024 échantillons ≈ 46ms
-      byte[] buffer = new byte[bufferSize];
+
+      using ARecord aRecord = new();
 
       while (TaskGo.TaskWork(task))
       {
+        byte[] buffer = aRecord.GetBuffer();
 
-        //int bytesRead = stream.Read(buffer, 0, bufferSize);
-        int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+        Complex[] samples = buffer.Select(b => new Complex((b - 128.0) / 128.0, 0)).ToArray();
+        Fourier.Forward(samples);
 
+        double[] magnitudes = samples.Take(samples.Length / 2).Select(c => c.Magnitude).ToArray();
+        int bandWidth = magnitudes.Length / PixelList.Largeur;
+        double[] bandLevels = new double[PixelList.Largeur];
 
-
-
-        if (bytesRead == 0)
-          continue;
-
-        double[] samples = new double[bytesRead];
-
-        for (int i = 0; i < bytesRead; i++)
-          samples[i] = buffer[i] - 128;
-
-        // FFT
-        //Complex[] complexSamples = new Complex[samples.Length];
-        // FFT
-        Complex[] fft = new Complex[samples.Length];
-
-        for (int i = 0; i < samples.Length; i++)
-          fft[i] = new Complex(samples[i], 0);
-
-        Fourier.Forward(fft, FourierOptions.Matlab);
-
-        double amplitude = GetAmplitudeSpectrum(fft);
+        for (int i = 0; i < PixelList.Largeur; i++)
+          bandLevels[i] = magnitudes.Skip(i * bandWidth).Take(bandWidth).Average();
 
 
-        //float[] fftData = SetFFT(buffer, complexSamples);
+
+
+
+
+        // Estimate scaling factor (adaptive to average volume)
+        double averageLevel = bandLevels.Average();
+
+        _scalingHistory[_scalingIndex++ % ScalingWindowSize] = averageLevel;
+        double scalingFactor = PixelList.Hauteur / (_scalingHistory.Max() + 1e-6);
+
+
+
+
+        //float avg = sum / binPerBand;
+
+        //// Scaling factor auto-ajusté
+        //ScalingFactor = Math.Max(ScalingFactor * 0.99f, avg);
+        //float scaled = avg / (ScalingFactor + 1e-6f);
+
 
 
 
@@ -113,7 +94,17 @@ namespace LedMatrix.Components.Layout
         AffHeure(cycle);
         debut = AffTitre(cycle, debut);
 
-        SetSpectrum(fft, amplitude);
+        // Convert to bar heights
+        int[] heights = bandLevels.Select(level => Math.Min(PixelList.Hauteur, (int)(level * scalingFactor))).ToArray();
+
+        for (int x = 0; x < PixelList.Largeur; x++)
+        {
+          int h = heights[x];
+
+          for (int y = 0; y < PixelList.Hauteur; y++)
+            if (y >= PixelList.Hauteur - h)
+              TabSpec.Get(x, y).SetColor(ProportionCouleur(y));
+        }
 
         foreach (Pixel spec in TabSpec)
         {
@@ -204,24 +195,24 @@ namespace LedMatrix.Components.Layout
     /// </summary>
     /// <param name="fft"></param>
     /// <returns></returns>
-    public static double GetAmplitudeSpectrum(Complex[] fft)
-    {
-      double max = fft.Max(a => a.Magnitude);
+    //public static double GetAmplitudeSpectrum(Complex[] fft)
+    //{
+    //  double max = fft.Max(a => a.Magnitude);
 
-      return max switch
-      {
-        > 75 => 0.005,
-        > 50 => 0.01,
-        > 25 => 0.02,
-        > 15 => 0.03,
-        > 10 => 0.04,
-        > 5 => 0.05,
-        > 4 => 0.06,
-        > 3 => 0.07,
-        > 1 => 0.08,
-        _ => 0.03
-      };
-    }
+    //  return max switch
+    //  {
+    //    > 75 => 0.005,
+    //    > 50 => 0.01,
+    //    > 25 => 0.02,
+    //    > 15 => 0.03,
+    //    > 10 => 0.04,
+    //    > 5 => 0.05,
+    //    > 4 => 0.06,
+    //    > 3 => 0.07,
+    //    > 1 => 0.08,
+    //    _ => 0.03
+    //  };
+    //}
 
     /// <summary>
     /// SetFFT
@@ -254,17 +245,17 @@ namespace LedMatrix.Components.Layout
     /// </summary>
     /// <param name="audioBuffer"></param>
     /// <param name="fft"></param>
-    private void SetSpectrum(Complex[] fftData, double amplitude)
-    {
-      for (int x = 0; x < PixelList.Largeur; x++)
-      {
-        double yMax = Magnitude(fftData, x, amplitude);
+    //private void SetSpectrum(Complex[] fftData, double amplitude)
+    //{
+    //  for (int x = 0; x < PixelList.Largeur; x++)
+    //  {
+    //    double yMax = Magnitude(fftData, x, amplitude);
 
-        for (int y = 0; y < PixelList.Hauteur; y++)
-          if (y < Math.Ceiling(yMax))
-            TabSpec.Get(x, 19 - y).SetColor(ProportionCouleur(y));
-      }
-    }
+    //    for (int y = 0; y < PixelList.Hauteur; y++)
+    //      if (y < Math.Ceiling(yMax))
+    //        TabSpec.Get(x, 19 - y).SetColor(ProportionCouleur(y));
+    //  }
+    //}
 
     /// <summary>
     /// ProportionCouleur
@@ -288,7 +279,7 @@ namespace LedMatrix.Components.Layout
     private void SetSpectrum(int cycle)
     {
       //Plus le chffre du mod est grand, plus la trainer sera ralenti
-      if (cycle % 10 == 0)
+      if (cycle % 5 == 0)
         for (int x = 0; x < PixelList.Largeur; x++)
           if (TabSpec.Where(p => p.X == x && !p.Couleur.IsNoir).OrderBy(p => p.Y).FirstOrDefault() is Pixel pixel)
             pixel.Couleur = Couleur.Noir;

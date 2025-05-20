@@ -1,7 +1,8 @@
 ﻿using Library.Collection;
 using Library.Entity;
-using OpenTK.Audio;
-using OpenTK.Audio.OpenAL;
+using Library.Util;
+//using OpenTK.Audio;
+//using OpenTK.Audio.OpenAL;
 
 namespace LedMatrix.Components.Layout
 {
@@ -43,15 +44,19 @@ namespace LedMatrix.Components.Layout
       double max = 0;
       CaractereList caracteres = new(PixelList.Largeur);
 
-      byte[] audioBuffer = new byte[256];
-      using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
-      audioCapture.Start();
+      //byte[] audioBuffer = new byte[256];
+      //using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
+      //audioCapture.Start();
+
+      using ARecord aRecord = new();
 
       while (TaskGo.TaskWork(task))
       {
         max -= 0.3;
 
-        double[] fft = Capture(audioCapture, audioBuffer);
+        //double[] fft = Capture(audioCapture, audioBuffer);
+        double[] fft = aRecord.Read();
+
 
         if (fft.Max(Math.Abs) > max)
           max = fft.Max(Math.Abs);
@@ -179,15 +184,15 @@ namespace LedMatrix.Components.Layout
     /// <param name="audioCapture"></param>
     /// <param name="audioBuffer"></param>
     /// <returns></returns>
-    private static double[] Capture(AudioCapture audioCapture, byte[] audioBuffer)
-    {
-      audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
-      double[] fft = new double[audioBuffer.Length];
+    //private static double[] Capture(AudioCapture audioCapture, byte[] audioBuffer)
+    //{
+    //  audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
+    //  double[] fft = new double[audioBuffer.Length];
 
-      for (int i = 0; i < audioBuffer.Length; i++)
-        fft[i] = audioBuffer[i] - 128;
+    //  for (int i = 0; i < audioBuffer.Length; i++)
+    //    fft[i] = audioBuffer[i] - 128;
 
-      return fft;
-    }
+    //  return fft;
+    //}
   }
 }
