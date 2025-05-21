@@ -42,25 +42,16 @@ namespace LedMatrix.Components.Layout
       int cycle = 0;
       int debut = -20;
 
-
-      InitTunnel();
-
       using ARecord aRecord = new(256);
 
       while (TaskGo.TaskWork(task))
       {
         double[] samples = aRecord.Read();
 
-
         //facteur de volume a améliorer
         double amplitude = GetAmplitudeGraph(samples);
 
-        if (option == 2)
-          DrawTunnel(samples);
-        else
-          GetGraph(samples, amplitude, option);
-
-
+        GetGraph(samples, amplitude, option);
         AffHeure();
         debut = AffTitre(cycle++, debut);
 
@@ -276,55 +267,55 @@ namespace LedMatrix.Components.Layout
 
 
 
-    private class Point3D
-    {
-      public double X, Y, Z;
-      public Couleur Couleur;
-    }
+    //private class Point3D
+    //{
+    //  public double X, Y, Z;
+    //  public Couleur Couleur;
+    //}
 
-    private List<Point3D> tunnelPoints = new();
-    private const double ZMax = 20;
-    private Random rand = new();
+    //private List<Point3D> tunnelPoints = new();
+    //private const double ZMax = 20;
+    //private Random rand = new();
 
-    private void InitTunnel()
-    {
-      tunnelPoints.Clear();
+    //private void InitTunnel()
+    //{
+    //  tunnelPoints.Clear();
 
-      for (int i = 0; i < 100; i++)
-      {
-        tunnelPoints.Add(new Point3D
-        {
-          X = rand.NextDouble() * 4 - 2,
-          Y = rand.NextDouble() * 4 - 2,
-          Z = rand.NextDouble() * ZMax,
-          Couleur = Couleur.Get(0, 0, 255)
-        });
-      }
-    }
+    //  for (int i = 0; i < 100; i++)
+    //  {
+    //    tunnelPoints.Add(new Point3D
+    //    {
+    //      X = rand.NextDouble() * 4 - 2,
+    //      Y = rand.NextDouble() * 4 - 2,
+    //      Z = rand.NextDouble() * ZMax,
+    //      Couleur = Couleur.Get(0, 0, 255)
+    //    });
+    //  }
+    //}
 
-    private void DrawTunnel(double[] fft)
-    {
-      double amplitude = fft.Max(Math.Abs);
+    //private void DrawTunnel(double[] fft)
+    //{
+    //  double amplitude = fft.Max(Math.Abs);
 
-      TabSpec.Reset(); // nettoyer l’écran
+    //  TabSpec.Reset(); // nettoyer l’écran
 
-      foreach (var p in tunnelPoints)
-      {
-        p.Z -= 0.1 + amplitude * 0.5; // avance selon le son
+    //  foreach (var p in tunnelPoints)
+    //  {
+    //    p.Z -= 0.1 + amplitude * 0.5; // avance selon le son
 
-        if (p.Z <= 1)
-        {
-          p.X = rand.NextDouble() * 4 - 2;
-          p.Y = rand.NextDouble() * 4 - 2;
-          p.Z = ZMax;
-        }
+    //    if (p.Z <= 1)
+    //    {
+    //      p.X = rand.NextDouble() * 4 - 2;
+    //      p.Y = rand.NextDouble() * 4 - 2;
+    //      p.Z = ZMax;
+    //    }
 
-        int x = (int)(p.X / p.Z * 10 + 10);
-        int y = (int)(p.Y / p.Z * 10 + 10);
+    //    int x = (int)(p.X / p.Z * 10 + 10);
+    //    int y = (int)(p.Y / p.Z * 10 + 10);
 
-        if (TabSpec.Get(x, y) is Pixel pixel)
-          pixel.SetColor(p.Couleur);
-      }
-    }
+    //    if (TabSpec.Get(x, y) is Pixel pixel)
+    //      pixel.SetColor(p.Couleur);
+    //  }
+    //}
   }
 }
