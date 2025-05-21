@@ -94,12 +94,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="OpenTK">
-      <HintPath>OpenTK.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="Components\Layout\NavMenu.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>

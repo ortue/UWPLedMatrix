@@ -5,7 +5,7 @@ namespace Library.Util
 {
   public class Apa102Writer
   {
-    private readonly SpiDevice _spi;
+    private SpiDevice _spi { get; set; }
     private readonly byte[] StartFrame = { 0, 0, 0, 0 };
     private readonly byte[] EndFrame;
 
@@ -18,14 +18,14 @@ namespace Library.Util
 
       SpiConnectionSettings spiSettings = new(0, 0)
       {
-        //ClockFrequency = 10000000,
+        ClockFrequency = 10000000,
         //ClockFrequency = 8_000_000,
         //ClockFrequency = 4000000,
         //ClockFrequency = 2000000,
         //ClockFrequency = 1000000,
         //ClockFrequency = 500000,
 
-        ClockFrequency = clockFrequency,
+        //ClockFrequency = clockFrequency,
         Mode = SpiMode.Mode0,
         DataBitLength = 8
       };
