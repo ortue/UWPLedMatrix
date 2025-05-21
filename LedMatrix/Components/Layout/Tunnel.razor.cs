@@ -44,7 +44,7 @@ namespace LedMatrix.Components.Layout
 
         Pixels.SendPixels();
 
-        waitHandle.Wait(TimeSpan.FromMilliseconds(1));
+        waitHandle.Wait(TimeSpan.FromMilliseconds(6));
       }
     }
   }
