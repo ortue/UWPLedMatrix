@@ -27,7 +27,7 @@ namespace Library.Collection
       //DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
 
       if (Environment.MachineName != "PC-BENOIT")
-        Apa102Writer = new Apa102Writer(Largeur * Hauteur);
+        Apa102Writer = new Apa102Writer(Largeur * Hauteur, 1000000);
 
       List<int> emplacement = Emplacement();
 

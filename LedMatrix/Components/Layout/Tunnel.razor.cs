@@ -10,12 +10,7 @@ namespace LedMatrix.Components.Layout
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
       if (Boot)
-      {
         await Task.Run(ExecTunnel);
-
-        //await Task.Run(Apa102MinimalTest.Main);
-
-      }
 
       Boot = false;
     }

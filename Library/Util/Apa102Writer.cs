@@ -9,7 +9,7 @@ namespace Library.Util
     private readonly byte[] StartFrame = { 0, 0, 0, 0 };
     private readonly byte[] EndFrame;
 
-    public Apa102Writer(int numLeds)
+    public Apa102Writer(int numLeds, int clockFrequency = 10000000)
     {
       //_numLeds = numLeds;
 
@@ -18,12 +18,14 @@ namespace Library.Util
 
       SpiConnectionSettings spiSettings = new(0, 0)
       {
-        ClockFrequency = 10000000,
+        //ClockFrequency = 10000000,
         //ClockFrequency = 8_000_000,
         //ClockFrequency = 4000000,
         //ClockFrequency = 2000000,
         //ClockFrequency = 1000000,
         //ClockFrequency = 500000,
+
+        ClockFrequency = clockFrequency,
         Mode = SpiMode.Mode0,
         DataBitLength = 8
       };

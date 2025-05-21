@@ -27,13 +27,13 @@ namespace LedMatrix.Components.Pages
       Task.Run(() =>
       {
         int i = 0;
+        using ManualResetEventSlim waitHandle = new(false);
 
         if (Animations != null)
           while (TaskGo.Autorun)
           {
             ExecAnimation(Animations[i++].FileNameID);
 
-            using ManualResetEventSlim waitHandle = new(false);
             waitHandle.Wait(TimeSpan.FromSeconds(10));
 
             if (Animations.Count <= i)

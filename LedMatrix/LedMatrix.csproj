@@ -7,34 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\Images\Animation\ScrewAttack.gif" />
-    <Content Remove="wwwroot\Images\Animation\ShipLeft.gif" />
-    <Content Remove="wwwroot\Images\Animation\ShyguyRedRight.gif" />
-    <Content Remove="wwwroot\Images\Animation\spinywalk.gif" />
-    <Content Remove="wwwroot\Images\Animation\Tinychimp.gif" />
-    <Content Remove="wwwroot\Images\Animation\ToadSmallR.gif" />
-    <Content Remove="wwwroot\Images\Animation\WeaponEnergyBall.gif" />
-    <Content Remove="wwwroot\Images\Animation\WhiteMage-Walk-Front.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeelaOrange.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteArmos.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteEnemyCloud.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteFairy.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteFire.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteFood.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteFood.png" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteHeart.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.png" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteKeeseBlue.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteLinkFront.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteLinkLeft.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteOctorokRedDown.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteRopeLeft.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteStalfos.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteTektiteRed.gif" />
     <Content Remove="wwwroot\Images\Animation\ZeldaSpriteTriforce.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZeldaSpriteWallMasterUL.gif" />
-    <Content Remove="wwwroot\Images\Animation\ZoomerRed.gif" />
     <Content Remove="wwwroot\Images\Meteo\01d.gif" />
     <Content Remove="wwwroot\Images\Meteo\01n.gif" />
     <Content Remove="wwwroot\Images\Meteo\02d.gif" />
@@ -57,87 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Images\Animation\ScrewAttack.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ShipLeft.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ShyguyRedRight.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\spinywalk.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\Tinychimp.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ToadSmallR.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\WeaponEnergyBall.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\WhiteMage-Walk-Front.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeelaOrange.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteArmos.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteEnemyCloud.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteFairy.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteFire.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteFood.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteFood.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeart.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteKeeseBlue.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteLinkFront.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteLinkLeft.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteOctorokRedDown.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteRopeLeft.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteStalfos.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteTektiteRed.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZeldaSpriteWallMasterUL.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\ZoomerRed.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="wwwroot\Images\Meteo\01d.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -353,6 +245,87 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\Images\Animation\Savepoint.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ScrewAttack.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ShipLeft.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ShyguyRedRight.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\spinywalk.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\Tinychimp.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ToadSmallR.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\WeaponEnergyBall.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\WhiteMage-Walk-Front.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeelaOrange.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteArmos.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteEnemyCloud.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteFairy.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteFire.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteFood.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteFood.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteHeart.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteHeartContainer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteKeeseBlue.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteLinkFront.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteLinkLeft.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteOctorokRedDown.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteRopeLeft.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteStalfos.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteTektiteRed.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZeldaSpriteWallMasterUL.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\ZoomerRed.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

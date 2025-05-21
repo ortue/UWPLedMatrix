@@ -70,10 +70,9 @@ namespace LedMatrix.Components.Layout
           Pixels.Get(spec).SetColor(couleur);
         }
 
-
         Pixels.SendPixels();
 
-        if (option == 0 || option == 2)
+        if (option == 0)
           TabSpec.Reset();
         else
           Fade();
