@@ -1,38 +1,50 @@
 ﻿using Library.Collection;
 using Library.Entity;
 using Library.Util;
+using MathNet.Numerics.IntegralTransforms;
+using System.Numerics;
 
 namespace LedMatrix.Components.Layout
 {
-  public partial class Spectrum
+  public partial class Spectrum2
   {
     private PixelList TabSpec { get; set; } = new PixelList(false);
+
+    private const int ScalingWindowSize = 1000;
+    private readonly double[] _scalingHistory = new double[ScalingWindowSize];
+    private int _scalingIndex = 0;
+    public float ScalingFactor { get; private set; } = 1.0f;
 
     /// <summary>
     /// Set
     /// </summary>
     private void Set()
     {
-      Task.Run(() =>
+      _ = Task.Run(() =>
       {
-        int i = 0;
-
-        TaskGo.StopTask();
-        using ManualResetEventSlim waitHandle = new(false);
-
-        while (ARecord.IsBusy || i++ > 100)
+        if (TaskGo.AudioCaptureConcurence)
+        {
+          TaskGo.StopTask();
+          using ManualResetEventSlim waitHandle = new(false);
           waitHandle.Wait(TimeSpan.FromMilliseconds(100));
+        }
 
-        ExecSpectrum();
+        try
+        {
+          ExecSpectrum();
+        }
+        catch (Exception ex)
+        {
+          var a = ex;
+        }
       });
     }
 
-    /// <summary>
-    /// Spectrum
-    /// </summary>
     private void ExecSpectrum()
     {
+      TaskGo.AudioCaptureConcurence = true;
       int task = TaskGo.StartTask("Spectrum");
+
       int cycle = 0;
       int debut = -20;
 
@@ -40,14 +52,38 @@ namespace LedMatrix.Components.Layout
 
       while (TaskGo.TaskWork(task))
       {
-        double[] fft = aRecord.Read();
-        double amplitude = GetAmplitudeSpectrum(fft);
-        float[] fftData = SetFFT(aRecord.GetBuffer(), fft);
+        short[] buffer = aRecord.GetBuffer();
+
+        Complex[] samples = buffer.Select(b => new Complex((b - 128.0) / 128.0, 0)).ToArray();
+        Fourier.Forward(samples);
+
+        double[] magnitudes = samples.Take(samples.Length / 2).Select(c => c.Magnitude).ToArray();
+        int bandWidth = magnitudes.Length / PixelList.Largeur;
+        double[] bandLevels = new double[PixelList.Largeur];
+
+        for (int i = 0; i < PixelList.Largeur; i++)
+          bandLevels[i] = magnitudes.Skip(i * bandWidth).Take(bandWidth).Average();
+
+        // Estimate scaling factor (adaptive to average volume)
+        double averageLevel = bandLevels.Average();
+
+        _scalingHistory[_scalingIndex++ % ScalingWindowSize] = averageLevel;
+        double scalingFactor = PixelList.Hauteur / (_scalingHistory.Max() + 1e-6);
 
         AffHeure(cycle);
         debut = AffTitre(cycle, debut);
 
-        SetSpectrum(fftData, amplitude);
+        // Convert to bar heights
+        int[] heights = bandLevels.Select(level => Math.Min(PixelList.Hauteur, (int)(level * scalingFactor))).ToArray();
+
+        for (int x = 0; x < PixelList.Largeur; x++)
+        {
+          int h = heights[x];
+
+          for (int y = 0; y < PixelList.Hauteur; y++)
+            if (y >= PixelList.Hauteur - h)
+              TabSpec.Get(x, y).SetColor(ProportionCouleur(y));
+        }
 
         foreach (Pixel spec in TabSpec)
         {
@@ -66,73 +102,8 @@ namespace LedMatrix.Components.Layout
         Pixels.SendPixels();
         SetSpectrum(cycle++);
       }
-    }
 
-    /// <summary>
-    /// GetAmplitude
-    /// </summary>
-    /// <param name="fft"></param>
-    /// <returns></returns>
-    public static double GetAmplitudeSpectrum(double[] fft)
-    {
-      double max = fft.Max(Math.Abs);
-
-      return max switch
-      {
-        > 75 => 0.005,
-        > 50 => 0.01,
-        > 25 => 0.02,
-        > 15 => 0.03,
-        > 10 => 0.04,
-        > 5 => 0.05,
-        > 4 => 0.06,
-        > 3 => 0.07,
-        > 1 => 0.08,
-        _ => 0.03
-      };
-    }
-
-    /// <summary>
-    /// SetFFT
-    /// do the Abs calculation and add with Math.Sqrt(audio_data.Length);
-    /// i.e. the magnitude spectrum
-    /// </summary>
-    /// <param name="audioBuffer"></param>
-    /// <param name="fft"></param>
-    /// <returns></returns>
-    private static float[] SetFFT(short[] audioBuffer, double[] fft)
-    {
-      LomFFT LomFFT = new();
-      LomFFT.RealFFT(fft, true);
-
-      float[] fftData = new float[audioBuffer.Length / 2];
-      double lengthSqrt = Math.Sqrt(audioBuffer.Length);
-
-      for (int j = 0; j < audioBuffer.Length / 2; j++)
-      {
-        double re = fft[2 * j] * lengthSqrt;
-        double img = fft[2 * j + 1] * lengthSqrt;
-        fftData[j] = (float)Math.Sqrt(re * re + img * img);
-      }
-
-      return fftData;
-    }
-
-    /// <summary>
-    /// Spectrum
-    /// </summary>
-    /// <param name="audioBuffer"></param>
-    /// <param name="fft"></param>
-    private void SetSpectrum(float[] fftData, double amplitude)
-    {
-      for (int x = 0; x < PixelList.Largeur; x++)
-      {
-        double yMax = Magnitude(fftData, x, amplitude);
-
-        for (int y = 0; y < PixelList.Hauteur; y++)
-          if (y < Math.Ceiling(yMax))
-            TabSpec.Get(x, 19 - y).SetColor(ProportionCouleur(y));
-      }
+      TaskGo.AudioCaptureConcurence = false;
     }
 
     /// <summary>
@@ -156,45 +127,11 @@ namespace LedMatrix.Components.Layout
     /// </summary>
     private void SetSpectrum(int cycle)
     {
+      //Plus le chffre du mod est grand, plus la trainer sera ralenti
       if (cycle % 4 == 0)
         for (int x = 0; x < PixelList.Largeur; x++)
           if (TabSpec.Where(p => p.X == x && !p.Couleur.IsNoir).OrderBy(p => p.Y).FirstOrDefault() is Pixel pixel)
             pixel.Couleur = Couleur.Noir;
-    }
-
-    /// <summary>
-    /// Magnitude
-    /// </summary>
-    /// <param name="fftData"></param>
-    /// <param name="x"></param>
-    /// <param name="amplitude"></param>
-    /// <returns></returns>
-    private static double Magnitude(float[] fftData, int x, double amplitude)
-    {
-
-
-
-
-      return x switch
-      {
-        0 => (fftData[x] - 140) * amplitude,
-
-        1 => (fftData[x] - 20) * amplitude * 0.6,
-        2 => (fftData[x] - 25) * amplitude * 0.7,
-        3 => (fftData[x] - 26) * amplitude * 0.8,
-
-        11 => (fftData.Skip(10).Take(3).Average() - 11) * amplitude,
-        12 => (fftData.Skip(13).Take(5).Average() - 11) * amplitude,
-        13 => (fftData.Skip(18).Take(7).Average() - 11) * amplitude * 2,
-        14 => (fftData.Skip(25).Take(9).Average() - 10) * amplitude * 2,
-        15 => (fftData.Skip(34).Take(11).Average() - 10) * amplitude * 2,
-        16 => (fftData.Skip(45).Take(13).Average() - 9) * amplitude * 3,
-        17 => (fftData.Skip(58).Take(17).Average() - 8) * amplitude * 4,
-        18 => (fftData.Skip(75).Take(22).Average() - 9) * amplitude * 5,
-        19 => (fftData.Skip(97).Take(30).Average() - 7) * amplitude * 6,
-
-        _ => (fftData[x] - 20) * amplitude * 0.8
-      };
     }
 
     /// <summary>

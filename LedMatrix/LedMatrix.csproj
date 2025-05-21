@@ -7,26 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\Images\Animation\LuigiStanding.gif" />
-    <Content Remove="wwwroot\Images\Animation\LuigiStanding.png" />
-    <Content Remove="wwwroot\Images\Animation\MagicMushroom.gif" />
-    <Content Remove="wwwroot\Images\Animation\MagicMushroom.png" />
-    <Content Remove="wwwroot\Images\Animation\MagicWing.gif" />
-    <Content Remove="wwwroot\Images\Animation\MainCharacterF.gif" />
-    <Content Remove="wwwroot\Images\Animation\Mario.gif" />
-    <Content Remove="wwwroot\Images\Animation\MarioSmallR.gif" />
-    <Content Remove="wwwroot\Images\Animation\MarioStanding.png" />
-    <Content Remove="wwwroot\Images\Animation\MarioWalkingR.gif" />
-    <Content Remove="wwwroot\Images\Animation\megaman.gif" />
-    <Content Remove="wwwroot\Images\Animation\megaman.png" />
-    <Content Remove="wwwroot\Images\Animation\MrEggL.gif" />
-    <Content Remove="wwwroot\Images\Animation\MrHotDogL.gif" />
-    <Content Remove="wwwroot\Images\Animation\NettlerL.gif" />
-    <Content Remove="wwwroot\Images\Animation\POWD.gif" />
-    <Content Remove="wwwroot\Images\Animation\QuestionBlock.gif" />
-    <Content Remove="wwwroot\Images\Animation\QuestionBlock2.gif" />
-    <Content Remove="wwwroot\Images\Animation\Runningright.gif" />
-    <Content Remove="wwwroot\Images\Animation\Savepoint.gif" />
     <Content Remove="wwwroot\Images\Animation\ScrewAttack.gif" />
     <Content Remove="wwwroot\Images\Animation\ShipLeft.gif" />
     <Content Remove="wwwroot\Images\Animation\ShyguyRedRight.gif" />
@@ -77,66 +57,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Images\Animation\LuigiStanding.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\LuigiStanding.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\MagicMushroom.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\MagicMushroom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\MagicWing.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\MainCharacterF.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\Mario.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\MarioSmallR.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\MarioStanding.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\MarioWalkingR.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\megaman.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\megaman.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\MrEggL.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\MrHotDogL.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\NettlerL.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\POWD.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\QuestionBlock.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\QuestionBlock2.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\Runningright.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\Images\Animation\Savepoint.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="wwwroot\Images\Animation\ScrewAttack.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -372,8 +292,68 @@
     <Content Update="wwwroot\Images\Animation\LittleGoomba.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\Images\Animation\LuigiStanding.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\LuigiStanding.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\MagicMushroom.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\MagicMushroom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\MagicWing.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\MainCharacterF.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\Mario.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\MarioSmallR.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\MarioStanding.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\MarioWalkingR.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\megaman.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\megaman.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\MrEggL.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\MrHotDogL.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\NettlerL.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\Images\Animation\Pacman.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\POWD.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\QuestionBlock.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\QuestionBlock2.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\Runningright.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\Animation\Savepoint.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

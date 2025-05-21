@@ -14,12 +14,13 @@ namespace LedMatrix.Components.Layout
     {
       Task.Run(() =>
       {
-        if (TaskGo.AudioCaptureConcurence)
-        {
-          TaskGo.StopTask();
-          using ManualResetEventSlim waitHandle = new(false);
+        int i = 0;
+        TaskGo.StopTask();
+        using ManualResetEventSlim waitHandle = new(false);
+
+        while (ARecord.IsBusy || i++ > 100)
           waitHandle.Wait(TimeSpan.FromMilliseconds(100));
-        }
+
 
         try
         {
@@ -37,52 +38,25 @@ namespace LedMatrix.Components.Layout
     /// </summary>
     private void ExecSpectrograph()
     {
-      TaskGo.AudioCaptureConcurence = true;
-
       int task = TaskGo.StartTask();
-      //byte[] audioBuffer = new byte[256];
-      //using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
-      //audioCapture.Start();
       int cycle = 0;
 
       using ARecord aRecord = new();
+      using ManualResetEventSlim waitHandle = new(false);
 
       while (TaskGo.TaskWork(task))
       {
-        //double[] fft = Capture(audioCapture, audioBuffer);
-
         double[] fft = aRecord.Read();
-
         double amplitude = GetAmplitudeSpectroGraph(fft);
-        float[] fftData = SetFFT(aRecord.Buffer, fft);
+        float[] fftData = SetFFT(aRecord.GetBuffer(), fft);
 
         SetSpectrograph(fftData, amplitude);
         SetSpectrograph(cycle++);
         Pixels.SendPixels();
 
-        using ManualResetEventSlim waitHandle = new(false);
         waitHandle.Wait(TimeSpan.FromMilliseconds(1));
       }
-
-      TaskGo.AudioCaptureConcurence = false;
     }
-
-    /// <summary>
-    /// Capture
-    /// </summary>
-    /// <param name="audioCapture"></param>
-    /// <param name="audioBuffer"></param>
-    /// <returns></returns>
-    //private static double[] Capture(AudioCapture audioCapture, byte[] audioBuffer)
-    //{
-    //  audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
-    //  double[] fft = new double[audioBuffer.Length];
-
-    //  for (int i = 0; i < audioBuffer.Length; i++)
-    //    fft[i] = audioBuffer[i] - 128;
-
-    //  return fft;
-    //}
 
     /// <summary>
     /// GetAmplitudeSpectroGraph
@@ -115,7 +89,7 @@ namespace LedMatrix.Components.Layout
     /// <param name="audioBuffer"></param>
     /// <param name="fft"></param>
     /// <returns></returns>
-    private static float[] SetFFT(byte[] audioBuffer, double[] fft)
+    private static float[] SetFFT(short[] audioBuffer, double[] fft)
     {
       LomFFT LomFFT = new();
       LomFFT.RealFFT(fft, true);

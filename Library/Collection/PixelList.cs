@@ -7,7 +7,7 @@ namespace Library.Collection
   {
     public const int Largeur = 20;
     public const int Hauteur = 20;
-    private Apa102Writer Apa102Writer { get; set; }
+    private Apa102Writer? Apa102Writer { get; set; }
 
     //public DotStarStrip DotStarStrip { get; set; }
     //public Apa102 Apa102 { get; set; }
@@ -26,7 +26,8 @@ namespace Library.Collection
     {
       //DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
 
-      Apa102Writer = new Apa102Writer(Largeur * Hauteur);
+      if (Environment.MachineName != "PC-BENOIT")
+        Apa102Writer = new Apa102Writer(Largeur * Hauteur);
 
       List<int> emplacement = Emplacement();
 
@@ -42,7 +43,8 @@ namespace Library.Collection
     {
       //DotStarStrip = new(Largeur * Hauteur, Environment.MachineName != "PC-BENOIT");
 
-      Apa102Writer = new Apa102Writer(Largeur * Hauteur);
+      if (Environment.MachineName != "PC-BENOIT")
+        Apa102Writer = new Apa102Writer(Largeur * Hauteur);
 
       if (!inter)
         for (int y = 0; y < Largeur; y++)
@@ -137,7 +139,7 @@ namespace Library.Collection
       if (Environment.MachineName == "PC-BENOIT")
         SendPixelsDebug(Environment.MachineName == "PC-BENOIT");
       else
-        Apa102Writer.SendPixels(PixelColors);
+        Apa102Writer?.SendPixels(PixelColors);
     }
 
     /// <summary>

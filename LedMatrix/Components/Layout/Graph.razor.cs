@@ -21,21 +21,15 @@ namespace LedMatrix.Components.Layout
     {
       Task.Run(() =>
       {
-        if (TaskGo.AudioCaptureConcurence)
-        {
-          TaskGo.StopTask();
-          using ManualResetEventSlim waitHandle = new(false);
+        int i = 0;
+        TaskGo.StopTask();
+
+        using ManualResetEventSlim waitHandle = new(false);
+
+        while (ARecord.IsBusy || i++ > 100)
           waitHandle.Wait(TimeSpan.FromMilliseconds(100));
-        }
 
-        try
-        {
-          ExecGraph(option);
-        }
-        catch (Exception)
-        {
-
-        }
+        ExecGraph(option);
       });
     }
 
@@ -44,20 +38,29 @@ namespace LedMatrix.Components.Layout
     /// </summary>
     private void ExecGraph(int option)
     {
-      TaskGo.AudioCaptureConcurence = true;
       int task = TaskGo.StartTask("Graph");
-
       int cycle = 0;
       int debut = -20;
 
-      using ARecord aRecord = new();
+
+      InitTunnel();
+
+      using ARecord aRecord = new(256);
 
       while (TaskGo.TaskWork(task))
       {
         double[] samples = aRecord.Read();
+
+
+        //facteur de volume a améliorer
         double amplitude = GetAmplitudeGraph(samples);
 
-        GetGraph(samples, amplitude, option);
+        if (option == 2)
+          DrawTunnel(samples);
+        else
+          GetGraph(samples, amplitude, option);
+
+
         AffHeure();
         debut = AffTitre(cycle++, debut);
 
@@ -76,15 +79,14 @@ namespace LedMatrix.Components.Layout
           Pixels.Get(spec).SetColor(couleur);
         }
 
+
         Pixels.SendPixels();
 
-        if (option == 0)
+        if (option == 0 || option == 2)
           TabSpec.Reset();
         else
           Fade();
       }
-
-      TaskGo.AudioCaptureConcurence = false;
     }
 
     /// <summary>
@@ -110,23 +112,6 @@ namespace LedMatrix.Components.Layout
         pixel.SetColor(Couleur.Get(r, g, b));
       }
     }
-
-    /// <summary>
-    /// Capture
-    /// </summary>
-    /// <param name="audioCapture"></param>
-    /// <param name="audioBuffer"></param>
-    /// <returns></returns>
-    //private static double[] Capture(AudioCapture audioCapture, byte[] audioBuffer)
-    //{
-    //  audioCapture.ReadSamples(audioBuffer, audioBuffer.Length);
-    //  double[] fft = new double[audioBuffer.Length];
-
-    //  for (int i = 0; i < audioBuffer.Length; i++)
-    //    fft[i] = audioBuffer[i] - 128;
-
-    //  return fft;
-    //}
 
     /// <summary>
     /// GetAmplitudeGraph
@@ -159,14 +144,17 @@ namespace LedMatrix.Components.Layout
     /// <param name="fft"></param>
     private void GetGraph(double[] fft, double amplitude, int option)
     {
+      //elargir les vagues en sautant des elements
+      int facteur = 4;
+
       for (int x = 0; x < PixelList.Largeur; x++)
       {
-        int y = (int)(fft[x * 2] * amplitude) + 10;
-        double distance = Math.Abs(fft[x * 2] * amplitude);
+        int y = (int)(fft[x * facteur] * amplitude) + 10;
+        double distance = Math.Abs(fft[x * facteur] * amplitude);
 
         if (option == 1)
         {
-          int yy = (int)(-fft[x * 2] * amplitude) + 10;
+          int yy = (int)(-fft[x * facteur] * amplitude) + 10;
           int minY = Math.Min(y, yy);
           int maxY = Math.Max(y, yy);
 
@@ -283,6 +271,60 @@ namespace LedMatrix.Components.Layout
       }
 
       return debut;
+    }
+
+
+
+
+    private class Point3D
+    {
+      public double X, Y, Z;
+      public Couleur Couleur;
+    }
+
+    private List<Point3D> tunnelPoints = new();
+    private const double ZMax = 20;
+    private Random rand = new();
+
+    private void InitTunnel()
+    {
+      tunnelPoints.Clear();
+
+      for (int i = 0; i < 100; i++)
+      {
+        tunnelPoints.Add(new Point3D
+        {
+          X = rand.NextDouble() * 4 - 2,
+          Y = rand.NextDouble() * 4 - 2,
+          Z = rand.NextDouble() * ZMax,
+          Couleur = Couleur.Get(0, 0, 255)
+        });
+      }
+    }
+
+    private void DrawTunnel(double[] fft)
+    {
+      double amplitude = fft.Max(Math.Abs);
+
+      TabSpec.Reset(); // nettoyer l’écran
+
+      foreach (var p in tunnelPoints)
+      {
+        p.Z -= 0.1 + amplitude * 0.5; // avance selon le son
+
+        if (p.Z <= 1)
+        {
+          p.X = rand.NextDouble() * 4 - 2;
+          p.Y = rand.NextDouble() * 4 - 2;
+          p.Z = ZMax;
+        }
+
+        int x = (int)(p.X / p.Z * 10 + 10);
+        int y = (int)(p.Y / p.Z * 10 + 10);
+
+        if (TabSpec.Get(x, y) is Pixel pixel)
+          pixel.SetColor(p.Couleur);
+      }
     }
   }
 }

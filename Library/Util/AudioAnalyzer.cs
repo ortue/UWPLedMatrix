@@ -7,7 +7,7 @@ namespace Library.Util
     //private readonly int _bandCount;
     //private readonly int _sampleRate;
     //private readonly int _fftSize;
-    private readonly float[] _previousValues;
+    //private readonly float[] _previousValues;
     //private readonly float _decayFactor = 0.05f;
 
     public float ScalingFactor { get; private set; } = 1.0f;
@@ -17,7 +17,7 @@ namespace Library.Util
       //_bandCount = bandCount;
       //_sampleRate = sampleRate;
       //_fftSize = fftSize;
-      _previousValues = new float[PixelList.Largeur];
+      //_previousValues = new float[PixelList.Largeur];
     }
 
     public float[] Analyze(float[] fftMagnitude)
@@ -38,17 +38,19 @@ namespace Library.Util
 
         // Scaling factor auto-ajusté
         ScalingFactor = Math.Max(ScalingFactor * 0.99f, avg);
-        float scaled = avg / (ScalingFactor + 1e-6f);
+        //float scaled = avg / (ScalingFactor + 1e-6f);
 
         // Appliquer un effet de décroissance douce
         //if (scaled < _previousValues[i])
         //  bandAmplitudes[i] = _previousValues[i] - _decayFactor;
         //else
-        //  bandAmplitudes[i] = scaled;
+
+
+        bandAmplitudes[i] = avg / (ScalingFactor + 1e-6f);
 
         // Clamp à [0,1]
         bandAmplitudes[i] = Math.Max(0, Math.Min(1, bandAmplitudes[i]));
-        _previousValues[i] = bandAmplitudes[i];
+        //_previousValues[i] = bandAmplitudes[i];
       }
 
       return bandAmplitudes;

@@ -1,8 +1,6 @@
 ﻿using Library.Collection;
 using Library.Entity;
 using Library.Util;
-//using OpenTK.Audio;
-//using OpenTK.Audio.OpenAL;
 
 namespace LedMatrix.Components.Layout
 {
@@ -15,12 +13,13 @@ namespace LedMatrix.Components.Layout
     {
       Task.Run(() =>
       {
-        if (TaskGo.AudioCaptureConcurence)
-        {
-          TaskGo.StopTask();
-          using ManualResetEventSlim waitHandle = new(false);
+        int i = 0;
+
+        TaskGo.StopTask();
+        using ManualResetEventSlim waitHandle = new(false);
+
+        while (ARecord.IsBusy || i++ > 100)
           waitHandle.Wait(TimeSpan.FromMilliseconds(100));
-        }
 
         try
         {
@@ -38,15 +37,9 @@ namespace LedMatrix.Components.Layout
     /// </summary>
     private void ExecVUMeter()
     {
-      TaskGo.AudioCaptureConcurence = true;
       int task = TaskGo.StartTask("VUMeter");
-
       double max = 0;
       CaractereList caracteres = new(PixelList.Largeur);
-
-      //byte[] audioBuffer = new byte[256];
-      //using AudioCapture audioCapture = new(AudioCapture.AvailableDevices[1], 22000, ALFormat.Mono8, audioBuffer.Length);
-      //audioCapture.Start();
 
       using ARecord aRecord = new();
 
@@ -54,9 +47,7 @@ namespace LedMatrix.Components.Layout
       {
         max -= 0.3;
 
-        //double[] fft = Capture(audioCapture, audioBuffer);
         double[] fft = aRecord.Read();
-
 
         if (fft.Max(Math.Abs) > max)
           max = fft.Max(Math.Abs);
@@ -154,8 +145,6 @@ namespace LedMatrix.Components.Layout
         Pixels.SendPixels();
         Pixels.Reset();
       }
-
-      TaskGo.AudioCaptureConcurence = true;
     }
 
     /// <summary>

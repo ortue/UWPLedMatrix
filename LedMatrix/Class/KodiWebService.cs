@@ -48,7 +48,7 @@ namespace LedMatrix.Class
 
         string artist = string.Empty;
 
-        if (root?.result?.item?.artist != null && root.result.item.artist[0] != null)
+        if (root?.result?.item?.artist != null && root.result.item.artist.Count != 0 && root.result.item.artist[0] != null)
           artist = root.result.item.artist[0] + " - ";
 
         return Diacritic.Remove(artist + root?.result?.item?.title).ToUpper();
