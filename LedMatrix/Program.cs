@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.HttpOverrides;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseUrls("http://localhost:5000");
+
+
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -47,3 +50,26 @@ app.Run();
 // sudo systemctl stop kestrel-BlazorAppMatrix.service
 // sudo systemctl status kestrel-BlazorAppMatrix.service
 // /home/benoit/.dotnet/dotnet
+
+
+
+//sudo nano /etc/systemd/system/ledmatrix.service
+//sudo systemctl daemon-reexec
+//sudo systemctl daemon-reload
+//sudo systemctl enable ledmatrix.service
+//sudo systemctl stop ledmatrix.service
+//sudo systemctl start ledmatrix.service
+//systemctl status ledmatrix.service
+
+//sudo nano /etc/nginx/sites-available/ledmatrix
+
+//sudo ln -s /etc/nginx/sites-available/ledmatrix /etc/nginx/sites-enabled/
+//sudo nginx -t
+//sudo systemctl reload nginx
+
+
+
+
+
+
+

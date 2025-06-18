@@ -23,14 +23,16 @@ namespace Library.Util
         StartInfo = new ProcessStartInfo
         {
           FileName = "arecord",
-          Arguments = "-D hw:1,0 -f S16_LE -c 1 -r 44100 -t raw",
+          //Arguments = "-D hw:2,0 -f S16_LE -c 1 -r 44100 -t raw",
+          Arguments = "-D hw:2,0 -f S16_LE -c 1 -r 22500 -t raw",
           RedirectStandardOutput = true,
+          //RedirectStandardError = true,
           UseShellExecute = false,
           CreateNoWindow = true
         }
       };
 
-      //process.ErrorDataReceived += (sender, e) =>
+      //Process.ErrorDataReceived += (sender, e) =>
       //{
       //  if (!string.IsNullOrEmpty(e.Data))
       //    Console.WriteLine("Erreur arecord: " + e.Data);
@@ -39,7 +41,7 @@ namespace Library.Util
       Process.Start();
 
       IsBusy = true;
-      //process.BeginErrorReadLine();
+      // Process.BeginErrorReadLine();
 
       Stream = Process.StandardOutput.BaseStream;
 

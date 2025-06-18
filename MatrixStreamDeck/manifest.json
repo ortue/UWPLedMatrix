@@ -1,0 +1,34 @@
+{
+  "Actions": [
+    {
+      "UUID": "com.benoit.test.action",
+      "Name": "Mon Action",
+      "Tooltip": "Fait quelque chose",
+      "Icon": "images/actionIcon",
+      "States": [
+        {
+          "Image": "images/actionIcon",
+          "TitleAlignment": "bottom",
+          "FontSize": "10"
+        }
+      ],
+      "SupportedInMultiActions": true
+    }
+  ],
+  "Author": "Benoit",
+  "Name": "Test Plugin",
+  "Description": "Mon plugin Stream Deck",
+  "Version": "1.0",
+  "SDKVersion": 2,
+  "Software": {
+    "MinimumVersion": "5.0"
+  },
+  "CodePath": "app/MatrixStreamDeck.exe",
+  "OS": [
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "Category": "Test"
+}

@@ -18,6 +18,7 @@ namespace Library.Util
 
       SpiConnectionSettings spiSettings = new(0, 0)
       {
+        //ClockFrequency = 15000000,
         ClockFrequency = 10000000,
         //ClockFrequency = 8_000_000,
         //ClockFrequency = 4000000,

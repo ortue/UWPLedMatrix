@@ -23,6 +23,8 @@ namespace LedMatrix.Components.Layout
     /// </summary>
     private void ExecMeteo()
     {
+      //using ManualResetEventSlim waitHandle = new(false);
+
       //Couleur couleur = new() { R = 64, G = 0, B = 0 };
       DateTime update = DateTime.Now.AddMinutes(-10);
       int task = TaskGo.StartTask("Meteo");
@@ -47,6 +49,8 @@ namespace LedMatrix.Components.Layout
 
         Pixels.SendPixels();
         Pixels.Reset();
+        //waitHandle.Wait(TimeSpan.FromMilliseconds(2));
+        Thread.Sleep(2);
 
         if (update.AddMinutes(5) < DateTime.Now)
         {
